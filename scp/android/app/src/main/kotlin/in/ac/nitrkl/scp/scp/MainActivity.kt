@@ -1,4 +1,4 @@
-package in.ac.nitrkl.scp.scp
+package `in`.ac.nitrkl.scp.scp
 
 import android.os.Bundle
 
