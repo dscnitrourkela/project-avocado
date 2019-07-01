@@ -68,3 +68,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages
+  fonts:
+    - family: PfDin
+      fonts:
+        - asset: fonts/pf_din.otf
+        - asset: fonts/pf_din_med.ttf
+          weight: 500
