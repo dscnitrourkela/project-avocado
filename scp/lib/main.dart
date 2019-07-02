@@ -8,7 +8,9 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays([]);
+    //SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+      //statusBarColor: Colors.white70, //or set color with: Color(0xFF0000FF)
+    //));
     return MaterialApp(
       title: 'SCP Demo',
       theme: ThemeData(
