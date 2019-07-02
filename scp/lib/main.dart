@@ -3,6 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:scp/cards.dart';
 import 'package:scp/gradients.dart';
 
+
+import 'package:scp/time_table.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -46,6 +49,15 @@ class _HomePageState extends State<HomePage> {
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 40.0, fontWeight: FontWeight.w500, fontFamily: 'PfDin',letterSpacing: 2),
             ),
+          ),
+          RaisedButton(
+              child: Text('TimeTable'),
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => TimeTable()
+                  ),
+              ),
           ),
           appointmentCard(context, queryWidth, textScaleFactor),
           faqCard(context, queryWidth, textScaleFactor),
