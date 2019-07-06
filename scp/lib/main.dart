@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scp/cards.dart';
 import 'package:scp/gradients.dart';
+import 'dart:async';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
@@ -20,6 +23,7 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
+
   HomePage({Key key, this.title}) : super(key: key);
 
   final String title;
@@ -29,6 +33,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  static const platform=const MethodChannel("FAQ_ACTIVITY");
   @override
   Widget build(BuildContext context) {
     Gradients().init(context);
@@ -48,10 +53,20 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           appointmentCard(context, queryWidth, textScaleFactor),
-          faqCard(context, queryWidth, textScaleFactor),
+          InkWell(
+            onTap:()=> _startFAQActivity(),
+              child: faqCard(context, queryWidth, textScaleFactor)),
           mentorsCard(context, queryWidth, textScaleFactor),
         ],
       ),
     );
+  }
+  
+  _startFAQActivity() async{
+    try {
+      await platform.invokeMethod('startFaqActivity');
+    } on PlatformException catch (e){
+      print(e.message);
+    }
   }
 }
