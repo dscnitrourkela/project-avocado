@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:scp/gradients.dart';
-import 'main.dart';
 
 Widget appointmentCard(
     BuildContext context, double heightFactor, double textScaleFactor) {
@@ -148,7 +147,7 @@ Widget mentorsCard(
   return SizedBox(
     height: heightFactor * 0.58,
     child: Padding(
-      padding: const EdgeInsets.only(top: 12.0),
+      padding: const EdgeInsets.only(top: 0.0),
       child: Card(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
@@ -252,7 +251,7 @@ Widget faqCard(
   return SizedBox(
     height: heightFactor * 0.58,
     child: Padding(
-      padding: const EdgeInsets.only(top: 12.0),
+      padding: const EdgeInsets.only(top: 0.0),
       child: Card(
         shape:
         RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
