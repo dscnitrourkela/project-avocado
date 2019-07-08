@@ -1,9 +1,15 @@
 package in.ac.nitrkl.scp.model;
 
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class FaqModel {
     private String question;
     private String answer;
     private boolean expanded=false;
+    private List<String> categories=new ArrayList<>();
 
     public String getAnswer() {
         return answer;
@@ -21,9 +27,18 @@ public class FaqModel {
         this.question = question;
     }
 
-    public FaqModel(String question,String answer){
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public FaqModel(String question, String answer, List<String> categories){
         this.question=question;
         this.answer=answer;
+        this.categories=categories;
     }
 
     public boolean isExpanded() {

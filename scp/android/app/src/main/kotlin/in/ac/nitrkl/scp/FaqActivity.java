@@ -1,6 +1,8 @@
 package in.ac.nitrkl.scp;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -43,7 +45,8 @@ public class FaqActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faq);
         setTitle("FAQ");
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.faq_actionBar));
         //Setting up RecyclerView
         recyclerView=(RecyclerView)findViewById(R.id.faq_rv);
         recyclerView.setHasFixedSize(true);
@@ -92,8 +95,7 @@ public class FaqActivity extends AppCompatActivity {
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
             try {
-
-                loadUrlData(result);
+                               loadUrlData(result);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -109,6 +111,13 @@ public class FaqActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                faqModels.clear();
+                adapter.notifyDataSetChanged();
+                new SearchFetch(query).execute();
+                searchView.setIconified(true);
+                searchView.clearFocus();
+                searchView.onActionViewCollapsed();
+                menu.findItem(R.id.button_search).collapseActionView();
              return false;
             }
 
@@ -126,12 +135,17 @@ public class FaqActivity extends AppCompatActivity {
     private void loadUrlData(String result) throws JSONException {
         JSONObject jsonObject=new JSONObject(result).getJSONObject("hits");
         JSONArray array=jsonObject.getJSONArray("hits");
+        List<String> categories=new ArrayList<>();
         for(int i=0;i<array.length();i++){
             JSONObject jo=array.getJSONObject(i).getJSONObject("_source");
-            Toast.makeText(getApplicationContext(),jo.getString("Question"),Toast.LENGTH_SHORT).show();
-            faqModels.add(new FaqModel(jo.getString("Question"), jo.getString("Answer")));
-            Toast.makeText(getApplicationContext(),"Called",Toast.LENGTH_SHORT).show();
-        }
+            JSONArray cat=jo.getJSONArray("Category");
+            for(int j=0;j<cat.length();j++){
+                categories.add(cat.getString(j));
+            }
+            faqModels.add(new FaqModel(jo.getString("Question"), jo.getString("Answer"),categories));
+            }
+        Toast.makeText(getApplicationContext(),Integer.toString(faqModels.size()),Toast.LENGTH_SHORT).show();
+
         adapter.notifyDataSetChanged();
 
 
