@@ -3,8 +3,13 @@ package in.ac.nitrkl.scp;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +19,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import in.ac.nitrkl.scp.adapter.FaqAdapter;
@@ -21,7 +27,7 @@ import in.ac.nitrkl.scp.model.FaqModel;
 import in.ac.nitrkl.scp.scp.R;
 import io.appbase.client.AppbaseClient;
 
-public class FaqActivity extends Activity {
+public class FaqActivity extends AppCompatActivity {
     AppbaseClient client=new AppbaseClient(Constants.BASE_URL,
             Constants.APP_NAME,Constants.USERNAME,Constants.PASSWORD);
 
@@ -47,20 +53,37 @@ public class FaqActivity extends Activity {
         adapter=new FaqAdapter(faqModels,getApplicationContext());
         recyclerView.setAdapter(adapter);
 
-        new SearchFetch().execute();
+        new SearchFetch("").execute();
     }
     String result="";
     private class SearchFetch extends AsyncTask{
+        String searchText;
+        SearchFetch(String searchText){
+            this.searchText=searchText;
+        }
 
         @Override
         protected String doInBackground(Object[] objects) {
-            try {
-                result =client.prepareSearch(Constants.APP_NAME, Constants.QUERY)
-                        .execute()
-                        .body()
-                        .string();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (searchText.equalsIgnoreCase("")) {
+                try {
+                    result = client.prepareSearch(Constants.APP_NAME, Constants.QUERY)
+                            .execute()
+                            .body()
+                            .string();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else{
+                searchText=Constants.QUERY_PREFIX+searchText+Constants.QUERY_SUFFIX;
+                try {
+                    result=client.prepareSearch(Constants.APP_NAME,searchText)
+                            .execute()
+                            .body()
+                            .string();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             return result;
         }
@@ -75,6 +98,29 @@ public class FaqActivity extends Activity {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.menu_search,menu);
+        MenuItem item=menu.findItem(R.id.button_search);
+        SearchView searchView=(SearchView)item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+             return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void loadUrlData(String result) throws JSONException {
