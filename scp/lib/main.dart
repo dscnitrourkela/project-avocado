@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scp/cards.dart';
+import 'package:scp/login.dart';
 import 'package:scp/gradients.dart';
 
 void main() => runApp(MyApp());
@@ -11,10 +12,14 @@ class MyApp extends StatelessWidget {
     SystemChrome.setEnabledSystemUIOverlays([]);
     return MaterialApp(
       title: 'SCP Demo',
+      routes: <String, WidgetBuilder>{
+        '/homePage': (BuildContext context) => HomePage(title: 'SCP Home Page'),
+        '/landingPage': (BuildContext context) => Login(),
+      },
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(title: 'SCP Home Page'),
+      home: Login(),
     );
   }
 }
@@ -44,7 +49,11 @@ class _HomePageState extends State<HomePage> {
             child: Text(
               'SCP',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 40.0, fontWeight: FontWeight.w500, fontFamily: 'PfDin',letterSpacing: 2),
+              style: TextStyle(
+                  fontSize: 40.0,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'PfDin',
+                  letterSpacing: 2),
             ),
           ),
           appointmentCard(context, queryWidth, textScaleFactor),
