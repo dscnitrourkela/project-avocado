@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:scp/gradients.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
 
+
 Widget appointmentCard(
     BuildContext context, double heightFactor, double textScaleFactor) {
   Gradients().init(context);
@@ -81,6 +82,7 @@ Widget appointmentCard(
                         ),
                         ListTile(
                           contentPadding: EdgeInsets.only(bottom: 0.0),
+
                           title: ShaderMask(
                             shaderCallback: (rect) {
                               return LinearGradient(
@@ -266,20 +268,22 @@ Widget faqCard(
   return SizedBox(
     height: heightFactor * 0.58,
     child: Padding(
-      padding: const EdgeInsets.only(top: 12.0),
-      child: InkWell(
-        onTap: () {
-        },
-        child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
-          elevation: 8.0,
-          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
-          child: Stack(
-            fit: StackFit.loose,
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(24.0),
+
+      padding: const EdgeInsets.only(top: 0.0),
+      child: Card(
+        shape:
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+        elevation: 8.0,
+        margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
+        child: Stack(
+          fit: StackFit.loose,
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(24.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: Gradients.faqCardGradient,
+                ),
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: Gradients.faqCardGradient,
