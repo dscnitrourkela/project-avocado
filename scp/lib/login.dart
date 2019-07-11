@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'firebaseAuthHelper.dart';
+import 'package:scp/firebase/firebaseAuthHelper.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -12,7 +12,7 @@ class _LoginState extends State<Login> {
 
   @override
   void dispose() {
-    phoneController.dispose();
+    //phoneController.dispose();
     super.dispose();
   }
 

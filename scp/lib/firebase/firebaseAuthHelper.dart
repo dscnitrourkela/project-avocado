@@ -86,6 +86,7 @@ class ScpAuth {
     final FirebaseUser user = await FirebaseAuth.instance
         .signInWithCredential(credential)
         .then((user) {
+          Navigator.of(context).pop();
       Navigator.of(context).pushReplacementNamed('/homePage');
     }).catchError((error) {
       print(error);

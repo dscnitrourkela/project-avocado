@@ -1,18 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:scp/gradients.dart';
-import 'firebaseDBHandler.dart';
+import 'package:scp/firebase/firebaseDBHandler.dart';
 
 Widget appointmentCard(
     BuildContext context, double heightFactor, double textScaleFactor) {
   Gradients().init(context);
-  ScpDatabase().init();
   return SizedBox(
     height: heightFactor * 0.58,
     child: Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: InkWell(
-        onTap: (){
-          ScpDatabase.createRecord();
+        onTap: () {
+          Navigator.of(context).pushNamed('/appointments');
         },
         child: Card(
           shape:
@@ -151,14 +151,14 @@ Widget appointmentCard(
 Widget mentorsCard(
     BuildContext context, double heightFactor, double textScaleFactor) {
   Gradients().init(context);
-  ScpDatabase().init();
   return SizedBox(
     height: heightFactor * 0.58,
     child: Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: InkWell(
-        onTap: (){
-          ScpDatabase.updateData();
+        onTap: () {
+          FirebaseAuth.instance.signOut();
+          Navigator.pushReplacementNamed(context, '/loginPage');
         },
         child: Card(
           shape:
@@ -181,15 +181,16 @@ Widget mentorsCard(
                         Padding(
                           padding: const EdgeInsets.only(top: 32.0),
                           child: ListTile(
-                            contentPadding: EdgeInsets.symmetric(vertical: 10.0),
+                            contentPadding:
+                                EdgeInsets.symmetric(vertical: 10.0),
                             title: ShaderMask(
                               shaderCallback: (rect) {
                                 return LinearGradient(
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                   colors: [Colors.black, Colors.transparent],
-                                ).createShader(
-                                    Rect.fromLTRB(0, 0, rect.width, rect.height));
+                                ).createShader(Rect.fromLTRB(
+                                    0, 0, rect.width, rect.height));
                               },
                               blendMode: BlendMode.dstIn,
                               child: Container(
@@ -203,7 +204,8 @@ Widget mentorsCard(
                                     style: TextStyle(
                                         fontFamily: 'PfDin',
                                         fontSize: heightFactor * 0.07,
-                                        color: Color.fromRGBO(142, 40, 142, 1.0),
+                                        color:
+                                            Color.fromRGBO(142, 40, 142, 1.0),
                                         fontStyle: FontStyle.italic,
                                         fontWeight: FontWeight.w500),
                                     textAlign: TextAlign.left,
@@ -261,18 +263,16 @@ Widget mentorsCard(
 Widget faqCard(
     BuildContext context, double heightFactor, double textScaleFactor) {
   Gradients().init(context);
-  ScpDatabase().init();
   return SizedBox(
     height: heightFactor * 0.58,
     child: Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: InkWell(
-        onTap: (){
-          ScpDatabase.deleteData();
+        onTap: () {
         },
         child: Card(
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
           elevation: 8.0,
           margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
           child: Stack(
@@ -289,16 +289,22 @@ Widget faqCard(
                     child: Column(
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.only(left:28.0, top: 32.0,),
+                          padding: const EdgeInsets.only(
+                            left: 28.0,
+                            top: 32.0,
+                          ),
                           child: Align(
                             alignment: Alignment.centerLeft,
-                            child: Text('FAQs',style: TextStyle(
-                      fontSize: heightFactor * 0.15,
-                      fontStyle: FontStyle.italic,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'PfDin',
-                    ),),
+                            child: Text(
+                              'FAQs',
+                              style: TextStyle(
+                                fontSize: heightFactor * 0.15,
+                                fontStyle: FontStyle.italic,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'PfDin',
+                              ),
+                            ),
                           ),
                         ),
                         Padding(
