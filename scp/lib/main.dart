@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scp/cards.dart';
 import 'package:scp/login.dart';
 import 'package:scp/gradients.dart';
+import 'package:scp/appointments.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,14 +16,30 @@ class MyApp extends StatelessWidget {
       title: 'SCP Demo',
       routes: <String, WidgetBuilder>{
         '/homePage': (BuildContext context) => HomePage(title: 'SCP Home Page'),
-        '/landingPage': (BuildContext context) => Login(),
+        '/loginPage': (BuildContext context) => Login(),
+        '/appointments': (BuildContext context) => Appointments(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Login(),
+      home: _handleCurrentScreen(),
     );
   }
+}
+
+Widget _handleCurrentScreen() {
+  return new StreamBuilder<FirebaseUser>(
+      stream: FirebaseAuth.instance.onAuthStateChanged,
+      builder: (BuildContext context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else {
+          if (snapshot.hasData) {
+            return HomePage();
+          }
+          return Login();
+        }
+      });
 }
 
 class HomePage extends StatefulWidget {
