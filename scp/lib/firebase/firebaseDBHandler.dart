@@ -6,7 +6,7 @@ class ScpDatabase {
 
   void init() {
     database = new FirebaseDatabase();
-    _userRef = database.reference().child('user');
+    _userRef = database.reference().child('users');
   }
 
   static void createRecord() {

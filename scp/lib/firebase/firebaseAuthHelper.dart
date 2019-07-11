@@ -14,40 +14,39 @@ class ScpAuth {
     phoneNumber = phoneNumber;
   }
 
-  Future<bool> smsCodeDialog (BuildContext context) {
+  Future<bool> smsCodeDialog(BuildContext context) {
     print('enter smsdialog');
     return showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => AlertDialog(
-          title: Text('Enter SMS Code'),
-          content: TextField(
-            onChanged: (value) {
-              smsCode = value;
-            },
-          ),
-          contentPadding: EdgeInsets.all(10.0),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(
-                'DONE',
+              title: Text('Enter SMS Code'),
+              content: TextField(
+                onChanged: (value) {
+                  smsCode = value;
+                },
               ),
-              color: Colors.blue,
-              onPressed: () {
-                FirebaseAuth.instance.currentUser().then((user) {
-                  if (user != null) {
-                    Navigator.of(context).pop();
-                    Navigator.of(context)
-                        .pushReplacementNamed('/homePage');
-                  } else {
-                    Navigator.of(context).pop();
-                    signIn(context);
-                  }
-                });
-              },
-            ),
-          ],
-        ));
+              contentPadding: EdgeInsets.all(10.0),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text(
+                    'DONE',
+                  ),
+                  color: Colors.blue,
+                  onPressed: () {
+                    FirebaseAuth.instance.currentUser().then((user) {
+                      if (user != null) {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pushReplacementNamed('/homePage');
+                      } else {
+                        Navigator.of(context).pop();
+                        signIn(context);
+                      }
+                    });
+                  },
+                ),
+              ],
+            ));
   }
 
   Future<void> verifyPhone(String phoneNumber) async {
