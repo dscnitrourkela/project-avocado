@@ -3,15 +3,16 @@ package in.ac.nitrkl.scp;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 
@@ -32,10 +33,12 @@ public class FaqActivity extends AppCompatActivity {
     AppbaseClient client = new AppbaseClient(Constants.BASE_URL,
             Constants.APP_NAME, Constants.USERNAME, Constants.PASSWORD);
     String result = "";
+    boolean FAQquery = false;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<FaqModel> faqModels = new ArrayList<>();
     private ShimmerFrameLayout shimmerFrameLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,7 @@ public class FaqActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.faq_rv);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        llm.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(llm);
         adapter = new FaqAdapter(faqModels, getApplicationContext());
         recyclerView.setAdapter(adapter);
@@ -66,16 +69,18 @@ public class FaqActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
         MenuItem item = menu.findItem(R.id.button_search);
-
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 faqModels.clear();
+                setTitle(query);
+                FAQquery=true;
                 adapter.notifyDataSetChanged();
                 shimmerFrameLayout.startShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.VISIBLE);
                 new SearchFetch(query).execute();
+                //Toast.makeText(getApplicationContext(),query,Toast.LENGTH_LONG).show();
                 searchView.setIconified(true);
                 searchView.clearFocus();
                 searchView.onActionViewCollapsed();
@@ -85,7 +90,18 @@ public class FaqActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                return false;
+
+                if(newText.equalsIgnoreCase(""))
+                    return true;
+                setTitle("");
+                faqModels.clear();
+                FAQquery=true;
+                adapter.notifyDataSetChanged();
+                //Toast.makeText(getApplicationContext(),newText,Toast.LENGTH_LONG).show();
+                shimmerFrameLayout.startShimmerAnimation();
+                shimmerFrameLayout.setVisibility(View.VISIBLE);
+                new SearchFetch(newText).execute();
+                return true;
             }
         });
 
@@ -94,11 +110,44 @@ public class FaqActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed()
+    {
+        if(FAQquery)
+        {
+            faqModels.clear();
+            adapter.notifyDataSetChanged();
+            shimmerFrameLayout.startShimmerAnimation();
+            shimmerFrameLayout.setVisibility(View.VISIBLE);
+            new SearchFetch("").execute();// This is the initial list that is shown
+            FAQquery=false;
+            setTitle("FAQ");
+
+        }
+        else
+        {
+            super.onBackPressed();
+        }
+    }
+    @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
+                if(FAQquery)
+                {
+                    faqModels.clear();
+                    adapter.notifyDataSetChanged();
+                    shimmerFrameLayout.startShimmerAnimation();
+                    shimmerFrameLayout.setVisibility(View.VISIBLE);
+                    new SearchFetch("").execute();// This is the initial list that is shown
+                    FAQquery=false;
+                    setTitle("FAQ");
+                    menuItem.collapseActionView();
+                }
+                else
+                {
+                    finish();
+                }
+                return false;
             default:
                 return super.onOptionsItemSelected(menuItem);
         }
