@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="faq_question_unselected">#95cdd8</color>
+    <color name="faq_question_selected">#19272d</color>
+    <color name="faq_actionBar">#2f434c</color>
+    <color name="background">#dddddd</color>
+</resources>

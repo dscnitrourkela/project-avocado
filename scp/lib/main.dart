@@ -5,13 +5,18 @@ import 'package:scp/cards.dart';
 import 'package:scp/login.dart';
 import 'package:scp/gradients.dart';
 import 'package:scp/appointments.dart';
+import 'dart:async';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays([]);
+    //SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+      //statusBarColor: Colors.white70, //or set color with: Color(0xFF0000FF)
+    //));
     return MaterialApp(
       title: 'SCP Demo',
       routes: <String, WidgetBuilder>{
@@ -43,6 +48,7 @@ Widget _handleCurrentScreen() {
 }
 
 class HomePage extends StatefulWidget {
+
   HomePage({Key key, this.title}) : super(key: key);
 
   final String title;
@@ -52,6 +58,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  static const platform=const MethodChannel("FAQ_ACTIVITY");
   @override
   Widget build(BuildContext context) {
     Gradients().init(context);
@@ -75,10 +82,20 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           appointmentCard(context, queryWidth, textScaleFactor),
-          faqCard(context, queryWidth, textScaleFactor),
+          InkWell(
+            onTap:()=> _startFAQActivity(),
+              child: faqCard(context, queryWidth, textScaleFactor)),
           mentorsCard(context, queryWidth, textScaleFactor),
         ],
       ),
     );
+  }
+  
+  _startFAQActivity() async{
+    try {
+      await platform.invokeMethod('startFaqActivity');
+    } on PlatformException catch (e){
+      print(e.message);
+    }
   }
 }
