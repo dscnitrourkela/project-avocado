@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:scp/gradients.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
 
-
 Widget appointmentCard(
     BuildContext context, double heightFactor, double textScaleFactor) {
   Gradients().init(context);
@@ -82,7 +81,6 @@ Widget appointmentCard(
                         ),
                         ListTile(
                           contentPadding: EdgeInsets.only(bottom: 0.0),
-
                           title: ShaderMask(
                             shaderCallback: (rect) {
                               return LinearGradient(
@@ -268,22 +266,19 @@ Widget faqCard(
   return SizedBox(
     height: heightFactor * 0.58,
     child: Padding(
-
-      padding: const EdgeInsets.only(top: 0.0),
-      child: Card(
-        shape:
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
-        elevation: 8.0,
-        margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
-        child: Stack(
-          fit: StackFit.loose,
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(24.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: Gradients.faqCardGradient,
-                ),
+      padding: const EdgeInsets.only(top: 12.0),
+      child: InkWell(
+        onTap: () {},
+        child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+          elevation: 8.0,
+          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
+          child: Stack(
+            fit: StackFit.loose,
+            children: <Widget>[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(24.0),
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: Gradients.faqCardGradient,
@@ -350,6 +345,32 @@ Widget faqCard(
               ),
             ],
           ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget slotCard(double heightFactor, double textScaleFactor, String titleText, String designation) {
+  return Container(
+    color: Colors.white,
+    child: SizedBox(
+      height: heightFactor * 1.1,
+      width: heightFactor * 0.85,
+      child: Card(
+        color: Colors.amber,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0,),
+        ),
+        elevation: 4.0,
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
+              child: Text(titleText, style: TextStyle(fontFamily: 'PfDin',color: Colors.black, fontWeight: FontWeight.w500,fontSize: heightFactor * 0.065),),
+            ),
+            Text(designation, style: TextStyle(fontFamily: 'PfDin',color: Colors.blueGrey, fontWeight: FontWeight.w500,fontSize: heightFactor * 0.05),)
+          ],
         ),
       ),
     ),
