@@ -61,7 +61,6 @@ class _HomePageState extends State<HomePage> {
   static const platform=const MethodChannel("FAQ_ACTIVITY");
   @override
   Widget build(BuildContext context) {
-    Gradients().init(context);
     var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return Scaffold(
