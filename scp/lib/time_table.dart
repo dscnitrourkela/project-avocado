@@ -3,14 +3,20 @@ import 'time_table_resources.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TimeTable extends StatefulWidget {
+  String theorySection, practicalSection;
+  TimeTable({this.theorySection,this.practicalSection});
+
   @override
-  TimeTableState createState() => new TimeTableState();
+  TimeTableState createState() =>
+      new TimeTableState(theorySection: theorySection, practicalSection: practicalSection);
 }
 
 class TimeTableState extends State<TimeTable> {
   String theorySection = 'E';
   String practicalSection = 'P6';
   String sectionSequence = 'pt';
+  TimeTableState({this.theorySection,this.practicalSection});
+
   bool showTimeTable = false;
 
   final Color primaryColor = Color.fromARGB(255, 49, 68, 76);
@@ -57,14 +63,14 @@ class TimeTableState extends State<TimeTable> {
                 tabs: TimeTableResources.sequence[sectionSequence].keys
                     .map(
                       (day) => Tab(
-                            child: Text(
-                              day,
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
+                        child: Text(
+                          day,
+                          style: TextStyle(
+                            color: primaryColor,
+                            fontWeight: FontWeight.w700,
                           ),
+                        ),
+                      ),
                     )
                     .toList(),
                 isScrollable: true,
