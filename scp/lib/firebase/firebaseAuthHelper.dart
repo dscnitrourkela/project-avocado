@@ -15,6 +15,7 @@ class ScpAuth {
     phoneNumber = phoneNumber;
   }
 
+  
   Future<bool> smsCodeDialog(BuildContext context) {
     print('enter smsdialog');
     return showDialog(
@@ -62,8 +63,7 @@ class ScpAuth {
                   onPressed: () {
                     FirebaseAuth.instance.currentUser().then((user) {
                       if (user != null) {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pushReplacementNamed('/homePage');
+                        Navigator.of(context).pushReplacementNamed('/userdata');
                       } else {
                         Navigator.of(context).pop();
                         signIn(context);
@@ -112,8 +112,8 @@ class ScpAuth {
     final FirebaseUser user = await FirebaseAuth.instance
         .signInWithCredential(credential)
         .then((user) {
-      Navigator.of(context).pop();
-      Navigator.of(context).pushReplacementNamed('/homePage');
+      
+      Navigator.of(context).pushReplacementNamed('/userdata');
     }).catchError((error) {
       print(error);
     });
