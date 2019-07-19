@@ -7,6 +7,7 @@ import 'package:scp/gradients.dart';
 import 'package:scp/appointments.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
+import 'package:scp/userdata.dart';
 import 'timetable/theorySection.dart';
 
 
@@ -15,6 +16,8 @@ import 'package:scp/time_table.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +31,7 @@ class MyApp extends StatelessWidget {
         '/loginPage': (BuildContext context) => Login(),
         '/appointments': (BuildContext context) => Appointments(),
         '/timetable':(BuildContext context)=> TheorySection(),
+        '/userdata':(BuildContext context)=>Userdata(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -42,10 +46,10 @@ Widget _handleCurrentScreen() {
       stream: FirebaseAuth.instance.onAuthStateChanged,
       builder: (BuildContext context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return Login();
         } else {
           if (snapshot.hasData) {
-            return HomePage();
+            return Userdata();
           }
           return Login();
         }
