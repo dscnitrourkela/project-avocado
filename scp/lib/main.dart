@@ -7,6 +7,7 @@ import 'package:scp/gradients.dart';
 import 'package:scp/appointments.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
+import 'timetable/theorySection.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         '/homePage': (BuildContext context) => HomePage(title: 'SCP Home Page'),
         '/loginPage': (BuildContext context) => Login(),
         '/appointments': (BuildContext context) => Appointments(),
+        '/timetable':(BuildContext context)=> TheorySection(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -65,22 +67,34 @@ class _HomePageState extends State<HomePage> {
     var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return Scaffold(
+      drawer: Drawer(
+        child:ListTile(
+          title: Text("Timetable"),
+          onTap: (){
+            Navigator.pushNamed(context, '/timetable');
+          },
+
+        ) ,
+      ),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        title:Text(
+          'SCP',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.black,
+              fontSize: 40.0,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'PfDin',
+              letterSpacing: 2),
+        ) ,
+      ),
       backgroundColor: Colors.white,
       body: ListView(
         scrollDirection: Axis.vertical,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 24.0),
-            child: Text(
-              'SCP',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 40.0,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'PfDin',
-                  letterSpacing: 2),
-            ),
-          ),
           appointmentCard(context, queryWidth, textScaleFactor),
           InkWell(
             onTap:()=> _startFAQActivity(),
