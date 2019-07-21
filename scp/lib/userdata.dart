@@ -63,10 +63,7 @@ class Userdata extends StatelessWidget {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: rollNo == "" ||
-                                            rollNo == null ||
-                                            rollNo == "null"
-                                        ? Padding(
+                                    child:Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 40.0,
                                                 right: 40.0,
@@ -96,34 +93,7 @@ class Userdata extends StatelessWidget {
                                                 controller: rollController,
                                               ),
                                             ),
-                                          )
-                                        : Padding(
-                                            padding: const EdgeInsets.all(20.0),
-                                            child: Column(
-                                              children: <Widget>[
-                                                Text(
-                                                  "Roll Number",
-                                                  style: TextStyle(
-                                                    fontSize: 24,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily: 'PfDin',
-                                                    color: Color.fromRGBO(
-                                                        74, 232, 190, 1),
-                                                  ),
-                                                ),
-                                                Text(
-                                                  rollNo,
-                                                  style: TextStyle(
-                                                    fontSize: 24,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily: 'PfDin',
-                                                    color: Color.fromRGBO(
-                                                        25, 39, 45, 1),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
+                                    ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(
