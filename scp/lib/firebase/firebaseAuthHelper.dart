@@ -49,7 +49,6 @@ class ScpAuth {
               contentPadding: EdgeInsets.all(10.0),
               actions: <Widget>[
                 RaisedButton(
-
                   child: Text(
                     'Done',
                     style: TextStyle(
@@ -63,11 +62,10 @@ class ScpAuth {
                 color: Colors.blue,
                   onPressed: () {
                     firebaseInstance.currentUser().then((user) {
-                      if (user != null) {
-                        Navigator.of(context).pushNamed('/userdata');
-                      } else {
-                        Navigator.of(context).pop();
+                      if (user == null) {
                         signIn(context);
+
+                      } else {Navigator.of(context).pushNamed('/userdata');
                       }
                     });
                   },
