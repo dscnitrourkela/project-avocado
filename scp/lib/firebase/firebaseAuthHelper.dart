@@ -63,7 +63,7 @@ class ScpAuth {
                   onPressed: () {
                     FirebaseAuth.instance.currentUser().then((user) {
                       if (user != null) {
-                        Navigator.of(context).pushReplacementNamed('/userdata');
+                        Navigator.of(context).pushNamed('/userdata');
                       } else {
                         Navigator.of(context).pop();
                         signIn(context);
@@ -113,7 +113,7 @@ class ScpAuth {
         .signInWithCredential(credential)
         .then((user) {
       
-      Navigator.of(context).pushReplacementNamed('/userdata');
+      Navigator.of(context).pushNamed('/userdata');
     }).catchError((error) {
       print(error);
     });

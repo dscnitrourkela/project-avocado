@@ -8,37 +8,45 @@ import 'package:scp/appointments.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:scp/userdata.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'timetable/theorySection.dart';
 
 
 import 'package:scp/time_table.dart';
 
-void main() => runApp(MyApp());
+//void main() => runApp(MyApp());
+void main()=>runApp(
+      MaterialApp(
+        title: 'SCP Demo',
+        routes: <String, WidgetBuilder>{
+          '/homePage': (BuildContext context) => HomePage(title: 'SCP Home Page'),
+          '/loginPage': (BuildContext context) => Login(),
+          '/appointments': (BuildContext context) => Appointments(),
+          '/timetable':(BuildContext context)=> TheorySection(),
+          '/userdata':(BuildContext context)=>Userdata(),
+          '/login':(BuildContext context)=>Login(),
+        },
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MyApp(),
+      ));
 
 class MyApp extends StatelessWidget {
 
-  
 
   @override
   Widget build(BuildContext context) {
     //SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       //statusBarColor: Colors.white70, //or set color with: Color(0xFF0000FF)
     //));
-    return MaterialApp(
-      title: 'SCP Demo',
-      routes: <String, WidgetBuilder>{
-        '/homePage': (BuildContext context) => HomePage(title: 'SCP Home Page'),
-        '/loginPage': (BuildContext context) => Login(),
-        '/appointments': (BuildContext context) => Appointments(),
-        '/timetable':(BuildContext context)=> TheorySection(),
-        '/userdata':(BuildContext context)=>Userdata(),
-      },
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: _handleCurrentScreen(),
-    );
+    return _handleCurrentScreen();
   }
+}
+
+Future<String> _fetchUserData(BuildContext context) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('username');
 }
 
 Widget _handleCurrentScreen() {
@@ -49,7 +57,19 @@ Widget _handleCurrentScreen() {
           return Login();
         } else {
           if (snapshot.hasData) {
-            return Userdata();
+            return FutureBuilder
+              (
+                future: _fetchUserData(context),
+              builder: (_,snapshot){
+                  print("Main.dart "+ snapshot.data.toString());
+                  if(snapshot.data.toString()=="" || snapshot.data.toString()==null || snapshot.data.toString()=="null"){
+                    return Userdata();
+                  }
+                  else{
+                    return HomePage();
+                  }
+              },
+            );
           }
           return Login();
         }
