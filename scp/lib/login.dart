@@ -37,13 +37,14 @@ class _LoginState extends State<Login> {
                 ),
                 SizedBox(height: 10.0),
                 RaisedButton(
-                    onPressed: () {
-                      ScpAuth(context).verifyPhone(phoneController.text);
-                    },
-                    child: Text('Verify'),
-                    textColor: Colors.white,
-                    elevation: 7.0,
-                    color: Colors.blue),
+                  onPressed: () {
+                    ScpAuth(context).verifyPhone(phoneController.text);
+                  },
+                  child: Text('Verify'),
+                  textColor: Colors.white,
+                  elevation: 7.0,
+                  color: Colors.blue,
+                ),
               ],
             )),
       ),
