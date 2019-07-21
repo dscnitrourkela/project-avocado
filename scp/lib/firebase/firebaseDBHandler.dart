@@ -1,30 +1,30 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:scp/models.dart';
+import 'package:scp/appointments.dart';
 
 class ScpDatabase {
   static FirebaseDatabase database;
-  static DatabaseReference _userRef;
+  static DatabaseReference slotsRef;
+  List<Slot> slotsList = List();
 
-  void init() {
+  void init(){
     database = new FirebaseDatabase();
-    _userRef = database.reference().child('users');
-  }
-
-  static void createRecord() {
-    _userRef.child("1").set({
-      'title': 'Mastering EJB',
-      'description': 'Programming Guide for J2EE'
+    slotsRef = database.reference().child("slots").child('week1').child('counselor');
+    slotsList.clear();
+    slotsRef.once().then((DataSnapshot snapshot){
+      int i = 1;
+      while(i <= 6){
+        slotsRef.child('slot$i').once().then((DataSnapshot snapshot){
+          slotsList.add(Slot.fromSnapshot(snapshot));
+        });
+        i+=1;
+      }
     });
-    _userRef.child("2").set({
-      'title': 'Flutter in Action',
-      'description': 'Complete Programming Guide to learn Flutter'
-    });
   }
 
-  static void updateData() {
-    _userRef.child('1').update({'description': 'J2EE complete Reference'});
-  }
-
-  static void deleteData() {
-    _userRef.child('1').remove();
+  void readWeekSlots(){
+    print(slotsList[0].phoneNo);
+    print(slotsList[5].status);
+    print(slotsList[2].rollNo);
   }
 }
