@@ -346,7 +346,7 @@ Widget faqCard(
                     ),
                   ),
                 ),
-              ),),
+              ),
               Positioned(
                 top: 16.0,
                 bottom: -10.0,
@@ -364,7 +364,7 @@ Widget faqCard(
       ),
     ),
   ),
-  );
+  ),);
 }
 
 Widget timetableCard(

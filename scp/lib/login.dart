@@ -83,7 +83,6 @@ class _LoginState extends State<Login> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(30.0)),
                 ),
-                
                 child: TextField(
                   enableInteractiveSelection: true,
                   style: TextStyle(
@@ -109,9 +108,11 @@ class _LoginState extends State<Login> {
                   elevation: 7.0,
                   color: Colors.blue,
                 ),
+              ),
+            ),
+          ),
               ],
-            )),
-      ),
+    ),
     );
   }
 }
