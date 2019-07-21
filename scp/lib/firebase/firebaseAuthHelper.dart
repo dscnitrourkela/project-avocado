@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
+import 'package:scp/main.dart';
 
 class ScpAuth {
   static String phoneNumber;
@@ -61,7 +62,7 @@ class ScpAuth {
                 ),
                 color: Colors.blue,
                   onPressed: () {
-                    FirebaseAuth.instance.currentUser().then((user) {
+                    firebaseInstance.currentUser().then((user) {
                       if (user != null) {
                         Navigator.of(context).pushNamed('/userdata');
                       } else {
@@ -93,7 +94,7 @@ class ScpAuth {
       print('${error.message}');
     };
 
-    FirebaseAuth.instance.verifyPhoneNumber(
+    firebaseInstance.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         codeAutoRetrievalTimeout: autoRetrievalTimeout,
         codeSent: codeSent,
@@ -109,7 +110,7 @@ class ScpAuth {
     print(smsCode);
     final AuthCredential credential = PhoneAuthProvider.getCredential(
         verificationId: verificationId, smsCode: smsCode);
-    final FirebaseUser user = await FirebaseAuth.instance
+    final FirebaseUser user = await firebaseInstance
         .signInWithCredential(credential)
         .then((user) {
       
