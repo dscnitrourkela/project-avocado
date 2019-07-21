@@ -333,13 +333,122 @@ Widget faqCard(
                     ),
                   ),
                 ),
-              ),
+              ),),
               Positioned(
                 top: 16.0,
                 bottom: -10.0,
                 right: 0.0,
                 child: Image.asset(
                   'assets/scp_faq.png',
+                  width: heightFactor * 0.45,
+                  height: heightFactor * 0.45,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.bottomRight,
+                  colorBlendMode: BlendMode.color,
+                ),
+              ),
+        ],
+      ),
+    ),
+  ),
+  );
+}
+
+Widget timetableCard(
+    BuildContext context, double heightFactor, double textScaleFactor) {
+  Gradients().init(context);
+  return SizedBox(
+    height: heightFactor * 0.58,
+    child: Padding(
+      padding: const EdgeInsets.only(top: 12.0),
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, '/timetable');
+        },
+        child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+          elevation: 8.0,
+          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
+          child: Stack(
+            fit: StackFit.loose,
+            children: <Widget>[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(24.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: Gradients.timetableCardGradient,
+                  ),
+                  child: Container(
+                    height: heightFactor * 0.58,
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20.0),
+                          child: ListTile(
+                            contentPadding:
+                                EdgeInsets.symmetric(vertical: 10.0),
+                            title: ShaderMask(
+                              shaderCallback: (rect) {
+                                return LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [Colors.black, Colors.transparent],
+                                ).createShader(Rect.fromLTRB(
+                                    0, 0, rect.width, rect.height));
+                              },
+                              blendMode: BlendMode.dstIn,
+                              child: Container(
+                                height: heightFactor * 0.15,
+                                color: Colors.white,
+                                padding: EdgeInsets.only(left: 18.0),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'MY TIMETABLE',
+                                    style: TextStyle(
+                                        fontFamily: 'PfDin',
+                                        fontSize: heightFactor * 0.07,
+                                        color:
+                                            Color.fromRGBO(142, 40, 142, 1.0),
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.w500),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 14.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: SizedBox(
+                              width: 200.0,
+                              child: Text(
+                                'Set your personal timetable and get information about class timings and location',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontSize: heightFactor * 0.038,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'PfDin',
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 10.0,
+                right: 0.0,
+                child: Image.asset(
+                  'assets/scp_timetable.png',
                   width: heightFactor * 0.45,
                   height: heightFactor * 0.45,
                   fit: BoxFit.cover,

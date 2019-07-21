@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pin_code_text_field/pin_code_text_field.dart';
 
 class ScpAuth {
   static String phoneNumber;
@@ -20,19 +21,44 @@ class ScpAuth {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => AlertDialog(
-              title: Text('Enter SMS Code'),
-              content: TextField(
-                onChanged: (value) {
-                  smsCode = value;
-                },
+              title: Text(
+                'Enter OTP',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: "PfDin",
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)),
+              content: PinCodeTextField(
+                maxLength:6,
+                autofocus: true,
+                isCupertino: true,
+                pinBoxHeight: 40.0,
+                pinBoxWidth: 40.0,
+                defaultBorderColor: Colors.lightBlue,
+                hasTextBorderColor: Colors.blueAccent,
+                onDone:(String otp){
+                  smsCode=otp;
+                }
+
               ),
               contentPadding: EdgeInsets.all(10.0),
               actions: <Widget>[
-                FlatButton(
+                RaisedButton(
+
                   child: Text(
-                    'DONE',
+                    'Done',
+                    style: TextStyle(
+                      color:Colors.white,
+                      fontFamily:'PfDin'
+                    ),
                   ),
-                  color: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                  borderRadius:BorderRadius.circular(30.0)
+                ),
+                color: Colors.blue,
                   onPressed: () {
                     FirebaseAuth.instance.currentUser().then((user) {
                       if (user != null) {
@@ -87,7 +113,7 @@ class ScpAuth {
     final FirebaseUser user = await FirebaseAuth.instance
         .signInWithCredential(credential)
         .then((user) {
-          Navigator.of(context).pop();
+      Navigator.of(context).pop();
       Navigator.of(context).pushReplacementNamed('/homePage');
     }).catchError((error) {
       print(error);
