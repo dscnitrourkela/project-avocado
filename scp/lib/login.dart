@@ -99,27 +99,18 @@ class _LoginState extends State<Login> {
                   },
                   controller: phoneController,
                 ),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment(0, 0.2),
-            child: RaisedButton(
-                onPressed: () {
-                  ScpAuth(context).verifyPhone(phoneController.text);
-                },
-                child: Text('Verify',
-                style: TextStyle(
-                  fontFamily:'PfDin',
-                ),),
-                textColor: Colors.white,
-                elevation: 7.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius:BorderRadius.circular(30.0)
+                SizedBox(height: 10.0),
+                RaisedButton(
+                  onPressed: () {
+                    ScpAuth(context).verifyPhone(phoneController.text);
+                  },
+                  child: Text('Verify'),
+                  textColor: Colors.white,
+                  elevation: 7.0,
+                  color: Colors.blue,
                 ),
-                color: Colors.blue),
-          ),
-        ],
+              ],
+            )),
       ),
     );
   }

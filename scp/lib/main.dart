@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:scp/booking.dart';
 import 'package:scp/cards.dart';
 import 'package:scp/login.dart';
 import 'package:scp/gradients.dart';
@@ -27,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/homePage': (BuildContext context) => HomePage(title: 'SCP Home Page'),
         '/loginPage': (BuildContext context) => Login(),
         '/appointments': (BuildContext context) => Appointments(),
+//        '/booking': (BuildContext context) => Booking(),
         '/timetable':(BuildContext context)=> TheorySection(),
       },
       theme: ThemeData(
@@ -38,7 +41,7 @@ class MyApp extends StatelessWidget {
 }
 
 Widget _handleCurrentScreen() {
-  return new StreamBuilder<FirebaseUser>(
+  return StreamBuilder<FirebaseUser>(
       stream: FirebaseAuth.instance.onAuthStateChanged,
       builder: (BuildContext context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -66,7 +69,7 @@ class _HomePageState extends State<HomePage> {
   static const platform=const MethodChannel("FAQ_ACTIVITY");
   @override
   Widget build(BuildContext context) {
-    Gradients().init(context);
+    FirebaseDatabase.instance.setPersistenceEnabled(true);
     var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return Scaffold(
