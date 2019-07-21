@@ -33,17 +33,37 @@ void main()=>runApp(
         home: MyApp(),
       ));
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
 
-
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    //SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
-      //statusBarColor: Colors.white70, //or set color with: Color(0xFF0000FF)
-    //));
-    return _handleCurrentScreen();
+    return Container();
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    checkLogin();
+
+  }
+
+  Future checkLogin() async{
+    SharedPreferences prefs=await SharedPreferences.getInstance();
+    bool _loggedin=(prefs.getBool('loggedin')??false);
+    print(_loggedin);
+    if(_loggedin){
+      Navigator.pushNamed(context, '/homePage');
+    }
+    else{
+      Navigator.pushNamed(context, '/login');
+    }
   }
 }
+
 
 Future<String> _fetchUserData(BuildContext context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
