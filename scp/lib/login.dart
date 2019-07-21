@@ -83,12 +83,13 @@ class _LoginState extends State<Login> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(30.0)),
                 ),
+                
                 child: TextField(
                   enableInteractiveSelection: true,
                   style: TextStyle(
                     fontFamily: "PfDin",
                   ),
-                  autofocus: false,
+                  autofocus: true,
                   keyboardType: TextInputType.phone,
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
@@ -98,21 +99,28 @@ class _LoginState extends State<Login> {
                   },
                   controller: phoneController,
                 ),
-                SizedBox(height: 10.0),
-                RaisedButton(
-                  onPressed: () {
-                    ScpAuth(context).verifyPhone(phoneController.text);
-                  },
-                  child: Text('Verify'),
-                  textColor: Colors.white,
-                  elevation: 7.0,
-                  color: Colors.blue,
-                ),
               ),
             ),
           ),
-              ],
-    ),
+          Align(
+            alignment: Alignment(0, 0.2),
+            child: RaisedButton(
+                onPressed: () {
+                  ScpAuth(context).verifyPhone(phoneController.text);
+                },
+                child: Text('Verify',
+                style: TextStyle(
+                  fontFamily:'PfDin',
+                ),),
+                textColor: Colors.white,
+                elevation: 7.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius:BorderRadius.circular(30.0)
+                ),
+                color: Colors.blue),
+          ),
+        ],
+      ),
     );
   }
 }

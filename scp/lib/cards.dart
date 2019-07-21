@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:scp/booking.dart';
 import 'package:scp/gradients.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
@@ -10,6 +11,7 @@ import 'main.dart';
 
 import 'models.dart';
 
+const platform = const MethodChannel("FAQ_ACTIVITY");
 Widget appointmentCard(
     BuildContext context, double heightFactor, double textScaleFactor) {
   Gradients().init(context);
@@ -155,14 +157,6 @@ Widget appointmentCard(
   );
 }
 
-_removeUserData(BuildContext context) async{
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.clear();
-  await firebaseInstance.signOut();
-  Navigator.of(context)
-      .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
-}
-
 Widget mentorsCard(
     BuildContext context, double heightFactor, double textScaleFactor) {
   Gradients().init(context);
@@ -172,11 +166,7 @@ Widget mentorsCard(
       padding: const EdgeInsets.only(top: 12.0),
       child: InkWell(
         onTap: () {
-          _removeUserData(context);
-
-
-
-        },
+                  },
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
@@ -277,6 +267,14 @@ Widget mentorsCard(
   );
 }
 
+_startFAQActivity() async {
+  try {
+    await platform.invokeMethod('startFaqActivity');
+  } on PlatformException catch (e) {
+    print(e.message);
+  }
+}
+
 Widget faqCard(
     BuildContext context, double heightFactor, double textScaleFactor) {
   Gradients().init(context);
@@ -285,7 +283,9 @@ Widget faqCard(
     child: Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          _startFAQActivity();
+        },
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),

@@ -186,7 +186,7 @@ Widget _buildCarouselItem(BuildContext context, int carouselIndex,
     child: Text(
       sectionArray[itemIndex],
       style: TextStyle(
-          fontSize: 64.0 * SizeScale,
+          fontSize: 50.0 * SizeScale,
           fontWeight: FontWeight.w500,
           fontFamily: 'PfDin',
           color: Color.fromRGBO(25, 39, 45, ColorScale),

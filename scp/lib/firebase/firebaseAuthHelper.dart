@@ -19,6 +19,10 @@ class ScpAuth {
   
   Future<bool> smsCodeDialog(BuildContext context) {
     print('enter smsdialog');
+    var queryWidth = MediaQuery.of(context).size.width;
+    var textScaleFactor = MediaQuery.of(context).textScaleFactor;
+
+    print(queryWidth);
     return showDialog(
         context: context,
         barrierDismissible: false,
@@ -37,8 +41,8 @@ class ScpAuth {
                 maxLength:6,
                 autofocus: true,
                 isCupertino: true,
-                pinBoxHeight: 40.0,
-                pinBoxWidth: 40.0,
+                pinBoxHeight: queryWidth*0.0973,
+                pinBoxWidth: queryWidth*0.0973,
                 defaultBorderColor: Colors.lightBlue,
                 hasTextBorderColor: Colors.blueAccent,
                 onDone:(String otp){
