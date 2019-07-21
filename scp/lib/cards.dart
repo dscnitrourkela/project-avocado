@@ -1,12 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:scp/booking.dart';
 import 'package:scp/gradients.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'main.dart';
 
 import 'models.dart';
 
+const platform = const MethodChannel("FAQ_ACTIVITY");
 Widget appointmentCard(
     BuildContext context, double heightFactor, double textScaleFactor) {
   Gradients().init(context);
@@ -161,9 +166,7 @@ Widget mentorsCard(
       padding: const EdgeInsets.only(top: 12.0),
       child: InkWell(
         onTap: () {
-          FirebaseAuth.instance.signOut();
-          Navigator.pushReplacementNamed(context, '/loginPage');
-        },
+                  },
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
@@ -264,6 +267,14 @@ Widget mentorsCard(
   );
 }
 
+_startFAQActivity() async {
+  try {
+    await platform.invokeMethod('startFaqActivity');
+  } on PlatformException catch (e) {
+    print(e.message);
+  }
+}
+
 Widget faqCard(
     BuildContext context, double heightFactor, double textScaleFactor) {
   Gradients().init(context);
@@ -272,7 +283,9 @@ Widget faqCard(
     child: Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          _startFAQActivity();
+        },
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
@@ -333,7 +346,7 @@ Widget faqCard(
                     ),
                   ),
                 ),
-              ),),
+              ),
               Positioned(
                 top: 16.0,
                 bottom: -10.0,
@@ -351,7 +364,7 @@ Widget faqCard(
       ),
     ),
   ),
-  );
+  ),);
 }
 
 Widget timetableCard(

@@ -153,14 +153,17 @@ Widget _buildCarouselItem(BuildContext context, int carouselIndex,
     int itemIndex, double SizeScale, double ColorScale) {
   return Container(
     alignment: Alignment.center,
-    child: Text(
-      sectionArray[itemIndex],
-      style: TextStyle(
-          fontSize: 64.0 * SizeScale,
-          fontWeight: FontWeight.w500,
-          fontFamily: 'PfDin',
-          color: Color.fromRGBO(25, 39, 45, ColorScale),
-          letterSpacing: 2),
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        sectionArray[itemIndex],
+        style: TextStyle(
+            fontSize: 50.0 * SizeScale,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'PfDin',
+            color: Color.fromRGBO(25, 39, 45, ColorScale),
+            letterSpacing: 2),
+      ),
     ),
   );
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
+import 'package:scp/main.dart';
 
 class ScpAuth {
   static String phoneNumber;
@@ -15,8 +16,13 @@ class ScpAuth {
     phoneNumber = phoneNumber;
   }
 
+  
   Future<bool> smsCodeDialog(BuildContext context) {
     print('enter smsdialog');
+    var queryWidth = MediaQuery.of(context).size.width;
+    var textScaleFactor = MediaQuery.of(context).textScaleFactor;
+
+    print(queryWidth);
     return showDialog(
         context: context,
         barrierDismissible: false,
@@ -35,8 +41,8 @@ class ScpAuth {
                 maxLength:6,
                 autofocus: true,
                 isCupertino: true,
-                pinBoxHeight: 40.0,
-                pinBoxWidth: 40.0,
+                pinBoxHeight: queryWidth*0.0973,
+                pinBoxWidth: queryWidth*0.0973,
                 defaultBorderColor: Colors.lightBlue,
                 hasTextBorderColor: Colors.blueAccent,
                 onDone:(String otp){
@@ -47,7 +53,6 @@ class ScpAuth {
               contentPadding: EdgeInsets.all(10.0),
               actions: <Widget>[
                 RaisedButton(
-
                   child: Text(
                     'Done',
                     style: TextStyle(
@@ -60,13 +65,11 @@ class ScpAuth {
                 ),
                 color: Colors.blue,
                   onPressed: () {
-                    FirebaseAuth.instance.currentUser().then((user) {
-                      if (user != null) {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pushReplacementNamed('/homePage');
-                      } else {
-                        Navigator.of(context).pop();
+                    firebaseInstance.currentUser().then((user) {
+                      if (user == null) {
                         signIn(context);
+
+                      } else {Navigator.of(context).pushNamed('/userdata');
                       }
                     });
                   },
@@ -94,7 +97,7 @@ class ScpAuth {
       Scaffold.of(context).showSnackBar(SnackBar(content: Text('Booooo!')));
     };
 
-    FirebaseAuth.instance.verifyPhoneNumber(
+    firebaseInstance.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         codeAutoRetrievalTimeout: autoRetrievalTimeout,
         codeSent: codeSent,
@@ -110,11 +113,11 @@ class ScpAuth {
     print(smsCode);
     final AuthCredential credential = PhoneAuthProvider.getCredential(
         verificationId: verificationId, smsCode: smsCode);
-    final FirebaseUser user = await FirebaseAuth.instance
+    final FirebaseUser user = await firebaseInstance
         .signInWithCredential(credential)
         .then((user) {
-      Navigator.of(context).pop();
-      Navigator.of(context).pushReplacementNamed('/homePage');
+      
+      Navigator.of(context).pushNamed('/userdata');
     }).catchError((error) {
       print(error);
     });
