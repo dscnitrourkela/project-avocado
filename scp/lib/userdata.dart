@@ -172,7 +172,7 @@ class Userdata extends StatelessWidget {
     await prefs.setString('phone_no', phoneNo);
     await prefs.setBool('loggedin', true);
     Navigator.of(context)
-        .pushReplacementNamed("/homePage");
+        .pushNamedAndRemoveUntil('/homePage', (Route<dynamic> route) => false);
   }
 
   Future<String> _fetchUserData(BuildContext context) async {
