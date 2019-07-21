@@ -15,7 +15,6 @@ import 'timetable/theorySection.dart';
 
 import 'package:scp/time_table.dart';
 
-//void main() => runApp(MyApp());
 var firebaseInstance = FirebaseAuth.instance;
 void main() => runApp(MaterialApp(
       title: 'SCP Demo',
@@ -64,27 +63,6 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-Future<String> _fetchUserData(BuildContext context) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.getString('username');
-}
-
-Widget _handleCurrentScreen() {
-  return new StreamBuilder<FirebaseUser>(
-      stream: firebaseInstance.onAuthStateChanged,
-      builder: (BuildContext context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Login();
-        } else {
-          if (snapshot.hasData) {
-            return Userdata();
-          } else {
-            return Login();
-          }
-        }
-      });
-}
-
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
 
@@ -102,70 +80,74 @@ class _HomePageState extends State<HomePage> {
     FirebaseDatabase.instance.setPersistenceEnabled(true);
     var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    return Scaffold(
-      drawer: Drawer(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          DrawerHeader(
+    return FutureBuilder(
+      future: fetchUserData(context),
+      builder: (context,snap){
+        return Scaffold(
+          drawer: Drawer(
               child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  DrawerHeader(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            username,
+                            style: TextStyle(fontSize: 20.0, fontFamily: 'PfDin'),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 4.0),
+                            child: Text(phoneNo),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 4.0),
+                            child: Text(rollNo),
+                          )
+                        ],
+                      )),
+                  Expanded(
+                      child: Align(
+                        alignment: Alignment.bottomLeft,
+                        child: ListTile(
+                          onTap:(){
+                            _removeUserData(context);
+                          },
+                          title: Text("Logout"),
+                          leading: Icon(Icons.no_encryption),
+                        ),
+                      ))
+                ],
+              )),
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            centerTitle: true,
+            title: Text(
+              'SCP',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 40.0,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'PfDin',
+                  letterSpacing: 2),
+            ),
+          ),
+          backgroundColor: Colors.white,
+          body: ListView(
+            scrollDirection: Axis.vertical,
             children: <Widget>[
-              Text(
-                username,
-                style: TextStyle(fontSize: 20.0, fontFamily: 'PfDin'),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 4.0),
-                child: Text(phoneNo),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 4.0),
-                child: Text(rollNo),
-              )
+              appointmentCard(context, queryWidth, textScaleFactor),
+              timetableCard(context, queryWidth, textScaleFactor),
+              faqCard(context, queryWidth, textScaleFactor),
+              mentorsCard(context, queryWidth, textScaleFactor),
+
             ],
-          )),
-          Expanded(
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: ListTile(
-                  onTap:(){
-                    _removeUserData(context);
-                  },
-                  title: Text("Logout"),
-                    leading: Icon(Icons.no_encryption),
-                ),
-              ))
-        ],
-      )),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          'SCP',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colors.black,
-              fontSize: 40.0,
-              fontWeight: FontWeight.w500,
-              fontFamily: 'PfDin',
-              letterSpacing: 2),
-        ),
-      ),
-      backgroundColor: Colors.white,
-      body: ListView(
-        scrollDirection: Axis.vertical,
-        children: <Widget>[
-          appointmentCard(context, queryWidth, textScaleFactor),
-          InkWell(
-              onTap: () => _startFAQActivity(),
-              child: faqCard(context, queryWidth, textScaleFactor)),
-          mentorsCard(context, queryWidth, textScaleFactor),
-          timetableCard(context, queryWidth, textScaleFactor)
-        ],
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -187,8 +169,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    super.initState();
     fetchUserData(context);
+       super.initState();
   }
 
   Future fetchUserData(BuildContext context) async {
