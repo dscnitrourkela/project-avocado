@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:scp/booking.dart';
 import 'package:scp/cards.dart';
 import 'package:scp/login.dart';
 import 'package:scp/gradients.dart';
@@ -24,6 +26,8 @@ void main() => runApp(MaterialApp(
         '/timetable': (BuildContext context) => TheorySection(),
         '/userdata': (BuildContext context) => Userdata(),
         '/login': (BuildContext context) => Login(),
+        '/booking': (BuildContext context) => Booking(),
+
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -95,7 +99,7 @@ class _HomePageState extends State<HomePage> {
   static const platform = const MethodChannel("FAQ_ACTIVITY");
   @override
   Widget build(BuildContext context) {
-    Gradients().init(context);
+    FirebaseDatabase.instance.setPersistenceEnabled(true);
     var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return Scaffold(
