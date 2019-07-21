@@ -133,8 +133,7 @@ class Userdata extends StatelessWidget {
                                     rollNo != null ||
                                     rollNo != "null" && username != "") {
                                   _storeUserData(context);
-                                  Navigator.of(context)
-                                      .pushReplacementNamed("/homePage");
+
                                 }
                               },
                               child: Text(
@@ -172,6 +171,8 @@ class Userdata extends StatelessWidget {
     await prefs.setString('roll_no', rollNo);
     await prefs.setString('phone_no', phoneNo);
     await prefs.setBool('loggedin', true);
+    Navigator.of(context)
+        .pushReplacementNamed("/homePage");
   }
 
   Future<String> _fetchUserData(BuildContext context) async {

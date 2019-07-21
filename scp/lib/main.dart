@@ -11,27 +11,25 @@ import 'package:scp/userdata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'timetable/theorySection.dart';
 
-
 import 'package:scp/time_table.dart';
 
 //void main() => runApp(MyApp());
-var firebaseInstance=FirebaseAuth.instance;
-void main()=>runApp(
-      MaterialApp(
-        title: 'SCP Demo',
-        routes: <String, WidgetBuilder>{
-          '/homePage': (BuildContext context) => HomePage(title: 'SCP Home Page'),
-          '/loginPage': (BuildContext context) => Login(),
-          '/appointments': (BuildContext context) => Appointments(),
-          '/timetable':(BuildContext context)=> TheorySection(),
-          '/userdata':(BuildContext context)=>Userdata(),
-          '/login':(BuildContext context)=>Login(),
-        },
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: MyApp(),
-      ));
+var firebaseInstance = FirebaseAuth.instance;
+void main() => runApp(MaterialApp(
+      title: 'SCP Demo',
+      routes: <String, WidgetBuilder>{
+        '/homePage': (BuildContext context) => HomePage(title: 'SCP Home Page'),
+        '/loginPage': (BuildContext context) => Login(),
+        '/appointments': (BuildContext context) => Appointments(),
+        '/timetable': (BuildContext context) => TheorySection(),
+        '/userdata': (BuildContext context) => Userdata(),
+        '/login': (BuildContext context) => Login(),
+      },
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyApp(),
+    ));
 
 class MyApp extends StatefulWidget {
   @override
@@ -45,25 +43,22 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     checkLogin();
-
   }
 
-  Future checkLogin() async{
-    SharedPreferences prefs=await SharedPreferences.getInstance();
-    bool _loggedin=(prefs.getBool('loggedin')??false);
+  Future checkLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool _loggedin = (prefs.getBool('loggedin') ?? false);
     print(_loggedin);
-    if(_loggedin){
+    if (_loggedin) {
       Navigator.pushNamed(context, '/homePage');
-    }
-    else{
+    } else {
       Navigator.pushNamed(context, '/login');
     }
   }
 }
-
 
 Future<String> _fetchUserData(BuildContext context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -79,8 +74,7 @@ Widget _handleCurrentScreen() {
         } else {
           if (snapshot.hasData) {
             return Userdata();
-          }
-          else{
+          } else {
             return Login();
           }
         }
@@ -88,7 +82,6 @@ Widget _handleCurrentScreen() {
 }
 
 class HomePage extends StatefulWidget {
-
   HomePage({Key key, this.title}) : super(key: key);
 
   final String title;
@@ -98,7 +91,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static const platform=const MethodChannel("FAQ_ACTIVITY");
+  String username = " ", rollNo = " ", phoneNo = " ";
+  static const platform = const MethodChannel("FAQ_ACTIVITY");
   @override
   Widget build(BuildContext context) {
     Gradients().init(context);
@@ -106,29 +100,55 @@ class _HomePageState extends State<HomePage> {
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return Scaffold(
       drawer: Drawer(
-        child:ListTile(
-          title: Text("Timetable"),
-          onTap: (){
-            Navigator.of(context).pop();
-            Navigator.pushNamed(context, '/timetable');
-          },
-
-        ) ,
-      ),
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          DrawerHeader(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                username,
+                style: TextStyle(fontSize: 20.0, fontFamily: 'PfDin'),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0),
+                child: Text(phoneNo),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0),
+                child: Text(rollNo),
+              )
+            ],
+          )),
+          Expanded(
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: ListTile(
+                  onTap:(){
+                    _removeUserData(context);
+                  },
+                  title: Text("Logout"),
+                    leading: Icon(Icons.no_encryption),
+                ),
+              ))
+        ],
+      )),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        title:Text(
+        title: Text(
           'SCP',
           textAlign: TextAlign.center,
           style: TextStyle(
-            color: Colors.black,
+              color: Colors.black,
               fontSize: 40.0,
               fontWeight: FontWeight.w500,
               fontFamily: 'PfDin',
               letterSpacing: 2),
-        ) ,
+        ),
       ),
       backgroundColor: Colors.white,
       body: ListView(
@@ -136,7 +156,7 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           appointmentCard(context, queryWidth, textScaleFactor),
           InkWell(
-            onTap:()=> _startFAQActivity(),
+              onTap: () => _startFAQActivity(),
               child: faqCard(context, queryWidth, textScaleFactor)),
           mentorsCard(context, queryWidth, textScaleFactor),
           timetableCard(context, queryWidth, textScaleFactor)
@@ -144,12 +164,34 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-  
-  _startFAQActivity() async{
+
+  _removeUserData(BuildContext context) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+    await firebaseInstance.signOut();
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+  }
+
+  _startFAQActivity() async {
     try {
       await platform.invokeMethod('startFaqActivity');
-    } on PlatformException catch (e){
+    } on PlatformException catch (e) {
       print(e.message);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserData(context);
+  }
+
+  Future fetchUserData(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    username = prefs.getString('username');
+    rollNo = prefs.getString('roll_no');
+    phoneNo = prefs.getString('phone_no');
+    print(username + rollNo + phoneNo);
   }
 }
