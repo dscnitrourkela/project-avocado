@@ -57,21 +57,11 @@ Widget _handleCurrentScreen() {
           return Login();
         } else {
           if (snapshot.hasData) {
-            return FutureBuilder
-              (
-                future: _fetchUserData(context),
-              builder: (_,snapshot){
-                  print("Main.dart "+ snapshot.data.toString());
-                  if(snapshot.data.toString()=="" || snapshot.data.toString()==null || snapshot.data.toString()=="null"){
-                    return Userdata();
-                  }
-                  else{
-                    return HomePage();
-                  }
-              },
-            );
+            return Userdata();
           }
-          return Login();
+          else{
+            return Login();
+          }
         }
       });
 }
