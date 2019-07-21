@@ -15,6 +15,7 @@ import 'timetable/theorySection.dart';
 import 'package:scp/time_table.dart';
 
 //void main() => runApp(MyApp());
+var firebaseInstance=FirebaseAuth.instance;
 void main()=>runApp(
       MaterialApp(
         title: 'SCP Demo',
@@ -51,7 +52,7 @@ Future<String> _fetchUserData(BuildContext context) async {
 
 Widget _handleCurrentScreen() {
   return new StreamBuilder<FirebaseUser>(
-      stream: FirebaseAuth.instance.onAuthStateChanged,
+      stream: firebaseInstance.onAuthStateChanged,
       builder: (BuildContext context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Login();

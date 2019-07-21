@@ -128,7 +128,7 @@ class Userdata extends StatelessWidget {
                                     if (rollNo != "" ||
                                         rollNo != null ||
                                         rollNo != "null") {
-                                      FirebaseAuth.instance
+                                      firebaseInstance
                                           .currentUser()
                                           .then((val) {
                                         UserUpdateInfo updateUser =
@@ -202,7 +202,7 @@ class Userdata extends StatelessWidget {
   }
 
   Future<String> inputData() async {
-    final FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    final FirebaseUser user = await firebaseInstance.currentUser();
     rollNo = user.displayName;
     print(rollNo+"Printed in userdata");
     print(phoneNo);

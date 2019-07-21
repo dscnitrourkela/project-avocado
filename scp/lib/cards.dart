@@ -4,6 +4,8 @@ import 'package:scp/gradients.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'main.dart';
+
 
 Widget appointmentCard(
     BuildContext context, double heightFactor, double textScaleFactor) {
@@ -154,7 +156,7 @@ Widget appointmentCard(
 _removeUserData(BuildContext context) async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.clear();
-  await FirebaseAuth.instance.signOut();
+  await firebaseInstance.signOut();
   Navigator.of(context)
       .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
 }
