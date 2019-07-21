@@ -89,7 +89,7 @@ class _LoginState extends State<Login> {
                   style: TextStyle(
                     fontFamily: "PfDin",
                   ),
-                  autofocus: true,
+                  autofocus: false,
                   keyboardType: TextInputType.phone,
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(

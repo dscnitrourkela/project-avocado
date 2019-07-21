@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:scp/gradients.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 Widget appointmentCard(
@@ -150,6 +151,14 @@ Widget appointmentCard(
   );
 }
 
+_removeUserData(BuildContext context) async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.clear();
+  await FirebaseAuth.instance.signOut();
+  Navigator.of(context)
+      .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+}
+
 Widget mentorsCard(
     BuildContext context, double heightFactor, double textScaleFactor) {
   Gradients().init(context);
@@ -159,8 +168,10 @@ Widget mentorsCard(
       padding: const EdgeInsets.only(top: 12.0),
       child: InkWell(
         onTap: () {
-          FirebaseAuth.instance.signOut();
-          Navigator.pushReplacementNamed(context, '/loginPage');
+          _removeUserData(context);
+
+
+
         },
         child: Card(
           shape:
