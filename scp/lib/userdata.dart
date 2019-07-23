@@ -12,6 +12,9 @@ class Userdata extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var queryWidth = MediaQuery.of(context).size.width;
+    var textScaleFactor = MediaQuery.of(context).textScaleFactor;
+
     return Scaffold(
       resizeToAvoidBottomPadding: true,
       appBar: AppBar(
@@ -56,10 +59,11 @@ class Userdata extends StatelessWidget {
                             padding: const EdgeInsets.only(
                                 left: 40.0, right: 40.0, top: 20),
                             child: Material(
-                              elevation: 10.0,
+                              elevation:10.0,
+                              shadowColor: Colors.white70,
                               shape: RoundedRectangleBorder(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(30.0)),
+                                    BorderRadius.all(Radius.circular(8.0)),
                               ),
                               child: TextField(
                                 enableInteractiveSelection: true,
@@ -82,10 +86,11 @@ class Userdata extends StatelessWidget {
                             padding: const EdgeInsets.only(
                                 left: 40.0, right: 40.0, top: 20),
                             child: Material(
-                              elevation: 10.0,
+                              elevation:10.0,
+                              shadowColor: Colors.white70,
                               shape: RoundedRectangleBorder(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(30.0)),
+                                    BorderRadius.all(Radius.circular(8.0)),
                               ),
                               child: TextField(
                                 enableInteractiveSelection: true,
@@ -105,48 +110,54 @@ class Userdata extends StatelessWidget {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: RaisedButton(
-                              onPressed: () {
-                                if (rollNo != "" ||
-                                    rollNo != null ||
-                                    rollNo != "null") {
-                                  FirebaseAuth.instance
-                                      .currentUser()
-                                      .then((val) {
-                                    UserUpdateInfo updateUser =
-                                        UserUpdateInfo();
-                                    updateUser.displayName = rollNo;
-                                    val.updateProfile(updateUser);
-                                  });
-                                } else {
-                                  // Scaffold.of(context).showSnackBar(new SnackBar(
-                                  //   content:Text("Roll Number can't be empty"),
+                            padding: const EdgeInsets.all(36.0),
+                            child: ButtonTheme(
+                              height: 40,
+                              minWidth: 100,
+                              child: RaisedButton(
+                                onPressed: () {
+                                  if (rollNo != "" ||
+                                      rollNo != null ||
+                                      rollNo != "null") {
+                                    FirebaseAuth.instance
+                                        .currentUser()
+                                        .then((val) {
+                                      UserUpdateInfo updateUser =
+                                          UserUpdateInfo();
+                                      updateUser.displayName = rollNo;
+                                      val.updateProfile(updateUser);
+                                    });
+                                  } else {
+                                    // Scaffold.of(context).showSnackBar(new SnackBar(
+                                    //   content:Text("Roll Number can't be empty"),
 
-                                  // ));
-                                }
-                                if (username == "") {
-                                  // Scaffold.of(context).showSnackBar(new SnackBar(
-                                  //   content:Text("Username can't be empty"),));
-                                }
-                                if (rollNo != "" ||
-                                    rollNo != null ||
-                                    rollNo != "null" && username != "") {
-                                  _storeUserData(context);
+                                    // ));
+                                  }
+                                  if (username == "") {
+                                    // Scaffold.of(context).showSnackBar(new SnackBar(
+                                    //   content:Text("Username can't be empty"),));
+                                  }
+                                  if (rollNo != "" ||
+                                      rollNo != null ||
+                                      rollNo != "null" && username != "") {
+                                    _storeUserData(context);
 
-                                }
-                              },
-                              child: Text(
-                                'Verify',
-                                style: TextStyle(
-                                  fontFamily: 'PfDin',
+                                  }
+                                },
+                                child: Text(
+                                  'Verify',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily:'PfDin',
+                                      fontSize: 20*textScaleFactor
+                                  ),
                                 ),
+                                textColor: Colors.white,
+                                elevation: 7.0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0)),
+                                color:  Color.fromRGBO(25, 39, 45, 1)
                               ),
-                              textColor: Colors.white,
-                              elevation: 7.0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0)),
-                              color: Color.fromRGBO(74, 232, 190, 1),
                             ),
                           ),
                         ]),
@@ -171,6 +182,7 @@ class Userdata extends StatelessWidget {
     await prefs.setString('roll_no', rollNo);
     await prefs.setString('phone_no', phoneNo);
     await prefs.setBool('loggedin', true);
+    await prefs.setBool('show_timetable', false);
     Navigator.of(context)
         .pushNamedAndRemoveUntil('/homePage', (Route<dynamic> route) => false);
   }

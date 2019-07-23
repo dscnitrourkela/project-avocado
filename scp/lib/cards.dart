@@ -166,6 +166,7 @@ Widget mentorsCard(
       padding: const EdgeInsets.only(top: 12.0),
       child: InkWell(
         onTap: () {
+          Navigator.of(context).pushNamed('/mentors');
                   },
         child: Card(
           shape:
@@ -613,6 +614,7 @@ Widget slotCard(
 
   return Container(
     color: Colors.white,
+
     child: SizedBox(
       height: heightFactor * 1.1,
       width: heightFactor * 0.85,
@@ -623,7 +625,7 @@ Widget slotCard(
             12.0,
           ),
         ),
-        elevation: 4.0,
+        elevation: 5.0,
         child: Column(
           children: <Widget>[
             Padding(
