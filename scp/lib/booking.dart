@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Booking extends StatefulWidget {
   final String keyCode;
 
-  Booking({@required this.keyCode});
+  Booking({@required this.keyCode, String time, String counselDay});
 
   @override
   _BookingState createState() => _BookingState(keyCode: keyCode);
@@ -12,7 +12,8 @@ class Booking extends StatefulWidget {
 class _BookingState extends State<Booking> {
   final String keyCode;
   double queryWidth;
-  _BookingState({@required this.keyCode});
+  final String counselDay, time;
+  _BookingState({@required this.keyCode,this.time, this.counselDay});
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +46,14 @@ class _BookingState extends State<Booking> {
           ),
           leading: Padding(
             padding: const EdgeInsets.only(top: 8.0),
-            child: Icon(
-              Icons.arrow_back_ios,
+            child: IconButton(
+              onPressed: (){
+                Navigator.of(context).pop();
+                Navigator.pushNamed(context, '/homePage');
+              },
+              icon: Icon(
+                Icons.arrow_back_ios,
+              ),
             ),
           ),
           elevation: 0.0,
@@ -75,6 +82,16 @@ class _BookingState extends State<Booking> {
                 fontFamily: 'PfDin',
                 fontSize: queryWidth * 0.050,
               ),),
+              SizedBox(height: 20.0,),
+              Text(
+                '$counselDay | 26th July | $time',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'PfDin',
+                    fontSize: queryWidth * 0.050,
+                    fontWeight: FontWeight.w500),
+                textAlign: TextAlign.left,
+              ),
             ],
           ),
         ),

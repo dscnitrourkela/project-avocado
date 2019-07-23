@@ -40,7 +40,7 @@ class _AppointmentsState extends State<Appointments> {
     _onSlotsChangedSubscription.cancel();
   }
 
-  Widget anonymousButton() =>
+  /*Widget anonymousButton() =>
       StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: queryWidth * 0.05),
@@ -71,10 +71,11 @@ class _AppointmentsState extends State<Appointments> {
             shape: StadiumBorder(),
           ),
         );
-      });
+      });*/
 
   @override
   Widget build(BuildContext context) {
+
     queryWidth = MediaQuery.of(context).size.width;
     textScaleFactor = MediaQuery.of(context).textScaleFactor;
 
@@ -129,7 +130,7 @@ class _AppointmentsState extends State<Appointments> {
       scrollDirection: Axis.vertical,
       padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 30.0),
       children: <Widget>[
-        anonymousButton(),
+        //anonymousButton(),
         SizedBox(
           height: 20.0,
         ),
@@ -148,7 +149,6 @@ class _AppointmentsState extends State<Appointments> {
     RemoteConfig remoteConfig = await RemoteConfig.instance;
     // Enable developer mode to relax fetch throttling
     remoteConfig.setConfigSettings(RemoteConfigSettings(debugMode: true));
-    // Using default duration to force fetching from remote server.
     await remoteConfig.fetch(expiration: const Duration(seconds: 0));
     await remoteConfig.activateFetched();
     counselDay = remoteConfig.getString('counsel_day');

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +27,6 @@ void main() => runApp(MaterialApp(
         '/timetable': (BuildContext context) => TheorySection(),
         '/userdata': (BuildContext context) => Userdata(),
         '/login': (BuildContext context) => Login(),
-        '/booking': (BuildContext context) => Booking(),
 
       },
       theme: ThemeData(
@@ -74,9 +75,28 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String username = " ", rollNo = " ", phoneNo = " ";
+  /*final String jsonT = '{\"slots\" :{' +
+      //'\'slots:\' {'+
+      '\"week1\" :{'+
+      '\”counselor\” :{'+
+      '\”slot1\” :{'+
+      '\”phoneNo\” :\”\”,'+
+      '\”rollNo\” :\”\”,'+
+      '\”status\” :\”0\”,'+
+      '\”time\” :\”5:00 PM\”'+
+      '},'+
+      '}'+
+      '}'+
+      '}'+
+      '}';*/
   static const platform = const MethodChannel("FAQ_ACTIVITY");
   @override
   Widget build(BuildContext context) {
+    print(DateTime.now().weekday);
+
+    //Map jMap = json.decode(jsonT);
+    //print(jMap);
+
     FirebaseDatabase.instance.setPersistenceEnabled(true);
     var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
@@ -124,27 +144,32 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Colors.white,
             elevation: 0,
             centerTitle: true,
-            title: Text(
-              'SCP',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 40.0,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'PfDin',
-                  letterSpacing: 2),
+            title: Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Text(
+                'SCP',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 40.0,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'PfDin',
+                    letterSpacing: 2),
+              ),
             ),
           ),
           backgroundColor: Colors.white,
-          body: ListView(
-            scrollDirection: Axis.vertical,
-            children: <Widget>[
-              appointmentCard(context, queryWidth, textScaleFactor),
-              timetableCard(context, queryWidth, textScaleFactor),
-              faqCard(context, queryWidth, textScaleFactor),
-              mentorsCard(context, queryWidth, textScaleFactor),
-
-            ],
+          body: Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: ListView(
+              scrollDirection: Axis.vertical,
+              children: <Widget>[
+                appointmentCard(context, queryWidth, textScaleFactor),
+                timetableCard(context, queryWidth, textScaleFactor),
+                faqCard(context, queryWidth, textScaleFactor),
+                mentorsCard(context, queryWidth, textScaleFactor),
+              ],
+            ),
           ),
         );
       },
@@ -165,6 +190,10 @@ class _HomePageState extends State<HomePage> {
     } on PlatformException catch (e) {
       print(e.message);
     }
+  }
+
+  _newWeekPusher() async{
+    var day = DateTime.now().weekday;
   }
 
   @override
