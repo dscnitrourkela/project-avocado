@@ -42,9 +42,9 @@ class _LoginState extends State<Login> {
       backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[
-          BackgroundGrad(),
+          //BackgroundGrad(),
           Align(
-            alignment: Alignment(-0, -0.5),
+            alignment: Alignment(-0, -0.7),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Container(
@@ -53,34 +53,39 @@ class _LoginState extends State<Login> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Image.asset('assets/nit.png',
-                    height: queryWidth*0.1,
-                    width:queryWidth*0.1),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "SIGN IN",
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            fontFamily: "PfDin",
-                            foreground: Paint()..shader = linearGradient,
-                            fontWeight: FontWeight.w600),
-                      ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.asset('assets/nit.png',
+                      height: queryWidth*0.2,
+                      width:queryWidth*0.2,
+                      color: Colors.black,),
                     ),
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "To SCP NITR app",
+                        "SCP NIT ROURKELA",
                         style: TextStyle(
                             fontSize: 32.0,
                             fontFamily: "PfDin",
-                            foreground: Paint()..shader = linearGradient,
+                            color: Color.fromRGBO(25, 39, 45, 1),
                             fontWeight: FontWeight.w900),
                       ),
                     ),
+
                   ],
                 ),
               ),
+            ),
+          ),
+          Align(
+            alignment: Alignment(0,-0.15),
+            child: Text(
+              "SIGN IN",
+              style: TextStyle(
+                  fontSize: 20.0,
+                  fontFamily: "PfDin",
+                  color: Color.fromRGBO(74, 232, 190, 1),
+                  fontWeight: FontWeight.w600),
             ),
           ),
           Align(
@@ -101,7 +106,7 @@ class _LoginState extends State<Login> {
                           child: Text("+",
                             style: TextStyle(
                                 fontSize: 30*textScaleFactor,
-                                color: Colors.deepPurple,
+                                color: Color.fromRGBO(25, 39, 45, 1),
                                 fontFamily: 'PfDin',
                               fontWeight: FontWeight.w600
                             ),),
@@ -114,7 +119,7 @@ class _LoginState extends State<Login> {
                               enableInteractiveSelection: true,
                               style: TextStyle(
                                   fontSize: 30*textScaleFactor,
-                                  color: Colors.deepPurple,
+                                  color: Color.fromRGBO(25, 39, 45, 1),
                                   fontWeight: FontWeight.w600,
                                   fontFamily: 'PfDin'
                               ),
@@ -122,7 +127,7 @@ class _LoginState extends State<Login> {
                               textAlign: TextAlign.left,
                               decoration: InputDecoration(border: InputBorder.none, counterText: '',hintStyle:TextStyle(
                                   fontSize: 30*textScaleFactor,
-                                  color: Colors.deepPurple,
+                                  color: Color.fromRGBO(25, 39, 45, 1),
                                   fontFamily: 'PfDin'
                               ), ),
                               onChanged: (value) {
@@ -143,7 +148,7 @@ class _LoginState extends State<Login> {
                         enableInteractiveSelection: true,
                         style:TextStyle(
                             fontSize: 30*textScaleFactor,
-                            color: Colors.deepPurple,
+                            color: Color.fromRGBO(25, 39, 45, 1),
                             fontFamily: 'PfDin',
                             fontWeight: FontWeight.w600
                         ),
@@ -166,22 +171,30 @@ class _LoginState extends State<Login> {
             ),
           ),
           Align(
-            alignment: Alignment(0, 0.2),
-            child: RaisedButton(
-                onPressed: () {
-                  String finalPhoneNo="+" + countryCodeController.text+ " "+phoneController.text;
-                  ScpAuth(context).verifyPhone(finalPhoneNo);
-                },
-                child: Text('Verify',
-                style: TextStyle(
-                  fontFamily:'PfDin',
-                ),),
-                textColor: Colors.white,
-                elevation: 7.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius:BorderRadius.circular(30.0)
-                ),
-                color: Colors.blue),
+            alignment: Alignment(0, 0.25),
+            child: ButtonTheme(
+              minWidth: 200,
+              height: 40,
+              child: RaisedButton(
+
+                  onPressed: () {
+                    String finalPhoneNo="+" + countryCodeController.text+ " "+phoneController.text;
+                    ScpAuth(context).verifyPhone(finalPhoneNo);
+                  },
+                  child: Text('SEND OTP',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontFamily:'PfDin',
+                    fontSize: 20*textScaleFactor
+                  ),),
+                  textColor: Colors.white,
+
+                  elevation: 7.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius:BorderRadius.circular(8.0)
+                  ),
+                  color: Color.fromRGBO(25, 39, 45, 1)),
+            ),
           ),
         ],
       ),

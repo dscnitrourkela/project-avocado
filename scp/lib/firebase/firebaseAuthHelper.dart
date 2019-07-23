@@ -47,7 +47,7 @@ class ScpAuth {
                   decoration: InputDecoration(
                     border: UnderlineInputBorder(
                       borderSide: BorderSide(
-                          color:Colors.purpleAccent
+                          color:Color.fromRGBO(25, 39, 45, 1),
                       )
                     )
                   ),
@@ -66,14 +66,15 @@ class ScpAuth {
                     child: Text(
                       'Done',
                       style: TextStyle(
+                        fontWeight: FontWeight.w400,
                         color:Colors.white,
                         fontFamily:'PfDin'
                       ),
                     ),
                     shape: RoundedRectangleBorder(
-                    borderRadius:BorderRadius.circular(30.0)
+                    borderRadius:BorderRadius.circular(8.0)
                   ),
-                  color: Colors.blue,
+                  color: Color.fromRGBO(25, 39, 45, 1),
                     onPressed: () {
                       firebaseInstance.currentUser().then((user) {
                         if (user == null) {
