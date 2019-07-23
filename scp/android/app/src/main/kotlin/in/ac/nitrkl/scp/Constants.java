@@ -13,14 +13,6 @@ public class Constants {
             "   }\n" +
             "}";
 
-    /*final static String QUERY="{\n" +
-            "   \"query\":{\n" +
-            "      \"multi_match\" : {\n" +
-            "         \"query\": \"scholarship\",\n" +
-            "         \"fields\": [ \"Question\", \"Answer\" ]\n" +
-            "      }\n" +
-            "   }\n" +
-            "}";*/
     final static String QUERY_PREFIX = "{\n" +
             "   \"query\":{\n" +
             "      \"multi_match\" : {\n" +

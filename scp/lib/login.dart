@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scp/background.dart';
+import 'package:scp/background_gradient.dart';
 
 import 'package:scp/firebase/firebaseAuthHelper.dart';
 
@@ -14,6 +15,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final phoneController = TextEditingController();
+  final countryCodeController = TextEditingController();
   final Shader linearGradient = LinearGradient(
     colors: <Color>[
       Color.fromRGBO(142, 40, 142, 1.0),
@@ -27,18 +29,22 @@ class _LoginState extends State<Login> {
     super.dispose();
   }
 
+  String countryCode="91";
   String phoneNumber;
 
   @override
   Widget build(BuildContext context) {
+    var queryWidth = MediaQuery.of(context).size.width;
+    var textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    countryCodeController.text=countryCode;
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[
-          Background(),
+          //BackgroundGrad(),
           Align(
-            alignment: Alignment(-0, -0.5),
+            alignment: Alignment(-0, -0.7),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Container(
@@ -47,77 +53,148 @@ class _LoginState extends State<Login> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Sign in",
-                        style: TextStyle(
-                            fontSize: 40.0,
-                            fontFamily: "PfDin",
-                            foreground: Paint()..shader = linearGradient,
-                            fontWeight: FontWeight.w900),
-                      ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.asset('assets/nit.png',
+                      height: queryWidth*0.2,
+                      width:queryWidth*0.2,
+                      color: Colors.black,),
                     ),
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "To SCP NITR app",
+                        "SCP NIT ROURKELA",
                         style: TextStyle(
                             fontSize: 32.0,
                             fontFamily: "PfDin",
-                            foreground: Paint()..shader = linearGradient,
+                            color: Color.fromRGBO(25, 39, 45, 1),
                             fontWeight: FontWeight.w900),
                       ),
                     ),
+
                   ],
                 ),
               ),
             ),
           ),
           Align(
+            alignment: Alignment(0,-0.15),
+            child: Text(
+              "SIGN IN",
+              style: TextStyle(
+                  fontSize: 20.0,
+                  fontFamily: "PfDin",
+                  color: Color.fromRGBO(74, 232, 190, 1),
+                  fontWeight: FontWeight.w600),
+            ),
+          ),
+          Align(
             alignment: Alignment(0, 0.0),
             child: Padding(
               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-              child: Material(
-                elevation: 10.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                ),
-                
-                child: TextField(
-                  enableInteractiveSelection: true,
-                  style: TextStyle(
-                    fontFamily: "PfDin",
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Flexible(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text("+",
+                            style: TextStyle(
+                                fontSize: 30*textScaleFactor,
+                                color: Color.fromRGBO(25, 39, 45, 1),
+                                fontFamily: 'PfDin',
+                              fontWeight: FontWeight.w600
+                            ),),
+                        ),
+                        Flexible(
+                          child: Container(
+                            width: queryWidth*0.1,
+                            child: TextField(
+                              maxLength: 2,
+                              enableInteractiveSelection: true,
+                              style: TextStyle(
+                                  fontSize: 30*textScaleFactor,
+                                  color: Color.fromRGBO(25, 39, 45, 1),
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'PfDin'
+                              ),
+                              keyboardType: TextInputType.phone,
+                              textAlign: TextAlign.left,
+                              decoration: InputDecoration(border: InputBorder.none, counterText: '',hintStyle:TextStyle(
+                                  fontSize: 30*textScaleFactor,
+                                  color: Color.fromRGBO(25, 39, 45, 1),
+                                  fontFamily: 'PfDin'
+                              ), ),
+                              onChanged: (value) {
+                                this.countryCode = value;
+                              },
+                              controller: countryCodeController,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  autofocus: true,
-                  keyboardType: TextInputType.phone,
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                      hintText: 'Enter Phone number', border: InputBorder.none),
-                  onChanged: (value) {
-                    this.phoneNumber = value;
-                  },
-                  controller: phoneController,
-                ),
+                  Flexible(
+                    child: Container(
+                      width: queryWidth*0.4,
+                      child: TextField(
+                        maxLength: 10,
+                        enableInteractiveSelection: true,
+                        style:TextStyle(
+                            fontSize: 30*textScaleFactor,
+                            color: Color.fromRGBO(25, 39, 45, 1),
+                            fontFamily: 'PfDin',
+                            fontWeight: FontWeight.w600
+                        ),
+                        autofocus: true,
+                        keyboardType: TextInputType.phone,
+                        textAlign: TextAlign.left,
+                        decoration: InputDecoration(
+                            hintText: 'Phone no', border: InputBorder.none,counterText: '',hintStyle: TextStyle(
+                          fontWeight:FontWeight.w200,
+                        )),
+                        onChanged: (value) {
+                          this.phoneNumber = value;
+                        },
+                        controller: phoneController,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
           Align(
-            alignment: Alignment(0, 0.2),
-            child: RaisedButton(
-                onPressed: () {
-                  ScpAuth(context).verifyPhone(phoneController.text);
-                },
-                child: Text('Verify',
-                style: TextStyle(
-                  fontFamily:'PfDin',
-                ),),
-                textColor: Colors.white,
-                elevation: 7.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius:BorderRadius.circular(30.0)
-                ),
-                color: Colors.blue),
+            alignment: Alignment(0, 0.25),
+            child: ButtonTheme(
+              minWidth: 200,
+              height: 40,
+              child: RaisedButton(
+
+                  onPressed: () {
+                    String finalPhoneNo="+" + countryCodeController.text+ " "+phoneController.text;
+                    ScpAuth(context).verifyPhone(finalPhoneNo);
+                  },
+                  child: Text('SEND OTP',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontFamily:'PfDin',
+                    fontSize: 20*textScaleFactor
+                  ),),
+                  textColor: Colors.white,
+
+                  elevation: 7.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius:BorderRadius.circular(8.0)
+                  ),
+                  color: Color.fromRGBO(25, 39, 45, 1)),
+            ),
           ),
         ],
       ),
