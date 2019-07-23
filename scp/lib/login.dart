@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scp/background.dart';
+import 'package:scp/background_gradient.dart';
 
 import 'package:scp/firebase/firebaseAuthHelper.dart';
 
@@ -14,6 +15,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final phoneController = TextEditingController();
+  final countryCodeController = TextEditingController();
   final Shader linearGradient = LinearGradient(
     colors: <Color>[
       Color.fromRGBO(142, 40, 142, 1.0),
@@ -27,16 +29,20 @@ class _LoginState extends State<Login> {
     super.dispose();
   }
 
+  String countryCode="91";
   String phoneNumber;
 
   @override
   Widget build(BuildContext context) {
+    var queryWidth = MediaQuery.of(context).size.width;
+    var textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    countryCodeController.text=countryCode;
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[
-          Background(),
+          BackgroundGrad(),
           Align(
             alignment: Alignment(-0, -0.5),
             child: Padding(
@@ -47,15 +53,18 @@ class _LoginState extends State<Login> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
+                    Image.asset('assets/nit.png',
+                    height: queryWidth*0.1,
+                    width:queryWidth*0.1),
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "Sign in",
+                        "SIGN IN",
                         style: TextStyle(
-                            fontSize: 40.0,
+                            fontSize: 20.0,
                             fontFamily: "PfDin",
                             foreground: Paint()..shader = linearGradient,
-                            fontWeight: FontWeight.w900),
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
                     Align(
@@ -78,27 +87,81 @@ class _LoginState extends State<Login> {
             alignment: Alignment(0, 0.0),
             child: Padding(
               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-              child: Material(
-                elevation: 10.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                ),
-                
-                child: TextField(
-                  enableInteractiveSelection: true,
-                  style: TextStyle(
-                    fontFamily: "PfDin",
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Flexible(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text("+",
+                            style: TextStyle(
+                                fontSize: 30*textScaleFactor,
+                                color: Colors.deepPurple,
+                                fontFamily: 'PfDin',
+                              fontWeight: FontWeight.w600
+                            ),),
+                        ),
+                        Flexible(
+                          child: Container(
+                            width: queryWidth*0.1,
+                            child: TextField(
+                              maxLength: 2,
+                              enableInteractiveSelection: true,
+                              style: TextStyle(
+                                  fontSize: 30*textScaleFactor,
+                                  color: Colors.deepPurple,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'PfDin'
+                              ),
+                              keyboardType: TextInputType.phone,
+                              textAlign: TextAlign.left,
+                              decoration: InputDecoration(border: InputBorder.none, counterText: '',hintStyle:TextStyle(
+                                  fontSize: 30*textScaleFactor,
+                                  color: Colors.deepPurple,
+                                  fontFamily: 'PfDin'
+                              ), ),
+                              onChanged: (value) {
+                                this.countryCode = value;
+                              },
+                              controller: countryCodeController,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  autofocus: true,
-                  keyboardType: TextInputType.phone,
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                      hintText: 'Enter Phone number', border: InputBorder.none),
-                  onChanged: (value) {
-                    this.phoneNumber = value;
-                  },
-                  controller: phoneController,
-                ),
+                  Flexible(
+                    child: Container(
+                      width: queryWidth*0.4,
+                      child: TextField(
+                        maxLength: 10,
+                        enableInteractiveSelection: true,
+                        style:TextStyle(
+                            fontSize: 30*textScaleFactor,
+                            color: Colors.deepPurple,
+                            fontFamily: 'PfDin',
+                            fontWeight: FontWeight.w600
+                        ),
+                        autofocus: true,
+                        keyboardType: TextInputType.phone,
+                        textAlign: TextAlign.left,
+                        decoration: InputDecoration(
+                            hintText: 'Phone no', border: InputBorder.none,counterText: '',hintStyle: TextStyle(
+                          fontWeight:FontWeight.w200,
+                        )),
+                        onChanged: (value) {
+                          this.phoneNumber = value;
+                        },
+                        controller: phoneController,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -106,7 +169,8 @@ class _LoginState extends State<Login> {
             alignment: Alignment(0, 0.2),
             child: RaisedButton(
                 onPressed: () {
-                  ScpAuth(context).verifyPhone(phoneController.text);
+                  String finalPhoneNo="+" + countryCodeController.text+ " "+phoneController.text;
+                  ScpAuth(context).verifyPhone(finalPhoneNo);
                 },
                 child: Text('Verify',
                 style: TextStyle(
