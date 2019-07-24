@@ -28,6 +28,11 @@ class TimeTableState extends State<TimeTable> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     theorySection = prefs.getString('theory_section');
     practicalSection = prefs.getString('prac_section');
+    if((theorySection.compareTo('A')==0)||(theorySection.compareTo('D')==0)||(theorySection.compareTo('C')==0)||(theorySection.compareTo('B')==0))
+      {
+        sectionSequence = 'tp';
+      }
+    print("PSA"+sectionSequence);
   }
 
   _resetSections(BuildContext context) async{

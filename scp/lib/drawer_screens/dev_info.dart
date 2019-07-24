@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-final String ABOUT_TEXT="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+final String ABOUT_TEXT="Developer Student Clubs (DSC) is a Google Developers powered program for university students to learn mobile and web development skills. The clubs will be open to any student interested to learn, ranging from novice developers who are just starting, to advanced developers who want to further their skills. The clubs are intended as a space for students to try out new ideas and collaborate to solve mobile and web development problems.\n\n"
+"DSC NIT Rourkela(DSC NITR) is a student chapter of DSC India with a motive to nurture developers within the community and solve real-life problems in the community through technology.";
 
 class DevInfo extends StatelessWidget {
   @override
@@ -64,9 +65,11 @@ class DevInfo extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
+                contactCard(context, "Abel Mathew | DSC NITR Lead", "https://github.com/DesignrKnight"),
+                contactCard(context, "Ankesh Anku", "https://github.com/ankank30"),
                 contactCard(context, "Chinmay Kabi", "https://github.com/Chinmay-KB"),
                 contactCard(context, "Smarak Das", "https://github.com/Thesmader"),
-                contactCard(context, "Ankesh Anku", "https://github.com/ankank30"),
+                contactCard(context, "Reuben Abraham | Designer", "http://reubenabraham.com/"),
 
               ],
             )

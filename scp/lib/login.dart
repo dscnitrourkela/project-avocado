@@ -63,7 +63,7 @@ class _LoginState extends State<Login> {
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "SCP NIT ROURKELA",
+                        "SCS NIT ROURKELA",
                         style: TextStyle(
                             fontSize: 32.0,
                             fontFamily: "PfDin",
