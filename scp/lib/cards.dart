@@ -230,7 +230,7 @@ Widget mentorsCard(
                             child: SizedBox(
                               width: 200.0,
                               child: Text(
-                                'Find the complete database of SCP Mentors',
+                                'Find the complete database of SCS Mentors',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   fontSize: heightFactor * 0.038,
@@ -277,7 +277,7 @@ _startFAQActivity() async {
 }
 
 Widget faqCard(
-    BuildContext context, double heightFactor, double textScaleFactor) {
+    BuildContext context, double heightFactor, double textScaleFactor){
   Gradients().init(context);
   return SizedBox(
     height: heightFactor * 0.58,

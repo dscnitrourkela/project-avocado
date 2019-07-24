@@ -102,7 +102,7 @@ class ScpAuth {
     final PhoneVerificationCompleted verificationCompleted =
         (AuthCredential credential) {
       print('verified');
-    };
+        };
 
     final PhoneVerificationFailed verificationFailed = (AuthException error) {
       print('${error.message}');

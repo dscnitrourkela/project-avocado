@@ -21,11 +21,11 @@ import 'timetable/theorySection.dart';
 import 'package:scp/time_table.dart';
 
 var firebaseInstance = FirebaseAuth.instance;
-final PRIVACY_POLICY="https://google.com";
+final PRIVACY_POLICY="https://project-avocado-8b3e1.firebaseapp.com";
 void main() => runApp(MaterialApp(
-      title: 'SCP Demo',
+      title: 'SCS',
       routes: <String, WidgetBuilder>{
-        '/homePage': (BuildContext context) => HomePage(title: 'SCP Home Page'),
+        '/homePage': (BuildContext context) => HomePage(title: 'SCS Home Page'),
         '/loginPage': (BuildContext context) => Login(),
         '/appointments': (BuildContext context) => Appointments(),
         '/timetable': (BuildContext context) => TheorySection(),
@@ -69,6 +69,8 @@ class _MyAppState extends State<MyApp> {
       Navigator.pushNamed(context, '/homePage');
     } else {
       Navigator.pushNamed(context, '/login');
+//      Navigator.pushNamed(context, '/timetable');
+
     }
   }
 }
@@ -135,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                           onTap:(){
                             Navigator.pushNamed(context, '/about_scp');
                           },
-                          title: Text("About SCP",style: TextStyle(fontSize: 18.0, fontFamily: 'PfDin'),),
+                          title: Text("About SCS",style: TextStyle(fontSize: 18.0, fontFamily: 'PfDin'),),
                         ),
                         ListTile(
                           onTap:(){
@@ -183,7 +185,7 @@ class _HomePageState extends State<HomePage> {
             elevation: 0,
             centerTitle: true,
             title: Text(
-              'SCP',
+              'SCS',
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Colors.black,
