@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:scp/time_table.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const List<String> sectionArray = [
   "P1",
@@ -98,26 +99,7 @@ class _PracticalSectionState extends State<PracticalSection> {
               alignment: Alignment(0, 0.6),
               child: FloatingActionButton(
                 onPressed: () => {
-                  /*
-                    Uncomment this and route it wherever necessary
-                    theorySection is a global variable,
-                    String practicalSection=sectionArray[
-                        (pageController.page.round().toInt())])
-                    Navigator.push(
-                    context,
-                    new MaterialPageRoute(
-                        builder: (ctxt) => PracticalSection(sectionArray[
-                        (pageController.page.round().toInt())])),
-                  )*/
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => TimeTable(
-                              theorySection: theorySection,
-                              practicalSection: sectionArray[
-                                  (pageController.page.round().toInt())],
-                            )),
-                  ),
+                storeSectionData(context),
                 },
                 child: Icon(Icons.arrow_forward),
                 backgroundColor: Color.fromRGBO(74, 232, 190, 1),
@@ -137,11 +119,31 @@ class _PracticalSectionState extends State<PracticalSection> {
             Align(
                 alignment: Alignment.center,
                 child: _buildCarousel(this, context, 8)),
+    Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Align(
+    alignment: Alignment.bottomCenter,
+    child: Text("The timetable is subject to change")),
+    )
           ],
         )),
       ),
     );
   }
+}
+
+storeSectionData(BuildContext context) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString('theory_section', theorySection);
+  await prefs.setString('prac_section', sectionArray[
+  (pageController.page.round().toInt())]);
+  await prefs.setBool('show_timetable', true);
+  Navigator.of(context).pop();
+  Navigator.push(
+  context,
+  MaterialPageRoute(
+  builder: (context) => TimeTable()),
+  );
 }
 
 Widget _buildCarousel(_PracticalSectionState timetableState,
