@@ -19,8 +19,10 @@ class ImpDocs extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-docCard(context, "Timetable", "https://nitrkl.ac.in/Academics/AcademicProcess/AcademicTimeTable.aspx"),
-docCard(context, "Academic Calendar", "https://nitrkl.ac.in/Academics/AcademicProcess/AcademicCalendar.aspx"),
+          docCard(context, "Timetable", "https://nitrkl.ac.in/Academics/AcademicProcess/AcademicTimeTable.aspx"),
+          docCard(context, "Academic Calendar", "https://nitrkl.ac.in/Academics/AcademicProcess/AcademicCalendar.aspx"),
+          docCard(context, "Curriculum", "https://nitrkl.ac.in/Academics/AcademicProcess/Curricula.aspx"),
+
 
 
         ],
