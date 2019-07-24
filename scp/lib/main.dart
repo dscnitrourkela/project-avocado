@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:scp/booking.dart';
 import 'package:scp/cards.dart';
 import 'package:scp/drawer_screens/about_scp.dart';
@@ -15,6 +18,8 @@ import 'package:flutter/services.dart';
 import 'package:scp/mentors.dart';
 import 'package:scp/userdata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'firebase/firebaseDBHandler.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'timetable/theorySection.dart';
 
@@ -86,10 +91,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String username = " ", rollNo = " ", phoneNo = " ";
+  DatabaseReference slotsRefMain;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   static const platform = const MethodChannel("FAQ_ACTIVITY");
   @override
   Widget build(BuildContext context) {
+    print(DateTime.now().weekday);
+    print(DateTime.now().hour);
+    //ScpDatabase.pushNewWeek(slotsRefMain);
+
+    //Map jMap = json.decode(jsonT);
+    //print(jMap);
+
     FirebaseDatabase.instance.setPersistenceEnabled(true);
     var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
@@ -184,27 +198,32 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Colors.white,
             elevation: 0,
             centerTitle: true,
-            title: Text(
-              'SCS',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 40.0,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'PfDin',
-                  letterSpacing: 2),
+            title: Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Text(
+                'SCS',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 40.0,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'PfDin',
+                    letterSpacing: 2),
+              ),
             ),
           ),
           backgroundColor: Colors.white,
-          body: ListView(
-            scrollDirection: Axis.vertical,
-            children: <Widget>[
-              appointmentCard(context, queryWidth, textScaleFactor),
-              timetableCard(context, queryWidth, textScaleFactor),
-              faqCard(context, queryWidth, textScaleFactor),
-              mentorsCard(context, queryWidth, textScaleFactor),
-
-            ],
+          body: Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: ListView(
+              scrollDirection: Axis.vertical,
+              children: <Widget>[
+                appointmentCard(context, queryWidth, textScaleFactor),
+                timetableCard(context, queryWidth, textScaleFactor),
+                faqCard(context, queryWidth, textScaleFactor),
+                mentorsCard(context, queryWidth, textScaleFactor),
+              ],
+            ),
           ),
         );
       },
@@ -219,6 +238,29 @@ class _HomePageState extends State<HomePage> {
         .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
   }
 
+  reset() async{
+    var wednesday = 3;
+    var now = DateTime.now();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if((DateTime.now().weekday == 4)&& (DateTime.now().hour>=19)){
+
+      prefs.setBool('hasBooked', false);
+    }
+    while(now.weekday!=wednesday)
+    {
+      now=now.add(new Duration(days: 1));
+      //print(now);
+    }
+    print(DateFormat.d().format(now)+" " + DateFormat.MMM().format(now));
+    prefs.setString('psychDate',DateFormat.d().format(now)+" "+DateFormat.MMM().format(now));
+    prefs.setString('counselDate',DateFormat.d().format(now.add(Duration(days: 1)))+" "+DateFormat.MMM().format(now.add(Duration(days: 1))));
+
+
+
+
+  }
+
+
   _startFAQActivity() async {
     try {
       await platform.invokeMethod('startFaqActivity');
@@ -230,7 +272,21 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     fetchUserData(context);
-       super.initState();
+    reset();
+    /*if(DateTime.now().weekday == 3){
+     if(DateTime.now().hour >= 4){
+       slotsRefMain = FirebaseDatabase.instance.reference().child("slots").child('week1').child('counselor');
+       ScpDatabase.pushNewWeek(slotsRefMain);
+     }
+    }*/
+    super.initState();
+  }
+
+
+  @override
+  void dispose() {
+    super.dispose();
+    //ScpDatabase.pushNewWeek(slotsRefMain).clear();
   }
 
   Future fetchUserData(BuildContext context) async {
