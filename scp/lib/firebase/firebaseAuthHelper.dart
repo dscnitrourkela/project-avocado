@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
@@ -21,61 +22,72 @@ class ScpAuth {
     print('enter smsdialog');
     var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
-
+    final otpController =TextEditingController();
     print(queryWidth);
     return showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (BuildContext context) => AlertDialog(
-              title: Text(
-                'Enter OTP',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: "PfDin",
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-              content: PinCodeTextField(
-                maxLength:6,
-                autofocus: true,
-                isCupertino: true,
-                pinBoxHeight: queryWidth*0.0973,
-                pinBoxWidth: queryWidth*0.0973,
-                defaultBorderColor: Colors.lightBlue,
-                hasTextBorderColor: Colors.blueAccent,
-                onDone:(String otp){
-                  smsCode=otp;
-                }
-
-              ),
-              contentPadding: EdgeInsets.all(10.0),
-              actions: <Widget>[
-                RaisedButton(
-                  child: Text(
-                    'Done',
-                    style: TextStyle(
-                      color:Colors.white,
-                      fontFamily:'PfDin'
-                    ),
+        builder: (BuildContext context) => BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 4,sigmaY: 4),
+          child: AlertDialog(
+                title: Text(
+                  'Enter OTP',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: "PfDin",
+                    fontWeight: FontWeight.w600,
                   ),
-                  shape: RoundedRectangleBorder(
-                  borderRadius:BorderRadius.circular(30.0)
                 ),
-                color: Colors.blue,
-                  onPressed: () {
-                    firebaseInstance.currentUser().then((user) {
-                      if (user == null) {
-                        signIn(context);
-
-                      } else {Navigator.of(context).pushNamed('/userdata');
-                      }
-                    });
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
+                content: TextField(
+                  textAlign: TextAlign.center,
+                  controller: otpController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                          color:Color.fromRGBO(25, 39, 45, 1),
+                      )
+                    )
+                  ),
+                  style:TextStyle(
+                      fontSize: 20*textScaleFactor,
+                      fontWeight: FontWeight.w800,
+                      fontFamily: 'PfDin'
+                  ),
+                  onChanged: (value){
+                    smsCode=value;
                   },
                 ),
-              ],
-            ));
+                contentPadding: EdgeInsets.all(10.0),
+                actions: <Widget>[
+                  RaisedButton(
+                    child: Text(
+                      'Done',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color:Colors.white,
+                        fontFamily:'PfDin'
+                      ),
+                    ),
+                    shape: RoundedRectangleBorder(
+                    borderRadius:BorderRadius.circular(8.0)
+                  ),
+                  color: Color.fromRGBO(25, 39, 45, 1),
+                    onPressed: () {
+                      firebaseInstance.currentUser().then((user) {
+                        if (user == null) {
+                          signIn(context);
+
+                        } else {Navigator.of(context).pushNamed('/userdata');
+                        }
+                      });
+                    },
+                  ),
+                ],
+              ),
+        ));
   }
 
   Future<void> verifyPhone(String phoneNumber) async {
@@ -90,7 +102,7 @@ class ScpAuth {
     final PhoneVerificationCompleted verificationCompleted =
         (AuthCredential credential) {
       print('verified');
-    };
+        };
 
     final PhoneVerificationFailed verificationFailed = (AuthException error) {
       print('${error.message}');

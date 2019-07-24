@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:scp/time_table.dart';
 import 'package:scp/timetable/pracSection.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const List<String> sectionArray = ["A", "B", "C", "D", "E", "F", "G", "H"];
 const FULL_SCALE = 1.0;
@@ -25,27 +27,43 @@ class _TheorySectionState extends State<TheorySection> {
     super.initState();
   }
 
+  Future fetchSection() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool show_timetable =prefs.getBool('show_timetable');
+    if(show_timetable){
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => TimeTable()),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(25, 39, 45, 1),
-        title: Text(
-          "Timetable Selector",
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w500,
-            fontFamily: 'PfDin',
-            color: Colors.white,
+    return FutureBuilder(
+      future: fetchSection(),
+      builder:(context,snap) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Color.fromRGBO(25, 39, 45, 1),
+            title: Text(
+              "Timetable Selector",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w500,
+                fontFamily: 'PfDin',
+                color: Colors.white,
+              ),
+            ),
           ),
-        ),
-      ),
-      body: Container(
-        alignment: Alignment.center,
-        child: Center(
-            child: Stack(
-          children: <Widget>[
-            Align(
+          body: Container(
+            alignment: Alignment.center,
+            child: Center(
+              child: Stack(
+                  children: <Widget>[
+              Align(
               alignment: Alignment(0, -0.6),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -81,35 +99,46 @@ class _TheorySectionState extends State<TheorySection> {
             Align(
               alignment: Alignment(0, 0.6),
               child: FloatingActionButton(
-                onPressed: () => {
-                      Navigator.push(
-                        context,
-                        new MaterialPageRoute(
-                            builder: (ctxt) => PracticalSection(sectionArray[
-                                (pageController.page.round().toInt())])),
-                      )
-                    },
-                child: Icon(Icons.arrow_forward),
-                backgroundColor: Color.fromRGBO(74, 232, 190, 1),
-              ),
+                  onPressed: () => {
+                  Navigator.of(context).pop(),
+              Navigator.push(
+                context,
+                new MaterialPageRoute(
+                    builder: (ctxt) =>
+                        PracticalSection(sectionArray[
+                        (pageController.page.round().toInt())])),
+              )
+              },
+              child: Icon(Icons.arrow_forward),
+              backgroundColor: Color.fromRGBO(74, 232, 190, 1),
             ),
-            Center(
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(16.0))),
-                child: Container(
-                  height: PAGER_HEIGHT,
-                  width: PAGER_HEIGHT,
-                ),
-                elevation: 20,
+          ),
+          Center(
+            child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(16.0))),
+              child: Container(
+                height: PAGER_HEIGHT,
+                width: PAGER_HEIGHT,
               ),
+              elevation: 20,
             ),
-            Align(
-                alignment: Alignment.center,
-                child: _buildCarousel(this, context, 8)),
+          ),
+          Align(
+              alignment: Alignment.center,
+              child: _buildCarousel(this, context, 8)),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Text("The timetable is subject to change")),
+          )
           ],
         )),
-      ),
+        )
+        ,
+        );
+      }
     );
   }
 }
