@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:scp/booking.dart';
 import 'package:scp/cards.dart';
 import 'package:scp/login.dart';
@@ -13,6 +14,8 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:scp/userdata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'firebase/firebaseDBHandler.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'timetable/theorySection.dart';
 
 import 'package:scp/time_table.dart';
@@ -75,24 +78,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String username = " ", rollNo = " ", phoneNo = " ";
-  /*final String jsonT = '{\"slots\" :{' +
-      //'\'slots:\' {'+
-      '\"week1\" :{'+
-      '\”counselor\” :{'+
-      '\”slot1\” :{'+
-      '\”phoneNo\” :\”\”,'+
-      '\”rollNo\” :\”\”,'+
-      '\”status\” :\”0\”,'+
-      '\”time\” :\”5:00 PM\”'+
-      '},'+
-      '}'+
-      '}'+
-      '}'+
-      '}';*/
+  DatabaseReference slotsRefMain;
+
+
+
   static const platform = const MethodChannel("FAQ_ACTIVITY");
   @override
   Widget build(BuildContext context) {
     print(DateTime.now().weekday);
+    print(DateTime.now().hour);
+    //ScpDatabase.pushNewWeek(slotsRefMain);
 
     //Map jMap = json.decode(jsonT);
     //print(jMap);
@@ -184,6 +179,29 @@ class _HomePageState extends State<HomePage> {
         .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
   }
 
+  reset() async{
+    var wednesday = 3;
+    var now = DateTime.now();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if((DateTime.now().weekday == 4)&& (DateTime.now().hour>=19)){
+
+      prefs.setBool('hasBooked', false);
+    }
+    while(now.weekday!=wednesday)
+    {
+      now=now.add(new Duration(days: 1));
+      //print(now);
+    }
+    print(DateFormat.d().format(now)+" " + DateFormat.MMM().format(now));
+    prefs.setString('psychDate',DateFormat.d().format(now)+" "+DateFormat.MMM().format(now));
+    prefs.setString('counselDate',DateFormat.d().format(now.add(Duration(days: 1)))+" "+DateFormat.MMM().format(now.add(Duration(days: 1))));
+
+
+
+
+  }
+
+
   _startFAQActivity() async {
     try {
       await platform.invokeMethod('startFaqActivity');
@@ -192,14 +210,24 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  _newWeekPusher() async{
-    var day = DateTime.now().weekday;
-  }
-
   @override
   void initState() {
     fetchUserData(context);
-       super.initState();
+    reset();
+    /*if(DateTime.now().weekday == 3){
+     if(DateTime.now().hour >= 4){
+       slotsRefMain = FirebaseDatabase.instance.reference().child("slots").child('week1').child('counselor');
+       ScpDatabase.pushNewWeek(slotsRefMain);
+     }
+    }*/
+    super.initState();
+  }
+
+
+  @override
+  void dispose() {
+    super.dispose();
+    //ScpDatabase.pushNewWeek(slotsRefMain).clear();
   }
 
   Future fetchUserData(BuildContext context) async {
