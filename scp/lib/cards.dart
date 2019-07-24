@@ -20,8 +20,15 @@ Widget appointmentCard(
     child: Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: InkWell(
-        onTap: () {
-          Navigator.of(context).pushNamed('/appointments');
+        onTap: () async{
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          if(prefs.getBool('hasBooked') == true){
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    Booking(keyCode: gKey, counselDay: gCounselDay, time: gTime)));
+          }
+          else
+            Navigator.of(context).pushNamed('/appointments');
         },
         child: Card(
           shape:
@@ -469,38 +476,57 @@ Widget timetableCard(
   );
 }
 
+var gKey, gCounselDay, gTime;
+
 Widget slotCard(
     BuildContext context,
     double heightFactor,
     double textScaleFactor,
     String counselDay,
+    String date,
     String titleText,
+    String type,
     String designation) {
-  Widget slotWidget(String status, String key, String time) {
+  Widget slotWidget(String status, String key,String time) {
     final bool visible = false;
     bool isSelected = false;
 
-    void bookAppointment(String key) async{
 
+    void bookAppointment(String key) async{
+      print(counselDay);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var rollNo = prefs.getString('roll_no');
       var phoneNo = prefs.getString('phone_no');
+      //prefs.setString('counselPsychDay', counselDay);
+      prefs.setBool('hasBooked', true);
+      prefs.setString('bookedDate', date);
+      prefs.setString('bookingType', type);
+      gCounselDay = counselDay;
+      gKey = key;
+      gTime = time;
+      prefs.setString('bookedTime', gTime);
 
-      await ScpDatabase.slotsRef.child(key).update({
+      var reference = (type == "psych")?ScpDatabase.psychRef:ScpDatabase.counselRef;
+
+      await reference.child(key).update({
         "phoneNo" : phoneNo,
         "rollNo" : rollNo,
         "status" : "1",
       }).then((_){
         print("Value updated");
+        Navigator.of(context).pop();
         Navigator.of(context).push(MaterialPageRoute(
             builder: (BuildContext context) =>
                 Booking(keyCode: key, counselDay: counselDay, time: time)));
       });
     }
 
+
+
+
     return StatefulBuilder(
-      builder: (BuildContext context, StateSetter setSlotWidgetState) =>
-          InkWell(
+      builder: (BuildContext context, StateSetter setSlotWidgetState){
+          return InkWell(
         onTap: () {
           switch (status) {
             case "0":
@@ -532,9 +558,9 @@ Widget slotCard(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        onPressed: () async{
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
-                          prefs.setBool("isBookingActive", true);
+                        onPressed: () {
+                          //SharedPreferences prefs = await SharedPreferences.getInstance();
+                          //prefs.setBool("isBookingActive", true);
                           Navigator.pop(context);
                           bookAppointment(key);
                         },
@@ -579,7 +605,7 @@ Widget slotCard(
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      '$counselDay | 26th July | $time',
+                      '$counselDay | $date | $time',
                       style: TextStyle(
                           color: (status == "0")
                               ? (isSelected ? Colors.black : Colors.cyan)
@@ -612,7 +638,7 @@ Widget slotCard(
             ),
           ),
         ),
-      ),
+      );},
     );
   }
 
@@ -654,7 +680,7 @@ Widget slotCard(
               height: heightFactor * 0.047,
             ),
             StreamBuilder(
-                stream: ScpDatabase.slotsRef.once().asStream(),
+                stream: (type == "psych")? ScpDatabase.psychRef.once().asStream():ScpDatabase.counselRef.once().asStream(),
                 builder: (context, snapshot) {
                   DataSnapshot _slotsSnapshot = snapshot.data;
                   if (!snapshot.hasData) {
