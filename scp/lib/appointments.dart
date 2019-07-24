@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:scp/cards.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Appointments extends StatefulWidget {
   @override
@@ -16,8 +17,9 @@ class _AppointmentsState extends State<Appointments> {
   double queryWidth;
   double textScaleFactor;
   static String counselDay, counselorName, psychName, psychDay;
-  StreamSubscription<Event> _onSlotsChangedSubscription;
+  StreamSubscription<Event> _onCounselChangedSubscription, _onPsychChangedSubscription;
   ScpDatabase scpDatabase;
+  String psychDate,counselDate;
 
   void _onSlotsUpdated(Event event) async {
     setState(() {});
@@ -26,21 +28,24 @@ class _AppointmentsState extends State<Appointments> {
   @override
   void initState() {
     /*ScpDatabase().init();*/
-    isBookingAnonymously = false;
+    getDate();
+    //isBookingAnonymously = false;
     scpDatabase = ScpDatabase();
     scpDatabase.init();
-    _onSlotsChangedSubscription =
-        ScpDatabase.slotsRef.onChildChanged.listen(_onSlotsUpdated);
+    _onCounselChangedSubscription =
+        ScpDatabase.counselRef.onChildChanged.listen(_onSlotsUpdated);
+    _onPsychChangedSubscription = ScpDatabase.psychRef.onChildChanged.listen(_onSlotsUpdated);
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _onSlotsChangedSubscription.cancel();
+    _onCounselChangedSubscription.cancel();
+    _onPsychChangedSubscription.cancel();
   }
 
-  Widget anonymousButton() =>
+  /*Widget anonymousButton() =>
       StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: queryWidth * 0.05),
@@ -71,10 +76,11 @@ class _AppointmentsState extends State<Appointments> {
             shape: StadiumBorder(),
           ),
         );
-      });
+      });*/
 
   @override
   Widget build(BuildContext context) {
+
     queryWidth = MediaQuery.of(context).size.width;
     textScaleFactor = MediaQuery.of(context).textScaleFactor;
 
@@ -105,8 +111,14 @@ class _AppointmentsState extends State<Appointments> {
             ),
             leading: Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child: Icon(
-                Icons.arrow_back_ios,
+              child: IconButton(
+                onPressed: (){
+                  Navigator.of(context);
+                  Navigator.pushNamed(context, '/homePage');
+                },
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                ),
               ),
             ),
             elevation: 0.0,
@@ -129,26 +141,33 @@ class _AppointmentsState extends State<Appointments> {
       scrollDirection: Axis.vertical,
       padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 30.0),
       children: <Widget>[
-        anonymousButton(),
+        //anonymousButton(),
         SizedBox(
           height: 20.0,
         ),
-        slotCard(context, this.queryWidth, this.textScaleFactor, psychDay,
-            psychName, 'Psychiatrist'),
+        slotCard(context, this.queryWidth, this.textScaleFactor, psychDay,psychDate,
+            psychName, 'psych','Psychiatrist'),
         SizedBox(
           height: 40.0,
         ),
-        slotCard(context, this.queryWidth, this.textScaleFactor, counselDay,
-            counselorName, 'Counsellor'),
+        slotCard(context, this.queryWidth, this.textScaleFactor, counselDay,counselDate,
+            counselorName, 'counsel', 'Counsellor'),
       ],
     );
+  }
+
+  getDate() async{
+    SharedPreferences prefs=await SharedPreferences.getInstance();
+    psychDate=prefs.getString('psychDate');
+    counselDate=prefs.getString('counselDate');
+
+
   }
 
   Future<RemoteConfig> _setupRemoteConfig() async {
     RemoteConfig remoteConfig = await RemoteConfig.instance;
     // Enable developer mode to relax fetch throttling
     remoteConfig.setConfigSettings(RemoteConfigSettings(debugMode: true));
-    // Using default duration to force fetching from remote server.
     await remoteConfig.fetch(expiration: const Duration(seconds: 0));
     await remoteConfig.activateFetched();
     counselDay = remoteConfig.getString('counsel_day');
