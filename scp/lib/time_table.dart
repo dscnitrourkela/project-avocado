@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'time_table_resources.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TimeTable extends StatefulWidget {
-  String theorySection, practicalSection;
-  TimeTable({this.theorySection,this.practicalSection});
+  TimeTable();
 
   @override
-  TimeTableState createState() =>
-      new TimeTableState(theorySection: theorySection, practicalSection: practicalSection);
+  TimeTableState createState() => new TimeTableState();
 }
 
 class TimeTableState extends State<TimeTable> {
   String theorySection = 'E';
   String practicalSection = 'P6';
   String sectionSequence = 'pt';
-  TimeTableState({this.theorySection,this.practicalSection});
 
   bool showTimeTable = false;
 
@@ -25,65 +23,108 @@ class TimeTableState extends State<TimeTable> {
   final double unitHeight = 80.0;
   double screenWidth, screenHeight;
 
+
+  Future _fetchSectionData(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    theorySection = prefs.getString('theory_section');
+    practicalSection = prefs.getString('prac_section');
+    if((theorySection.compareTo('A')==0)||(theorySection.compareTo('D')==0)||(theorySection.compareTo('C')==0)||(theorySection.compareTo('B')==0))
+      {
+        sectionSequence = 'tp';
+      }
+    print("PSA"+sectionSequence);
+  }
+
+  _resetSections(BuildContext context) async{
+    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
+    sharedPreferences.getKeys();
+    sharedPreferences.remove('theory_section');
+    sharedPreferences.remove('prac_section');
+    sharedPreferences.setBool('show_timetable', false);
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('/homePage', (Route<dynamic> route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text(
-          'Your Timetable',
-        ),
-        backgroundColor: primaryColor,
-      ),
-      body: DefaultTabController(
-        length: 5,
-        child: Scaffold(
+    return FutureBuilder(
+      future: _fetchSectionData(context),
+      builder: (context, snap) {
+        return Scaffold(
           backgroundColor: Colors.white,
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(80.0),
-            child: AppBar(
-              brightness: Brightness.light,
-              automaticallyImplyLeading: false,
-              backgroundColor: Colors.white,
-              elevation: 0.0,
-              toolbarOpacity: 0.0,
-              flexibleSpace: TabBar(
-                indicatorPadding: EdgeInsets.zero,
-                labelStyle: TextStyle(
-                  color: primaryColor,
-                  fontSize: 30,
-                ),
-                unselectedLabelStyle:
-                    TextStyle(color: primaryColor.withAlpha(100), fontSize: 20),
-                labelPadding:
-                    EdgeInsets.symmetric(vertical: 16.0, horizontal: 48.0),
-                indicatorColor: Colors.transparent,
-                tabs: TimeTableResources.sequence[sectionSequence].keys
-                    .map(
-                      (day) => Tab(
-                        child: Text(
-                          day,
-                          style: TextStyle(
-                            color: primaryColor,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
+          appBar: AppBar(
+            actions: <Widget>[
+              PopupMenuButton<String>(
+                onSelected: (val) {
+                  _resetSections(context);
+
+                },
+                itemBuilder: (BuildContext context) {
+                  return <PopupMenuEntry<String>>[
+                    PopupMenuItem<String>(
+                      value: "Reset",
+                      child: Text("Reset section"),
                     )
-                    .toList(),
-                isScrollable: true,
+                  ];
+                },
+              )
+            ],
+            title: Text(
+              'Your Timetable',
+            ),
+            backgroundColor: primaryColor,
+          ),
+          body: DefaultTabController(
+            length: 5,
+            child: Scaffold(
+              backgroundColor: Colors.white,
+              appBar: PreferredSize(
+                preferredSize: Size.fromHeight(80.0),
+                child: AppBar(
+                  brightness: Brightness.light,
+                  automaticallyImplyLeading: false,
+                  backgroundColor: Colors.white,
+                  elevation: 0.0,
+                  toolbarOpacity: 0.0,
+                  flexibleSpace: TabBar(
+                    indicatorPadding: EdgeInsets.zero,
+                    labelStyle: TextStyle(
+                      color: primaryColor,
+                      fontSize: 30,
+                    ),
+                    unselectedLabelStyle: TextStyle(
+                        color: primaryColor.withAlpha(100), fontSize: 20),
+                    labelPadding:
+                        EdgeInsets.symmetric(vertical: 16.0, horizontal: 48.0),
+                    indicatorColor: Colors.transparent,
+                    tabs: TimeTableResources.sequence[sectionSequence].keys
+                        .map(
+                          (day) => Tab(
+                            child: Text(
+                              day,
+                              style: TextStyle(
+                                color: primaryColor,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    isScrollable: true,
+                  ),
+                ),
               ),
+              body: TabBarView(
+                  children: TimeTableResources.sequence[sectionSequence].entries
+                      .map((entry) => Container(
+                          child: buildList(context, entry.key, entry.value)))
+                      .toList()),
             ),
           ),
-          body: TabBarView(
-              children: TimeTableResources.sequence[sectionSequence].entries
-                  .map((entry) => Container(
-                      child: buildList(context, entry.key, entry.value)))
-                  .toList()),
-        ),
-      ),
+        );
+      },
     );
   }
 

@@ -1,5 +1,5 @@
 name: scp
-description: Mobile app of SCP NIT Rourkela
+description: Mobile app of SCS NIT Rourkela
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -28,9 +28,14 @@ dependencies:
   intl: ^0.15.2
 
 dev_dependencies:
+  flutter_launcher_icons: "^0.7.2"
   flutter_test:
     sdk: flutter
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

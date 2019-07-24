@@ -171,9 +171,8 @@ Widget mentorsCard(
     height: heightFactor * 0.64,
     child: InkWell(
       onTap: () {
-                },
-      child: Padding(
-        padding: EdgeInsets.only(bottom: 20.0),
+        Navigator.of(context).pushNamed('/mentors');
+                }
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
@@ -235,7 +234,7 @@ Widget mentorsCard(
                             child: SizedBox(
                               width: 200.0,
                               child: Text(
-                                'Find the complete database of SCP Mentors',
+                                'Find the complete database of SCS Mentors',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   fontSize: heightFactor * 0.038,
@@ -282,7 +281,7 @@ _startFAQActivity() async {
 }
 
 Widget faqCard(
-    BuildContext context, double heightFactor, double textScaleFactor) {
+    BuildContext context, double heightFactor, double textScaleFactor){
   Gradients().init(context);
   return SizedBox(
     height: heightFactor * 0.58,
@@ -644,6 +643,7 @@ Widget slotCard(
 
   return Container(
     color: Colors.white,
+
     child: SizedBox(
       height: heightFactor * 1.1,
       width: heightFactor * 0.85,
@@ -654,7 +654,7 @@ Widget slotCard(
             12.0,
           ),
         ),
-        elevation: 4.0,
+        elevation: 5.0,
         child: Column(
           children: <Widget>[
             Padding(
