@@ -20,8 +20,15 @@ Widget appointmentCard(
     child: Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: InkWell(
-        onTap: () {
-          Navigator.of(context).pushNamed('/appointments');
+        onTap: () async{
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          if(prefs.getBool('hasBooked') == true){
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    Booking(keyCode: gKey, counselDay: gCounselDay, time: gTime)));
+          }
+          else
+            Navigator.of(context).pushNamed('/appointments');
         },
         child: Card(
           shape:
@@ -50,18 +57,18 @@ Widget appointmentCard(
                                 alignment: Alignment.centerLeft,
                                 child: Container(
                                   width: 65.0,
-                                  decoration: BoxDecoration(
+                                  /*decoration: BoxDecoration(
                                     border: Border.all(
                                         width: 1.0, color: Colors.white),
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(5.0),
                                     ),
-                                  ),
+                                  ),*/
                                   child: Text(
                                     'BOOK',
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 20.0,
+                                      fontSize: 18.0,
                                       fontFamily: 'PfDin',
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -72,14 +79,14 @@ Widget appointmentCard(
                             ),
                             Padding(
                               padding:
-                                  const EdgeInsets.only(top: 20.0, left: 5.0),
+                                  const EdgeInsets.only(top: 20.0, left: 0.0),
                               child: Container(
                                 alignment: Alignment.bottomLeft,
                                 child: Text(
                                   'YOUR',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 20.0,
+                                    fontSize: 18.0,
                                     fontFamily: 'PfDin',
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -161,13 +168,11 @@ Widget mentorsCard(
     BuildContext context, double heightFactor, double textScaleFactor) {
   Gradients().init(context);
   return SizedBox(
-    height: heightFactor * 0.58,
-    child: Padding(
-      padding: const EdgeInsets.only(top: 12.0),
-      child: InkWell(
-        onTap: () {
-          Navigator.of(context).pushNamed('/mentors');
-                  },
+    height: heightFactor * 0.64,
+    child: InkWell(
+      onTap: () {
+        Navigator.of(context).pushNamed('/mentors');
+                }
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
@@ -214,7 +219,6 @@ Widget mentorsCard(
                                         fontSize: heightFactor * 0.07,
                                         color:
                                             Color.fromRGBO(142, 40, 142, 1.0),
-                                        fontStyle: FontStyle.italic,
                                         fontWeight: FontWeight.w500),
                                     textAlign: TextAlign.left,
                                   ),
@@ -281,42 +285,58 @@ Widget faqCard(
   Gradients().init(context);
   return SizedBox(
     height: heightFactor * 0.58,
-    child: Padding(
-      padding: const EdgeInsets.only(top: 12.0),
-      child: InkWell(
-        onTap: () {
-          _startFAQActivity();
-        },
-        child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
-          elevation: 8.0,
-          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
-          child: Stack(
-            fit: StackFit.loose,
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(24.0),
+    child: InkWell(
+      onTap: () {
+        _startFAQActivity();
+      },
+      child: Card(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+        elevation: 8.0,
+        margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
+        child: Stack(
+          fit: StackFit.loose,
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(24.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: Gradients.faqCardGradient,
+                ),
                 child: Container(
-                  decoration: BoxDecoration(
-                    gradient: Gradients.faqCardGradient,
-                  ),
-                  child: Container(
-                    height: heightFactor * 0.58,
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 28.0,
-                            top: 32.0,
+                  height: heightFactor * 0.58,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 18.0,
+                          top: 32.0,
+                        ),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'FAQs',
+                            style: TextStyle(
+                              fontSize: heightFactor * 0.15,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'PfDin',
+                            ),
                           ),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: SizedBox(
+                            width: 200.0,
                             child: Text(
-                              'FAQs',
+                              'Find the answers to our most frequently asked questions',
+                              textAlign: TextAlign.left,
                               style: TextStyle(
-                                fontSize: heightFactor * 0.15,
-                                fontStyle: FontStyle.italic,
+                                fontSize: heightFactor * 0.038,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'PfDin',
@@ -324,47 +344,28 @@ Widget faqCard(
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 28.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: SizedBox(
-                              width: 200.0,
-                              child: Text(
-                                'Find the answers to our most frequently asked questions',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: heightFactor * 0.038,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'PfDin',
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              Positioned(
-                top: 16.0,
-                bottom: -10.0,
-                right: 0.0,
-                child: Image.asset(
-                  'assets/scp_faq.png',
-                  width: heightFactor * 0.45,
-                  height: heightFactor * 0.45,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.bottomRight,
-                  colorBlendMode: BlendMode.color,
-                ),
+            ),
+            Positioned(
+              top: 16.0,
+              bottom: -10.0,
+              right: 0.0,
+              child: Image.asset(
+                'assets/scp_faq.png',
+                width: heightFactor * 0.45,
+                height: heightFactor * 0.45,
+                fit: BoxFit.cover,
+                alignment: Alignment.bottomRight,
+                colorBlendMode: BlendMode.color,
               ),
-        ],
-      ),
+            ),
+      ],
     ),
-  ),
+    ),
   ),);
 }
 
@@ -373,138 +374,158 @@ Widget timetableCard(
   Gradients().init(context);
   return SizedBox(
     height: heightFactor * 0.58,
-    child: Padding(
-      padding: const EdgeInsets.only(top: 12.0),
-      child: InkWell(
-        onTap: () {
-          Navigator.pushNamed(context, '/timetable');
-        },
-        child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
-          elevation: 8.0,
-          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
-          child: Stack(
-            fit: StackFit.loose,
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(24.0),
+    child: InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, '/timetable');
+      },
+      child: Card(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+        elevation: 8.0,
+        margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
+        child: Stack(
+          fit: StackFit.loose,
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(24.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: Gradients.timetableCardGradient,
+                ),
                 child: Container(
-                  decoration: BoxDecoration(
-                    gradient: Gradients.timetableCardGradient,
-                  ),
-                  child: Container(
-                    height: heightFactor * 0.58,
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20.0),
-                          child: ListTile(
-                            contentPadding:
-                                EdgeInsets.symmetric(vertical: 10.0),
-                            title: ShaderMask(
-                              shaderCallback: (rect) {
-                                return LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [Colors.black, Colors.transparent],
-                                ).createShader(Rect.fromLTRB(
-                                    0, 0, rect.width, rect.height));
-                              },
-                              blendMode: BlendMode.dstIn,
-                              child: Container(
-                                height: heightFactor * 0.15,
+                  height: heightFactor * 0.58,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20.0),
+                        child: ListTile(
+                          contentPadding:
+                              EdgeInsets.symmetric(vertical: 10.0),
+                          title: ShaderMask(
+                            shaderCallback: (rect) {
+                              return LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [Colors.black, Colors.transparent],
+                              ).createShader(Rect.fromLTRB(
+                                  0, 0, rect.width, rect.height));
+                            },
+                            blendMode: BlendMode.dstIn,
+                            child: Container(
+                              height: heightFactor * 0.15,
+                              color: Colors.white,
+                              padding: EdgeInsets.only(left: 18.0),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'MY TIMETABLE',
+                                  style: TextStyle(
+                                      fontFamily: 'PfDin',
+                                      fontSize: heightFactor * 0.07,
+                                      color:
+                                          Color.fromRGBO(142, 40, 142, 1.0),
+                                      fontWeight: FontWeight.w500),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 14.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: SizedBox(
+                            width: 200.0,
+                            child: Text(
+                              'Set your personal timetable and get information about class timings and location',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontSize: heightFactor * 0.038,
                                 color: Colors.white,
-                                padding: EdgeInsets.only(left: 18.0),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'MY TIMETABLE',
-                                    style: TextStyle(
-                                        fontFamily: 'PfDin',
-                                        fontSize: heightFactor * 0.07,
-                                        color:
-                                            Color.fromRGBO(142, 40, 142, 1.0),
-                                        fontStyle: FontStyle.italic,
-                                        fontWeight: FontWeight.w500),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'PfDin',
                               ),
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 14.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: SizedBox(
-                              width: 200.0,
-                              child: Text(
-                                'Set your personal timetable and get information about class timings and location',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: heightFactor * 0.038,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'PfDin',
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              Positioned(
-                top: 10.0,
-                right: 0.0,
-                child: Image.asset(
-                  'assets/scp_timetable.png',
-                  width: heightFactor * 0.45,
-                  height: heightFactor * 0.45,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.bottomRight,
-                  colorBlendMode: BlendMode.color,
-                ),
+            ),
+            Positioned(
+              top: 10.0,
+              right: 0.0,
+              child: Image.asset(
+                'assets/scp_timetable.png',
+                width: heightFactor * 0.45,
+                height: heightFactor * 0.45,
+                fit: BoxFit.cover,
+                alignment: Alignment.bottomRight,
+                colorBlendMode: BlendMode.color,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     ),
   );
 }
 
+var gKey, gCounselDay, gTime;
+
 Widget slotCard(
     BuildContext context,
     double heightFactor,
     double textScaleFactor,
     String counselDay,
+    String date,
     String titleText,
+    String type,
     String designation) {
-  Widget slotWidget(String status, String key, String time) {
+  Widget slotWidget(String status, String key,String time) {
     final bool visible = false;
     bool isSelected = false;
 
+
     void bookAppointment(String key) async{
-      await ScpDatabase.slotsRef.child(key).update({
-        "phoneNo" : "",
-        "rollNo" : "",
+      print(counselDay);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var rollNo = prefs.getString('roll_no');
+      var phoneNo = prefs.getString('phone_no');
+      //prefs.setString('counselPsychDay', counselDay);
+      prefs.setBool('hasBooked', true);
+      prefs.setString('bookedDate', date);
+      prefs.setString('bookingType', type);
+      gCounselDay = counselDay;
+      gKey = key;
+      gTime = time;
+      prefs.setString('bookedTime', gTime);
+
+      var reference = (type == "psych")?ScpDatabase.psychRef:ScpDatabase.counselRef;
+
+      await reference.child(key).update({
+        "phoneNo" : phoneNo,
+        "rollNo" : rollNo,
         "status" : "1",
       }).then((_){
         print("Value updated");
+        Navigator.of(context).pop();
         Navigator.of(context).push(MaterialPageRoute(
             builder: (BuildContext context) =>
-                Booking(keyCode: key)));
+                Booking(keyCode: key, counselDay: counselDay, time: time)));
       });
     }
 
+
+
+
     return StatefulBuilder(
-      builder: (BuildContext context, StateSetter setSlotWidgetState) =>
-          InkWell(
+      builder: (BuildContext context, StateSetter setSlotWidgetState){
+          return InkWell(
         onTap: () {
           switch (status) {
             case "0":
@@ -516,6 +537,9 @@ Widget slotCard(
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                     title: Text('Confirm Slot Booking?'),
                     actions: <Widget>[
                       FlatButton(
@@ -530,7 +554,12 @@ Widget slotCard(
                       ),
                       RaisedButton(
                         color: Colors.cyan,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
                         onPressed: () {
+                          //SharedPreferences prefs = await SharedPreferences.getInstance();
+                          //prefs.setBool("isBookingActive", true);
                           Navigator.pop(context);
                           bookAppointment(key);
                         },
@@ -575,7 +604,7 @@ Widget slotCard(
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      '$counselDay | 26th July | $time',
+                      '$counselDay | $date | $time',
                       style: TextStyle(
                           color: (status == "0")
                               ? (isSelected ? Colors.black : Colors.cyan)
@@ -608,7 +637,7 @@ Widget slotCard(
             ),
           ),
         ),
-      ),
+      );},
     );
   }
 
@@ -651,7 +680,7 @@ Widget slotCard(
               height: heightFactor * 0.047,
             ),
             StreamBuilder(
-                stream: ScpDatabase.slotsRef.once().asStream(),
+                stream: (type == "psych")? ScpDatabase.psychRef.once().asStream():ScpDatabase.counselRef.once().asStream(),
                 builder: (context, snapshot) {
                   DataSnapshot _slotsSnapshot = snapshot.data;
                   if (!snapshot.hasData) {
