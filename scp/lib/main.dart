@@ -28,6 +28,7 @@ import 'package:scp/time_table.dart';
 var firebaseInstance = FirebaseAuth.instance;
 final PRIVACY_POLICY="https://project-avocado-8b3e1.firebaseapp.com";
 void main() => runApp(MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'SCS',
       routes: <String, WidgetBuilder>{
         '/homePage': (BuildContext context) => HomePage(title: 'SCS Home Page'),
@@ -194,12 +195,15 @@ class _HomePageState extends State<HomePage> {
                 ],
               )),
           appBar: AppBar(
-            leading: IconButton(icon: Icon(Icons.menu,color:Colors.black,),onPressed: ()=>_scaffoldKey.currentState.openDrawer()),
+            leading: Padding(
+              padding: EdgeInsets.only(top: queryWidth * 0.037),
+              child: IconButton(icon: Icon(Icons.menu,color:Colors.black,size: 35.0,),onPressed: ()=>_scaffoldKey.currentState.openDrawer()),
+            ),
             backgroundColor: Colors.white,
             elevation: 0,
             centerTitle: true,
             title: Padding(
-              padding: const EdgeInsets.only(top: 16.0),
+              padding: EdgeInsets.only(top: queryWidth * 0.037),
               child: Text(
                 'SCS',
                 textAlign: TextAlign.center,
@@ -242,7 +246,7 @@ class _HomePageState extends State<HomePage> {
     var wednesday = 3;
     var now = DateTime.now();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if((DateTime.now().weekday == 4)&& (DateTime.now().hour>=19)){
+    if((DateTime.now().weekday == 3)&& (DateTime.now().hour>=19)){
 
       prefs.setBool('hasBooked', false);
     }
@@ -253,7 +257,7 @@ class _HomePageState extends State<HomePage> {
     }
     print(DateFormat.d().format(now)+" " + DateFormat.MMM().format(now));
     prefs.setString('psychDate',DateFormat.d().format(now)+" "+DateFormat.MMM().format(now));
-    prefs.setString('counselDate',DateFormat.d().format(now.add(Duration(days: 1)))+" "+DateFormat.MMM().format(now.add(Duration(days: 1))));
+    prefs.setString('counselDate',DateFormat.d().format(now.subtract(Duration(days: 1)))+" "+DateFormat.MMM().format(now.subtract(Duration(days: 1))));
 
 
 
