@@ -102,6 +102,8 @@ class ScpAuth {
     final PhoneVerificationCompleted verificationCompleted =
         (AuthCredential credential) {
       print('verified');
+      signInSpecial(context,credential);
+
         };
 
     final PhoneVerificationFailed verificationFailed = (AuthException error) {
@@ -129,6 +131,19 @@ class ScpAuth {
         .signInWithCredential(credential)
         .then((user) {
       
+      Navigator.of(context).pushNamed('/userdata');
+    }).catchError((error) {
+      print(error);
+    });
+  }
+
+  static signInSpecial(BuildContext context, AuthCredential credential) async {
+    print(verificationId);
+    print(smsCode);
+    final FirebaseUser user = await firebaseInstance
+        .signInWithCredential(credential)
+        .then((user) {
+
       Navigator.of(context).pushNamed('/userdata');
     }).catchError((error) {
       print(error);
