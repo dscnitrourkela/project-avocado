@@ -130,13 +130,16 @@ Widget appointmentCard(
                         Container(
                           padding: EdgeInsets.only(left: 14.0),
                           alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Feel like talking to someone?',
-                            style: TextStyle(
-                                fontSize: heightFactor * 0.037,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'PfDin'),
+                          child: SizedBox(
+                            width: heightFactor * 0.47,
+                            child: Text(
+                              'Feel like talking to someone? Meet a counsellor today!',
+                              style: TextStyle(
+                                  fontSize: heightFactor * 0.037,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'PfDin'),
+                            ),
                           ),
                         )
                       ],
