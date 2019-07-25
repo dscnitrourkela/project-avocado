@@ -172,7 +172,7 @@ Widget mentorsCard(
     child: InkWell(
       onTap: () {
         Navigator.of(context).pushNamed('/mentors');
-                }
+                },
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
@@ -268,8 +268,7 @@ Widget mentorsCard(
           ),
         ),
       ),
-    ),
-  );
+    );
 }
 
 _startFAQActivity() async {
