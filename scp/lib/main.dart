@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:scp/booking.dart';
 import 'package:scp/cards.dart';
-import 'package:scp/drawer_screens/about_scp.dart';
+import 'package:scp/drawer_screens/about_scs.dart';
 import 'package:scp/drawer_screens/dev_info.dart';
 import 'package:scp/drawer_screens/important_documents.dart';
 import 'package:scp/login.dart';
@@ -26,7 +26,7 @@ import 'timetable/theorySection.dart';
 import 'package:scp/time_table.dart';
 
 var firebaseInstance = FirebaseAuth.instance;
-final PRIVACY_POLICY="https://project-avocado-8b3e1.firebaseapp.com";
+final PRIVACY_POLICY = "https://project-avocado-8b3e1.firebaseapp.com";
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'SCS',
@@ -38,11 +38,10 @@ void main() => runApp(MaterialApp(
         '/userdata': (BuildContext context) => Userdata(),
         '/login': (BuildContext context) => Login(),
         '/booking': (BuildContext context) => Booking(),
-        '/about_scp':(BuildContext context)=>AboutSCP(),
-        '/mentors':(BuildContext context)=>Mentors(),
-        '/imp_docs':(BuildContext context)=>ImpDocs(),
-        '/dev_info':(BuildContext context)=>DevInfo()
-
+        '/about_scp': (BuildContext context) => AboutSCP(),
+        '/mentors': (BuildContext context) => Mentors(),
+        '/imp_docs': (BuildContext context) => ImpDocs(),
+        '/dev_info': (BuildContext context) => DevInfo()
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -110,94 +109,119 @@ class _HomePageState extends State<HomePage> {
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return FutureBuilder(
       future: fetchUserData(context),
-      builder: (context,snap){
+      builder: (context, snap) {
         return Scaffold(
           key: _scaffoldKey,
           drawer: Drawer(
               child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              DrawerHeader(
+                  child: Column(
+                mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  DrawerHeader(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            username,
-                            style: TextStyle(fontSize: 25.0, fontFamily: 'PfDin'),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 4.0),
-                            child: Text(phoneNo,style: TextStyle(fontSize: 15.0, fontFamily: 'PfDin'),),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 4.0),
-                            child: Text(rollNo,style: TextStyle(fontSize: 15.0, fontFamily: 'PfDin'),),
-                          )
-                        ],
-                      )),
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        ListTile(
-                          onTap:(){
-                            Navigator.of(context).pushNamed('/imp_docs');
-                         },
-                          title: Text("Important Documents",style: TextStyle(fontSize: 18.0, fontFamily: 'PfDin'),),
-                        ),
-                        ListTile(
-                          onTap:(){
-                            Navigator.pushNamed(context, '/about_scp');
-                          },
-                          title: Text("About SCS",style: TextStyle(fontSize: 18.0, fontFamily: 'PfDin'),),
-                        ),
-                        ListTile(
-                          onTap:(){
-                            _launchURL();
-                          },
-                          title: Text("Privacy Policy",style: TextStyle(fontSize: 18.0, fontFamily: 'PfDin'),),
-                        ),
-                        ListTile(
-                          onTap:(){
-                            Navigator.of(context).pushNamed('/dev_info');
-                          },
-                          title: Text("Developer Info",style: TextStyle(fontSize: 18.0, fontFamily: 'PfDin'),),
-                        ),
-                      ],
+                  Text(
+                    username,
+                    style: TextStyle(fontSize: 25.0, fontFamily: 'PfDin'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4.0),
+                    child: Text(
+                      phoneNo,
+                      style: TextStyle(fontSize: 15.0, fontFamily: 'PfDin'),
                     ),
                   ),
-                  Expanded(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: ButtonTheme(
-                          minWidth: 200,
-                          height: 40,
-                          child: RaisedButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:BorderRadius.circular(8.0)
-                              ),
-                              color: Color.fromRGBO(25, 39, 45, 1),
-                            onPressed:(){
-                              _removeUserData(context);
-                            },
-                            child: Text("Log Out",style:TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontFamily:'PfDin',
-                                color: Colors.white,
-                                fontSize: 20*textScaleFactor
-                            ),),
-                          ),
-                        ),
-                      ))
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4.0),
+                    child: Text(
+                      rollNo,
+                      style: TextStyle(fontSize: 15.0, fontFamily: 'PfDin'),
+                    ),
+                  )
                 ],
               )),
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    ListTile(
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/imp_docs');
+                      },
+                      title: Text(
+                        "Important Documents",
+                        style: TextStyle(fontSize: 18.0, fontFamily: 'PfDin'),
+                      ),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/about_scp');
+                      },
+                      title: Text(
+                        "About SCS",
+                        style: TextStyle(fontSize: 18.0, fontFamily: 'PfDin'),
+                      ),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        _launchURL();
+                      },
+                      title: Text(
+                        "Privacy Policy",
+                        style: TextStyle(fontSize: 18.0, fontFamily: 'PfDin'),
+                      ),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/dev_info');
+                      },
+                      title: Text(
+                        "Developer Info",
+                        style: TextStyle(fontSize: 18.0, fontFamily: 'PfDin'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                  child: Align(
+                alignment: Alignment.center,
+                child: ButtonTheme(
+                  minWidth: 200,
+                  height: 40,
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0)),
+                    color: Color.fromRGBO(25, 39, 45, 1),
+                    onPressed: () {
+                      _removeUserData(context);
+                    },
+                    child: Text(
+                      "Log Out",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'PfDin',
+                          color: Colors.white,
+                          fontSize: 20 * textScaleFactor),
+                    ),
+                  ),
+                ),
+              ))
+            ],
+          )),
           appBar: AppBar(
             leading: Padding(
               padding: EdgeInsets.only(top: queryWidth * 0.037),
-              child: IconButton(icon: Icon(Icons.menu,color:Colors.black,size: 35.0,),onPressed: ()=>_scaffoldKey.currentState.openDrawer()),
+              child: IconButton(
+                  icon: Icon(
+                    Icons.menu,
+                    color: Colors.black,
+                    size: 35.0,
+                  ),
+                  onPressed: () => _scaffoldKey.currentState.openDrawer()),
             ),
             backgroundColor: Colors.white,
             elevation: 0,
@@ -234,7 +258,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _removeUserData(BuildContext context) async{
+  _removeUserData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
     await firebaseInstance.signOut();
@@ -242,28 +266,26 @@ class _HomePageState extends State<HomePage> {
         .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
   }
 
-  reset() async{
+  reset() async {
     var wednesday = 3;
     var now = DateTime.now();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if((DateTime.now().weekday == 3)&& (DateTime.now().hour>=19)){
-
+    if ((DateTime.now().weekday == 3) && (DateTime.now().hour >= 19)) {
       prefs.setBool('hasBooked', false);
     }
-    while(now.weekday!=wednesday)
-    {
-      now=now.add(new Duration(days: 1));
+    while (now.weekday != wednesday) {
+      now = now.add(new Duration(days: 1));
       //print(now);
     }
-    print(DateFormat.d().format(now)+" " + DateFormat.MMM().format(now));
-    prefs.setString('psychDate',DateFormat.d().format(now)+" "+DateFormat.MMM().format(now));
-    prefs.setString('counselDate',DateFormat.d().format(now.subtract(Duration(days: 1)))+" "+DateFormat.MMM().format(now.subtract(Duration(days: 1))));
-
-
-
-
+    print(DateFormat.d().format(now) + " " + DateFormat.MMM().format(now));
+    prefs.setString('psychDate',
+        DateFormat.d().format(now) + " " + DateFormat.MMM().format(now));
+    prefs.setString(
+        'counselDate',
+        DateFormat.d().format(now.subtract(Duration(days: 1))) +
+            " " +
+            DateFormat.MMM().format(now.subtract(Duration(days: 1))));
   }
-
 
   _startFAQActivity() async {
     try {
@@ -285,7 +307,6 @@ class _HomePageState extends State<HomePage> {
     }*/
     super.initState();
   }
-
 
   @override
   void dispose() {
