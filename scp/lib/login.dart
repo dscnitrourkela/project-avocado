@@ -29,14 +29,14 @@ class _LoginState extends State<Login> {
     super.dispose();
   }
 
-  String countryCode="91";
+  String countryCode = "91";
   String phoneNumber;
 
   @override
   Widget build(BuildContext context) {
     var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    countryCodeController.text=countryCode;
+    countryCodeController.text = countryCode;
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
@@ -55,10 +55,12 @@ class _LoginState extends State<Login> {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/nit.png',
-                      height: queryWidth*0.2,
-                      width:queryWidth*0.2,
-                      color: Colors.black,),
+                      child: Image.asset(
+                        'assets/nit.png',
+                        height: queryWidth * 0.2,
+                        width: queryWidth * 0.2,
+                        color: Colors.black,
+                      ),
                     ),
                     Align(
                       alignment: Alignment.center,
@@ -71,14 +73,13 @@ class _LoginState extends State<Login> {
                             fontWeight: FontWeight.w900),
                       ),
                     ),
-
                   ],
                 ),
               ),
             ),
           ),
           Align(
-            alignment: Alignment(0,-0.15),
+            alignment: Alignment(0, -0.15),
             child: Text(
               "SIGN IN",
               style: TextStyle(
@@ -103,33 +104,36 @@ class _LoginState extends State<Login> {
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text("+",
+                          child: Text(
+                            "+",
                             style: TextStyle(
-                                fontSize: 30*textScaleFactor,
+                                fontSize: 30 * textScaleFactor,
                                 color: Color.fromRGBO(25, 39, 45, 1),
                                 fontFamily: 'PfDin',
-                              fontWeight: FontWeight.w600
-                            ),),
+                                fontWeight: FontWeight.w600),
+                          ),
                         ),
                         Flexible(
                           child: Container(
-                            width: queryWidth*0.1,
+                            width: queryWidth * 0.1,
                             child: TextField(
                               maxLength: 2,
                               enableInteractiveSelection: true,
                               style: TextStyle(
-                                  fontSize: 30*textScaleFactor,
+                                  fontSize: 30 * textScaleFactor,
                                   color: Color.fromRGBO(25, 39, 45, 1),
                                   fontWeight: FontWeight.w600,
-                                  fontFamily: 'PfDin'
-                              ),
+                                  fontFamily: 'PfDin'),
                               keyboardType: TextInputType.phone,
                               textAlign: TextAlign.left,
-                              decoration: InputDecoration(border: InputBorder.none, counterText: '',hintStyle:TextStyle(
-                                  fontSize: 30*textScaleFactor,
-                                  color: Color.fromRGBO(25, 39, 45, 1),
-                                  fontFamily: 'PfDin'
-                              ), ),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                counterText: '',
+                                hintStyle: TextStyle(
+                                    fontSize: 30 * textScaleFactor,
+                                    color: Color.fromRGBO(25, 39, 45, 1),
+                                    fontFamily: 'PfDin'),
+                              ),
                               onChanged: (value) {
                                 this.countryCode = value;
                               },
@@ -142,23 +146,25 @@ class _LoginState extends State<Login> {
                   ),
                   Flexible(
                     child: Container(
-                      width: queryWidth*0.4,
+                      width: queryWidth * 0.4,
                       child: TextField(
                         maxLength: 10,
                         enableInteractiveSelection: true,
-                        style:TextStyle(
-                            fontSize: 30*textScaleFactor,
+                        style: TextStyle(
+                            fontSize: 30 * textScaleFactor,
                             color: Color.fromRGBO(25, 39, 45, 1),
                             fontFamily: 'PfDin',
-                            fontWeight: FontWeight.w600
-                        ),
+                            fontWeight: FontWeight.w600),
                         autofocus: true,
                         keyboardType: TextInputType.phone,
                         textAlign: TextAlign.left,
                         decoration: InputDecoration(
-                            hintText: 'Phone no', border: InputBorder.none,counterText: '',hintStyle: TextStyle(
-                          fontWeight:FontWeight.w200,
-                        )),
+                            hintText: 'Phone no',
+                            border: InputBorder.none,
+                            counterText: '',
+                            hintStyle: TextStyle(
+                              fontWeight: FontWeight.w200,
+                            )),
                         onChanged: (value) {
                           this.phoneNumber = value;
                         },
@@ -176,23 +182,25 @@ class _LoginState extends State<Login> {
               minWidth: 200,
               height: 40,
               child: RaisedButton(
-
                   onPressed: () {
-                    String finalPhoneNo="+" + countryCodeController.text+ " "+phoneController.text;
+                    String finalPhoneNo = "+" +
+                        countryCodeController.text +
+                        " " +
+                        phoneController.text;
                     ScpAuth(context).verifyPhone(finalPhoneNo);
                   },
-                  child: Text('SEND OTP',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontFamily:'PfDin',
-                    fontSize: 20*textScaleFactor
-                  ),),
+                  child: Text(
+                    'VERIFY',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'PfDin',
+                      fontSize: 20 * textScaleFactor,
+                    ),
+                  ),
                   textColor: Colors.white,
-
                   elevation: 7.0,
                   shape: RoundedRectangleBorder(
-                    borderRadius:BorderRadius.circular(8.0)
-                  ),
+                      borderRadius: BorderRadius.circular(8.0)),
                   color: Color.fromRGBO(25, 39, 45, 1)),
             ),
           ),
