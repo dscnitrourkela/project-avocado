@@ -20,14 +20,13 @@ Widget appointmentCard(
     child: Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: InkWell(
-        onTap: () async{
+        onTap: () async {
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          if(prefs.getBool('hasBooked') == true){
+          if (prefs.getBool('hasBooked') == true) {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    Booking(keyCode: gKey, counselDay: gCounselDay, time: gTime)));
-          }
-          else
+                builder: (BuildContext context) => Booking(
+                    keyCode: gKey, counselDay: gCounselDay, time: gTime)));
+          } else
             Navigator.of(context).pushNamed('/appointments');
         },
         child: Card(
@@ -175,103 +174,101 @@ Widget mentorsCard(
     child: InkWell(
       onTap: () {
         Navigator.of(context).pushNamed('/mentors');
-                },
-        child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
-          elevation: 8.0,
-          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
-          child: Stack(
-            fit: StackFit.loose,
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(24.0),
+      },
+      child: Card(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+        elevation: 8.0,
+        margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
+        child: Stack(
+          fit: StackFit.loose,
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(24.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: Gradients.mentorsCardGradient,
+                ),
                 child: Container(
-                  decoration: BoxDecoration(
-                    gradient: Gradients.mentorsCardGradient,
-                  ),
-                  child: Container(
-                    height: heightFactor * 0.58,
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top: 32.0),
-                          child: ListTile(
-                            contentPadding:
-                                EdgeInsets.symmetric(vertical: 10.0),
-                            title: ShaderMask(
-                              shaderCallback: (rect) {
-                                return LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [Colors.black, Colors.transparent],
-                                ).createShader(Rect.fromLTRB(
-                                    0, 0, rect.width, rect.height));
-                              },
-                              blendMode: BlendMode.dstIn,
-                              child: Container(
-                                height: heightFactor * 0.15,
+                  height: heightFactor * 0.58,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 32.0),
+                        child: ListTile(
+                          contentPadding: EdgeInsets.symmetric(vertical: 10.0),
+                          title: ShaderMask(
+                            shaderCallback: (rect) {
+                              return LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [Colors.black, Colors.transparent],
+                              ).createShader(
+                                  Rect.fromLTRB(0, 0, rect.width, rect.height));
+                            },
+                            blendMode: BlendMode.dstIn,
+                            child: Container(
+                              height: heightFactor * 0.15,
+                              color: Colors.white,
+                              padding: EdgeInsets.only(left: 18.0),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'MENTORS',
+                                  style: TextStyle(
+                                      fontFamily: 'PfDin',
+                                      fontSize: heightFactor * 0.07,
+                                      color: Color.fromRGBO(142, 40, 142, 1.0),
+                                      fontWeight: FontWeight.w500),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 14.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: SizedBox(
+                            width: 200.0,
+                            child: Text(
+                              'Find the complete database of SCS Mentors',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontSize: heightFactor * 0.038,
                                 color: Colors.white,
-                                padding: EdgeInsets.only(left: 18.0),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'MENTORS',
-                                    style: TextStyle(
-                                        fontFamily: 'PfDin',
-                                        fontSize: heightFactor * 0.07,
-                                        color:
-                                            Color.fromRGBO(142, 40, 142, 1.0),
-                                        fontWeight: FontWeight.w500),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'PfDin',
                               ),
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 14.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: SizedBox(
-                              width: 200.0,
-                              child: Text(
-                                'Find the complete database of SCS Mentors',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: heightFactor * 0.038,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'PfDin',
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              Positioned(
-                top: 16.0,
-                bottom: -10.0,
-                right: 0.0,
-                child: Image.asset(
-                  'assets/scp_mentors.png',
-                  width: heightFactor * 0.45,
-                  height: heightFactor * 0.45,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.bottomRight,
-                  colorBlendMode: BlendMode.color,
-                ),
+            ),
+            Positioned(
+              top: 16.0,
+              bottom: -10.0,
+              right: 0.0,
+              child: Image.asset(
+                'assets/scp_mentors.png',
+                width: heightFactor * 0.45,
+                height: heightFactor * 0.45,
+                fit: BoxFit.cover,
+                alignment: Alignment.bottomRight,
+                colorBlendMode: BlendMode.color,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
-    );
+    ),
+  );
 }
 
 _startFAQActivity() async {
@@ -283,7 +280,7 @@ _startFAQActivity() async {
 }
 
 Widget faqCard(
-    BuildContext context, double heightFactor, double textScaleFactor){
+    BuildContext context, double heightFactor, double textScaleFactor) {
   Gradients().init(context);
   return SizedBox(
     height: heightFactor * 0.58,
@@ -365,10 +362,11 @@ Widget faqCard(
                 colorBlendMode: BlendMode.color,
               ),
             ),
-      ],
+          ],
+        ),
+      ),
     ),
-    ),
-  ),);
+  );
 }
 
 Widget timetableCard(
@@ -401,16 +399,15 @@ Widget timetableCard(
                       Padding(
                         padding: const EdgeInsets.only(top: 20.0),
                         child: ListTile(
-                          contentPadding:
-                              EdgeInsets.symmetric(vertical: 10.0),
+                          contentPadding: EdgeInsets.symmetric(vertical: 10.0),
                           title: ShaderMask(
                             shaderCallback: (rect) {
                               return LinearGradient(
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                                 colors: [Colors.black, Colors.transparent],
-                              ).createShader(Rect.fromLTRB(
-                                  0, 0, rect.width, rect.height));
+                              ).createShader(
+                                  Rect.fromLTRB(0, 0, rect.width, rect.height));
                             },
                             blendMode: BlendMode.dstIn,
                             child: Container(
@@ -424,8 +421,7 @@ Widget timetableCard(
                                   style: TextStyle(
                                       fontFamily: 'PfDin',
                                       fontSize: heightFactor * 0.07,
-                                      color:
-                                          Color.fromRGBO(142, 40, 142, 1.0),
+                                      color: Color.fromRGBO(142, 40, 142, 1.0),
                                       fontWeight: FontWeight.w500),
                                   textAlign: TextAlign.left,
                                 ),
@@ -488,12 +484,11 @@ Widget slotCard(
     String titleText,
     String type,
     String designation) {
-  Widget slotWidget(String status, String key,String time) {
+  Widget slotWidget(String status, String key, String time) {
     final bool visible = false;
     bool isSelected = false;
 
-
-    void bookAppointment(String key) async{
+    void bookAppointment(String key) async {
       print(counselDay);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var rollNo = prefs.getString('roll_no');
@@ -507,13 +502,14 @@ Widget slotCard(
       gTime = time;
       prefs.setString('bookedTime', gTime);
 
-      var reference = (type == "psych")?ScpDatabase.psychRef:ScpDatabase.counselRef;
+      var reference =
+          (type == "psych") ? ScpDatabase.psychRef : ScpDatabase.counselRef;
 
       await reference.child(key).update({
-        "phoneNo" : phoneNo,
-        "rollNo" : rollNo,
-        "status" : "1",
-      }).then((_){
+        "phoneNo": phoneNo,
+        "rollNo": rollNo,
+        "status": "1",
+      }).then((_) {
         print("Value updated");
         Navigator.of(context).pop();
         Navigator.of(context).push(MaterialPageRoute(
@@ -522,130 +518,127 @@ Widget slotCard(
       });
     }
 
-
-
-
     return StatefulBuilder(
-      builder: (BuildContext context, StateSetter setSlotWidgetState){
-          return InkWell(
-        onTap: () {
-          switch (status) {
-            case "0":
-              setSlotWidgetState(() {
-                isSelected = !isSelected;
-              });
+      builder: (BuildContext context, StateSetter setSlotWidgetState) {
+        return InkWell(
+          onTap: () {
+            switch (status) {
+              case "0":
+                setSlotWidgetState(() {
+                  isSelected = !isSelected;
+                });
 
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    title: Text('Confirm Slot Booking?'),
-                    actions: <Widget>[
-                      FlatButton(
-                        onPressed: () {
-                          setSlotWidgetState(() {
-                            isSelected = !isSelected;
-                          });
-                          Navigator.pop(context);
-                        },
-                        child: Text('CANCEL'),
-                        textColor: Colors.cyan,
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
-                      RaisedButton(
-                        color: Colors.cyan,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                      title: Text('Confirm Slot Booking?'),
+                      actions: <Widget>[
+                        FlatButton(
+                          onPressed: () {
+                            setSlotWidgetState(() {
+                              isSelected = !isSelected;
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: Text('CANCEL'),
+                          textColor: Colors.cyan,
                         ),
-                        onPressed: () {
-                          //SharedPreferences prefs = await SharedPreferences.getInstance();
-                          //prefs.setBool("isBookingActive", true);
-                          Navigator.pop(context);
-                          bookAppointment(key);
-                        },
-                        child: Text('BOOK'),
-                        textColor: Colors.white,
-                      ),
-                    ],
-                  );
-                },
-              );
-              break;
-            case "1":
-              Scaffold.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                      'Selected slot is full. Please choose another slot.'),
-                ),
-              );
-              break;
-          }
-        },
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: heightFactor * 0.02),
-          child: SizedBox(
-            width: heightFactor * 0.70,
-            height: heightFactor * 0.09,
-            child: Container(
-              padding: const EdgeInsets.only(left: 10.0),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: (status == "0")
-                      ? (isSelected ? Colors.black : Colors.cyan)
-                      : Colors.red,
-                ),
-                borderRadius: BorderRadius.circular(
-                  8.0,
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      '$counselDay | $date | $time',
-                      style: TextStyle(
-                          color: (status == "0")
-                              ? (isSelected ? Colors.black : Colors.cyan)
-                              : Colors.red,
-                          fontFamily: 'PfDin',
-                          fontSize: heightFactor * 0.038,
-                          fontWeight: FontWeight.w500),
-                      textAlign: TextAlign.left,
-                    ),
+                        RaisedButton(
+                          color: Colors.cyan,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          onPressed: () {
+                            //SharedPreferences prefs = await SharedPreferences.getInstance();
+                            //prefs.setBool("isBookingActive", true);
+                            Navigator.pop(context);
+                            bookAppointment(key);
+                          },
+                          child: Text('BOOK'),
+                          textColor: Colors.white,
+                        ),
+                      ],
+                    );
+                  },
+                );
+                break;
+              case "1":
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                        'Selected slot is full. Please choose another slot.'),
                   ),
-                  Visibility(
-                    visible: (status == "0") ? visible : !visible,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 20.0),
-                      child: Container(
-                        child: Text(
-                          'Slot full',
-                          style: TextStyle(
-                            fontSize: heightFactor * 0.038,
+                );
+                break;
+            }
+          },
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: heightFactor * 0.02),
+            child: SizedBox(
+              width: heightFactor * 0.70,
+              height: heightFactor * 0.09,
+              child: Container(
+                padding: const EdgeInsets.only(left: 10.0),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: (status == "0")
+                        ? (isSelected ? Colors.black : Colors.cyan)
+                        : Colors.red,
+                  ),
+                  borderRadius: BorderRadius.circular(
+                    8.0,
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        '$counselDay | $date | $time',
+                        style: TextStyle(
+                            color: (status == "0")
+                                ? (isSelected ? Colors.black : Colors.cyan)
+                                : Colors.red,
                             fontFamily: 'PfDin',
-                            fontWeight: FontWeight.w500,
-                            color: Colors.red,
+                            fontSize: heightFactor * 0.038,
+                            fontWeight: FontWeight.w500),
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                    Visibility(
+                      visible: (status == "0") ? visible : !visible,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 20.0),
+                        child: Container(
+                          child: Text(
+                            'Slot full',
+                            style: TextStyle(
+                              fontSize: heightFactor * 0.038,
+                              fontFamily: 'PfDin',
+                              fontWeight: FontWeight.w500,
+                              color: Colors.red,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      );},
+        );
+      },
     );
   }
 
   return Container(
     color: Colors.white,
-
     child: SizedBox(
       height: heightFactor * 1.1,
       width: heightFactor * 0.85,
@@ -682,7 +675,9 @@ Widget slotCard(
               height: heightFactor * 0.047,
             ),
             StreamBuilder(
-                stream: (type == "psych")? ScpDatabase.psychRef.once().asStream():ScpDatabase.counselRef.once().asStream(),
+                stream: (type == "psych")
+                    ? ScpDatabase.psychRef.once().asStream()
+                    : ScpDatabase.counselRef.once().asStream(),
                 builder: (context, snapshot) {
                   DataSnapshot _slotsSnapshot = snapshot.data;
                   if (!snapshot.hasData) {
