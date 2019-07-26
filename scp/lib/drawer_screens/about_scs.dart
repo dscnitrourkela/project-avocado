@@ -93,12 +93,14 @@ class AboutSCP extends StatelessWidget {
                 contactCard(context, "Aalisha Padhy", "Student Coordinator", "7894522431"),
                 contactCard(context, "Amrit Jena", "Student Coordinator", "9658636724"),
                 contactCard(context, "Dakarapu Rishi", "Student Coordinator", "9938776163"),
-                contactCard(context, "Mirza Khalid Zaid", "Student Coordinator", "7894083120"),
+                contactCard(context, "Mirza Khalid Baig", "Student Coordinator", "7894083120"),
                 contactCard(context, "Nikhil Gupta", "Student Coordinator", "7873744718"),
                 contactCard(context, "Kuldeep Namdeo", "Student Coordinator", "9009204239"),
                 contactCard(context, "Payal Das", "Student Coordinator", "8895561515"),
+                contactCard(context, "Siddharth Swarup", "Student Coordinator", "7008947727"),
                 contactCard(context, "Shweta Kedas", "Student Coordinator", "8500290908"),
-
+                contactCard(context, "Sravya Sridhar", "Student Coordinator", "7008118925"),
+                contactCard(context, "Zakiya Ali", "Student Coordinator", "9337002705"),
               ],
             )
           ],
