@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -7,23 +5,18 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:scp/booking.dart';
 import 'package:scp/cards.dart';
+import 'package:scp/dateConfig.dart';
 import 'package:scp/drawer_screens/about_scs.dart';
 import 'package:scp/drawer_screens/dev_info.dart';
 import 'package:scp/drawer_screens/important_documents.dart';
 import 'package:scp/login.dart';
-import 'package:scp/gradients.dart';
 import 'package:scp/appointments.dart';
 import 'dart:async';
-import 'package:flutter/services.dart';
 import 'package:scp/mentors.dart';
 import 'package:scp/userdata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'firebase/firebaseDBHandler.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'timetable/theorySection.dart';
-
-import 'package:scp/time_table.dart';
 
 var firebaseInstance = FirebaseAuth.instance;
 final PRIVACY_POLICY = "https://project-avocado-8b3e1.firebaseapp.com";
@@ -269,14 +262,23 @@ class _HomePageState extends State<HomePage> {
   reset() async {
     var wednesday = 3;
     var now = DateTime.now();
+    //var bookedDate = DateTime.parse(formattedString)
+    // int dayFromEpoch = (DateTime.now().millisecondsSinceEpoch/(fac)).floor();
+    // print("Smarak ${((dayFromEpoch - 1)/7).floor()}");
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if ((DateTime.now().weekday == 3) && (DateTime.now().hour >= 19)) {
+    if(!prefs.getBool('hasBooked')){
+      prefs.setString('bookDate', DateTime.now().toString());
+    }
+
+    if (now.day > (DateTime.parse(prefs.getString('bookDate')).day)) {
       prefs.setBool('hasBooked', false);
     }
+    /*if(DateTime.now().weekday > 3)*/
     while (now.weekday != wednesday) {
       now = now.add(new Duration(days: 1));
       //print(now);
     }
+  
     print(DateFormat.d().format(now) + " " + DateFormat.MMM().format(now));
     prefs.setString('psychDate',
         DateFormat.d().format(now) + " " + DateFormat.MMM().format(now));
@@ -297,6 +299,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    DateConfig().init();
     fetchUserData(context);
     reset();
     /*if(DateTime.now().weekday == 3){
@@ -319,6 +322,7 @@ class _HomePageState extends State<HomePage> {
     username = prefs.getString('username');
     rollNo = prefs.getString('roll_no');
     phoneNo = prefs.getString('phone_no');
+  prefs.setBool('hasBooked', prefs.getBool('hasBooked')??false);
     print(username + rollNo + phoneNo);
   }
 
