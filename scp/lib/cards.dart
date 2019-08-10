@@ -1,14 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scp/booking.dart';
+import 'package:scp/dateConfig.dart';
 import 'package:scp/gradients.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'main.dart';
-
 import 'models.dart';
 
 const platform = const MethodChannel("FAQ_ACTIVITY");
@@ -499,6 +496,8 @@ Widget slotCard(
       prefs.setBool('hasBooked', true);
       prefs.setString('bookedDate', date);
       prefs.setString('bookingType', type);
+      prefs.setString('bookDate', ((type == "psych") ? DateConfig.psychDate.toString() : DateConfig.counselDate.toString()));
+      print(DateConfig.bookedDate.toString());
       gCounselDay = counselDay;
       gKey = key;
       gTime = time;
