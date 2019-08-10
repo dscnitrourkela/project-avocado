@@ -56,10 +56,10 @@ class _LoginState extends State<Login> {
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Image.asset(
-                        'assets/nit.png',
+                        'assets/icon-t.png',
                         height: queryWidth * 0.2,
                         width: queryWidth * 0.2,
-                        color: Colors.black,
+                        color: Color.fromRGBO(74, 232, 190, 1),
                       ),
                     ),
                     Align(
@@ -117,7 +117,7 @@ class _LoginState extends State<Login> {
                           child: Container(
                             width: queryWidth * 0.1,
                             child: TextField(
-                              maxLength: 2,
+                              //maxLength: 2,
                               enableInteractiveSelection: true,
                               style: TextStyle(
                                   fontSize: 30 * textScaleFactor,

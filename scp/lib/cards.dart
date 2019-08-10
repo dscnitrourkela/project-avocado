@@ -170,7 +170,7 @@ Widget mentorsCard(
     BuildContext context, double heightFactor, double textScaleFactor) {
   Gradients().init(context);
   return SizedBox(
-    height: heightFactor * 0.64,
+    height: heightFactor * 0.58,
     child: InkWell(
       onTap: () {
         Navigator.of(context).pushNamed('/mentors');
@@ -483,7 +483,9 @@ Widget slotCard(
     String date,
     String titleText,
     String type,
-    String designation) {
+    String designation,
+    int count,
+    double scale_height) {
   Widget slotWidget(String status, String key, String time) {
     final bool visible = false;
     bool isSelected = false;
@@ -640,7 +642,7 @@ Widget slotCard(
   return Container(
     color: Colors.white,
     child: SizedBox(
-      height: heightFactor * 1.1,
+      height: heightFactor * scale_height,
       width: heightFactor * 0.85,
       child: Card(
         color: Colors.white,
@@ -688,7 +690,7 @@ Widget slotCard(
                           horizontal: heightFactor * 0.047),
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: 6, //ScpDatabase.slotsList.length,
+                      itemCount: count, //ScpDatabase.slotsList.length,
                       itemBuilder: (BuildContext context, int index) {
                         var slot =
                             Slot.map(_slotsSnapshot.value['slot${index + 1}']);
