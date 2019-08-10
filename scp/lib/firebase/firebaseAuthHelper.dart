@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pin_code_text_field/pin_code_text_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:scp/main.dart';
 
 class ScpAuth {
@@ -64,7 +64,7 @@ class ScpAuth {
                 actions: <Widget>[
                   RaisedButton(
                     child: Text(
-                      'Done',
+                      'Next',
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                         color:Colors.white,
@@ -130,8 +130,10 @@ class ScpAuth {
     final FirebaseUser user = await firebaseInstance
         .signInWithCredential(credential)
         .then((user) {
-      
-      Navigator.of(context).pushNamed('/userdata');
+
+          print(user.displayName);
+
+          _storeUserData(context,user);
     }).catchError((error) {
       print(error);
     });
@@ -144,9 +146,17 @@ class ScpAuth {
         .signInWithCredential(credential)
         .then((user) {
 
-      Navigator.of(context).pushNamed('/userdata');
+      _storeUserData(context,user);
+
     }).catchError((error) {
       print(error);
     });
+  }
+
+  static _storeUserData(BuildContext context, FirebaseUser firebaseUser) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('roll_no',firebaseUser.displayName);
+    Navigator.of(context).pushNamed('/userdata');
+
   }
 }
