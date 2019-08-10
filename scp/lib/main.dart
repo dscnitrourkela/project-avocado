@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -11,23 +9,22 @@ import 'package:scp/drawer_screens/about_scs.dart';
 import 'package:scp/drawer_screens/dev_info.dart';
 import 'package:scp/drawer_screens/important_documents.dart';
 import 'package:scp/login.dart';
-import 'package:scp/gradients.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:scp/appointments.dart';
 import 'dart:async';
-import 'package:flutter/services.dart';
 import 'package:scp/mentors.dart';
 import 'package:scp/userdata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'firebase/firebaseDBHandler.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'timetable/theorySection.dart';
 
-import 'package:scp/time_table.dart';
 
 var firebaseInstance = FirebaseAuth.instance;
 final PRIVACY_POLICY = "https://project-avocado-8b3e1.firebaseapp.com";
-void main() => runApp(MaterialApp(
+void main() {
+  FlutterError.onError = Crashlytics.instance.recordFlutterError;
+  runZoned<Future<void>>(() async {
+    runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'SCS',
       routes: <String, WidgetBuilder>{
@@ -48,6 +45,11 @@ void main() => runApp(MaterialApp(
       ),
       home: MyApp(),
     ));
+  }, onError: Crashlytics.instance.recordError);
+  FlutterError.onError = (FlutterErrorDetails details) {
+    Crashlytics.instance.recordFlutterError(details);
+  };
+}
 
 class MyApp extends StatefulWidget {
   @override
