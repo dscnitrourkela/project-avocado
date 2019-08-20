@@ -13,7 +13,7 @@ import 'package:scp/login.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:scp/appointments.dart';
 import 'dart:async';
-import 'package:scp/mentors.dart';
+import 'mentor_search/mentors.dart';
 import 'package:scp/userdata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
