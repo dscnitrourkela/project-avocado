@@ -98,8 +98,8 @@ class _PracticalSectionState extends State<PracticalSection> {
             Align(
               alignment: Alignment(0, 0.6),
               child: FloatingActionButton(
-                onPressed: () => {
-                storeSectionData(context),
+                onPressed: () {
+                storeSectionData(context);
                 },
                 child: Icon(Icons.arrow_forward),
                 backgroundColor: Color.fromRGBO(74, 232, 190, 1),
