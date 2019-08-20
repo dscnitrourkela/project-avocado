@@ -51,6 +51,7 @@ abstract class TimeTableResources {
       'TD': 'Basic Electrical Engineering',
       'TF': 'Chemistry',
       'SA': 'Physics-Tutorial',
+      'SB': 'Engineering Mechanics-Tutorial',
       'SC': 'Mathematics-Tutorial',
       'TG3': 'Chemistry-Tutorial'
     },
@@ -61,6 +62,7 @@ abstract class TimeTableResources {
       'TD': 'Basic Electrical Engineering',
       'TF': 'Chemistry',
       'SA': 'Physics-Tutorial',
+      'SB': 'Engineering Mechanics-Tutorial',
       'SC': 'Mathematics-Tutorial',
       'TG3': 'Chemistry-Tutorial'
     },
@@ -70,6 +72,7 @@ abstract class TimeTableResources {
       'TC': 'Basic Electrical Engineering',
       'TD': 'Mathematics-I',
       'TF': 'Chemistry',
+      'SA': 'Engineering Mechanics-Tutorial',
       'SB': 'Physics-Tutorial',
       'TG1': 'Mathematics-Tutorial',
       'TG3': 'Chemistry-Tutorial'
@@ -80,6 +83,7 @@ abstract class TimeTableResources {
       'TC': 'Basic Electrical Engineering',
       'TD': 'Mathematics-I',
       'TF': 'Chemistry',
+      'SA': 'Engineering Mechanics-Tutorial',
       'SB': 'Physics-Tutorial',
       'TG1': 'Mathematics-Tutorial',
       'TG3': 'Chemistry-Tutorial'
@@ -110,7 +114,9 @@ abstract class TimeTableResources {
       'TK': 'Biology',
       'TL': 'Mathematics-I',
       'TM': 'Physics-I',
-      'TG': 'Communicative English',
+      'TG1': 'Communicative English',
+      'TG2': 'Communicative English',
+      'TG3': 'Communicative English',
       'SL1': 'Mathematics-Tutorial',
       'SM1': 'Physics-Tutorial'
     },
@@ -120,7 +126,9 @@ abstract class TimeTableResources {
       'TK': 'Biology',
       'TL': 'Mathematics-I',
       'TM': 'Physics-I',
-      'TG': 'Communicative English',
+      'TG1': 'Communicative English',
+      'TG2': 'Communicative English',
+      'TG3': 'Communicative English',
       'SL1': 'Mathematics-Tutorial',
       'SM1': 'Physics-Tutorial'
     },
