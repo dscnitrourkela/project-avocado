@@ -3,7 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 final String ABOUT_TEXT =
     "Developer Student Clubs (DSC) is a Google Developers powered program for university students to learn mobile and web development skills. The clubs will be open to any student interested to learn, ranging from novice developers who are just starting, to advanced developers who want to further their skills. The clubs are intended as a space for students to try out new ideas and collaborate to solve mobile and web development problems.\n\n"
-    "DSC NIT Rourkela(DSC NITR) is a student chapter of DSC India with a motive to nurture developers within the community and solve real-life problems in the community through technology.";
+    "DSC NIT Rourkela (DSC NITR) is a student chapter of DSC India with a motive to nurture developers within the community and solve real-life problems in the community through technology.";
 
 class DevInfo extends StatelessWidget {
   @override
@@ -49,7 +49,7 @@ class DevInfo extends StatelessWidget {
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 15,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w400,
                   fontFamily: 'PfDin',
                   color: Color.fromRGBO(25, 39, 45, 1),
                 ),
