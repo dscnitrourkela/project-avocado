@@ -15,23 +15,25 @@ class ImpDocs extends StatelessWidget {
                 fontWeight: FontWeight.w600),
           )
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          docCard(context, "Academic Calendar", "https://nitrkl.ac.in/Academics/AcademicProcess/AcademicCalendar.aspx"),
-          docCard(context, "Academic Forms", "https://nitrkl.ac.in/Academics/AcademicProcess/AcademicForms.aspx"),
-          docCard(context, "Academic Regulations", "https://nitrkl.ac.in/Academics/AcademicProcess/AcademicRegulations.aspx"),
-          docCard(context, "Communication Handbook", "https://nitrkl.ac.in/docs/Misc/CommunicationHandBook.pdf"),
-          docCard(context, "Curriculum", "https://nitrkl.ac.in/Academics/AcademicProcess/Curricula.aspx"),
-          docCard(context, "Faculty Directory", "https://nitrkl.ac.in/FacultyStaff/EmployeeDirectory/Faculty.aspx"),
-          docCard(context, "Timetable", "https://nitrkl.ac.in/Academics/AcademicProcess/AcademicTimeTable.aspx"),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            docCard(context, "Academic Calendar", "https://nitrkl.ac.in/Academics/AcademicProcess/AcademicCalendar.aspx"),
+            docCard(context, "Academic Forms", "https://nitrkl.ac.in/Academics/AcademicProcess/AcademicForms.aspx"),
+            docCard(context, "Academic Regulations", "https://nitrkl.ac.in/Academics/AcademicProcess/AcademicRegulations.aspx"),
+            docCard(context, "Communication Handbook", "https://nitrkl.ac.in/docs/Misc/CommunicationHandBook.pdf"),
+            docCard(context, "Curriculum", "https://nitrkl.ac.in/Academics/AcademicProcess/Curricula.aspx"),
+            docCard(context, "Faculty Directory", "https://nitrkl.ac.in/FacultyStaff/EmployeeDirectory/Faculty.aspx"),
+            docCard(context, "Timetable", "https://nitrkl.ac.in/Academics/AcademicProcess/AcademicTimeTable.aspx"),
 
 
 
 
-        ],
-      ),
+          ],
+        ),
+      )
     );
   }
 
