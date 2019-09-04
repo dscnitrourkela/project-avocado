@@ -21,8 +21,8 @@ dependencies:
   pin_code_text_field: ^1.3.7
   shared_preferences: ^0.5.3+4
   http: ^0.12.0+2
-  contacts_service: ^0.3.0
   firebase_crashlytics: ^0.1.0+2
+  native_contact_dialog: ^0.2.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -45,7 +45,6 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
