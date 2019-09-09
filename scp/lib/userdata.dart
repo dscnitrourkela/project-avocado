@@ -4,10 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Userdata extends StatelessWidget {
+class Userdata extends StatefulWidget
+{
+  @override
+  State<StatefulWidget> createState()
+  {
+    return UserdataState();
+  }
+}
+class UserdataState extends State<Userdata> {
   final rollController = TextEditingController();
   var usernameController = TextEditingController();
   String rollNo = "", username = "", phoneNo = "";
+  bool isEarlierLoggedIn=false;
   RegExp pattern=new RegExp(r'[0-9][0-9][0-9][a-zA-Z][a-zA-Z][0-9][0-9][0-9][0-9]', multiLine: false,caseSensitive: false,);
 
   @override
@@ -66,11 +75,12 @@ class Userdata extends StatelessWidget {
                                     BorderRadius.all(Radius.circular(8.0)),
                               ),
                               child: TextField(
-                                enableInteractiveSelection: true,
+                                enableInteractiveSelection: false,
                                 style: TextStyle(
                                   fontFamily: "PfDin",
                                 ),
-                                autofocus: false,
+                                autofocus: !isEarlierLoggedIn,
+                                textCapitalization: TextCapitalization.characters,
                                 textAlign: TextAlign.center,
                                 decoration: InputDecoration(
                                     hintText: 'Enter Roll No.',
@@ -93,17 +103,19 @@ class Userdata extends StatelessWidget {
                                     BorderRadius.all(Radius.circular(8.0)),
                               ),
                               child: TextField(
-                                enableInteractiveSelection: true,
+                                enableInteractiveSelection: false,
                                 style: TextStyle(
                                   fontFamily: "PfDin",
                                 ),
-                                autofocus: false,
+                                autofocus: isEarlierLoggedIn,
+                                textCapitalization: TextCapitalization.sentences,
+                                textInputAction: TextInputAction.done,
                                 textAlign: TextAlign.center,
                                 decoration: InputDecoration(
                                     hintText: 'Enter Name',
                                     border: InputBorder.none),
                                 onChanged: (value) {
-                                  this.username = value;
+                                  this.username=value;
                                 },
                                 controller: usernameController,
                               ),
@@ -189,13 +201,14 @@ class Userdata extends StatelessWidget {
         .pushNamedAndRemoveUntil('/homePage', (Route<dynamic> route) => false);
   }
 
-  Future<String> _fetchUserData(BuildContext context) async {
+  void _fetchUserData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     rollNo=prefs.getString('roll_no');
     if( rollNo != "" &&
         rollNo != null &&
         rollNo != "null")
     {
+      isEarlierLoggedIn=true;
       rollController.text=rollNo;
     }
 
