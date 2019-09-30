@@ -18,18 +18,27 @@ import 'package:scp/userdata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'timetable/theorySection.dart';
+import 'package:flare_splash_screen/flare_splash_screen.dart';
+
 
 
 var firebaseInstance = FirebaseAuth.instance;
 final PRIVACY_POLICY = "https://project-avocado-8b3e1.firebaseapp.com";
 void main() {
+ Function duringSplash = () async {   
+    
+  };
+  
+
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
   runZoned<Future<void>>(() async {
     runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'SCS',
       routes: <String, WidgetBuilder>{
-        '/homePage': (BuildContext context) => HomePage(title: 'SCS Home Page'),
+        '/homePage': (BuildContext context) => HomePage(
+              title: 'SCS Home Page',
+            ),
         '/loginPage': (BuildContext context) => Login(),
         '/appointments': (BuildContext context) => Appointments(),
         '/timetable': (BuildContext context) => TheorySection(),
@@ -44,7 +53,15 @@ void main() {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyApp(),
+      home: SplashScreen(
+        "assets/welcome_page.flr",        
+        MyApp(),  
+        until: duringSplash,           
+        startAnimation: 'welcome',
+        backgroundColor: Colors.white70,
+
+        
+      ),
     ));
   }, onError: Crashlytics.instance.recordError);
   FlutterError.onError = (FlutterErrorDetails details) {
@@ -276,7 +293,7 @@ class _HomePageState extends State<HomePage> {
     // int dayFromEpoch = (DateTime.now().millisecondsSinceEpoch/(fac)).floor();
     // print("Smarak ${((dayFromEpoch - 1)/7).floor()}");
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if(!prefs.getBool('hasBooked')){
+    if (!prefs.getBool('hasBooked')) {
       prefs.setString('bookDate', DateTime.now().toString());
     }
 
@@ -288,7 +305,7 @@ class _HomePageState extends State<HomePage> {
       now = now.add(new Duration(days: 1));
       //print(now);
     }
-  
+
     print(DateFormat.d().format(now) + " " + DateFormat.MMM().format(now));
     prefs.setString('psychDate',
         DateFormat.d().format(now) + " " + DateFormat.MMM().format(now));
@@ -332,7 +349,7 @@ class _HomePageState extends State<HomePage> {
     username = prefs.getString('username');
     rollNo = prefs.getString('roll_no');
     phoneNo = prefs.getString('phone_no');
-  prefs.setBool('hasBooked', prefs.getBool('hasBooked')??false);
+    prefs.setBool('hasBooked', prefs.getBool('hasBooked') ?? false);
     print(username + rollNo + phoneNo);
   }
 
