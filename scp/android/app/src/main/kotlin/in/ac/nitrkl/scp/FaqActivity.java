@@ -181,6 +181,10 @@ public class FaqActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Object[] objects) {
+            if (!isInternetAvailable()) {
+                return null;
+            }
+            
             if (searchText.equalsIgnoreCase("")) {
                 try {
                     result = client.prepareSearch(Constants.APP_NAME, Constants.QUERY)
@@ -212,6 +216,16 @@ public class FaqActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    
+    public boolean isInternetAvailable() {
+        try {
+            InetAddress ipAddr = InetAddress.getByName("google.com");
+            return !ipAddr.equals("");
+
+        } catch (Exception e) {
+            return false;
         }
     }
 }
