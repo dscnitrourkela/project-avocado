@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:scp/main.dart';
 
 class ScpAuth {
@@ -125,38 +124,38 @@ class ScpAuth {
   static signIn(BuildContext context) async {
     print(verificationId);
     print(smsCode);
-    final AuthCredential credential = PhoneAuthProvider.getCredential(
-        verificationId: verificationId, smsCode: smsCode);
-    final FirebaseUser user = await firebaseInstance
-        .signInWithCredential(credential)
-        .then((user) {
+    // final AuthCredential credential = PhoneAuthProvider.getCredential(
+    //     verificationId: verificationId, smsCode: smsCode);
+    // final FirebaseUser user = await firebaseInstance
+    //     .signInWithCredential(credential)
+    //     .then((user) {
 
-          print(user.displayName);
+    //       print(user.displayName);
 
-          _storeUserData(context,user);
-    }).catchError((error) {
-      print(error);
-    });
+    //       _storeUserData(context,user);
+    // }).catchError((error) {
+    //   print(error);
+    // });
   }
 
   static signInSpecial(BuildContext context, AuthCredential credential) async {
     print(verificationId);
     print(smsCode);
-    final FirebaseUser user = await firebaseInstance
-        .signInWithCredential(credential)
-        .then((user) {
+    // final FirebaseUser user = await firebaseInstance
+    //     .signInWithCredential(credential)
+    //     .then((user) {
 
-      _storeUserData(context,user);
+    //   _storeUserData(context,user);
 
-    }).catchError((error) {
-      print(error);
-    });
+    // }).catchError((error) {
+    //   print(error);
+    // });
   }
 
-  static _storeUserData(BuildContext context, FirebaseUser firebaseUser) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('roll_no',firebaseUser.displayName);
-    Navigator.of(context).pushNamed('/userdata');
+  // static _storeUserData(BuildContext context, FirebaseUser firebaseUser) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   await prefs.setString('roll_no',firebaseUser.displayName);
+  //   Navigator.of(context).pushNamed('/userdata');
 
-  }
+  // }
 }
