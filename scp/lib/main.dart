@@ -21,7 +21,7 @@ import 'timetable/theorySection.dart';
 
 
 var firebaseInstance = FirebaseAuth.instance;
-final PRIVACY_POLICY = "https://project-avocado-8b3e1.firebaseapp.com";
+final privacyPolicy = "https://project-avocado-8b3e1.firebaseapp.com";
 void main() {
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
   runZoned<Future<void>>(() async {
@@ -299,13 +299,13 @@ class _HomePageState extends State<HomePage> {
             DateFormat.MMM().format(now.subtract(Duration(days: 1))));
   }
 
-  _startFAQActivity() async {
-    try {
-      await platform.invokeMethod('startFaqActivity');
-    } on PlatformException catch (e) {
-      print(e.message);
-    }
-  }
+  // _startFAQActivity() async {
+  //   try {
+  //     await platform.invokeMethod('startFaqActivity');
+  //   } on PlatformException catch (e) {
+  //     print(e.message);
+  //   }
+  // }
 
   @override
   void initState() {
@@ -337,10 +337,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   _launchURL() async {
-    if (await canLaunch(PRIVACY_POLICY)) {
-      await launch(PRIVACY_POLICY);
+    if (await canLaunch(privacyPolicy)) {
+      await launch(privacyPolicy);
     } else {
-      throw 'Could not launch $PRIVACY_POLICY';
+      throw 'Could not launch $privacyPolicy';
     }
   }
 }

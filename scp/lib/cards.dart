@@ -482,7 +482,7 @@ Widget slotCard(
     String type,
     String designation,
     int count,
-    double scale_height) {
+    double scaleHeight) {
   Widget slotWidget(String status, String key, String time) {
     final bool visible = false;
     bool isSelected = false;
@@ -641,7 +641,7 @@ Widget slotCard(
   return Container(
     color: Colors.white,
     child: SizedBox(
-      height: heightFactor * scale_height,
+      height: heightFactor * scaleHeight,
       width: heightFactor * 0.85,
       child: Card(
         color: Colors.white,

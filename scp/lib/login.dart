@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:scp/background.dart';
-import 'package:scp/background_gradient.dart';
-
 import 'package:scp/firebase/firebaseAuthHelper.dart';
 
 final Shader linearGradient = LinearGradient(
