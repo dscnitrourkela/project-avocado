@@ -2,19 +2,28 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:scp/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Userdata extends StatelessWidget {
+class Userdata extends StatefulWidget
+{
+  @override
+  State<StatefulWidget> createState()
+  {
+    return UserdataState();
+  }
+}
+class UserdataState extends State<Userdata> {
   final rollController = TextEditingController();
   var usernameController = TextEditingController();
   String rollNo = "", username = "", phoneNo = "";
+  bool isEarlierLoggedIn=false;
+  RegExp pattern=new RegExp(r'[0-9][0-9][0-9][a-zA-Z][a-zA-Z][0-9][0-9][0-9][0-9]', multiLine: false,caseSensitive: false,);
 
   @override
   Widget build(BuildContext context) {
-    var queryWidth = MediaQuery.of(context).size.width;
+    //var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
-
+    _fetchUserData(context);
     return Scaffold(
       resizeToAvoidBottomPadding: true,
       appBar: AppBar(
@@ -66,14 +75,15 @@ class Userdata extends StatelessWidget {
                                     BorderRadius.all(Radius.circular(8.0)),
                               ),
                               child: TextField(
-                                enableInteractiveSelection: true,
+                                enableInteractiveSelection: false,
                                 style: TextStyle(
                                   fontFamily: "PfDin",
                                 ),
-                                autofocus: false,
+                                autofocus: !isEarlierLoggedIn,
+                                textCapitalization: TextCapitalization.characters,
                                 textAlign: TextAlign.center,
                                 decoration: InputDecoration(
-                                    hintText: 'Enter Roll no',
+                                    hintText: 'Enter Roll No.',
                                     border: InputBorder.none),
                                 onChanged: (value) {
                                   this.rollNo = value;
@@ -93,17 +103,19 @@ class Userdata extends StatelessWidget {
                                     BorderRadius.all(Radius.circular(8.0)),
                               ),
                               child: TextField(
-                                enableInteractiveSelection: true,
+                                enableInteractiveSelection: false,
                                 style: TextStyle(
                                   fontFamily: "PfDin",
                                 ),
-                                autofocus: false,
+                                autofocus: isEarlierLoggedIn,
+                                textCapitalization: TextCapitalization.sentences,
+                                textInputAction: TextInputAction.done,
                                 textAlign: TextAlign.center,
                                 decoration: InputDecoration(
-                                    hintText: 'Enter name',
+                                    hintText: 'Enter Name',
                                     border: InputBorder.none),
                                 onChanged: (value) {
-                                  this.username = value;
+                                  this.username=value;
                                 },
                                 controller: usernameController,
                               ),
@@ -116,36 +128,38 @@ class Userdata extends StatelessWidget {
                               minWidth: 100,
                               child: RaisedButton(
                                 onPressed: () {
-                                  if (rollNo != "" ||
-                                      rollNo != null ||
-                                      rollNo != "null") {
-                                    FirebaseAuth.instance
-                                        .currentUser()
-                                        .then((val) {
-                                      UserUpdateInfo updateUser =
-                                          UserUpdateInfo();
-                                      updateUser.displayName = rollNo;
-                                      val.updateProfile(updateUser);
-                                    });
-                                  } else {
-                                    // Scaffold.of(context).showSnackBar(new SnackBar(
-                                    //   content:Text("Roll Number can't be empty"),
 
-                                    // ));
+                                  //FirebaseUser fireuser;
+                                  //fireuser.displayName;
+
+                                  if (rollNo != "" &&
+                                      rollNo != null &&
+                                      rollNo != "null" &&(rollNo.length==9)&&(pattern.hasMatch(rollNo))){
+                                      {
+                                        FirebaseAuth.instance
+                                            .currentUser()
+                                            .then((val) {
+                                          UserUpdateInfo updateUser =
+                                          UserUpdateInfo();
+                                          updateUser.displayName = rollNo;
+                                          val.updateProfile(updateUser);
+                                          _storeUserData(context);
+
+                                        });
+                                      }
+                                  } else {
+                                    Scaffold.of(context).showSnackBar(new SnackBar(
+                                       content:Text("Roll Number not correct"),
+
+                                     ));
                                   }
                                   if (username == "") {
                                     // Scaffold.of(context).showSnackBar(new SnackBar(
                                     //   content:Text("Username can't be empty"),));
                                   }
-                                  if (rollNo != "" ||
-                                      rollNo != null ||
-                                      rollNo != "null" && username != "") {
-                                    _storeUserData(context);
-
-                                  }
                                 },
                                 child: Text(
-                                  'Verify',
+                                  'Confirm',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400,
                                       fontFamily:'PfDin',
@@ -179,7 +193,7 @@ class Userdata extends StatelessWidget {
   _storeUserData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('username', username);
-    await prefs.setString('roll_no', rollNo);
+    await prefs.setString('roll_no', rollNo.toUpperCase());
     await prefs.setString('phone_no', phoneNo);
     await prefs.setBool('loggedin', true);
     await prefs.setBool('show_timetable', false);
@@ -187,9 +201,17 @@ class Userdata extends StatelessWidget {
         .pushNamedAndRemoveUntil('/homePage', (Route<dynamic> route) => false);
   }
 
-  Future<String> _fetchUserData(BuildContext context) async {
+  void _fetchUserData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('username');
+    rollNo=prefs.getString('roll_no');
+    if( rollNo != "" &&
+        rollNo != null &&
+        rollNo != "null")
+    {
+      isEarlierLoggedIn=true;
+      rollController.text=rollNo;
+    }
+
   }
 
   Future<String> inputData() async {

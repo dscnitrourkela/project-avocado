@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-final String ABOUT_TEXT="Student Counselling Services, NIT Rourkela is a noble initiative by the current Director, Prof Animesh Biswas. This program deals with various important aspects of a student’s life. It addresses Academic, Financial, Mental and Socio-cultural issues, ensuring a seamless transition from home to hostel life for the freshmen and making life at NITR more enjoyable. \n\n"
+final String ABOUT_TEXT="Student Counselling Services, NIT Rourkela is a noble initiative by the current Director, Prof. Animesh Biswas. This service deals with various important aspects of a student’s life. It addresses Academic, Financial, Mental and Socio-cultural issues, ensuring a seamless transition from home to hostel life for the freshmen and making life at NITR more enjoyable. \n\n"
     "The objective of SCS is to prepare the students for a confident approach towards life and to bring about a voluntary change in themselves. The goal of counselling is to help individuals overcome their immediate problems and also to equip them to meet future problems. The goals of counselling are appropriately concerned with fundamental and basic aspects such as self-understanding and self-actualization.\n\n"
-"The program has 8 faculty members, including the Professor in Charge, Prof. K. C. Pati and 11 Student Coordinators. Each coordinator has been assigned a set number of mentors who in turn take care of mentees from the freshman year. Experienced mentors interact with the newbies to bridge the Junior-Senior gap and also personal and professional support. Student Counselling Program also has at their services a Counsellor and a Psychiatrist, who professionally deal with various student issues. ";
+"The service has 8 faculty members, including the Professor in Charge, Prof. K. C. Pati and 11 Student Coordinators. Each coordinator has been assigned a set number of mentors who in turn take care of mentees from the freshman year. Experienced mentors interact with the newbies to bridge the Junior-Senior gap and also personal and professional support. Student Counselling Services also has at their services a Counsellor and a Psychiatrist, who professionally deal with various student issues. ";
 class AboutSCP extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -62,15 +62,15 @@ class AboutSCP extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                contactCard(context,"Prof Animesh Biswas", "Director", ""),
-                contactCard(context,"Prof K.C. Pati", "Professor-In-Charge", ""),
-                contactCard(context, "Prof Alok Satpathy", "Faculty Coordinator", ""),
-                contactCard(context, "Prof A.K Rath", "Faculty Coordinator", ""),
-                contactCard(context, "Prof Suvendu Ranjan Pattnaik", "Faculty Coordinator", ""),
-                contactCard(context, "Prof Dipti Patra", "Faculty Coordinator", ""),
-                contactCard(context, "Prof Usha Rani Subudhi", "Faculty Coordinator", ""),
-                contactCard(context, "Prof K.R. Subhashini", "Faculty Coordinator", ""),
-                contactCard(context, "Prof Snehanshu Pal", "Faculty Coordinator", ""),
+                contactCard(context, "Prof. Animesh Biswas", "Director", ""),
+                contactCard(context, "Prof. K.C. Pati", "Professor-In-Charge", ""),
+                contactCard(context, "Prof. Alok Satpathy", "Faculty Coordinator", ""),
+                contactCard(context, "Prof. A.K Rath", "Faculty Coordinator", ""),
+                contactCard(context, "Prof. Suvendu Ranjan Pattnaik", "Faculty Coordinator", ""),
+                contactCard(context, "Prof. Dipti Patra", "Faculty Coordinator", ""),
+                contactCard(context, "Prof. Usha Rani Subudhi", "Faculty Coordinator", ""),
+                contactCard(context, "Prof. K.R. Subhashini", "Faculty Coordinator", ""),
+                contactCard(context, "Prof. Snehanshu Pal", "Faculty Coordinator", ""),
               ],
             ),
             Padding(
@@ -89,18 +89,18 @@ class AboutSCP extends StatelessWidget {
             ),
             Column(
               children: <Widget>[
-                contactCard(context, "Amlan Das", "Senior Coordinator", "9438226363"),
-                contactCard(context, "Aalisha Padhy", "Student Coordinator", "7894522431"),
-                contactCard(context, "Amrit Jena", "Student Coordinator", "9658636724"),
-                contactCard(context, "Dakarapu Rishi", "Student Coordinator", "9938776163"),
-                contactCard(context, "Mirza Khalid Baig", "Student Coordinator", "7894083120"),
-                contactCard(context, "Nikhil Gupta", "Student Coordinator", "7873744718"),
-                contactCard(context, "Kuldeep Namdeo", "Student Coordinator", "9009204239"),
-                contactCard(context, "Payal Das", "Student Coordinator", "8895561515"),
-                contactCard(context, "Siddharth Swarup", "Student Coordinator", "7008947727"),
-                contactCard(context, "Shweta Kedas", "Student Coordinator", "8500290908"),
-                contactCard(context, "Sravya Sridhar", "Student Coordinator", "7008118925"),
-                contactCard(context, "Zakiya Ali", "Student Coordinator", "9337002705"),
+                contactCard(context, "Amlan Das", "Senior Coordinator", "+91 9438226363"),
+                contactCard(context, "Aalisha Padhy", "Student Coordinator", "+91 7894522431"),
+                contactCard(context, "Amrit Jena", "Student Coordinator", "+91 9658636724"),
+                contactCard(context, "Dakarapu Rishi", "Student Coordinator", "+91 9938776163"),
+                contactCard(context, "Mirza Khalid Baig", "Student Coordinator", "+91 7894083120"),
+                contactCard(context, "Nikhil Gupta", "Student Coordinator", "+91 7873744718"),
+                contactCard(context, "Kuldeep Namdeo", "Student Coordinator", "+91 9009204239"),
+                contactCard(context, "Payal Das", "Student Coordinator", "+91 8895561515"),
+                contactCard(context, "Siddharth Swarup", "Student Coordinator", "+91 7008947727"),
+                contactCard(context, "Shweta Kedas", "Student Coordinator", "+91 8500290908"),
+                contactCard(context, "Sravya Sridhar", "Student Coordinator", "+91 7008118925"),
+                contactCard(context, "Zakiya Ali", "Student Coordinator", "+91 9337002705"),
               ],
             )
           ],
@@ -140,13 +140,13 @@ class AboutSCP extends StatelessWidget {
             style: TextStyle(
                 fontSize: textScaleFactor*15,
                 fontFamily: 'PfDin',
-                fontWeight: FontWeight.w800
+                fontWeight: FontWeight.w500
             ),),
             Text(contact,
               style: TextStyle(
                   fontSize: textScaleFactor*15,
                   fontFamily: 'PfDin',
-                  fontWeight: FontWeight.w800
+                  fontWeight: FontWeight.w500
               ),)
           ],
         ),
