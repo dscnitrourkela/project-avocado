@@ -13,14 +13,13 @@ if (flutterRoot == null) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 //if (flutterVersionCode == null) {
-    flutterVersionCode = '7'
+    flutterVersionCode = '16'
 //}
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
+    flutterVersionName = '2.0'
 }
-
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -84,3 +83,4 @@ dependencies {
 
 }
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'io.fabric'
