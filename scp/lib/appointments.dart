@@ -146,12 +146,12 @@ class _AppointmentsState extends State<Appointments> {
           height: 20.0,
         ),
         slotCard(context, this.queryWidth, this.textScaleFactor, psychDay,psychDate,
-            psychName, 'psych','Psychiatrist'),
+            psychName, 'psych','Psychiatrist', 6, 1.1),
         SizedBox(
           height: 40.0,
         ),
         slotCard(context, this.queryWidth, this.textScaleFactor, counselDay,counselDate,
-            counselorName, 'counsel', 'Counsellor'),
+            counselorName, 'counsel', 'Counsellor', 4, 0.85),
       ],
     );
   }
