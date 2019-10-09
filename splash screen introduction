@@ -1,0 +1,26 @@
+A splash screen is a screen which appears when you open an app on your mobile device. Sometimes it’s referred to as a launch screen or startup screen and shows up when your app is loading after you’ve just opened it. When the loading is finished, you’ll be taken to a more functional screen where you can complete actions.
+
+Splash screens appear on your screen for a fleeting moment – look away and your might miss them. Traditionally, you’ll see a logo and company name and, if you’re lucky, the company motto.
+
+You might think of them as a waste of time, an afterthought or something not to bother thinking about. But they’re good for strengthening brand identity and perception. Google’s Material Design highlights that they’re the user’s first experience of your application. And first impressions count, right?
+
+Take Skype’s splash screen. It shows their logo in pride of place, with a soft gradient. Then when the loading is ready, the icon will animate and bounce around. A nice bit of UX whimsy. Whereas there are other splash screens, like Medium and Etsy, which incorporate fun, relevant and bespoke illustrations that fit in perfectly with the brand and reinforce their identity.
+
+Sometimes an app doesn’t take very long to load. In this instance, you may come across a placeholder UI instead of a branded launch. Maybe your app doesn’t need to reinforce its brand identity in which case you’ll see core structure elements on your app upon open which don’t display any content like so:
+
+splash screen design general guidelines
+
+Splash screen best practices
+Splash screens are simple. They’re used to enhance a brand and give users something nice to look at as they wait. In this regard, here are some best practices for when you design your own splash screen:
+
+Keep it free from unnecessary distraction
+Don’t use multiple colors or logos
+Use animation sparingly
+Prototyping a splash screen in Justinmind
+Creating a splash screen in Justinmind is super simple. When you download Justinmind and start a new prototype, you have at your disposal a treasure trove of awesome pre-built UI widgets.
+
+Using a default mobile screen, you can just drag an image widget and a text widget onto your canvas in the desired position. Add your own images and color preferences and voila. Combined with interactions, your screen will change after your desired time (it’s a splash screen, so don’t leave your users hanging!).
+
+Go here for more on prototyping mobile UI animations with free downloadable examples.
+
+20 inspiring splash screen designs
