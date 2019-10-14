@@ -12,6 +12,7 @@ import 'package:scp/drawer_screens/important_documents.dart';
 import 'package:scp/login.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:scp/appointments.dart';
+import 'package:scp/timetablecardsplit.dart';
 import 'dart:async';
 import 'mentor_search/mentors.dart';
 import 'package:scp/userdata.dart';
@@ -247,14 +248,15 @@ class _HomePageState extends State<HomePage> {
           body: Padding(
             padding: const EdgeInsets.only(top: 16.0),
             child: ListView(
-              scrollDirection: Axis.vertical,
-              children: <Widget>[
-                appointmentCard(context, queryWidth, textScaleFactor),
-                timetableCard(context, queryWidth, textScaleFactor),
-                faqCard(context, queryWidth, textScaleFactor),
-                mentorsCard(context, queryWidth, textScaleFactor),
-              ],
-            ),
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                children: <Widget>[
+                  appointmentCard(context, queryWidth, textScaleFactor),
+                  TimetableCardSplit(context, queryWidth, textScaleFactor),
+                  faqCard(context, queryWidth, textScaleFactor),
+                  mentorsCard(context, queryWidth, textScaleFactor),
+                ],
+              ),
           ),
         );
       },
