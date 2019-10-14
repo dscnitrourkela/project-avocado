@@ -80,7 +80,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
           elevation: 8.0,
-          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
+          margin: new EdgeInsets.symmetric(horizontal: 5.0, vertical: 16.0),
           child: Stack(
             fit: StackFit.loose,
             children: <Widget>[
