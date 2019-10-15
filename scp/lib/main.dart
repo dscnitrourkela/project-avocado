@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:scp/booking.dart';
-import 'package:scp/cards.dart';
+import 'package:scp/ui/cards.dart';
 import 'package:scp/dateConfig.dart';
 import 'package:scp/drawer_screens/about_scs.dart';
 import 'package:scp/drawer_screens/dev_info.dart';
@@ -12,13 +12,13 @@ import 'package:scp/drawer_screens/important_documents.dart';
 import 'package:scp/login.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:scp/appointments.dart';
+import 'package:scp/utils/sizeConfig.dart';
 import 'dart:async';
 import 'mentor_search/mentors.dart';
 import 'package:scp/userdata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'timetable/theorySection.dart';
-
 
 var firebaseInstance = FirebaseAuth.instance;
 final privacyPolicy = "https://project-avocado-8b3e1.firebaseapp.com";
@@ -102,14 +102,15 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     print(DateTime.now().weekday);
     print(DateTime.now().hour);
+    SizeConfig().init(context);
     //ScpDatabase.pushNewWeek(slotsRefMain);
 
     //Map jMap = json.decode(jsonT);
     //print(jMap);
 
     FirebaseDatabase.instance.setPersistenceEnabled(true);
-    var queryWidth = MediaQuery.of(context).size.width;
-    var textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    // var queryWidth = MediaQuery.of(context).size.width;
+    // var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return FutureBuilder(
       future: fetchUserData(context),
       builder: (context, snap) {
@@ -127,20 +128,26 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget>[
                   Text(
                     username,
-                    style: TextStyle(fontSize: 25.0, fontFamily: 'PfDin'),
+                    style: TextStyle(
+                        fontSize: SizeConfig.screenWidth * 0.058,
+                        fontFamily: 'PfDin'),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 4.0),
                     child: Text(
                       phoneNo,
-                      style: TextStyle(fontSize: 15.0, fontFamily: 'PfDin'),
+                      style: TextStyle(
+                          fontSize: SizeConfig.screenWidth * 0.035,
+                          fontFamily: 'PfDin'),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 4.0),
                     child: Text(
                       rollNo,
-                      style: TextStyle(fontSize: 15.0, fontFamily: 'PfDin'),
+                      style: TextStyle(
+                          fontSize: SizeConfig.screenWidth * 0.035,
+                          fontFamily: 'PfDin'),
                     ),
                   )
                 ],
@@ -156,7 +163,9 @@ class _HomePageState extends State<HomePage> {
                       },
                       title: Text(
                         "Important Documents",
-                        style: TextStyle(fontSize: 18.0, fontFamily: 'PfDin'),
+                        style: TextStyle(
+                            fontSize: SizeConfig.drawerItemTextSize,
+                            fontFamily: 'PfDin'),
                       ),
                     ),
                     ListTile(
@@ -165,7 +174,9 @@ class _HomePageState extends State<HomePage> {
                       },
                       title: Text(
                         "About SCS",
-                        style: TextStyle(fontSize: 18.0, fontFamily: 'PfDin'),
+                        style: TextStyle(
+                            fontSize: SizeConfig.drawerItemTextSize,
+                            fontFamily: 'PfDin'),
                       ),
                     ),
                     ListTile(
@@ -174,7 +185,9 @@ class _HomePageState extends State<HomePage> {
                       },
                       title: Text(
                         "Privacy Policy",
-                        style: TextStyle(fontSize: 18.0, fontFamily: 'PfDin'),
+                        style: TextStyle(
+                            fontSize: SizeConfig.drawerItemTextSize,
+                            fontFamily: 'PfDin'),
                       ),
                     ),
                     ListTile(
@@ -183,7 +196,9 @@ class _HomePageState extends State<HomePage> {
                       },
                       title: Text(
                         "Developer Info",
-                        style: TextStyle(fontSize: 18.0, fontFamily: 'PfDin'),
+                        style: TextStyle(
+                            fontSize: SizeConfig.drawerItemTextSize,
+                            fontFamily: 'PfDin'),
                       ),
                     ),
                   ],
@@ -193,8 +208,8 @@ class _HomePageState extends State<HomePage> {
                   child: Align(
                 alignment: Alignment.center,
                 child: ButtonTheme(
-                  minWidth: 200,
-                  height: 40,
+                  minWidth: SizeConfig.screenWidth * 0.463,
+                  height: SizeConfig.screenWidth * 0.093,
                   child: RaisedButton(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0)),
@@ -208,7 +223,7 @@ class _HomePageState extends State<HomePage> {
                           fontWeight: FontWeight.w400,
                           fontFamily: 'PfDin',
                           color: Colors.white,
-                          fontSize: 20 * textScaleFactor),
+                          fontSize: SizeConfig.screenWidth * 0.046),
                     ),
                   ),
                 ),
@@ -217,7 +232,7 @@ class _HomePageState extends State<HomePage> {
           )),
           appBar: AppBar(
             leading: Padding(
-              padding: EdgeInsets.only(top: queryWidth * 0.037),
+              padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.037),
               child: IconButton(
                   icon: Icon(
                     Icons.menu,
@@ -230,7 +245,7 @@ class _HomePageState extends State<HomePage> {
             elevation: 0,
             centerTitle: true,
             title: Padding(
-              padding: EdgeInsets.only(top: queryWidth * 0.037),
+              padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.037),
               child: Text(
                 'SCS',
                 textAlign: TextAlign.center,
@@ -249,10 +264,10 @@ class _HomePageState extends State<HomePage> {
             child: ListView(
               scrollDirection: Axis.vertical,
               children: <Widget>[
-                appointmentCard(context, queryWidth, textScaleFactor),
-                timetableCard(context, queryWidth, textScaleFactor),
-                faqCard(context, queryWidth, textScaleFactor),
-                mentorsCard(context, queryWidth, textScaleFactor),
+                appointmentCard(context),
+                timetableCard(context),
+                faqCard(context),
+                mentorsCard(context),
               ],
             ),
           ),
@@ -276,7 +291,7 @@ class _HomePageState extends State<HomePage> {
     // int dayFromEpoch = (DateTime.now().millisecondsSinceEpoch/(fac)).floor();
     // print("Smarak ${((dayFromEpoch - 1)/7).floor()}");
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if(!prefs.getBool('hasBooked')){
+    if (!prefs.getBool('hasBooked')) {
       prefs.setString('bookDate', DateTime.now().toString());
     }
 
@@ -288,7 +303,7 @@ class _HomePageState extends State<HomePage> {
       now = now.add(new Duration(days: 1));
       //print(now);
     }
-  
+
     print(DateFormat.d().format(now) + " " + DateFormat.MMM().format(now));
     prefs.setString('psychDate',
         DateFormat.d().format(now) + " " + DateFormat.MMM().format(now));
@@ -332,7 +347,7 @@ class _HomePageState extends State<HomePage> {
     username = prefs.getString('username');
     rollNo = prefs.getString('roll_no');
     phoneNo = prefs.getString('phone_no');
-  prefs.setBool('hasBooked', prefs.getBool('hasBooked')??false);
+    prefs.setBool('hasBooked', prefs.getBool('hasBooked') ?? false);
     print(username + rollNo + phoneNo);
   }
 

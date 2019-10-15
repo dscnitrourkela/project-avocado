@@ -1,5 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:scp/models.dart';
+import 'package:scp/utils/models.dart';
 
 class ScpDatabase {
   static FirebaseDatabase database;
