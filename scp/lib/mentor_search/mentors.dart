@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:scp/mentor_search/appbase_search_manager.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:native_contact_dialog/native_contact_dialog.dart';
+import 'package:scp/mentor_search/appbase_search_manager.dart';
+import 'package:scp/utils/connectivity.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Mentors extends StatefulWidget {
   @override
@@ -79,8 +80,7 @@ class _MentorsState extends State<Mentors> {
                 color: Colors.lightBlueAccent,
                 shape: CircleBorder(),
               ),
-              child:
-              IconButton(
+              child: IconButton(
                 icon: Icon(Icons.check),
                 iconSize: 40,
                 onPressed: () {
@@ -90,9 +90,9 @@ class _MentorsState extends State<Mentors> {
                           builder: (context) =>
                               DetailScreen(rollNoController.text)));
                 },
-              ),),
+              ),
+            ),
           )
-
         ],
       ),
     );
@@ -101,6 +101,7 @@ class _MentorsState extends State<Mentors> {
 
 class DetailScreen extends StatefulWidget {
   final String text;
+
   DetailScreen(this.text);
 
   @override
@@ -108,14 +109,16 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  
   final Color primaryColor = Color.fromARGB(255, 49, 68, 76);
   final Color secondaryColor = Color.fromARGB(255, 158, 218, 224);
   final Color lunchColor = Color.fromARGB(255, 238, 71, 89);
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     var queryWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+        key: _scaffoldKey,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(
             60.0,
@@ -164,20 +167,20 @@ class _DetailScreenState extends State<DetailScreen> {
     mentorName = 'NA';
     mentorContact = 'NA';
     mentorEmail = 'NA';
-    String message='Incorrect Input';
+    String message = 'Incorrect Input';
     return Container(
       child: FutureBuilder(
         future: AppBaseSearchHandler.searchRollNo(widget.text),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            if ((snapshot.hasData)&&((snapshot.data.hits.hits.length>0))) {
+            if ((snapshot.hasData) && ((snapshot.data.hits.hits.length > 0))) {
               //print('abelmps'+snapshot.data.hits.hits[0].source.mentorName);
-                  mentorName = snapshot.data.hits.hits[0].source.mentorName;
-                  mentorContact = snapshot.data.hits.hits[0].source.mentorContact;
-                  mentorEmail = snapshot.data.hits.hits[0].source.mentorEmail;
-                  message='Save Contact';
+              mentorName = snapshot.data.hits.hits[0].source.mentorName;
+              mentorContact = snapshot.data.hits.hits[0].source.mentorContact;
+              mentorEmail = snapshot.data.hits.hits[0].source.mentorEmail;
+              message = 'Save Contact';
               return Padding(
-                padding: EdgeInsets.only(top:queryWidth * 0.3),
+                padding: EdgeInsets.only(top: queryWidth * 0.3),
                 child: Column(
                   children: <Widget>[
                     SizedBox(
@@ -200,11 +203,11 @@ class _DetailScreenState extends State<DetailScreen> {
                         child: RaisedButton(
                           color: secondaryColor,
                           shape: StadiumBorder(),
-                          onPressed: () async{
-                            var url = "tel:"+mentorContact;
-                            if(await canLaunch(url)){
+                          onPressed: () async {
+                            var url = "tel:" + mentorContact;
+                            if (await canLaunch(url)) {
                               await launch(url);
-                            }else{
+                            } else {
                               throw 'Could not launch $url';
                             }
                           },
@@ -217,8 +220,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               ),
                               Padding(
                                 padding: EdgeInsets.only(left: 8.0),
-                                child: Text(
-                                    mentorContact,
+                                child: Text(mentorContact,
                                     style: TextStyle(
                                         fontFamily: 'PfDin',
                                         color: primaryColor,
@@ -240,24 +242,26 @@ class _DetailScreenState extends State<DetailScreen> {
                         child: RaisedButton(
                           shape: StadiumBorder(),
                           color: secondaryColor,
-                          onPressed: () async{
-                            var url = "mailto:"+mentorEmail;
-                            if(await canLaunch(url)){
+                          onPressed: () async {
+                            var url = "mailto:" + mentorEmail;
+                            if (await canLaunch(url)) {
                               await launch(url);
-                            }else{
+                            } else {
                               throw 'Could not launch $url';
                             }
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Icon(Icons.email,color: primaryColor,),
+                              Icon(
+                                Icons.email,
+                                color: primaryColor,
+                              ),
                               Padding(
                                 padding: EdgeInsets.only(left: 8.0),
-                                child: Text(
-                                    mentorEmail,
+                                child: Text(mentorEmail,
                                     style: TextStyle(
-                                      color: primaryColor,
+                                        color: primaryColor,
                                         fontFamily: 'PfDin',
                                         fontSize: queryWidth * 0.04)),
                               ),
@@ -274,26 +278,33 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: RaisedButton(
                         color: primaryColor,
                         shape: StadiumBorder(),
-                        onPressed: (){
+                        onPressed: () {
                           saveContact(Contact(
                               givenName: mentorName,
                               phones: [Item(value: mentorContact)],
-                              emails: [Item(value: mentorEmail)]
-                          ));
+                              emails: [Item(value: mentorEmail)]));
                         },
-                        child: Text(message, style: TextStyle(color: Colors.white),),
+                        child: Text(
+                          message,
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     )
                   ],
                 ),
               );
             } else {
-              if(snapshot.hasError)
-                {
-                  message='Check Connectivity';
-                }
+              if (snapshot.hasError) {
+                isInternetAvailable().then((isInternetAvailable) {
+                  if (!isInternetAvailable) {
+                    showNoInternetAvailableSnackbar(_scaffoldKey);
+                  }
+                });
+
+                message = 'Check Connectivity';
+              }
               return Padding(
-                padding: EdgeInsets.only(top:queryWidth * 0.3),
+                padding: EdgeInsets.only(top: queryWidth * 0.3),
                 child: Column(
                   children: <Widget>[
                     SizedBox(
@@ -310,13 +321,12 @@ class _DetailScreenState extends State<DetailScreen> {
                     ),
                     Padding(
                       padding:
-                      EdgeInsets.symmetric(horizontal: queryWidth * 0.07),
+                          EdgeInsets.symmetric(horizontal: queryWidth * 0.07),
                       child: SizedBox(
                         height: queryWidth * 0.1,
                         child: RaisedButton(
                           color: secondaryColor,
                           shape: StadiumBorder(),
-
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
@@ -326,8 +336,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               ),
                               Padding(
                                 padding: EdgeInsets.only(left: 8.0),
-                                child: Text(
-                                    mentorContact,
+                                child: Text(mentorContact,
                                     style: TextStyle(
                                         fontFamily: 'PfDin',
                                         color: primaryColor,
@@ -343,21 +352,22 @@ class _DetailScreenState extends State<DetailScreen> {
                     ),
                     Padding(
                       padding:
-                      EdgeInsets.symmetric(horizontal: queryWidth * 0.07),
+                          EdgeInsets.symmetric(horizontal: queryWidth * 0.07),
                       child: SizedBox(
                         height: queryWidth * 0.1,
                         child: RaisedButton(
                           shape: StadiumBorder(),
                           color: secondaryColor,
-
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Icon(Icons.email,color: primaryColor,),
+                              Icon(
+                                Icons.email,
+                                color: primaryColor,
+                              ),
                               Padding(
                                 padding: EdgeInsets.only(left: 8.0),
-                                child: Text(
-                                    mentorEmail,
+                                child: Text(mentorEmail,
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontFamily: 'PfDin',
@@ -376,12 +386,13 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: RaisedButton(
                         color: primaryColor,
                         shape: StadiumBorder(),
-
-                        child: Text(message, style: TextStyle(color: Colors.white),),
-                        onPressed: (){
+                        child: Text(
+                          message,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () {
                           Navigator.of(context);
                           Navigator.pop(context);
-
                         },
                       ),
                     )
@@ -396,8 +407,7 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  void saveContact(Contact newContact) async
-  {
+  void saveContact(Contact newContact) async {
     NativeContactDialog.addContact(newContact).then((result) {
       // NOTE: The user could cancel the dialog, but not add
       // them to their addressbook. Whether or not the user decides
@@ -410,5 +420,4 @@ class _DetailScreenState extends State<DetailScreen> {
       print('Error adding contact!');
     });
   }
-
 }

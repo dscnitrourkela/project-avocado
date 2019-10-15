@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:isolate';
+
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:scp/cards.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
+import 'package:scp/utils/connectivity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Appointments extends StatefulWidget {
@@ -17,9 +20,12 @@ class _AppointmentsState extends State<Appointments> {
   double queryWidth;
   double textScaleFactor;
   static String counselDay, counselorName, psychName, psychDay;
-  StreamSubscription<Event> _onCounselChangedSubscription, _onPsychChangedSubscription;
+  StreamSubscription<Event> _onCounselChangedSubscription,
+      _onPsychChangedSubscription;
   ScpDatabase scpDatabase;
-  String psychDate,counselDate;
+  String psychDate, counselDate;
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _onSlotsUpdated(Event event) async {
     setState(() {});
@@ -34,7 +40,8 @@ class _AppointmentsState extends State<Appointments> {
     scpDatabase.init();
     _onCounselChangedSubscription =
         ScpDatabase.counselRef.onChildChanged.listen(_onSlotsUpdated);
-    _onPsychChangedSubscription = ScpDatabase.psychRef.onChildChanged.listen(_onSlotsUpdated);
+    _onPsychChangedSubscription =
+        ScpDatabase.psychRef.onChildChanged.listen(_onSlotsUpdated);
     super.initState();
   }
 
@@ -80,11 +87,11 @@ class _AppointmentsState extends State<Appointments> {
 
   @override
   Widget build(BuildContext context) {
-
     queryWidth = MediaQuery.of(context).size.width;
     textScaleFactor = MediaQuery.of(context).textScaleFactor;
 
     return Scaffold(
+        key: _scaffoldKey,
         backgroundColor: Colors.white,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(
@@ -112,7 +119,7 @@ class _AppointmentsState extends State<Appointments> {
             leading: Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: IconButton(
-                onPressed: (){
+                onPressed: () {
                   Navigator.of(context);
                   Navigator.pushNamed(context, '/homePage');
                 },
@@ -129,7 +136,7 @@ class _AppointmentsState extends State<Appointments> {
             builder:
                 (BuildContext context, AsyncSnapshot<RemoteConfig> snapshot) {
               return Center(
-                  child: snapshot.hasData
+                  child: snapshot.hasData && !snapshot.hasError
                       ? appointmentScreen(context, snapshot.data)
                       : CircularProgressIndicator());
             }));
@@ -145,36 +152,43 @@ class _AppointmentsState extends State<Appointments> {
         SizedBox(
           height: 20.0,
         ),
-        slotCard(context, this.queryWidth, this.textScaleFactor, psychDay,psychDate,
-            psychName, 'psych','Psychiatrist', 6, 1.1),
+        slotCard(context, this.queryWidth, this.textScaleFactor, psychDay,
+            psychDate, psychName, 'psych', 'Psychiatrist', 6, 1.1),
         SizedBox(
           height: 40.0,
         ),
-        slotCard(context, this.queryWidth, this.textScaleFactor, counselDay,counselDate,
-            counselorName, 'counsel', 'Counsellor', 4, 0.85),
+        slotCard(context, this.queryWidth, this.textScaleFactor, counselDay,
+            counselDate, counselorName, 'counsel', 'Counsellor', 4, 0.85),
       ],
     );
   }
 
-  getDate() async{
-    SharedPreferences prefs=await SharedPreferences.getInstance();
-    psychDate=prefs.getString('psychDate');
-    counselDate=prefs.getString('counselDate');
-
-
+  getDate() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    psychDate = prefs.getString('psychDate');
+    counselDate = prefs.getString('counselDate');
   }
 
   Future<RemoteConfig> _setupRemoteConfig() async {
     RemoteConfig remoteConfig = await RemoteConfig.instance;
     // Enable developer mode to relax fetch throttling
     remoteConfig.setConfigSettings(RemoteConfigSettings(debugMode: true));
-    await remoteConfig.fetch(expiration: const Duration(seconds: 0));
-    await remoteConfig.activateFetched();
-    counselDay = remoteConfig.getString('counsel_day');
-    counselorName = remoteConfig.getString('counselor_name');
-    psychName = remoteConfig.getString('psych_name');
-    psychDay = remoteConfig.getString('psych_day');
-    print(counselDay + 'hola');
-    return remoteConfig;
+
+    await isInternetAvailable().then((isInternetAvailable) {
+      if (isInternetAvailable) {
+        remoteConfig.fetch(expiration: const Duration(seconds: 0));
+        remoteConfig.activateFetched();
+        counselDay = remoteConfig.getString('counsel_day');
+        counselorName = remoteConfig.getString('counselor_name');
+        psychName = remoteConfig.getString('psych_name');
+        psychDay = remoteConfig.getString('psych_day');
+        print(counselDay + 'hola');
+      } else {
+        showNoInternetAvailableSnackbar(_scaffoldKey);
+        throw Future.error(RemoteError("No internet connection", null));
+      }
+    });
+
+    return Future.value(remoteConfig);
   }
 }

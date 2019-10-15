@@ -80,7 +80,8 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
     implementation 'androidx.appcompat:appcompat:1.0.2'
-
+    implementation "com.google.android.material:material:1.0.0"
 }
+
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'
