@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scp/utils/sizeConfig.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final String aboutText="Student Counselling Services, NIT Rourkela is a noble initiative by the current Director, Prof. Animesh Biswas. This service deals with various important aspects of a student’s life. It addresses Academic, Financial, Mental and Socio-cultural issues, ensuring a seamless transition from home to hostel life for the freshmen and making life at NITR more enjoyable. \n\n"
@@ -51,7 +52,7 @@ class AboutSCP extends StatelessWidget {
                 child: Text("FACULTY MEMBERS",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: SizeConfig.screenWidth * 0.05,
                     fontWeight: FontWeight.w500,
                     fontFamily: 'PfDin',
                     color: Color.fromRGBO(74, 232, 190, 1),
@@ -110,7 +111,6 @@ class AboutSCP extends StatelessWidget {
   }
 
   Widget contactCard(BuildContext context,String name,String position,String contact){
-    //var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return InkWell(
       onTap: (){
