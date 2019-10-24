@@ -13,6 +13,7 @@ import 'package:scp/login.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:scp/appointments.dart';
 import 'package:scp/utils/sizeConfig.dart';
+import 'package:scp/timetablecardsplit.dart';
 import 'dart:async';
 import 'mentor_search/mentors.dart';
 import 'package:scp/userdata.dart';
