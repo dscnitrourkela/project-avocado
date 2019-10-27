@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:scp/background.dart';
-import 'package:scp/background_gradient.dart';
-
 import 'package:scp/firebase/firebaseAuthHelper.dart';
+
+import 'utils/sizeConfig.dart';
 
 final Shader linearGradient = LinearGradient(
   colors: <Color>[Color(0xffDA44bb), Color(0xff8921aa)],
@@ -34,7 +33,8 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    var queryWidth = MediaQuery.of(context).size.width;
+    SizeConfig().init(context);
+    //var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     countryCodeController.text = countryCode;
     return Scaffold(
@@ -57,8 +57,8 @@ class _LoginState extends State<Login> {
                       padding: const EdgeInsets.all(10.0),
                       child: Image.asset(
                         'assets/icon-t.png',
-                        height: queryWidth * 0.2,
-                        width: queryWidth * 0.2,
+                        height: SizeConfig.iconSizeSCP,
+                        width: SizeConfig.iconSizeSCP,
                         color: Color.fromRGBO(74, 232, 190, 1),
                       ),
                     ),
@@ -67,7 +67,7 @@ class _LoginState extends State<Login> {
                       child: Text(
                         "SCS NIT ROURKELA",
                         style: TextStyle(
-                            fontSize: 32.0,
+                            fontSize: SizeConfig.screenWidth * 0.074,
                             fontFamily: "PfDin",
                             color: Color.fromRGBO(25, 39, 45, 1),
                             fontWeight: FontWeight.w900),
@@ -83,7 +83,7 @@ class _LoginState extends State<Login> {
             child: Text(
               "SIGN IN",
               style: TextStyle(
-                  fontSize: 20.0,
+                  fontSize: SizeConfig.screenWidth * 0.047,
                   fontFamily: "PfDin",
                   color: Color.fromRGBO(74, 232, 190, 1),
                   fontWeight: FontWeight.w600),
@@ -115,7 +115,7 @@ class _LoginState extends State<Login> {
                         ),
                         Flexible(
                           child: Container(
-                            width: queryWidth * 0.1,
+                            width: SizeConfig.screenWidth * 0.1,
                             child: TextField(
                               //maxLength: 2,
                               enableInteractiveSelection: true,
@@ -146,7 +146,7 @@ class _LoginState extends State<Login> {
                   ),
                   Flexible(
                     child: Container(
-                      width: queryWidth * 0.4,
+                      width: SizeConfig.screenWidth * 0.4,
                       child: TextField(
                         maxLength: 10,
                         enableInteractiveSelection: true,
@@ -180,7 +180,7 @@ class _LoginState extends State<Login> {
             alignment: Alignment(0, 0.25),
             child: ButtonTheme(
               minWidth: 200,
-              height: 40,
+              height: SizeConfig.screenWidth * 0.094,
               child: RaisedButton(
                   onPressed: () {
                     String finalPhoneNo = "+" +
@@ -194,7 +194,7 @@ class _LoginState extends State<Login> {
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontFamily: 'PfDin',
-                      fontSize: 20 * textScaleFactor,
+                      fontSize: SizeConfig.screenWidth*0.047,
                     ),
                   ),
                   textColor: Colors.white,

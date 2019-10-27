@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:scp/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ScpAuth {
   static String phoneNumber;
@@ -17,19 +17,18 @@ class ScpAuth {
     phoneNumber = phoneNumber;
   }
 
-  
   Future<bool> smsCodeDialog(BuildContext context) {
     print('enter smsdialog');
     var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    final otpController =TextEditingController();
+    final otpController = TextEditingController();
     print(queryWidth);
     return showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 4,sigmaY: 4),
-          child: AlertDialog(
+              filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+              child: AlertDialog(
                 title: Text(
                   'Enter OTP',
                   textAlign: TextAlign.center,
@@ -45,19 +44,16 @@ class ScpAuth {
                   controller: otpController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    border: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                          color:Color.fromRGBO(25, 39, 45, 1),
-                      )
-                    )
-                  ),
-                  style:TextStyle(
-                      fontSize: 20*textScaleFactor,
+                      border: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                    color: Color.fromRGBO(25, 39, 45, 1),
+                  ))),
+                  style: TextStyle(
+                      fontSize: 20 * textScaleFactor,
                       fontWeight: FontWeight.w800,
-                      fontFamily: 'PfDin'
-                  ),
-                  onChanged: (value){
-                    smsCode=value;
+                      fontFamily: 'PfDin'),
+                  onChanged: (value) {
+                    smsCode = value;
                   },
                 ),
                 contentPadding: EdgeInsets.all(10.0),
@@ -66,28 +62,27 @@ class ScpAuth {
                     child: Text(
                       'Next',
                       style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color:Colors.white,
-                        fontFamily:'PfDin'
-                      ),
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                          fontFamily: 'PfDin'),
                     ),
                     shape: RoundedRectangleBorder(
-                    borderRadius:BorderRadius.circular(8.0)
-                  ),
-                  color: Color.fromRGBO(25, 39, 45, 1),
+                        borderRadius: BorderRadius.circular(8.0)),
+                    color: Color.fromRGBO(25, 39, 45, 1),
                     onPressed: () {
                       firebaseInstance.currentUser().then((user) {
                         if (user == null) {
                           signIn(context);
-
-                        } else {Navigator.of(context).pushNamed('/userdata');
+                        } else {
+                          print("Navigatr push");
+                          Navigator.of(context).pushNamed('/userdata');
                         }
                       });
                     },
                   ),
                 ],
               ),
-        ));
+            ));
   }
 
   Future<void> verifyPhone(String phoneNumber) async {
@@ -102,9 +97,8 @@ class ScpAuth {
     final PhoneVerificationCompleted verificationCompleted =
         (AuthCredential credential) {
       print('verified');
-      signInSpecial(context,credential);
-
-        };
+      signInSpecial(context, credential);
+    };
 
     final PhoneVerificationFailed verificationFailed = (AuthException error) {
       print('${error.message}');
