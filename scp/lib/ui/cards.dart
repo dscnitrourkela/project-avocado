@@ -3,15 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scp/booking.dart';
 import 'package:scp/dateConfig.dart';
-import 'package:scp/gradients.dart';
+import 'package:scp/ui/gradients.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
+import 'package:scp/utils/sizeConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'models.dart';
+import '../utils/models.dart';
 
 const platform = const MethodChannel("FAQ_ACTIVITY");
-Widget appointmentCard(
-    BuildContext context, double heightFactor, double textScaleFactor) {
+Widget appointmentCard(BuildContext context) {
   Gradients().init(context);
+  SizeConfig().init(context);
+  double heightFactor = SizeConfig.screenWidth;
   return SizedBox(
     height: heightFactor * 0.58,
     child: Padding(
@@ -117,7 +119,7 @@ Widget appointmentCard(
                                       color: Colors.blue,
                                       fontWeight: FontWeight.w500),
                                   textAlign: TextAlign.left,
-                                  textScaleFactor: textScaleFactor,
+                                  //textScaleFactor: textScaleFactor,
                                 ),
                               ),
                             ),
@@ -163,9 +165,10 @@ Widget appointmentCard(
   );
 }
 
-Widget mentorsCard(
-    BuildContext context, double heightFactor, double textScaleFactor) {
+Widget mentorsCard(BuildContext context) {
   Gradients().init(context);
+  SizeConfig().init(context);
+  double heightFactor = SizeConfig.screenWidth;
   return SizedBox(
     height: heightFactor * 0.58,
     child: InkWell(
@@ -276,9 +279,10 @@ _startFAQActivity() async {
   }
 }
 
-Widget faqCard(
-    BuildContext context, double heightFactor, double textScaleFactor) {
+Widget faqCard(BuildContext context) {
   Gradients().init(context);
+  SizeConfig().init(context);
+  double heightFactor = SizeConfig.screenWidth;
   return SizedBox(
     height: heightFactor * 0.58,
     child: InkWell(
@@ -366,9 +370,10 @@ Widget faqCard(
   );
 }
 
-Widget timetableCard(
-    BuildContext context, double heightFactor, double textScaleFactor) {
+Widget timetableCard(BuildContext context) {
   Gradients().init(context);
+  SizeConfig().init(context);
+  double heightFactor = SizeConfig.screenWidth;
   return SizedBox(
     height: heightFactor * 0.58,
     child: InkWell(
@@ -474,18 +479,22 @@ var gKey, gCounselDay, gTime;
 
 Widget slotCard(
     BuildContext context,
-    double heightFactor,
-    double textScaleFactor,
+    //double heightFactor,
+    //double textScaleFactor,
     String counselDay,
     String date,
     String titleText,
     String type,
     String designation,
     int count,
-    double scale_height) {
+    double scaleHeight) {
+      SizeConfig().init(context);
+      double heightFactor = SizeConfig.screenWidth;
   Widget slotWidget(String status, String key, String time) {
     final bool visible = false;
     bool isSelected = false;
+    SizeConfig().init(context);
+    double heightFactor = SizeConfig.screenWidth;
 
     void bookAppointment(String key) async {
       print(counselDay);
@@ -496,7 +505,11 @@ Widget slotCard(
       prefs.setBool('hasBooked', true);
       prefs.setString('bookedDate', date);
       prefs.setString('bookingType', type);
-      prefs.setString('bookDate', ((type == "psych") ? DateConfig.psychDate.toString() : DateConfig.counselDate.toString()));
+      prefs.setString(
+          'bookDate',
+          ((type == "psych")
+              ? DateConfig.psychDate.toString()
+              : DateConfig.counselDate.toString()));
       print(DateConfig.bookedDate.toString());
       gCounselDay = counselDay;
       gKey = key;
@@ -641,7 +654,7 @@ Widget slotCard(
   return Container(
     color: Colors.white,
     child: SizedBox(
-      height: heightFactor * scale_height,
+      height: heightFactor * scaleHeight,
       width: heightFactor * 0.85,
       child: Card(
         color: Colors.white,
