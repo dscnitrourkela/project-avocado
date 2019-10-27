@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scp/gradients.dart';
+import 'package:scp/ui/gradients.dart';
 
 class TimetableCardSplit extends StatefulWidget {
   BuildContext cxt;
