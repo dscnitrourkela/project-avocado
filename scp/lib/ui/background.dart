@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:scp/cards.dart';
 
 class Background extends StatelessWidget {
   @override
