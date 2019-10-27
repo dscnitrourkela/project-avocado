@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:scp/cards.dart';
+import 'package:scp/ui/cards.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -145,12 +145,12 @@ class _AppointmentsState extends State<Appointments> {
         SizedBox(
           height: 20.0,
         ),
-        slotCard(context, this.queryWidth, this.textScaleFactor, psychDay,psychDate,
+        slotCard(context, psychDay,psychDate,
             psychName, 'psych','Psychiatrist', 6, 1.1),
         SizedBox(
           height: 40.0,
         ),
-        slotCard(context, this.queryWidth, this.textScaleFactor, counselDay,counselDate,
+        slotCard(context, counselDay,counselDate,
             counselorName, 'counsel', 'Counsellor', 4, 0.85),
       ],
     );
