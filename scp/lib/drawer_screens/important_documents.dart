@@ -38,7 +38,7 @@ class ImpDocs extends StatelessWidget {
   }
 
   Widget docCard(BuildContext context,String name,String contact){
-    var queryWidth = MediaQuery.of(context).size.width;
+    //var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return Padding(
       padding: const EdgeInsets.all(8.0),

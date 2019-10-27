@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:scp/utils/sizeConfig.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-final String ABOUT_TEXT="Student Counselling Services, NIT Rourkela is a noble initiative by the current Director, Prof. Animesh Biswas. This service deals with various important aspects of a student’s life. It addresses Academic, Financial, Mental and Socio-cultural issues, ensuring a seamless transition from home to hostel life for the freshmen and making life at NITR more enjoyable. \n\n"
+final String aboutText="Student Counselling Services, NIT Rourkela is a noble initiative by the current Director, Prof. Animesh Biswas. This service deals with various important aspects of a student’s life. It addresses Academic, Financial, Mental and Socio-cultural issues, ensuring a seamless transition from home to hostel life for the freshmen and making life at NITR more enjoyable. \n\n"
     "The objective of SCS is to prepare the students for a confident approach towards life and to bring about a voluntary change in themselves. The goal of counselling is to help individuals overcome their immediate problems and also to equip them to meet future problems. The goals of counselling are appropriately concerned with fundamental and basic aspects such as self-understanding and self-actualization.\n\n"
 "The service has 8 faculty members, including the Professor in Charge, Prof. K. C. Pati and 11 Student Coordinators. Each coordinator has been assigned a set number of mentors who in turn take care of mentees from the freshman year. Experienced mentors interact with the newbies to bridge the Junior-Senior gap and also personal and professional support. Student Counselling Services also has at their services a Counsellor and a Psychiatrist, who professionally deal with various student issues. ";
 class AboutSCP extends StatelessWidget {
@@ -35,7 +36,7 @@ class AboutSCP extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 25,right: 25, top: 20,bottom: 30),
-              child: Text(ABOUT_TEXT,
+              child: Text(aboutText,
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 15,
@@ -51,7 +52,7 @@ class AboutSCP extends StatelessWidget {
                 child: Text("FACULTY MEMBERS",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: SizeConfig.screenWidth * 0.05,
                     fontWeight: FontWeight.w500,
                     fontFamily: 'PfDin',
                     color: Color.fromRGBO(74, 232, 190, 1),
@@ -110,7 +111,6 @@ class AboutSCP extends StatelessWidget {
   }
 
   Widget contactCard(BuildContext context,String name,String position,String contact){
-    var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return InkWell(
       onTap: (){
