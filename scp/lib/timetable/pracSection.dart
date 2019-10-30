@@ -22,7 +22,7 @@ const VIEWPORT_FRACTION = 0.4;
 double page = 0.0;
 int currentPage = 0;
 PageController pageController;
-double PAGER_HEIGHT = 140.0;
+double pagerHeight = 140.0;
 String theorySection;
 
 class PracticalSection extends StatefulWidget {
@@ -110,8 +110,8 @@ class _PracticalSectionState extends State<PracticalSection> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(16.0))),
                 child: Container(
-                  height: PAGER_HEIGHT,
-                  width: PAGER_HEIGHT,
+                  height: pagerHeight,
+                  width: pagerHeight,
                 ),
                 elevation: 20,
               ),
@@ -167,12 +167,12 @@ Widget _buildCarousel(_PracticalSectionState timetableState,
             controller: pageController,
             itemCount: sectionArray.length,
             itemBuilder: (BuildContext context, int itemIndex) {
-              final SizeScale = max(SCALE_FRACTION,
+              final sizeScale = max(SCALE_FRACTION,
                   (FULL_SCALE - (itemIndex - page).abs()) + VIEWPORT_FRACTION);
-              final ColorScale = min(SCALE_FRACTION,
+              final colorScale = min(SCALE_FRACTION,
                   (FULL_SCALE - (itemIndex - page).abs()) + VIEWPORT_FRACTION);
               return _buildCarouselItem(
-                  context, carouselIndex, itemIndex, SizeScale, ColorScale);
+                  context, carouselIndex, itemIndex, sizeScale, colorScale);
             },
           ),
         ),
@@ -182,16 +182,16 @@ Widget _buildCarousel(_PracticalSectionState timetableState,
 }
 
 Widget _buildCarouselItem(BuildContext context, int carouselIndex,
-    int itemIndex, double SizeScale, double ColorScale) {
+    int itemIndex, double sizeScale, double colorScale) {
   return Container(
     alignment: Alignment.center,
     child: Text(
       sectionArray[itemIndex],
       style: TextStyle(
-          fontSize: 50.0 * SizeScale,
+          fontSize: 50.0 * sizeScale,
           fontWeight: FontWeight.w500,
           fontFamily: 'PfDin',
-          color: Color.fromRGBO(25, 39, 45, ColorScale),
+          color: Color.fromRGBO(25, 39, 45, colorScale),
           letterSpacing: 2),
     ),
   );
