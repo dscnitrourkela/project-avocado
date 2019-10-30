@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-final String ABOUT_TEXT =
+final String aboutText =
     "Developer Student Clubs (DSC) is a Google Developers powered program for university students to learn mobile and web development skills. The clubs will be open to any student interested to learn, ranging from novice developers who are just starting, to advanced developers who want to further their skills. The clubs are intended as a space for students to try out new ideas and collaborate to solve mobile and web development problems.\n\n"
     "DSC NIT Rourkela (DSC NITR) is a student chapter of DSC India with a motive to nurture developers within the community and solve real-life problems in the community through technology.";
 
@@ -45,7 +45,7 @@ class DevInfo extends StatelessWidget {
               padding: const EdgeInsets.only(
                   left: 25, right: 25, top: 20, bottom: 30),
               child: Text(
-                ABOUT_TEXT,
+                aboutText,
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 15,
@@ -92,7 +92,7 @@ class DevInfo extends StatelessWidget {
   }
 
   Widget contactCard(BuildContext context, String name, String contact) {
-    var queryWidth = MediaQuery.of(context).size.width;
+    //var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return Padding(
       padding: const EdgeInsets.all(8.0),
