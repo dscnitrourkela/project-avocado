@@ -299,6 +299,7 @@ class _HomePageState extends State<HomePage> {
               scrollDirection: Axis.vertical,
               children: <Widget>[
                 appointmentCard(context),
+                TimetableCardSplit(context,MediaQuery.of(context).size.width,MediaQuery.of(context).textScaleFactor),
                 timetableCard(context),
                 faqCard(context),
                 mentorsCard(context),
