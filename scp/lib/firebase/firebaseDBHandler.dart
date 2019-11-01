@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:scp/utils/models.dart';
 
+
 class ScpDatabase {
   static FirebaseDatabase database;
   static DatabaseReference counselRef = database.reference().child("slots").child('week1').child('counselor');
