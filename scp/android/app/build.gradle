@@ -49,6 +49,7 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -80,6 +81,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.android.support:multidex:1.0.3'
 
 }
 apply plugin: 'com.google.gms.google-services'
