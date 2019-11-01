@@ -7,22 +7,38 @@ import 'package:scp/booking.dart';
 import 'package:scp/ui/cards.dart';
 import 'package:scp/dateConfig.dart';
 import 'package:scp/drawer_screens/about_scs.dart';
+import 'package:scp/drawer_screens/notifications.dart';
 import 'package:scp/drawer_screens/dev_info.dart';
 import 'package:scp/drawer_screens/important_documents.dart';
 import 'package:scp/login.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:scp/appointments.dart';
 import 'package:scp/utils/sizeConfig.dart';
-import 'package:scp/timetablecardsplit.dart';
 import 'dart:async';
 import 'mentor_search/mentors.dart';
 import 'package:scp/userdata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'timetable/theorySection.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 var firebaseInstance = FirebaseAuth.instance;
 final privacyPolicy = "https://project-avocado-8b3e1.firebaseapp.com";
+
+Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
+  if (message.containsKey('data')) {
+    // Handle data message
+    final dynamic data = message['data'];
+  }
+
+  if (message.containsKey('notification')) {
+    // Handle notification message
+    final dynamic notification = message['notification'];
+  }
+
+  // Or do other work.
+}
+
 void main() {
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
   runZoned<Future<void>>(() async {
@@ -40,7 +56,8 @@ void main() {
         '/about_scp': (BuildContext context) => AboutSCP(),
         '/mentors': (BuildContext context) => Mentors(),
         '/imp_docs': (BuildContext context) => ImpDocs(),
-        '/dev_info': (BuildContext context) => DevInfo()
+        '/dev_info': (BuildContext context) => DevInfo(),
+        '/nots': (BuildContext context) => Nots(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -51,6 +68,8 @@ void main() {
   FlutterError.onError = (FlutterErrorDetails details) {
     Crashlytics.instance.recordFlutterError(details);
   };
+
+
 }
 
 class MyApp extends StatefulWidget {
@@ -62,12 +81,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Container();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    checkLogin();
   }
 
   Future checkLogin() async {
@@ -82,6 +95,14 @@ class _MyAppState extends State<MyApp> {
 
     }
   }
+
+  @override
+  void initState() {
+    super.initState();
+    // ...
+    checkLogin();
+  }
+
 }
 
 class HomePage extends StatefulWidget {
@@ -242,6 +263,18 @@ class _HomePageState extends State<HomePage> {
                   ),
                   onPressed: () => _scaffoldKey.currentState.openDrawer()),
             ),
+              actions: <Widget>[
+                IconButton(
+                  padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.048, right: SizeConfig.screenWidth * 0.06),
+                  icon: Icon(
+                    Icons.notifications,
+                    color: Colors.black,
+                    size: 35.0,
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/nots');
+          },
+        )],
             backgroundColor: Colors.white,
             elevation: 0,
             centerTitle: true,
@@ -323,19 +356,33 @@ class _HomePageState extends State<HomePage> {
   //     print(e.message);
   //   }
   // }
-
+  FirebaseMessaging _fcm = new FirebaseMessaging();
   @override
   void initState() {
+    super.initState();
     DateConfig().init();
     fetchUserData(context);
     reset();
+    _fcm.subscribeToTopic('scs-not');
+    _fcm.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        Navigator.pushNamed(context, '/nots');
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        Navigator.pushNamed(context, '/nots');
+      },
+      onResume: (Map<String, dynamic> message) async {
+        Navigator.pushNamed(context, '/nots');
+      },
+    );
+
     /*if(DateTime.now().weekday == 3){
      if(DateTime.now().hour >= 4){
        slotsRefMain = FirebaseDatabase.instance.reference().child("slots").child('week1').child('counselor');
        ScpDatabase.pushNewWeek(slotsRefMain);
      }
     }*/
-    super.initState();
+
   }
 
   @override
@@ -361,3 +408,5 @@ class _HomePageState extends State<HomePage> {
     }
   }
 }
+
+
