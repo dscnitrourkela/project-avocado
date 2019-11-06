@@ -12,7 +12,7 @@ const VIEWPORT_FRACTION = 0.4;
 double page = 0.0;
 int currentPage = 0;
 PageController pageController;
-double PAGER_HEIGHT = 140.0;
+double pagerHeight = 140.0;
 
 class TheorySection extends StatefulWidget {
   @override
@@ -29,8 +29,8 @@ class _TheorySectionState extends State<TheorySection> {
 
   Future fetchSection() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool show_timetable =prefs.getBool('show_timetable');
-    if(show_timetable){
+    bool showTimeTable =prefs.getBool('show_timetable');
+    if(showTimeTable){
       Navigator.of(context).pop();
       Navigator.push(
         context,
@@ -118,8 +118,8 @@ class _TheorySectionState extends State<TheorySection> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(16.0))),
               child: Container(
-                height: PAGER_HEIGHT,
-                width: PAGER_HEIGHT,
+                height: pagerHeight,
+                width: pagerHeight,
               ),
               elevation: 20,
             ),
@@ -164,12 +164,12 @@ Widget _buildCarousel(_TheorySectionState timetableState, BuildContext context,
             controller: pageController,
             itemCount: sectionArray.length,
             itemBuilder: (BuildContext context, int itemIndex) {
-              final SizeScale = max(SCALE_FRACTION,
+              final sizeScale = max(SCALE_FRACTION,
                   (FULL_SCALE - (itemIndex - page).abs()) + VIEWPORT_FRACTION);
-              final ColorScale = min(SCALE_FRACTION,
+              final colorScale = min(SCALE_FRACTION,
                   (FULL_SCALE - (itemIndex - page).abs()) + VIEWPORT_FRACTION);
               return _buildCarouselItem(
-                  context, carouselIndex, itemIndex, SizeScale, ColorScale);
+                  context, carouselIndex, itemIndex, sizeScale, colorScale);
             },
           ),
         ),
@@ -179,7 +179,7 @@ Widget _buildCarousel(_TheorySectionState timetableState, BuildContext context,
 }
 
 Widget _buildCarouselItem(BuildContext context, int carouselIndex,
-    int itemIndex, double SizeScale, double ColorScale) {
+    int itemIndex, double sizeScale, double colorScale) {
   return Container(
     alignment: Alignment.center,
     child: Padding(
@@ -187,10 +187,10 @@ Widget _buildCarouselItem(BuildContext context, int carouselIndex,
       child: Text(
         sectionArray[itemIndex],
         style: TextStyle(
-            fontSize: 50.0 * SizeScale,
+            fontSize: 50.0 * sizeScale,
             fontWeight: FontWeight.w500,
             fontFamily: 'PfDin',
-            color: Color.fromRGBO(25, 39, 45, ColorScale),
+            color: Color.fromRGBO(25, 39, 45, colorScale),
             letterSpacing: 2),
       ),
     ),

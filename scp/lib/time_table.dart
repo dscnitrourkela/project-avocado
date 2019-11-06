@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scp/utils/sizeConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'time_table_resources.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -47,8 +48,9 @@ class TimeTableState extends State<TimeTable> {
 
   @override
   Widget build(BuildContext context) {
-    screenWidth = MediaQuery.of(context).size.width;
-    screenHeight = MediaQuery.of(context).size.height;
+    SizeConfig().init(context);
+    screenWidth = SizeConfig.screenWidth;
+    screenHeight = SizeConfig.screenHeight;
     return FutureBuilder(
       future: _fetchSectionData(context),
       builder: (context, snap) {
