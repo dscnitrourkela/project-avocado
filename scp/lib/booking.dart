@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
+import 'package:scp/utils/sizeConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Booking extends StatefulWidget {
@@ -18,7 +19,7 @@ class _BookingState extends State<Booking> {
   final String keyCode;
   bool hasBooked;
   String bookedDate, bookedTime;
-  double queryWidth;
+  double screenWidth;
   String counselDay, time, counselorName, psychName, psychDay, type;
   _BookingState({@required this.keyCode,this.time, this.counselDay});
 
@@ -62,7 +63,8 @@ class _BookingState extends State<Booking> {
 
   @override
   Widget build(BuildContext context) {
-    queryWidth = MediaQuery.of(context).size.width;
+    SizeConfig().init(context);
+    screenWidth = SizeConfig.screenWidth;
     //print(type + "Smarak");
 
     return Scaffold(
@@ -78,7 +80,7 @@ class _BookingState extends State<Booking> {
             child: Text(
               'Confirmation',
               style: TextStyle(
-                  fontSize: queryWidth * 0.065,
+                  fontSize: screenWidth * 0.065,
                   fontFamily: 'PfDin',
                   fontWeight: FontWeight.w500),
             ),
@@ -115,12 +117,12 @@ class _BookingState extends State<Booking> {
                   Text('Your Appointment with',style: TextStyle(
                     color: Colors.cyan,
                     fontFamily: 'PfDin',
-                    fontSize: queryWidth * 0.060,
+                    fontSize: screenWidth * 0.060,
                   ),),
                   SizedBox(height: 20.0,),
           Text((type=="psych")?psychName:counselorName,style: TextStyle(
                       color: Colors.black,
-                      fontSize: queryWidth * 0.12,
+                      fontSize: screenWidth * 0.12,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'PfDin',
                     ),),
@@ -128,7 +130,7 @@ class _BookingState extends State<Booking> {
                   Text('has been booked on',style: TextStyle(
                     color: Colors.cyan,
                     fontFamily: 'PfDin',
-                    fontSize: queryWidth * 0.050,
+                    fontSize: screenWidth * 0.050,
                   ),),
                   SizedBox(height: 20.0,),
                   Text(
@@ -136,7 +138,7 @@ class _BookingState extends State<Booking> {
                     style: TextStyle(
                         color: Colors.black,
                         fontFamily: 'PfDin',
-                        fontSize: queryWidth * 0.050,
+                        fontSize: screenWidth * 0.050,
                         fontWeight: FontWeight.w500),
                     textAlign: TextAlign.left,
                   ),
