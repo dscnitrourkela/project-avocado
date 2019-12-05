@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:scp/booking.dart';
+import 'package:scp/timetablecardsplit.dart';
 import 'package:scp/ui/cards.dart';
 import 'package:scp/dateConfig.dart';
 import 'package:scp/drawer_screens/about_scs.dart';
