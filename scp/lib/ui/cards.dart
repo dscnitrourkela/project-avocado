@@ -19,15 +19,18 @@ Widget appointmentCard(BuildContext context) {
     child: Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: InkWell(
-        onTap: () async {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          if (prefs.getBool('hasBooked') == true) {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => Booking(
-                    keyCode: gKey, counselDay: gCounselDay, time: gTime)));
-          } else
-            Navigator.of(context).pushNamed('/appointments');
+        onTap: (){
+          Navigator.pushNamed(context, '/appointments');
         },
+        // onTap: () async {
+        //   SharedPreferences prefs = await SharedPreferences.getInstance();
+        //   if (prefs.getBool('hasBooked') == true) {
+        //     Navigator.of(context).push(MaterialPageRoute(
+        //         builder: (BuildContext context) => Booking(
+        //             keyCode: gKey, counselDay: gCounselDay, time: gTime)));
+        //   } else
+        //     Navigator.of(context).pushNamed('/appointments');
+        // },
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
@@ -523,6 +526,7 @@ Widget slotCard(
         "phoneNo": phoneNo,
         "rollNo": rollNo,
         "status": "1",
+        "timestamp": DateTime.now().toString(),
       }).then((_) {
         print("Value updated");
         Navigator.of(context).pop();

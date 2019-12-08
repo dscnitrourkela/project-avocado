@@ -301,7 +301,7 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 appointmentCard(context),
                 TimetableCardSplit(context,MediaQuery.of(context).size.width,MediaQuery.of(context).textScaleFactor),
-                timetableCard(context),
+                //timetableCard(context),
                 faqCard(context),
                 mentorsCard(context),
               ],
