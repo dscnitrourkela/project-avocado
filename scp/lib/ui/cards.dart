@@ -19,7 +19,7 @@ Widget appointmentCard(BuildContext context) {
     child: Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: InkWell(
-        onTap: (){
+        onTap: () {
           Navigator.pushNamed(context, '/appointments');
         },
         // onTap: () async {
@@ -27,7 +27,7 @@ Widget appointmentCard(BuildContext context) {
         //   if (prefs.getBool('hasBooked') == true) {
         //     Navigator.of(context).push(MaterialPageRoute(
         //         builder: (BuildContext context) => Booking(
-        //             keyCode: gKey, counselDay: gCounselDay, time: gTime)));
+        //             /*keyCode: gKey,*/ counselDay: gCounselDay, time: gTime)));
         //   } else
         //     Navigator.of(context).pushNamed('/appointments');
         // },
@@ -491,9 +491,9 @@ Widget slotCard(
     String designation,
     int count,
     double scaleHeight) {
-      SizeConfig().init(context);
-      double heightFactor = SizeConfig.screenWidth;
-  Widget slotWidget(String status, String key, String time) {
+  SizeConfig().init(context);
+  double heightFactor = SizeConfig.screenWidth;
+  Widget slotWidget(String status, String key, String time, String index) {
     final bool visible = false;
     bool isSelected = false;
     SizeConfig().init(context);
@@ -518,6 +518,7 @@ Widget slotCard(
       gKey = key;
       gTime = time;
       prefs.setString('bookedTime', gTime);
+      prefs.setString('bookedSlot', "slot$index");
 
       var reference =
           (type == "psych") ? ScpDatabase.psychRef : ScpDatabase.counselRef;
@@ -532,7 +533,7 @@ Widget slotCard(
         Navigator.of(context).pop();
         Navigator.of(context).push(MaterialPageRoute(
             builder: (BuildContext context) =>
-                Booking(keyCode: key, counselDay: counselDay, time: time)));
+                Booking(/*eyCode: key,*/ counselDay: counselDay, time: time)));
       });
     }
 
@@ -570,11 +571,13 @@ Widget slotCard(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
-                          onPressed: () {
-                            //SharedPreferences prefs = await SharedPreferences.getInstance();
+                          onPressed: () async {
                             //prefs.setBool("isBookingActive", true);
                             Navigator.pop(context);
                             bookAppointment(key);
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            print(prefs.getString("bookedSlot"));
                           },
                           child: Text('BOOK'),
                           textColor: Colors.white,
@@ -710,7 +713,8 @@ Widget slotCard(
                       itemBuilder: (BuildContext context, int index) {
                         var slot =
                             Slot.map(_slotsSnapshot.value['slot${index + 1}']);
-                        return slotWidget(slot.status, slot.key, slot.time);
+                        return slotWidget(slot.status, slot.key, slot.time,
+                            (index + 1).toString());
                       });
                 }),
           ],
