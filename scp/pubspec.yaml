@@ -29,6 +29,9 @@ dependencies:
   cupertino_icons: ^0.1.2
   url_launcher: ^5.1.0
   intl: ^0.15.2
+  camera: ^0.5.7
+  path_provider: ^1.0.0
+  firebase_storage: ^3.0.8
 
 dev_dependencies:
   flutter_launcher_icons: "^0.7.2"
