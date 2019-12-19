@@ -5,7 +5,7 @@ import 'package:scp/time_table.dart';
 import 'package:scp/timetable/pracSection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const List<String> sectionArray = ["A", "B", "C", "D", "E", "F", "G", "H"];
+const List<String> sectionArray = ["Ar.", "A", "B", "C", "D", "E", "F", "G", "H"];
 const FULL_SCALE = 1.0;
 const SCALE_FRACTION = 0.7;
 const VIEWPORT_FRACTION = 0.4;

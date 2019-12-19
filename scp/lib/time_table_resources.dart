@@ -44,6 +44,16 @@ abstract class TimeTableResources {
   ];
 
   static final theory = {
+    'Ar.': {
+      'TA': 'Evolution of Architecture-I',
+      'TB': 'Engineering Mechanics',
+      'TC': 'Principles of Architectural Designs',
+      'TD': 'Building Materials-I',
+      'SB': 'Engineering Mechanics-Tutorial',
+      'TG1': 'Communicative English',
+      'TG2': 'Communicative English',
+      'TG3': 'Communicative English'
+    },
     'A': {
       'TA': 'Physics-I',
       'TB': 'Engineering Mechanics',
@@ -135,6 +145,7 @@ abstract class TimeTableResources {
   };
 
   static final practical = {
+    'Ar.': {'PA': 'AR1', 'PB': 'AR2','PX': 'AR3', 'PC': 'AR4','PD': 'WP'},
     'P1': {'PA': 'PL', 'PB': 'BP', 'PD': 'WP'},
     'P2': {'PB': 'PL', 'PC': 'BP', 'PX': 'WP'},
     'P3': {'PC': 'PL', 'PD': 'BP', 'PA': 'WP'},
@@ -148,6 +159,10 @@ abstract class TimeTableResources {
   };
 
   static final practicalDetails = {
+    'AR1': {'name': 'Architectural Graphics-I', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777', 'locationName': 'TIIR'},
+    'AR2': {'name': 'Basic Design', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777', 'locationName': 'TIIR'},
+    'AR3': {'name': 'Visual Arts-I', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777', 'locationName': 'TIIR'},
+    'AR4': {'name': 'Non Graphic Computer Application', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777', 'locationName': 'TIIR'},
     'PL': {'name': 'Physics Laboratory', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777', 'locationName': 'Main Building'},
     'BP': {'name': 'Basic Programming', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2513332,84.9048918', 'locationName': 'LA1'},
     'WP': {'name': 'Workshop Practices', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2526002,84.9029979', 'locationName': 'Central Workshop'},
