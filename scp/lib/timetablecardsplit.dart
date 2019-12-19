@@ -33,7 +33,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
           children: <Widget>[
             Flexible(
                 child: timetableCard(widget.cxt, widget.heightFactor,
-                    widget.textSc, width1, "Remedial Classes", 1)),
+                    widget.textSc, width1, "SCS Classes", 1)),
           ],
         ),
         Row(
@@ -72,7 +72,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                 Navigator.pushNamed(context, '/timetable');
               if (cardType == 1) //Remedial
                 Navigator.pushNamed(context,
-                    '/appointments'); // TODO: Change the route accordingly, currently for debug purposes
+                    '/tutorial'); // TODO: Change the route accordingly, currently for debug purposes
             }
           });
         },
@@ -80,7 +80,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
           elevation: 8.0,
-          margin: new EdgeInsets.symmetric(horizontal: 5.0, vertical: 16.0),
+          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
           child: Stack(
             fit: StackFit.loose,
             children: <Widget>[
@@ -178,7 +178,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                                       onTapText,
                                       style: TextStyle(
                                           fontFamily: 'PfDin',
-                                          fontSize: heightFactor * 0.07,
+                                          fontSize: heightFactor * 0.06,
                                           color: Colors.white,
                                           fontWeight: FontWeight.w500),
                                       textAlign: TextAlign.center,

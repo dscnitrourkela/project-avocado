@@ -21,6 +21,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'timetable/theorySection.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:scp/timetablecardsplit.dart';
+import 'package:scp/timetable/tutorialSection.dart';
 
 var firebaseInstance = FirebaseAuth.instance;
 final privacyPolicy = "https://project-avocado-8b3e1.firebaseapp.com";
@@ -58,6 +60,7 @@ void main() {
         '/imp_docs': (BuildContext context) => ImpDocs(),
         '/dev_info': (BuildContext context) => DevInfo(),
         '/nots': (BuildContext context) => Nots(),
+        '/tutorial': (BuildContext context)=>TutorialSection()
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -300,7 +303,6 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 appointmentCard(context),
                 TimetableCardSplit(context,MediaQuery.of(context).size.width,MediaQuery.of(context).textScaleFactor),
-                timetableCard(context),
                 faqCard(context),
                 mentorsCard(context),
               ],

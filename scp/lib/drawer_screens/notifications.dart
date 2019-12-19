@@ -36,8 +36,11 @@ class _Nots extends State<Nots> {
                       )
                   );
                 default:
-                  return CircularProgressIndicator();
-
+                  return Container(
+                    child:Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
               }
             }
           )
