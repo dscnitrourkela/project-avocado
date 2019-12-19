@@ -37,8 +37,8 @@ class _BookingState extends State<Booking> {
     hasBooked = prefs.getBool('hasBooked');
     bookedDate = prefs.getString('bookedDate');
     bookedTime = prefs.getString('bookedTime');
-    //return prefs.getString('type');
 
+    //return prefs.getString('type');
   }
 
   Future<RemoteConfig> _setupRemoteConfig() async {
