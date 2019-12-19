@@ -15,6 +15,7 @@ class TimeTableState extends State<TimeTable> {
   String theorySection = 'E';
   String practicalSection = 'P6';
   String sectionSequence = 'pt';
+  bool allowedSection=true;
 
   bool showTimeTable = false;
 
@@ -29,11 +30,13 @@ class TimeTableState extends State<TimeTable> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     theorySection = prefs.getString('theory_section');
     practicalSection = prefs.getString('prac_section');
-    if((theorySection.compareTo('A')==0)||(theorySection.compareTo('D')==0)||(theorySection.compareTo('C')==0)||(theorySection.compareTo('B')==0))
+    if((theorySection.compareTo('Ar.')==0)||(theorySection.compareTo('A')==0)||(theorySection.compareTo('D')==0)||(theorySection.compareTo('C')==0)||(theorySection.compareTo('B')==0))
       {
         sectionSequence = 'tp';
       }
-    print("PSA"+sectionSequence);
+    print("Sequence"+sectionSequence);
+    print("Theory"+theorySection);
+    print("Practical"+practicalSection);
   }
 
   _resetSections(BuildContext context) async{
@@ -51,6 +54,7 @@ class TimeTableState extends State<TimeTable> {
     SizeConfig().init(context);
     screenWidth = SizeConfig.screenWidth;
     screenHeight = SizeConfig.screenHeight;
+    if(allowedSection){}
     return FutureBuilder(
       future: _fetchSectionData(context),
       builder: (context, snap) {
@@ -522,6 +526,8 @@ class TimeTableState extends State<TimeTable> {
   }
 
   String getSlotTime(int startSlotIndex, int endSlotIndex) {
+    print("startSlotIndex"+startSlotIndex.toString());
+    print("endSlotIndex"+endSlotIndex.toString());
     return TimeTableResources.slotTime[startSlotIndex]['start'] +
         '-' +
         TimeTableResources.slotTime[endSlotIndex]['end'];
