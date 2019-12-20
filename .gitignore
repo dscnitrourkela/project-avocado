@@ -1,6 +1,10 @@
-
+node_modules/
 scp/android/key.properties
 scp/key.jks
 scp/android/app/google-services.json
 key.jks
+<<<<<<< HEAD
 scp\ios\Flutter\flutter_export_environment.sh
+=======
+scp/ios/Flutter/flutter_export_environment.sh
+>>>>>>> upstream/master

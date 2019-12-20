@@ -8,6 +8,7 @@ import 'package:scp/firebase/firebaseDBHandler.dart';
 import 'package:scp/utils/sizeConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/models.dart';
+import 'package:scp/upload_image.dart';
 
 const platform = const MethodChannel("FAQ_ACTIVITY");
 Widget appointmentCard(BuildContext context) {
@@ -19,8 +20,13 @@ Widget appointmentCard(BuildContext context) {
     child: Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: InkWell(
-        onTap: () {
-          Navigator.pushNamed(context, '/appointments');
+      onTap:() async {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          if (prefs.getBool('hasBooked') == true) {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => Booking(counselDay: gCounselDay, time: gTime)));
+          } else
+            Navigator.of(context).pushNamed('/appointments');
         },
         // onTap: () async {
         //   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -482,8 +488,6 @@ var gKey, gCounselDay, gTime;
 
 Widget slotCard(
     BuildContext context,
-    //double heightFactor,
-    //double textScaleFactor,
     String counselDay,
     String date,
     String titleText,
@@ -586,6 +590,13 @@ Widget slotCard(
                     );
                   },
                 );
+                Navigator.push(context, MaterialPageRoute(builder: (context) => UploadImageScreen(
+                  bookingKey: key,
+                  time: time,
+                  counselDay: counselDay,
+                  date: date,
+                  type: type,
+                )));
                 break;
               case "1":
                 Scaffold.of(context).showSnackBar(
@@ -722,4 +733,5 @@ Widget slotCard(
       ),
     ),
   );
+
 }

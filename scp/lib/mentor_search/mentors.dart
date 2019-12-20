@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scp/mentor_search/appbase_search_manager.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:native_contact_dialog/native_contact_dialog.dart';
 
 class Mentors extends StatefulWidget {
   @override
@@ -274,6 +275,11 @@ class _DetailScreenState extends State<DetailScreen> {
                         color: primaryColor,
                         shape: StadiumBorder(),
                         onPressed: (){
+                          saveContact(Contact(
+                              givenName: mentorName,
+                              phones: [Item(value: mentorContact)],
+                              emails: [Item(value: mentorEmail)]
+                          ));
                         },
                         child: Text(message, style: TextStyle(color: Colors.white),),
                       ),
@@ -388,5 +394,19 @@ class _DetailScreenState extends State<DetailScreen> {
         },
       ),
     );
+  }
+  void saveContact(Contact newContact) async
+  {
+    NativeContactDialog.addContact(newContact).then((result) {
+      // NOTE: The user could cancel the dialog, but not add
+      // them to their addressbook. Whether or not the user decides
+      // to add [contactToAdd] to their addressbook, you will end up
+      // here.
+
+      print('add contact dialog closed.');
+    }).catchError((error) {
+      // FlutterError, most likely unsupported operating system.
+      print('Error adding contact!');
+    });
   }
 }
