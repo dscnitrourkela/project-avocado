@@ -2,7 +2,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scp/booking.dart';
-import 'package:scp/dateConfig.dart';
 import 'package:scp/ui/gradients.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
 import 'package:scp/utils/sizeConfig.dart';
@@ -20,15 +19,24 @@ Widget appointmentCard(BuildContext context) {
     child: Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: InkWell(
-      onTap:() async {
+        onTap: () async {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           if (prefs.getBool('hasBooked') == true) {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => Booking(
-                    keyCode: gKey, counselDay: gCounselDay, time: gTime)));
+                builder: (BuildContext context) =>
+                    Booking(counselDay: gCounselDay, time: gTime)));
           } else
             Navigator.of(context).pushNamed('/appointments');
         },
+        // onTap: () async {
+        //   SharedPreferences prefs = await SharedPreferences.getInstance();
+        //   if (prefs.getBool('hasBooked') == true) {
+        //     Navigator.of(context).push(MaterialPageRoute(
+        //         builder: (BuildContext context) => Booking(
+        //             /*keyCode: gKey,*/ counselDay: gCounselDay, time: gTime)));
+        //   } else
+        //     Navigator.of(context).pushNamed('/appointments');
+        // },
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
@@ -487,9 +495,9 @@ Widget slotCard(
     String designation,
     int count,
     double scaleHeight) {
-      SizeConfig().init(context);
-      double heightFactor = SizeConfig.screenWidth;
-  Widget slotWidget(String status, String key, String time) {
+  SizeConfig().init(context);
+  double heightFactor = SizeConfig.screenWidth;
+  Widget slotWidget(String status, String key, String time, String index) {
     final bool visible = false;
     bool isSelected = false;
     SizeConfig().init(context);
@@ -504,14 +512,18 @@ Widget slotCard(
                 setSlotWidgetState(() {
                   isSelected = !isSelected;
                 });
-
-                Navigator.push(context, MaterialPageRoute(builder: (context) => UploadImageScreen(
-                  bookingKey: key,
-                  time: time,
-                  counselDay: counselDay,
-                  date: date,
-                  type: type,
-                )));
+                Navigator.of(context).pop();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => UploadImageScreen(
+                              bookingKey: key,
+                              time: time,
+                              counselDay: counselDay,
+                              date: date,
+                              type: type,
+                              index: index,
+                            )));
                 break;
               case "1":
                 Scaffold.of(context).showSnackBar(
@@ -639,7 +651,9 @@ Widget slotCard(
                       itemBuilder: (BuildContext context, int index) {
                         var slot =
                             Slot.map(_slotsSnapshot.value['slot${index + 1}']);
-                        return slotWidget(slot.status, slot.key, slot.time);
+                        return slotWidget(slot.status, slot.key, slot.time,
+                            (index + 1).toString());
+
                       });
                 }),
           ],
@@ -647,5 +661,5 @@ Widget slotCard(
       ),
     ),
   );
-
 }
+
