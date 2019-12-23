@@ -5,7 +5,7 @@ class TimetableCardSplit extends StatefulWidget {
   BuildContext cxt;
   double heightFactor, textSc;
 
-  TimetableCardSplit(this.cxt, this.heightFactor, this.textSc) {}
+  TimetableCardSplit(this.cxt, this.heightFactor, this.textSc);
 
   @override
   _TimetableCardSplitState createState() => _TimetableCardSplitState();
@@ -17,7 +17,6 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     isTapped = false;
     width1 = widget.heightFactor;
