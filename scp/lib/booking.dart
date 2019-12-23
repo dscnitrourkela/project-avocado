@@ -170,6 +170,7 @@ class _BookingState extends State<Booking> {
                                   }).then((_) {
                                     print("Booking canceled");
                                     prefs.setBool('hasBooked', false);
+                                    prefs.setString('bookedSlot',"");
                                     Navigator.of(context).pop();
                                     Navigator.of(context)
                                         .pushNamed('/appointments');
@@ -181,7 +182,7 @@ class _BookingState extends State<Booking> {
                                     "phoneNo": "",
                                     "rollNo": "",
                                     "status": "0",
-                                    "timestamp": DateTime.now().toString(),
+                                    //"timestamp": DateTime.now().toString(),
                                   }).then((_) {
                                     print("Booking canceled");
                                     prefs.setBool('hasBooked', false);

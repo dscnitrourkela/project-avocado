@@ -13,7 +13,9 @@
   },
   "dependencies": {
     "firebase-admin": "^8.0.0",
-    "firebase-functions": "^3.1.0"
+    "firebase-functions": "^3.1.0",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.27"
   },
   "devDependencies": {
     "firebase-functions-test": "^0.1.6"

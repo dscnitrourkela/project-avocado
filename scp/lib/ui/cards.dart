@@ -2,7 +2,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scp/booking.dart';
-import 'package:scp/dateConfig.dart';
 import 'package:scp/ui/gradients.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
 import 'package:scp/utils/sizeConfig.dart';
@@ -20,11 +19,12 @@ Widget appointmentCard(BuildContext context) {
     child: Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: InkWell(
-      onTap:() async {
+        onTap: () async {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           if (prefs.getBool('hasBooked') == true) {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => Booking(counselDay: gCounselDay, time: gTime)));
+                builder: (BuildContext context) =>
+                    Booking(counselDay: gCounselDay, time: gTime)));
           } else
             Navigator.of(context).pushNamed('/appointments');
         },
@@ -503,44 +503,6 @@ Widget slotCard(
     SizeConfig().init(context);
     double heightFactor = SizeConfig.screenWidth;
 
-    void bookAppointment(String key) async {
-      print(counselDay);
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      var rollNo = prefs.getString('roll_no');
-      var phoneNo = prefs.getString('phone_no');
-      //prefs.setString('counselPsychDay', counselDay);
-      prefs.setBool('hasBooked', true);
-      prefs.setString('bookedDate', date);
-      prefs.setString('bookingType', type);
-      prefs.setString(
-          'bookDate',
-          ((type == "psych")
-              ? DateConfig.psychDate.toString()
-              : DateConfig.counselDate.toString()));
-      print(DateConfig.bookedDate.toString());
-      gCounselDay = counselDay;
-      gKey = key;
-      gTime = time;
-      prefs.setString('bookedTime', gTime);
-      prefs.setString('bookedSlot', "slot$index");
-
-      var reference =
-          (type == "psych") ? ScpDatabase.psychRef : ScpDatabase.counselRef;
-
-      await reference.child(key).update({
-        "phoneNo": phoneNo,
-        "rollNo": rollNo,
-        "status": "1",
-        "timestamp": DateTime.now().toString(),
-      }).then((_) {
-        print("Value updated");
-        Navigator.of(context).pop();
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) =>
-                Booking(/*eyCode: key,*/ counselDay: counselDay, time: time)));
-      });
-    }
-
     return StatefulBuilder(
       builder: (BuildContext context, StateSetter setSlotWidgetState) {
         return InkWell(
@@ -550,53 +512,18 @@ Widget slotCard(
                 setSlotWidgetState(() {
                   isSelected = !isSelected;
                 });
-
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      title: Text('Confirm Slot Booking?'),
-                      actions: <Widget>[
-                        FlatButton(
-                          onPressed: () {
-                            setSlotWidgetState(() {
-                              isSelected = !isSelected;
-                            });
-                            Navigator.pop(context);
-                          },
-                          child: Text('CANCEL'),
-                          textColor: Colors.cyan,
-                        ),
-                        RaisedButton(
-                          color: Colors.cyan,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          onPressed: () async {
-                            //prefs.setBool("isBookingActive", true);
-                            Navigator.pop(context);
-                            bookAppointment(key);
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            print(prefs.getString("bookedSlot"));
-                          },
-                          child: Text('BOOK'),
-                          textColor: Colors.white,
-                        ),
-                      ],
-                    );
-                  },
-                );
-                Navigator.push(context, MaterialPageRoute(builder: (context) => UploadImageScreen(
-                  bookingKey: key,
-                  time: time,
-                  counselDay: counselDay,
-                  date: date,
-                  type: type,
-                )));
+                Navigator.of(context).pop();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => UploadImageScreen(
+                              bookingKey: key,
+                              time: time,
+                              counselDay: counselDay,
+                              date: date,
+                              type: type,
+                              index: index,
+                            )));
                 break;
               case "1":
                 Scaffold.of(context).showSnackBar(
@@ -733,5 +660,4 @@ Widget slotCard(
       ),
     ),
   );
-
 }

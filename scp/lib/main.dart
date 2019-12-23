@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:scp/booking.dart';
+import 'package:scp/firebase/firebaseDBHandler.dart';
 import 'package:scp/timetablecardsplit.dart';
 import 'package:scp/ui/cards.dart';
 import 'package:scp/dateConfig.dart';
@@ -22,9 +23,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'timetable/theorySection.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:scp/timetablecardsplit.dart';
 import 'package:scp/timetable/tutorialSection.dart';
-
 
 var firebaseInstance = FirebaseAuth.instance;
 final privacyPolicy = "https://project-avocado-8b3e1.firebaseapp.com";
@@ -62,7 +61,7 @@ void main() {
         '/imp_docs': (BuildContext context) => ImpDocs(),
         '/dev_info': (BuildContext context) => DevInfo(),
         '/nots': (BuildContext context) => Nots(),
-        '/tutorial': (BuildContext context)=>TutorialSection()
+        '/tutorial': (BuildContext context) => TutorialSection()
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -73,8 +72,6 @@ void main() {
   FlutterError.onError = (FlutterErrorDetails details) {
     Crashlytics.instance.recordFlutterError(details);
   };
-
-
 }
 
 class MyApp extends StatefulWidget {
@@ -83,6 +80,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  ScpDatabase scpDatabase;
+
   @override
   Widget build(BuildContext context) {
     return Container();
@@ -107,7 +106,6 @@ class _MyAppState extends State<MyApp> {
     // ...
     checkLogin();
   }
-
 }
 
 class HomePage extends StatefulWidget {
@@ -268,18 +266,21 @@ class _HomePageState extends State<HomePage> {
                   ),
                   onPressed: () => _scaffoldKey.currentState.openDrawer()),
             ),
-              actions: <Widget>[
-                IconButton(
-                  padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.048, right: SizeConfig.screenWidth * 0.06),
-                  icon: Icon(
-                    Icons.notifications,
-                    color: Colors.black,
-                    size: 35.0,
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/nots');
-          },
-        )],
+            actions: <Widget>[
+              IconButton(
+                padding: EdgeInsets.only(
+                    top: SizeConfig.screenWidth * 0.048,
+                    right: SizeConfig.screenWidth * 0.06),
+                icon: Icon(
+                  Icons.notifications,
+                  color: Colors.black,
+                  size: 35.0,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/nots');
+                },
+              )
+            ],
             backgroundColor: Colors.white,
             elevation: 0,
             centerTitle: true,
@@ -304,7 +305,8 @@ class _HomePageState extends State<HomePage> {
               scrollDirection: Axis.vertical,
               children: <Widget>[
                 appointmentCard(context),
-                TimetableCardSplit(context,MediaQuery.of(context).size.width,MediaQuery.of(context).textScaleFactor),
+                TimetableCardSplit(context, MediaQuery.of(context).size.width,
+                    MediaQuery.of(context).textScaleFactor),
                 faqCard(context),
                 mentorsCard(context),
               ],
@@ -386,7 +388,6 @@ class _HomePageState extends State<HomePage> {
        ScpDatabase.pushNewWeek(slotsRefMain);
      }
     }*/
-
   }
 
   @override
@@ -412,5 +413,3 @@ class _HomePageState extends State<HomePage> {
     }
   }
 }
-
-

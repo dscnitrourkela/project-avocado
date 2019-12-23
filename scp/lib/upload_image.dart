@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:scp/camera.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
-import 'package:scp/utils/sizeConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:scp/dateConfig.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
@@ -17,9 +16,10 @@ class UploadImageScreen extends StatefulWidget {
   final String type;
   final String time;
   final String bookingKey;
+  final String index;
 
   UploadImageScreen(
-      {this.bookingKey, this.time, this.type, this.date, this.counselDay});
+      {this.bookingKey, this.time, this.type, this.date, this.counselDay, this.index});
 
   @override
   UploadImageState createState() => UploadImageState();
@@ -44,7 +44,7 @@ class UploadImageState extends State<UploadImageScreen> {
     var rollNo = prefs.getString('roll_no');
     var phoneNo = prefs.getString('phone_no');
     //prefs.setString('counselPsychDay', counselDay);
-    //prefs.setBool('hasBooked', true);
+    prefs.setBool('hasBooked', true);
     prefs.setString('bookedDate', widget.date);
     prefs.setString('bookingType', widget.type);
     prefs.setString(
@@ -54,6 +54,7 @@ class UploadImageState extends State<UploadImageScreen> {
             : DateConfig.counselDate.toString()));
     print(DateConfig.bookedDate.toString());
     prefs.setString('bookedTime', widget.time);
+    prefs.setString('bookedSlot', "slot${widget.index}");
 
     var reference = (widget.type == "psych")
         ? ScpDatabase.psychRef
@@ -63,7 +64,8 @@ class UploadImageState extends State<UploadImageScreen> {
       uploading = true;
     });
 
-    StorageReference ref = FirebaseStorage.instance.ref().child(widget.type + "$key.jpg");
+    StorageReference ref =
+        FirebaseStorage.instance.ref().child(widget.type + "$key.jpg");
     StorageUploadTask uploadTask = ref.putFile(File(imagePath));
     var futureUrl = (await uploadTask.onComplete).ref.getDownloadURL();
 
@@ -80,15 +82,15 @@ class UploadImageState extends State<UploadImageScreen> {
       "idImage": imageUrl,
     }).then((_) {
       print("Value updated");
-      Navigator.pushAndRemoveUntil(
+      Navigator.of(context).pop();
+      Navigator.push(
           context,
           MaterialPageRoute(
               builder: (BuildContext context) => Booking(
-                    keyCode: key,
                     counselDay: widget.counselDay,
                     time: widget.time,
                   )),
-          ModalRoute.withName('/appointments'));
+          /*ModalRoute.withName('/appointments')*/);
       //Navigator.push(context, MaterialPageRoute(
       //  builder: (BuildContext context) =>
       //    Booking(keyCode: key, counselDay: widget.counselDay, time: widget.time)));
@@ -161,10 +163,10 @@ class UploadImageState extends State<UploadImageScreen> {
             child: Text(
               '${widget.counselDay} | ${widget.date} | ${widget.time}',
               style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'PfDin',
-                  fontSize: MediaQuery.of(context).size.width * 0.038,
-                  fontWeight: FontWeight.w500,
+                color: Colors.black,
+                fontFamily: 'PfDin',
+                fontSize: MediaQuery.of(context).size.width * 0.038,
+                fontWeight: FontWeight.w500,
               ),
               textAlign: TextAlign.left,
             ),
@@ -246,7 +248,8 @@ class UploadImageState extends State<UploadImageScreen> {
               ),
               onPressed: () {
                 if (!validImage) {
-                  _scafoldKey.currentState.showSnackBar(SnackBar(content: Text('First upload an image')));
+                  _scafoldKey.currentState.showSnackBar(
+                      SnackBar(content: Text('First upload an image')));
                 } else if (!uploading) {
                   bookAppointment(context, widget.bookingKey);
                 }
