@@ -29,7 +29,7 @@ class _BookingState extends State<Booking> {
     getSharedPrefs();
     super.initState();
   }
-
+  
   getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     type = prefs.getString('bookingType');
@@ -83,9 +83,7 @@ class _BookingState extends State<Booking> {
     psychName = remoteConfig.getString('psych_name');
     psychDay = remoteConfig.getString('psych_day');
     print(counselDay + 'hola');
-
     if (hasBooked) {}
-
     return remoteConfig;
   }
 
@@ -122,6 +120,7 @@ class _BookingState extends State<Booking> {
           leading: Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: IconButton(
+
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.pushNamed(context, '/homePage');

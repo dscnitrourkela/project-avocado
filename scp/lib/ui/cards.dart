@@ -653,6 +653,7 @@ Widget slotCard(
                             Slot.map(_slotsSnapshot.value['slot${index + 1}']);
                         return slotWidget(slot.status, slot.key, slot.time,
                             (index + 1).toString());
+
                       });
                 }),
           ],
@@ -661,3 +662,4 @@ Widget slotCard(
     ),
   );
 }
+
