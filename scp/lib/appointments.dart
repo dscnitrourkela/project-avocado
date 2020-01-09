@@ -17,9 +17,10 @@ class _AppointmentsState extends State<Appointments> {
   double queryWidth;
   double textScaleFactor;
   static String counselDay, counselorName, psychName, psychDay;
-  StreamSubscription<Event> _onCounselChangedSubscription, _onPsychChangedSubscription;
+  StreamSubscription<Event> _onCounselChangedSubscription,
+      _onPsychChangedSubscription;
   ScpDatabase scpDatabase;
-  String psychDate,counselDate;
+  String psychDate, counselDate;
 
   void _onSlotsUpdated(Event event) async {
     setState(() {});
@@ -34,7 +35,8 @@ class _AppointmentsState extends State<Appointments> {
     scpDatabase.init();
     _onCounselChangedSubscription =
         ScpDatabase.counselRef.onChildChanged.listen(_onSlotsUpdated);
-    _onPsychChangedSubscription = ScpDatabase.psychRef.onChildChanged.listen(_onSlotsUpdated);
+    _onPsychChangedSubscription =
+        ScpDatabase.psychRef.onChildChanged.listen(_onSlotsUpdated);
     super.initState();
   }
 
@@ -45,42 +47,8 @@ class _AppointmentsState extends State<Appointments> {
     _onPsychChangedSubscription.cancel();
   }
 
-  /*Widget anonymousButton() =>
-      StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: queryWidth * 0.05),
-          child: RaisedButton(
-            child: ListTile(
-              leading: Visibility(
-                  visible: isBookingAnonymously,
-                  child: Icon(
-                    Icons.check_circle_outline,
-                    color: Colors.white,
-                    size: queryWidth * 0.090,
-                  )),
-              title: Text(
-                  'Book${isBookingAnonymously? 'ing' : ''} Anonymously',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: queryWidth * 0.047,
-                      fontFamily: 'PfDin',
-                      color: Colors.white),
-                ),
-            ),
-            onPressed: () {
-              setState(() {
-                isBookingAnonymously = !isBookingAnonymously;
-              });
-            },
-            color: isBookingAnonymously ? Colors.green : Colors.grey,
-            shape: StadiumBorder(),
-          ),
-        );
-      });*/
-
   @override
   Widget build(BuildContext context) {
-
     queryWidth = MediaQuery.of(context).size.width;
     textScaleFactor = MediaQuery.of(context).textScaleFactor;
 
@@ -112,7 +80,7 @@ class _AppointmentsState extends State<Appointments> {
             leading: Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: IconButton(
-                onPressed: (){
+                onPressed: () {
                   Navigator.of(context);
                   Navigator.pushNamed(context, '/homePage');
                 },
@@ -145,23 +113,21 @@ class _AppointmentsState extends State<Appointments> {
         SizedBox(
           height: 20.0,
         ),
-        slotCard(context, psychDay,psychDate,
-            psychName, 'psych','Psychiatrist', 6, 1.1),
+        slotCard(context, counselDay, counselDate, counselorName, 'counsel',
+            'Counsellor', ScpDatabase.counselCount, 0.85),
         SizedBox(
           height: 40.0,
         ),
-        slotCard(context, counselDay,counselDate,
-            counselorName, 'counsel', 'Counsellor', 4, 0.85),
+        slotCard(context, psychDay, psychDate, psychName, 'psych',
+            'Psychiatrist', ScpDatabase.psychCount, 1.1),
       ],
     );
   }
 
-  getDate() async{
-    SharedPreferences prefs=await SharedPreferences.getInstance();
-    psychDate=prefs.getString('psychDate');
-    counselDate=prefs.getString('counselDate');
-
-
+  getDate() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    psychDate = prefs.getString('psychDate');
+    counselDate = prefs.getString('counselDate');
   }
 
   Future<RemoteConfig> _setupRemoteConfig() async {

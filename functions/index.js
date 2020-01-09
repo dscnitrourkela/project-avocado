@@ -1,5 +1,6 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const moment = require('moment-timezone');
 
 admin.initializeApp(functions.config().firebase)
 
@@ -29,7 +30,44 @@ exports.notificationTrigger = functions.firestore.document(
     })
 
     })
-// // Create and Deploy Your First Cloud Functions
+
+    exports.slotBookTrigger = functions.database
+    .ref('/slots/week1/{type}/{slot}')
+    .onUpdate((change,context) => {
+        const before = change.before.val();
+        const after = change.after.val();
+        if(before.status === after.status){
+            return null;
+        }
+        else{
+        const timestamp = moment().tz('Asia/Kolkata').format('YYYY-MM-DD HH:mm:ss');
+        return change.after.ref.update({timestamp});
+    }
+    })
+
+    exports.countTrigger = functions.database
+    .ref('/slots/week1/{type}/{slot}')
+    .onWrite(async (change) => {
+        const ref = change.after.ref;
+        const countRef = ref.parent.child('count');
+
+        let increment;
+        if (change.after.exists() && !change.before.exists()){
+            increment = 1;
+        } else if (!change.after.exists() && change.before.exists()){
+            increment = -1;
+        } else{
+            return null;
+        }
+
+        await countRef.transaction((current) => {
+            return(current || 0) + increment;
+        });
+
+        return null;
+    });
+    
+    // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
 // exports.helloWorld = functions.https.onRequest((request, response) => {
