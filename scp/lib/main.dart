@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:scp/booking.dart';
+import 'package:scp/firebase/firebaseDBHandler.dart';
+import 'package:scp/timetablecardsplit.dart';
 import 'package:scp/ui/cards.dart';
 import 'package:scp/dateConfig.dart';
 import 'package:scp/drawer_screens/about_scs.dart';
@@ -21,6 +23,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'timetable/theorySection.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:scp/timetable/tutorialSection.dart';
 
 var firebaseInstance = FirebaseAuth.instance;
 final privacyPolicy = "https://project-avocado-8b3e1.firebaseapp.com";
@@ -35,7 +38,6 @@ Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
     // Handle notification message
     final dynamic notification = message['notification'];
   }
-
   // Or do other work.
 }
 
@@ -58,6 +60,7 @@ void main() {
         '/imp_docs': (BuildContext context) => ImpDocs(),
         '/dev_info': (BuildContext context) => DevInfo(),
         '/nots': (BuildContext context) => Nots(),
+        '/tutorial': (BuildContext context) => TutorialSection()
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -68,8 +71,6 @@ void main() {
   FlutterError.onError = (FlutterErrorDetails details) {
     Crashlytics.instance.recordFlutterError(details);
   };
-
-
 }
 
 class MyApp extends StatefulWidget {
@@ -78,6 +79,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  ScpDatabase scpDatabase;
+  
   @override
   Widget build(BuildContext context) {
     return Container();
@@ -263,18 +266,21 @@ class _HomePageState extends State<HomePage> {
                   ),
                   onPressed: () => _scaffoldKey.currentState.openDrawer()),
             ),
-              actions: <Widget>[
-                IconButton(
-                  padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.048, right: SizeConfig.screenWidth * 0.06),
-                  icon: Icon(
-                    Icons.notifications,
-                    color: Colors.black,
-                    size: 35.0,
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/nots');
-          },
-        )],
+            actions: <Widget>[
+              IconButton(
+                padding: EdgeInsets.only(
+                    top: SizeConfig.screenWidth * 0.048,
+                    right: SizeConfig.screenWidth * 0.06),
+                icon: Icon(
+                  Icons.notifications,
+                  color: Colors.black,
+                  size: 35.0,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/nots');
+                },
+              )
+            ],
             backgroundColor: Colors.white,
             elevation: 0,
             centerTitle: true,
@@ -299,8 +305,8 @@ class _HomePageState extends State<HomePage> {
               scrollDirection: Axis.vertical,
               children: <Widget>[
                 appointmentCard(context),
-                TimetableCardSplit(context,MediaQuery.of(context).size.width,MediaQuery.of(context).textScaleFactor),
-                timetableCard(context),
+                TimetableCardSplit(context, MediaQuery.of(context).size.width,
+                    MediaQuery.of(context).textScaleFactor),
                 faqCard(context),
                 mentorsCard(context),
               ],
@@ -309,6 +315,102 @@ class _HomePageState extends State<HomePage> {
         );
       },
     );
+  }
+
+  _removeUserData(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+    await firebaseInstance.signOut();
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+  }
+
+  reset() async {
+    var wednesday = 3;
+    var now = DateTime.now();
+    //var bookedDate = DateTime.parse(formattedString)
+    // int dayFromEpoch = (DateTime.now().millisecondsSinceEpoch/(fac)).floor();
+    // print("Smarak ${((dayFromEpoch - 1)/7).floor()}");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (!prefs.getBool('hasBooked')) {
+      prefs.setString('bookDate', DateTime.now().toString());
+    }
+
+    if (now.day > (DateTime.parse(prefs.getString('bookDate')).day)) {
+      prefs.setBool('hasBooked', false);
+    }
+    /*if(DateTime.now().weekday > 3)*/
+    while (now.weekday != wednesday) {
+      now = now.add(new Duration(days: 1));
+      //print(now);
+    }
+
+    print(DateFormat.d().format(now) + " " + DateFormat.MMM().format(now));
+    prefs.setString('psychDate',
+        DateFormat.d().format(now) + " " + DateFormat.MMM().format(now));
+    prefs.setString(
+        'counselDate',
+        DateFormat.d().format(now.subtract(Duration(days: 1))) +
+            " " +
+            DateFormat.MMM().format(now.subtract(Duration(days: 1))));
+  }
+
+  // _startFAQActivity() async {
+  //   try {
+  //     await platform.invokeMethod('startFaqActivity');
+  //   } on PlatformException catch (e) {
+  //     print(e.message);
+  //   }
+  // }
+  FirebaseMessaging _fcm = new FirebaseMessaging();
+  @override
+  void initState() {
+    super.initState();
+    DateConfig().init();
+    fetchUserData(context);
+    reset();
+    _fcm.subscribeToTopic('scs-not');
+    _fcm.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        Navigator.pushNamed(context, '/nots');
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        Navigator.pushNamed(context, '/nots');
+      },
+      onResume: (Map<String, dynamic> message) async {
+        Navigator.pushNamed(context, '/nots');
+      },
+    );
+
+    /*if(DateTime.now().weekday == 3){
+     if(DateTime.now().hour >= 4){
+       slotsRefMain = FirebaseDatabase.instance.reference().child("slots").child('week1').child('counselor');
+       ScpDatabase.pushNewWeek(slotsRefMain);
+     }
+    }*/
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    //ScpDatabase.pushNewWeek(slotsRefMain).clear();
+  }
+
+  Future fetchUserData(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    username = prefs.getString('username');
+    rollNo = prefs.getString('roll_no');
+    phoneNo = prefs.getString('phone_no');
+    prefs.setBool('hasBooked', prefs.getBool('hasBooked') ?? false);
+    print(username + rollNo + phoneNo);
+  }
+
+  _launchURL() async {
+    if (await canLaunch(privacyPolicy)) {
+      await launch(privacyPolicy);
+    } else {
+      throw 'Could not launch $privacyPolicy';
+    }
   }
 
   _removeUserData(BuildContext context) async {
