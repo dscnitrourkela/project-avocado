@@ -488,8 +488,6 @@ var gKey, gCounselDay, gTime;
 
 Widget slotCard(
     BuildContext context,
-    String counselDay,
-    String date,
     String titleText,
     String type,
     String designation,
@@ -497,11 +495,12 @@ Widget slotCard(
     double scaleHeight) {
   SizeConfig().init(context);
   double heightFactor = SizeConfig.screenWidth;
-  Widget slotWidget(String status, String key, String time, String index) {
+  Widget slotWidget(String status, String key, String time, String index, String date, String day) {
     final bool visible = false;
     bool isSelected = false;
     SizeConfig().init(context);
     double heightFactor = SizeConfig.screenWidth;
+    print('$day'+'smarak');
 
     return StatefulBuilder(
       builder: (BuildContext context, StateSetter setSlotWidgetState) {
@@ -519,7 +518,7 @@ Widget slotCard(
                         builder: (context) => UploadImageScreen(
                               bookingKey: key,
                               time: time,
-                              counselDay: counselDay,
+                              counselDay: day,
                               date: date,
                               type: type,
                               index: index,
@@ -558,7 +557,7 @@ Widget slotCard(
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        '$counselDay | $date | $time',
+                        '$day | $date | $time',
                         style: TextStyle(
                             color: (status == "0")
                                 ? (isSelected ? Colors.black : Colors.cyan)
@@ -609,26 +608,31 @@ Widget slotCard(
           ),
         ),
         elevation: 5.0,
-        child: Column(
+        child: ListView(
+          
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
-              child: Text(
-                titleText,
-                style: TextStyle(
-                    fontFamily: 'PfDin',
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    fontSize: heightFactor * 0.065),
+              child: Center(
+                child: Text(
+                  titleText,
+                  style: TextStyle(
+                      fontFamily: 'PfDin',
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontSize: heightFactor * 0.065),
+                ),
               ),
             ),
-            Text(
-              designation,
-              style: TextStyle(
-                  fontFamily: 'PfDin',
-                  color: Colors.blueGrey,
-                  fontWeight: FontWeight.w500,
-                  fontSize: heightFactor * 0.05),
+            Center(
+              child: Text(
+                designation,
+                style: TextStyle(
+                    fontFamily: 'PfDin',
+                    color: Colors.blueGrey,
+                    fontWeight: FontWeight.w500,
+                    fontSize: heightFactor * 0.05),
+              ),
             ),
             SizedBox(
               height: heightFactor * 0.047,
@@ -651,9 +655,7 @@ Widget slotCard(
                       itemBuilder: (BuildContext context, int index) {
                         var slot =
                             Slot.map(_slotsSnapshot.value['slot${index + 1}']);
-                        return slotWidget(slot.status, slot.key, slot.time,
-                            (index + 1).toString());
-
+                        return slotWidget(slot.status, slot.key, slot.time, (index + 1).toString(), slot.date, slot.day);
                       });
                 }),
           ],
