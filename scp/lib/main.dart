@@ -413,44 +413,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  _removeUserData(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.clear();
-    await firebaseInstance.signOut();
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
-  }
-
-  reset() async {
-    var wednesday = 3;
-    var now = DateTime.now();
-    //var bookedDate = DateTime.parse(formattedString)
-    // int dayFromEpoch = (DateTime.now().millisecondsSinceEpoch/(fac)).floor();
-    // print("Smarak ${((dayFromEpoch - 1)/7).floor()}");
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (!prefs.getBool('hasBooked')) {
-      prefs.setString('bookDate', DateTime.now().toString());
-    }
-
-    if (now.day > (DateTime.parse(prefs.getString('bookDate')).day)) {
-      prefs.setBool('hasBooked', false);
-    }
-    /*if(DateTime.now().weekday > 3)*/
-    while (now.weekday != wednesday) {
-      now = now.add(new Duration(days: 1));
-      //print(now);
-    }
-
-    print(DateFormat.d().format(now) + " " + DateFormat.MMM().format(now));
-    prefs.setString('psychDate',
-        DateFormat.d().format(now) + " " + DateFormat.MMM().format(now));
-    prefs.setString(
-        'counselDate',
-        DateFormat.d().format(now.subtract(Duration(days: 1))) +
-            " " +
-            DateFormat.MMM().format(now.subtract(Duration(days: 1))));
-  }
-
   // _startFAQActivity() async {
   //   try {
   //     await platform.invokeMethod('startFaqActivity');
@@ -458,57 +420,6 @@ class _HomePageState extends State<HomePage> {
   //     print(e.message);
   //   }
   // }
-  FirebaseMessaging _fcm = new FirebaseMessaging();
-  @override
-  void initState() {
-    super.initState();
-    DateConfig().init();
-    fetchUserData(context);
-    reset();
-    _fcm.subscribeToTopic('scs-not');
-    _fcm.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        Navigator.pushNamed(context, '/nots');
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        Navigator.pushNamed(context, '/nots');
-      },
-      onResume: (Map<String, dynamic> message) async {
-        Navigator.pushNamed(context, '/nots');
-      },
-    );
-
-    /*if(DateTime.now().weekday == 3){
-     if(DateTime.now().hour >= 4){
-       slotsRefMain = FirebaseDatabase.instance.reference().child("slots").child('week1').child('counselor');
-       ScpDatabase.pushNewWeek(slotsRefMain);
-     }
-    }*/
-
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    //ScpDatabase.pushNewWeek(slotsRefMain).clear();
-  }
-
-  Future fetchUserData(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    username = prefs.getString('username');
-    rollNo = prefs.getString('roll_no');
-    phoneNo = prefs.getString('phone_no');
-    prefs.setBool('hasBooked', prefs.getBool('hasBooked') ?? false);
-    print(username + rollNo + phoneNo);
-  }
-
-  _launchURL() async {
-    if (await canLaunch(privacyPolicy)) {
-      await launch(privacyPolicy);
-    } else {
-      throw 'Could not launch $privacyPolicy';
-    }
-  }
 }
 
 
