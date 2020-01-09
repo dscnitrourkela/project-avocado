@@ -6,6 +6,8 @@ class Slot {
   String rollNo;
   String status;
   String time;
+  String day;
+  String date;
 
   Slot({
     this.key,
@@ -13,6 +15,8 @@ class Slot {
     this.rollNo,
     this.status,
     this.time,
+    this.date,
+    this.day,
   });
 
   Slot.map(dynamic obj){
@@ -21,6 +25,8 @@ class Slot {
     this.rollNo = obj['rollNo'];
     this.status = obj['status'];
     this.time = obj['time'];
+    this.date = obj['date'];
+    this.day = obj['day'];
   }
 
   Slot.fromSnapshot(DataSnapshot snapshot){
@@ -29,5 +35,7 @@ class Slot {
     rollNo = snapshot.value['rollNo'];
     status = snapshot.value['status'];
     time = snapshot.value['time'];
+    date = snapshot.value['date'];
+    day = snapshot.value['day'];
   }
 }
