@@ -113,12 +113,12 @@ class _AppointmentsState extends State<Appointments> {
         SizedBox(
           height: 20.0,
         ),
-        slotCard(context, counselDay, counselDate, counselorName, 'counsel',
+        slotCard(context, counselorName, 'counsel',
             'Counsellor', ScpDatabase.counselCount, 0.85),
         SizedBox(
           height: 40.0,
         ),
-        slotCard(context, psychDay, psychDate, psychName, 'psych',
+        slotCard(context, psychName, 'psych',
             'Psychiatrist', ScpDatabase.psychCount, 1.1),
       ],
     );
