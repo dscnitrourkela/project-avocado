@@ -27,10 +27,7 @@ class ImpDocs extends StatelessWidget {
             docCard(context, "Curriculum", "https://nitrkl.ac.in/Academics/AcademicProcess/Curricula.aspx"),
             docCard(context, "Faculty Directory", "https://nitrkl.ac.in/FacultyStaff/EmployeeDirectory/Faculty.aspx"),
             docCard(context, "Timetable", "https://nitrkl.ac.in/Academics/AcademicProcess/AcademicTimeTable.aspx"),
-
-
-
-
+            docCard(context, "Counsellor Slot Booking for Online Session", "https://bit.ly/slot_booking"),
           ],
         ),
       )
