@@ -8,5 +8,4 @@ scp/.flutter-plugins-dependencies
 scp/ios/Flutter/flutter_export_environment.sh
 .idea/
 .github/
-encodedOutputFileName
-
+scp/android/encodedOutputFileName
