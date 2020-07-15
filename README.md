@@ -8,3 +8,4 @@
 - Make appointments
 - Timetable selector
 - Manage your mentors
+- Get Notifications
