@@ -1,4 +1,4 @@
-# ics
+# ICS
 
 Mobile app of ICS NIT Rourkela
 
