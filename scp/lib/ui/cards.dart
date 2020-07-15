@@ -243,7 +243,7 @@ Widget mentorsCard(BuildContext context) {
                           child: SizedBox(
                             width: 200.0,
                             child: Text(
-                              'Find the complete database of SCS Mentors',
+                              'Find the complete database of ICS Mentors',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontSize: heightFactor * 0.038,
