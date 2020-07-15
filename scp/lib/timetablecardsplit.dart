@@ -32,7 +32,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
           children: <Widget>[
             Flexible(
                 child: timetableCard(widget.cxt, widget.heightFactor,
-                    widget.textSc, width1, "SCS Classes", 1)),
+                    widget.textSc, width1, "ICS Classes", 1)),
           ],
         ),
         Row(

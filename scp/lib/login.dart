@@ -65,7 +65,7 @@ class _LoginState extends State<Login> {
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "SCS NIT ROURKELA",
+                        "ICS NIT ROURKELA",
                         style: TextStyle(
                             fontSize: SizeConfig.screenWidth * 0.074,
                             fontFamily: "PfDin",

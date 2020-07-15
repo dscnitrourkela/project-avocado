@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:scp/utils/sizeConfig.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Nots extends StatefulWidget{
   @override
@@ -11,6 +12,7 @@ class _Nots extends State<Nots> {
   final databaseReference = Firestore.instance;
   @override
   Widget build(BuildContext context) {
+    v=[];
     return Scaffold(
         appBar: AppBar(
             backgroundColor: Color.fromRGBO(25, 39, 45, 1),
@@ -84,6 +86,22 @@ class _Nots extends State<Nots> {
                             fontFamily: 'PfDin',
                             fontWeight: FontWeight.w500
                         ),)),
+                  Center(
+                      child: InkWell(
+                        onTap: () {
+                          if(f.data['link']!=null)
+                          _launchURL(f.data['link']);
+                        },
+                        child: Text(f.data['link']==null?"":f.data['link'],
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: textScaleFactor*15,
+                            fontFamily: 'PfDin',
+                            fontWeight: FontWeight.w500,
+                            color: Colors.blue,
+                          ),)
+                      ),
+                  ),
                 ],
               ),
             ),
@@ -94,5 +112,12 @@ class _Nots extends State<Nots> {
     });
     snapshot.documents.forEach((f) => print(snapshot.documents.length));
     return snapshot;
+  }
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
