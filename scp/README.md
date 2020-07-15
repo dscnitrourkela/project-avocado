@@ -1,6 +1,6 @@
-# scp
+# ics
 
-Mobile app of SCP NIT Rourkela
+Mobile app of ICS NIT Rourkela
 
 ## Getting Started
 

@@ -46,9 +46,9 @@ void main() {
   runZoned<Future<void>>(() async {
     runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'SCS',
+      title: 'ICS',
       routes: <String, WidgetBuilder>{
-        '/homePage': (BuildContext context) => HomePage(title: 'SCS Home Page'),
+        '/homePage': (BuildContext context) => HomePage(title: 'ICS Home Page'),
         '/loginPage': (BuildContext context) => Login(),
         '/appointments': (BuildContext context) => Appointments(),
         '/timetable': (BuildContext context) => TheorySection(),
@@ -198,7 +198,7 @@ class _HomePageState extends State<HomePage> {
                         Navigator.pushNamed(context, '/about_scp');
                       },
                       title: Text(
-                        "About SCS",
+                        "About ICS",
                         style: TextStyle(
                             fontSize: SizeConfig.drawerItemTextSize,
                             fontFamily: 'PfDin'),
@@ -287,7 +287,7 @@ class _HomePageState extends State<HomePage> {
             title: Padding(
               padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.037),
               child: Text(
-                'SCS',
+                'ICS',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Colors.black,
@@ -369,7 +369,7 @@ class _HomePageState extends State<HomePage> {
     DateConfig().init();
     fetchUserData(context);
     reset();
-    _fcm.subscribeToTopic('scs-not');
+    _fcm.subscribeToTopic('ics-not');
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
         Navigator.pushNamed(context, '/nots');
