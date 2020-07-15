@@ -13,13 +13,13 @@ if (flutterRoot == null) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 //if (flutterVersionCode == null) {
-    flutterVersionCode = '22'
+    flutterVersionCode = '27'
 //}
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
-if (flutterVersionName == null) {
+//if (flutterVersionName == null) {
     flutterVersionName = '2.2'
-}
+//}
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -66,8 +66,11 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled true
             useProguard true
-
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            signingConfig signingConfigs.debug
+            minifyEnabled false
         }
     }
 }
