@@ -6,3 +6,5 @@ scp/android/app/src/google-services.json
 key.jks
 scp/.flutter-plugins-dependencies
 scp/ios/Flutter/flutter_export_environment.sh
+.idea/
+.github/
