@@ -71,7 +71,7 @@ class ImpDocs extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                       fontSize: textScaleFactor*15,
-                      fontColor: Colors.blue,
+                      color: Colors.blue,
                       fontFamily: 'PfDin',
                       fontWeight: FontWeight.w500
                   ),)),
