@@ -175,6 +175,7 @@ class AboutSCP extends StatelessWidget {
             ),),
             Text(contact,
               style: TextStyle(
+                  fontColor: Colors.blue;
                   fontSize: textScaleFactor*15,
                   fontFamily: 'PfDin',
                   fontWeight: FontWeight.w500
