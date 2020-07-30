@@ -93,7 +93,9 @@ class DevInfo extends StatelessWidget {
 
   Widget contactCard(BuildContext context, String name, String contact) {
     //var queryWidth = MediaQuery.of(context).size.width;
-    var textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    var textScaleFactor = MediaQuery
+        .of(context)
+        .textScaleFactor;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
@@ -124,6 +126,7 @@ class DevInfo extends StatelessWidget {
                 Text(
                   contact,
                   style: TextStyle(
+                    color: Colors.blue,
                     fontSize: textScaleFactor * 15,
                     fontFamily: 'PfDin',
                     fontWeight: FontWeight.w500,
