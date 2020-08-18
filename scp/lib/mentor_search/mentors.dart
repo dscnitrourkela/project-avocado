@@ -225,13 +225,13 @@ class _DetailScreenState extends State<DetailScreen> {
                                 border: Border(
                                     right: BorderSide(
                               width: 1.0,
-                              color: Colors.teal.shade400,
+                              color: secondaryColor,
                             ))),
                             child: Padding(
                               padding: const EdgeInsets.only(right: 12.0),
                               child: Icon(
                                 Icons.phone,
-                                color: Colors.teal,
+                                color: Color.fromRGBO(74, 232, 190, 1),
                               ),
                             ),
                           ),
@@ -241,7 +241,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontFamily: 'PfDin',
-                                color: Colors.teal.shade900,
+                                color: primaryColor,
                               ),
                             ),
                           ),
@@ -264,13 +264,13 @@ class _DetailScreenState extends State<DetailScreen> {
                                 border: Border(
                                     right: BorderSide(
                               width: 1.0,
-                              color: Colors.teal.shade400,
+                              color: secondaryColor,
                             ))),
                             child: Padding(
                               padding: const EdgeInsets.only(right: 12.0),
                               child: Icon(
                                 Icons.email,
-                                color: Colors.teal,
+                                color: Color.fromRGBO(74, 232, 190, 1),
                               ),
                             ),
                           ),
@@ -280,7 +280,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontFamily: 'PfDin',
-                                color: Colors.teal.shade900,
+                                color: primaryColor,
                               ),
                             ),
                           ),
@@ -297,68 +297,50 @@ class _DetailScreenState extends State<DetailScreen> {
                         children: <Widget>[
                           Padding(
                             padding: EdgeInsets.all(20),
-                            child: Ink(
-                              decoration: ShapeDecoration(
-                                color: Colors.teal.shade500,
-                                shape: CircleBorder(),
-                              ),
-                              child: IconButton(
-                                color: Colors.white,
-                                icon: Icon(Icons.call),
-                                iconSize: 30,
-                                onPressed: () async {
-                                  var url = "tel:" + mentorContact;
-                                  if (await canLaunch(url)) {
-                                    await launch(url);
-                                  } else {
-                                    throw 'Could not launch $url';
-                                  }
-                                },
-                              ),
+                            child: FloatingActionButton(
+                              backgroundColor: Color.fromRGBO(74, 232, 190, 1),
+                              shape: CircleBorder(),
+                              child: Icon(Icons.call),
+                              onPressed: () async {
+                                var url = "tel:" + mentorContact;
+                                if (await canLaunch(url)) {
+                                  await launch(url);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
                             ),
                           ),
                           Padding(
                             padding: EdgeInsets.all(20),
-                            child: Ink(
-                              decoration: ShapeDecoration(
-                                color: Colors.teal.shade500,
-                                shape: CircleBorder(),
-                              ),
-                              child: IconButton(
-                                color: Colors.white,
-                                icon: Icon(Icons.mail),
-                                iconSize: 30,
-                                onPressed: () async {
-                                  var url = "mailto:" + mentorEmail;
-                                  if (await canLaunch(url)) {
-                                    await launch(url);
-                                  } else {
-                                    throw 'Could not launch $url';
-                                  }
-                                },
-                              ),
+                            child: FloatingActionButton(
+                              backgroundColor: Color.fromRGBO(74, 232, 190, 1),
+                              shape: CircleBorder(),
+                              child: Icon(Icons.mail),
+                              onPressed: () async {
+                                var url = "mailto:" + mentorEmail;
+                                if (await canLaunch(url)) {
+                                  await launch(url);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
                             ),
                           ),
                           Padding(
                             padding: EdgeInsets.all(20),
-                            child: Ink(
-                              decoration: ShapeDecoration(
-                                color: Colors.teal.shade500,
-                                shape: CircleBorder(),
-                              ),
-                              child: IconButton(
-                                color: Colors.white,
-                                icon: Icon(Icons.chat_bubble_outline),
-                                iconSize: 30,
-                                onPressed: () async {
-                                  var url = "sms:" + mentorContact;
-                                  if (await canLaunch(url)) {
-                                    await launch(url);
-                                  } else {
-                                    throw 'Could not launch $url';
-                                  }
-                                },
-                              ),
+                            child: FloatingActionButton(
+                              backgroundColor: Color.fromRGBO(74, 232, 190, 1),
+                              shape: CircleBorder(),
+                              child: Icon(Icons.message),
+                              onPressed: () async {
+                                var url = "sms:" + mentorContact;
+                                if (await canLaunch(url)) {
+                                  await launch(url);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
                             ),
                           ),
                         ],
@@ -367,7 +349,12 @@ class _DetailScreenState extends State<DetailScreen> {
                     SizedBox(
                       height: queryWidth * 0.1,
                       child: RaisedButton(
-                        color: primaryColor,
+                        color: Color.fromRGBO(
+                          54,
+                          66,
+                          87,
+                          1.0,
+                        ),
                         shape: StadiumBorder(),
                         onPressed: () {
                           saveContact(Contact(
