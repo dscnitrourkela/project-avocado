@@ -42,6 +42,8 @@ Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
 }
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
   runZoned<Future<void>>(() async {
     runApp(MaterialApp(
@@ -257,7 +259,7 @@ class _HomePageState extends State<HomePage> {
           )),
           appBar: AppBar(
             leading: Padding(
-              padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.010),
+              padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.037),
               child: IconButton(
                   icon: Icon(
                     Icons.menu,
@@ -269,7 +271,7 @@ class _HomePageState extends State<HomePage> {
             actions: <Widget>[
               IconButton(
                 padding: EdgeInsets.only(
-                    top: SizeConfig.screenWidth * 0.010,
+                    top: SizeConfig.screenWidth * 0.048,
                     right: SizeConfig.screenWidth * 0.06),
                 icon: Icon(
                   Icons.notifications,
@@ -285,7 +287,7 @@ class _HomePageState extends State<HomePage> {
             elevation: 0,
             centerTitle: true,
             title: Padding(
-              padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.010),
+              padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.037),
               child: Text(
                 'ICS',
                 textAlign: TextAlign.center,
