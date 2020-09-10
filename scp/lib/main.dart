@@ -80,7 +80,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   ScpDatabase scpDatabase;
-  
+
   @override
   Widget build(BuildContext context) {
     return Container();
@@ -105,7 +105,6 @@ class _MyAppState extends State<MyApp> {
     // ...
     checkLogin();
   }
-
 }
 
 class HomePage extends StatefulWidget {
@@ -123,6 +122,7 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   static const platform = const MethodChannel("FAQ_ACTIVITY");
+
   @override
   Widget build(BuildContext context) {
     print(DateTime.now().weekday);
@@ -257,7 +257,7 @@ class _HomePageState extends State<HomePage> {
           )),
           appBar: AppBar(
             leading: Padding(
-              padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.037),
+              padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.010),
               child: IconButton(
                   icon: Icon(
                     Icons.menu,
@@ -269,7 +269,7 @@ class _HomePageState extends State<HomePage> {
             actions: <Widget>[
               IconButton(
                 padding: EdgeInsets.only(
-                    top: SizeConfig.screenWidth * 0.048,
+                    top: SizeConfig.screenWidth * 0.010,
                     right: SizeConfig.screenWidth * 0.06),
                 icon: Icon(
                   Icons.notifications,
@@ -285,7 +285,7 @@ class _HomePageState extends State<HomePage> {
             elevation: 0,
             centerTitle: true,
             title: Padding(
-              padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.037),
+              padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.010),
               child: Text(
                 'ICS',
                 textAlign: TextAlign.center,
@@ -363,6 +363,7 @@ class _HomePageState extends State<HomePage> {
   //   }
   // }
   FirebaseMessaging _fcm = new FirebaseMessaging();
+
   @override
   void initState() {
     super.initState();
@@ -413,13 +414,11 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  // _startFAQActivity() async {
-  //   try {
-  //     await platform.invokeMethod('startFaqActivity');
-  //   } on PlatformException catch (e) {
-  //     print(e.message);
-  //   }
-  // }
+// _startFAQActivity() async {
+//   try {
+//     await platform.invokeMethod('startFaqActivity');
+//   } on PlatformException catch (e) {
+//     print(e.message);
+//   }
+// }
 }
-
-
