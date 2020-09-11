@@ -42,6 +42,8 @@ Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
 }
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
   runZoned<Future<void>>(() async {
     runApp(MaterialApp(
@@ -80,7 +82,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   ScpDatabase scpDatabase;
-  
+
   @override
   Widget build(BuildContext context) {
     return Container();
@@ -105,7 +107,6 @@ class _MyAppState extends State<MyApp> {
     // ...
     checkLogin();
   }
-
 }
 
 class HomePage extends StatefulWidget {
@@ -123,6 +124,7 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   static const platform = const MethodChannel("FAQ_ACTIVITY");
+
   @override
   Widget build(BuildContext context) {
     print(DateTime.now().weekday);
@@ -363,6 +365,7 @@ class _HomePageState extends State<HomePage> {
   //   }
   // }
   FirebaseMessaging _fcm = new FirebaseMessaging();
+
   @override
   void initState() {
     super.initState();
@@ -413,13 +416,11 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  // _startFAQActivity() async {
-  //   try {
-  //     await platform.invokeMethod('startFaqActivity');
-  //   } on PlatformException catch (e) {
-  //     print(e.message);
-  //   }
-  // }
+// _startFAQActivity() async {
+//   try {
+//     await platform.invokeMethod('startFaqActivity');
+//   } on PlatformException catch (e) {
+//     print(e.message);
+//   }
+// }
 }
-
-
