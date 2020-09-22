@@ -43,7 +43,8 @@ Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
   runZoned<Future<void>>(() async {
     runApp(MaterialApp(
@@ -82,30 +83,35 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   ScpDatabase scpDatabase;
-
+  bool _loggedin;
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return FutureBuilder(
+        future: checkLogin(),
+        builder: (context, response) {
+          if (response.connectionState == ConnectionState.done) {
+            if (_loggedin) {
+              return HomePage(
+                title: "SCP",
+              ); //Navigator.pushNamed(context, '/homePage');
+            } else {
+              return Login(); //Navigator.pushNamed(context, '/login');
+            }
+          } else
+            return CircularProgressIndicator();
+        });
   }
 
   Future checkLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool _loggedin = (prefs.getBool('loggedin') ?? false);
+    _loggedin = (prefs.getBool('loggedin') ?? false);
     print(_loggedin);
-    if (_loggedin) {
-      Navigator.pushNamed(context, '/homePage');
-    } else {
-      Navigator.pushNamed(context, '/login');
-//      Navigator.pushNamed(context, '/timetable');
-
-    }
   }
 
   @override
   void initState() {
     super.initState();
     // ...
-    checkLogin();
   }
 }
 
@@ -138,184 +144,186 @@ class _HomePageState extends State<HomePage> {
     FirebaseDatabase.instance.setPersistenceEnabled(true);
     // var queryWidth = MediaQuery.of(context).size.width;
     // var textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    return FutureBuilder(
-      future: fetchUserData(context),
-      builder: (context, snap) {
-        return Scaffold(
-          key: _scaffoldKey,
-          drawer: Drawer(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              DrawerHeader(
-                  child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    username,
-                    style: TextStyle(
-                        fontSize: SizeConfig.screenWidth * 0.058,
-                        fontFamily: 'PfDin'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4.0),
-                    child: Text(
-                      phoneNo,
-                      style: TextStyle(
-                          fontSize: SizeConfig.screenWidth * 0.035,
-                          fontFamily: 'PfDin'),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4.0),
-                    child: Text(
-                      rollNo,
-                      style: TextStyle(
-                          fontSize: SizeConfig.screenWidth * 0.035,
-                          fontFamily: 'PfDin'),
-                    ),
-                  )
-                ],
-              )),
-              Expanded(
+    return Scaffold(
+      body: FutureBuilder(
+        future: fetchUserData(context),
+        builder: (context, snap) {
+          return Scaffold(
+            key: _scaffoldKey,
+            drawer: Drawer(
                 child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                DrawerHeader(
+                    child: Column(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    ListTile(
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/imp_docs');
-                      },
-                      title: Text(
-                        "Important Documents",
-                        style: TextStyle(
-                            fontSize: SizeConfig.drawerItemTextSize,
-                            fontFamily: 'PfDin'),
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/about_scp');
-                      },
-                      title: Text(
-                        "About ICS",
-                        style: TextStyle(
-                            fontSize: SizeConfig.drawerItemTextSize,
-                            fontFamily: 'PfDin'),
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        _launchURL();
-                      },
-                      title: Text(
-                        "Privacy Policy",
-                        style: TextStyle(
-                            fontSize: SizeConfig.drawerItemTextSize,
-                            fontFamily: 'PfDin'),
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/dev_info');
-                      },
-                      title: Text(
-                        "Developer Info",
-                        style: TextStyle(
-                            fontSize: SizeConfig.drawerItemTextSize,
-                            fontFamily: 'PfDin'),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                  child: Align(
-                alignment: Alignment.center,
-                child: ButtonTheme(
-                  minWidth: SizeConfig.screenWidth * 0.463,
-                  height: SizeConfig.screenWidth * 0.093,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0)),
-                    color: Color.fromRGBO(25, 39, 45, 1),
-                    onPressed: () {
-                      _removeUserData(context);
-                    },
-                    child: Text(
-                      "Log Out",
+                    Text(
+                      username,
                       style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'PfDin',
-                          color: Colors.white,
-                          fontSize: SizeConfig.screenWidth * 0.046),
+                          fontSize: SizeConfig.screenWidth * 0.058,
+                          fontFamily: 'PfDin'),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      child: Text(
+                        phoneNo,
+                        style: TextStyle(
+                            fontSize: SizeConfig.screenWidth * 0.035,
+                            fontFamily: 'PfDin'),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      child: Text(
+                        rollNo,
+                        style: TextStyle(
+                            fontSize: SizeConfig.screenWidth * 0.035,
+                            fontFamily: 'PfDin'),
+                      ),
+                    )
+                  ],
+                )),
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      ListTile(
+                        onTap: () {
+                          Navigator.of(context).pushNamed('/imp_docs');
+                        },
+                        title: Text(
+                          "Important Documents",
+                          style: TextStyle(
+                              fontSize: SizeConfig.drawerItemTextSize,
+                              fontFamily: 'PfDin'),
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/about_scp');
+                        },
+                        title: Text(
+                          "About ICS",
+                          style: TextStyle(
+                              fontSize: SizeConfig.drawerItemTextSize,
+                              fontFamily: 'PfDin'),
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
+                          _launchURL();
+                        },
+                        title: Text(
+                          "Privacy Policy",
+                          style: TextStyle(
+                              fontSize: SizeConfig.drawerItemTextSize,
+                              fontFamily: 'PfDin'),
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
+                          Navigator.of(context).pushNamed('/dev_info');
+                        },
+                        title: Text(
+                          "Developer Info",
+                          style: TextStyle(
+                              fontSize: SizeConfig.drawerItemTextSize,
+                              fontFamily: 'PfDin'),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ))
-            ],
-          )),
-          appBar: AppBar(
-            leading: Padding(
-              padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.037),
-              child: IconButton(
+                Expanded(
+                    child: Align(
+                  alignment: Alignment.center,
+                  child: ButtonTheme(
+                    minWidth: SizeConfig.screenWidth * 0.463,
+                    height: SizeConfig.screenWidth * 0.093,
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0)),
+                      color: Color.fromRGBO(25, 39, 45, 1),
+                      onPressed: () {
+                        _removeUserData(context);
+                      },
+                      child: Text(
+                        "Log Out",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'PfDin',
+                            color: Colors.white,
+                            fontSize: SizeConfig.screenWidth * 0.046),
+                      ),
+                    ),
+                  ),
+                ))
+              ],
+            )),
+            appBar: AppBar(
+              leading: Padding(
+                padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.037),
+                child: IconButton(
+                    icon: Icon(
+                      Icons.menu,
+                      color: Colors.black,
+                      size: 35.0,
+                    ),
+                    onPressed: () => _scaffoldKey.currentState.openDrawer()),
+              ),
+              actions: <Widget>[
+                IconButton(
+                  padding: EdgeInsets.only(
+                      top: SizeConfig.screenWidth * 0.048,
+                      right: SizeConfig.screenWidth * 0.06),
                   icon: Icon(
-                    Icons.menu,
+                    Icons.notifications,
                     color: Colors.black,
                     size: 35.0,
                   ),
-                  onPressed: () => _scaffoldKey.currentState.openDrawer()),
-            ),
-            actions: <Widget>[
-              IconButton(
-                padding: EdgeInsets.only(
-                    top: SizeConfig.screenWidth * 0.048,
-                    right: SizeConfig.screenWidth * 0.06),
-                icon: Icon(
-                  Icons.notifications,
-                  color: Colors.black,
-                  size: 35.0,
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/nots');
+                  },
+                )
+              ],
+              backgroundColor: Colors.white,
+              elevation: 0,
+              centerTitle: true,
+              title: Padding(
+                padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.037),
+                child: Text(
+                  'ICS',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'PfDin',
+                      letterSpacing: 2),
                 ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/nots');
-                },
-              )
-            ],
-            backgroundColor: Colors.white,
-            elevation: 0,
-            centerTitle: true,
-            title: Padding(
-              padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.037),
-              child: Text(
-                'ICS',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 40.0,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'PfDin',
-                    letterSpacing: 2),
               ),
             ),
-          ),
-          backgroundColor: Colors.white,
-          body: Padding(
-            padding: const EdgeInsets.only(top: 16.0),
-            child: ListView(
-              scrollDirection: Axis.vertical,
-              children: <Widget>[
-                appointmentCard(context),
-                TimetableCardSplit(context, MediaQuery.of(context).size.width,
-                    MediaQuery.of(context).textScaleFactor),
-                faqCard(context),
-                mentorsCard(context),
-              ],
+            backgroundColor: Colors.white,
+            body: Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: ListView(
+                scrollDirection: Axis.vertical,
+                children: <Widget>[
+                  appointmentCard(context),
+                  TimetableCardSplit(context, MediaQuery.of(context).size.width,
+                      MediaQuery.of(context).textScaleFactor),
+                  faqCard(context),
+                  mentorsCard(context),
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
