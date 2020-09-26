@@ -32,7 +32,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
           children: <Widget>[
             Flexible(
                 child: timetableCard(widget.cxt, widget.heightFactor,
-                    widget.textSc, width1, "ICS Classes", 1)),
+                    widget.textSc, width1, "Attendance Tracker", 1)),
           ],
         ),
         Row(
@@ -71,7 +71,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                 Navigator.pushNamed(context, '/timetable');
               if (cardType == 1) //Remedial
                 Navigator.pushNamed(context,
-                    '/tutorial'); // TODO: Change the route accordingly, currently for debug purposes
+                    '/attendance'); // TODO: Change the route accordingly, currently for debug purposes
             }
           });
         },

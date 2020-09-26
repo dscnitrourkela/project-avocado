@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:scp/attendance_tracker.dart';
 import 'package:scp/booking.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
 import 'package:scp/timetablecardsplit.dart';
@@ -60,7 +61,7 @@ void main() {
         '/imp_docs': (BuildContext context) => ImpDocs(),
         '/dev_info': (BuildContext context) => DevInfo(),
         '/nots': (BuildContext context) => Nots(),
-        '/tutorial': (BuildContext context) => TutorialSection()
+        '/attendance': (BuildContext context) => AttendanceTracker()
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -80,7 +81,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   ScpDatabase scpDatabase;
-  
+
   @override
   Widget build(BuildContext context) {
     return Container();
@@ -105,7 +106,6 @@ class _MyAppState extends State<MyApp> {
     // ...
     checkLogin();
   }
-
 }
 
 class HomePage extends StatefulWidget {
@@ -421,5 +421,3 @@ class _HomePageState extends State<HomePage> {
   //   }
   // }
 }
-
-
