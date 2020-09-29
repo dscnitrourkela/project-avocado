@@ -33,6 +33,7 @@ dependencies:
   camera: ^0.5.7
   path_provider: ^1.0.0
   firebase_storage: ^3.0.8
+  table_calendar:
 
 dev_dependencies:
   flutter_launcher_icons: "^0.7.2"

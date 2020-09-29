@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:scp/attendance_tracker.dart';
 import 'package:scp/booking.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
 import 'package:scp/timetablecardsplit.dart';
@@ -23,7 +24,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'timetable/theorySection.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:scp/timetable/tutorialSection.dart';
 
 var firebaseInstance = FirebaseAuth.instance;
 final privacyPolicy = "https://project-avocado-8b3e1.firebaseapp.com";
@@ -63,7 +63,7 @@ void main() {
         '/imp_docs': (BuildContext context) => ImpDocs(),
         '/dev_info': (BuildContext context) => DevInfo(),
         '/nots': (BuildContext context) => Nots(),
-        '/tutorial': (BuildContext context) => TutorialSection()
+        '/attendance': (BuildContext context) => AttendanceTracker()
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
