@@ -1,6 +1,6 @@
 [![Starware](https://img.shields.io/badge/Starware-⭐-black?labelColor=f9b00d)](https://github.com/zepfietje/starware)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # About App
@@ -62,6 +62,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/Thesmader"><img src="https://avatars2.githubusercontent.com/u/34758667?v=4" width="100px;" alt=""/><br /><sub><b>Smarak Das</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado/commits?author=Thesmader" title="Code">💻</a> <a href="#projectManagement-Thesmader" title="Project Management">📆</a> <a href="#maintenance-Thesmader" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://github.com/ankank30"><img src="https://avatars3.githubusercontent.com/u/35187467?v=4" width="100px;" alt=""/><br /><sub><b>Ankesh Anku</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado/commits?author=ankank30" title="Code">💻</a> <a href="#projectManagement-ankank30" title="Project Management">📆</a></td>
     <td align="center"><a href="https://github.com/Chinmay-KB"><img src="https://avatars0.githubusercontent.com/u/13520364?v=4" width="100px;" alt=""/><br /><sub><b>Chinmay Kabi</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado/commits?author=Chinmay-KB" title="Code">💻</a> <a href="#projectManagement-Chinmay-KB" title="Project Management">📆</a> <a href="#platform-Chinmay-KB" title="Packaging/porting to new platform">📦</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://abhibhaw.team"><img src="https://avatars3.githubusercontent.com/u/39991296?v=4" width="100px;" alt=""/><br /><sub><b>Abhibhaw Asthana</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado/commits?author=abhibhaw" title="Code">💻</a> <a href="#a11y-abhibhaw" title="Accessibility">️️️️♿️</a></td>
   </tr>
 </table>
 
