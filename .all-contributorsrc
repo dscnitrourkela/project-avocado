@@ -84,6 +84,16 @@
         "code",
         "a11y"
       ]
+    },
+    {
+      "login": "hkp27299",
+      "name": "harsh patel",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/44067918?v=4",
+      "profile": "http://harshpatel.netlify.app",
+      "contributions": [
+        "doc",
+        "example"
+      ]
     }
   ],
   "contributorsPerLine": 7,
