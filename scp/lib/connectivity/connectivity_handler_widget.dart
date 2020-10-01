@@ -39,7 +39,7 @@ class _ConnectivityHandlerWidgetState extends State<ConnectivityHandlerWidget> {
         }
         _showSnackBar('No Internet Connection !!!');
       } else {
-        _showSnackBar('Connection Established');
+        if (toDisplay) _showSnackBar('Connection Established');
       }
     });
   }
