@@ -24,9 +24,9 @@ Please refer to the project's style and contribution guidelines for submitting p
  4. **Push** your work back up to your fork
  5. Submit a **Pull request** so that we can review your changes
 
-NOTE 1: Please abide by the [Contributing Guidelines](https://github.com/dscnitrourkela/project-avocado/blob/dev/CONTRIBUTING.md).
+NOTE 1: Please abide by the [Contributing Guidelines](https://github.com/dscnitrourkela/project-avocado/blob/master/CONTRIBUTING.md).
 
-NOTE 2: Please abide by the [Code of Conduct](https://github.com/dscnitrourkela/project-avocado/blob/dev/CODE_OF_CONDUCT.md).
+NOTE 2: Please abide by the [Code of Conduct](https://github.com/dscnitrourkela/project-avocado/blob/master/CODE_OF_CONDUCT.md).
 
 
 ## Starware
