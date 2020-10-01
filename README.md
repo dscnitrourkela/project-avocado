@@ -1,6 +1,6 @@
 [![Starware](https://img.shields.io/badge/Starware-⭐-black?labelColor=f9b00d)](https://github.com/zepfietje/starware)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # About App
@@ -53,6 +53,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://designrknight-website.web.app/"><img src="https://avatars0.githubusercontent.com/u/27865704?v=4" width="100px;" alt=""/><br /><sub><b>Abel Mathew</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado/commits?author=DesignrKnight" title="Code">💻</a> <a href="#projectManagement-DesignrKnight" title="Project Management">📆</a> <a href="#maintenance-DesignrKnight" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://allcontributors.org"><img src="https://avatars1.githubusercontent.com/u/46410174?v=4" width="100px;" alt=""/><br /><sub><b>All Contributors</b></sub></a><br /><a href="#tool-all-contributors" title="Tools">🔧</a></td>
+    <td align="center"><a href="https://www.linkedin.com/in/patibanda-sriram-237a0b193/"><img src="https://avatars3.githubusercontent.com/u/56649197?v=4" width="100px;" alt=""/><br /><sub><b>SriramPatibanda</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado/commits?author=SriramPatibanda" title="Code">💻</a></td>
   </tr>
 </table>
 
