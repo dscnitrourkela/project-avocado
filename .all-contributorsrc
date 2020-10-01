@@ -53,6 +53,16 @@
         "projectManagement",
         "maintenance"
       ]
+    },
+    {
+      "login": "ankank30",
+      "name": "Ankesh Anku",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/35187467?v=4",
+      "profile": "https://github.com/ankank30",
+      "contributions": [
+        "code",
+        "projectManagement"
+      ]
     }
   ],
   "contributorsPerLine": 7,
