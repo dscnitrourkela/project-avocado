@@ -74,6 +74,16 @@
         "projectManagement",
         "platform"
       ]
+    },
+    {
+      "login": "abhibhaw",
+      "name": "Abhibhaw Asthana",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/39991296?v=4",
+      "profile": "https://abhibhaw.team",
+      "contributions": [
+        "code",
+        "a11y"
+      ]
     }
   ],
   "contributorsPerLine": 7,
