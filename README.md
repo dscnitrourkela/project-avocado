@@ -1,6 +1,6 @@
 [![Starware](https://img.shields.io/badge/Starware-⭐-black?labelColor=f9b00d)](https://github.com/zepfietje/starware)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # About App
@@ -24,9 +24,9 @@ Please refer to the project's style and contribution guidelines for submitting p
  4. **Push** your work back up to your fork
  5. Submit a **Pull request** so that we can review your changes
 
-NOTE 1: Please abide by the [Contributing Guidelines](https://github.com/dscnitrourkela/project-avocado/blob/dev/CONTRIBUTING.md).
+NOTE 1: Please abide by the [Contributing Guidelines](https://github.com/dscnitrourkela/project-avocado/blob/master/CONTRIBUTING.md).
 
-NOTE 2: Please abide by the [Code of Conduct](https://github.com/dscnitrourkela/project-avocado/blob/dev/CODE_OF_CONDUCT.md).
+NOTE 2: Please abide by the [Code of Conduct](https://github.com/dscnitrourkela/project-avocado/blob/master/CODE_OF_CONDUCT.md).
 
 
 ## Starware
@@ -66,6 +66,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://abhibhaw.team"><img src="https://avatars3.githubusercontent.com/u/39991296?v=4" width="100px;" alt=""/><br /><sub><b>Abhibhaw Asthana</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado/commits?author=abhibhaw" title="Code">💻</a> <a href="#a11y-abhibhaw" title="Accessibility">️️️️♿️</a></td>
     <td align="center"><a href="http://harshpatel.netlify.app"><img src="https://avatars1.githubusercontent.com/u/44067918?v=4" width="100px;" alt=""/><br /><sub><b>harsh patel</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado/commits?author=hkp27299" title="Documentation">📖</a> <a href="#example-hkp27299" title="Examples">💡</a></td>
+    <td align="center"><a href="https://github.com/rajnis09"><img src="https://avatars2.githubusercontent.com/u/46453101?v=4" width="100px;" alt=""/><br /><sub><b>Rajnish Singh</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado/commits?author=rajnis09" title="Code">💻</a></td>
   </tr>
 </table>
 
