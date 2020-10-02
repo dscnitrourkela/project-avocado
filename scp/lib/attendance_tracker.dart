@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'package:scp/time_table_resources.dart';
+import 'package:scp/time_table.dart';
+
 import 'package:table_calendar/table_calendar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,33 +16,37 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
   final Color secondaryColor = Color.fromARGB(255, 158, 218, 224);
   final Color lunchColor = Color.fromARGB(255, 238, 71, 89);
 
-  final List<String> subjects = [
-    "Mathematics I",
-    "Mathematics II",
-    "Physics I",
-    "Physics II",
-    "Engineering Mechanics",
-    "Environment and Safety",
-    "Basic Electrical",
-    "Basic Electronics",
-    "Chemistry",
-    "Biology",
-    "Communicative English"
-  ];
-
   CalendarController _calendarController;
   Map<DateTime, List<dynamic>> _events;
   List<dynamic> _selectedEvents;
   String markedValue;
+  List<String> subjects;
   SharedPreferences pref;
+  //String theory = theorySection;
+  // String practical = practicalSection;
+  static String sequence = sectionSequence;
+
+  Map<dynamic, dynamic> codes = TimeTableResources.sequence[sequence];
+
+  List<String> items(BuildContext context, DateTime day) {
+    List<String> subList = new List<String>();
+    List<String> dayList = new List<String>();
+    dayList = codes[day.weekday.toString()];
+    for (var ele in dayList) {
+      if (TimeTableResources.theory[theorySection].containsValue(ele))
+        subList.add(TimeTableResources.theory[theorySection][ele]);
+      else
+        subList.add(TimeTableResources.practical[practicalSection][ele]);
+    }
+    return subList;
+  }
 
   @override
   void initState() {
     _calendarController = CalendarController();
-
     _events = {};
     _selectedEvents = [];
-    markedValue = subjects[0];
+    markedValue = "abc";
     initPrefs();
     super.initState();
   }
@@ -141,28 +148,29 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   DropdownButton<String>(
-                    icon: Icon(Icons.keyboard_arrow_down),
-                    iconSize: 16,
-                    elevation: 10,
-                    style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        markedValue = value;
-                      });
-                    },
-                    value: markedValue,
-                    items:
-                        subjects.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
+                      icon: Icon(Icons.keyboard_arrow_down),
+                      iconSize: 16,
+                      elevation: 10,
+                      style: TextStyle(
+                        color: primaryColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          markedValue = value;
+                        });
+                      },
+                      value: markedValue,
+                      items: items(context, _calendarController.selectedDay)
+                          .map((entry) {
+                        return DropdownMenuItem(
+                            value: entry,
+                            child: Text(
+                              entry,
+                              style: TextStyle(color: primaryColor),
+                            ));
+                      }).toList()),
                   RaisedButton(
                       elevation: 10,
                       color: primaryColor,
