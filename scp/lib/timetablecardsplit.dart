@@ -166,7 +166,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                                             height: heightFactor * 0.09,
                                           ),
                                           Text(
-                                            'The data will get lost on re-installation',
+                                            'The data will gets reset on re-installation',
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               fontSize: heightFactor * 0.028,

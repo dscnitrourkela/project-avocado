@@ -18,10 +18,12 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
 
   CalendarController _calendarController;
   Map<DateTime, List<dynamic>> _events;
+  Map<String, int> _absents;
   List<dynamic> _selectedEvents;
   String markedValue;
   List<String> subjects;
   SharedPreferences pref;
+
   DateTime currentDay;
   var theorySection;
   var practicalSection;
@@ -45,6 +47,7 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
     currentDay = DateTime.now();
     _calendarController = CalendarController();
     _events = {};
+    _absents = {};
     _selectedEvents = [];
 
     initPrefs();
@@ -56,7 +59,25 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
     setState(() {
       _events = Map<DateTime, List<dynamic>>.from(
           decodeMap(json.decode(pref.getString('events') ?? "{}")));
+      _absents = Map<String, int>.from(
+          decodeAbs(json.decode(pref.getString('absents') ?? "{}")));
     });
+  }
+
+  Map<String, dynamic> encodeAbs(Map<String, int> map) {
+    Map<String, dynamic> newMap = {};
+    map.forEach((key, value) {
+      newMap[key.toString()] = map[key];
+    });
+    return newMap;
+  }
+
+  Map<String, int> decodeAbs(Map<String, dynamic> map) {
+    Map<String, int> newMap = {};
+    map.forEach((key, value) {
+      newMap[key] = map[key.toString()];
+    });
+    return newMap;
   }
 
   Map<String, dynamic> encodeMap(Map<DateTime, dynamic> map) {
@@ -92,7 +113,10 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
             subList
                 .add(TimeTableResources.theory[theorySection][ele].toString());
           } else if (TimeTableResources.practical[practicalSection]
-              .containsKey(ele)) {
+                  .containsKey(ele) &&
+              !subList.contains(TimeTableResources.practical[practicalSection]
+                      [ele]
+                  .toString())) {
             subList.add(
                 TimeTableResources.practical[practicalSection][ele].toString());
           }
@@ -128,6 +152,7 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                 initialCalendarFormat: CalendarFormat.month,
                 onDaySelected: (day, events) {
                   setState(() {
+                    markedValue = items(day)[0];
                     currentDay = day;
                     _selectedEvents = events;
                   });
@@ -208,6 +233,11 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                             child: Text("Enter"),
                             onPressed: () {
                               setState(() {
+                                if (_absents.containsKey(markedValue)) {
+                                  _absents[markedValue.toString()]++;
+                                } else {
+                                  _absents[markedValue.toString()] = 1;
+                                }
                                 if (_selectedEvents.contains(markedValue)) {
                                   return;
                                 } else {
@@ -224,6 +254,8 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                                     ];
                                   }
                                 }
+                                pref.setString('absents',
+                                    json.encode(encodeAbs(_absents)));
                                 pref.setString(
                                     'events', json.encode(encodeMap(_events)));
                               });
@@ -256,7 +288,9 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                           child: SizedBox(
                             height: 12,
                             child: Text(
-                              _selectedEvents[index],
+                              _selectedEvents[index] +
+                                  " - " +
+                                  _absents[_selectedEvents[index]].toString(),
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: primaryColor),
