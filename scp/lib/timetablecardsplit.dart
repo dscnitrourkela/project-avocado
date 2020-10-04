@@ -146,15 +146,36 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                                     alignment: Alignment.centerLeft,
                                     child: SizedBox(
                                       width: 200.0,
-                                      child: Text(
-                                        'Set your personal timetable and get information about class timings and location',
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                          fontSize: heightFactor * 0.038,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily: 'PfDin',
-                                        ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: <Widget>[
+                                          Text(
+                                            'Set your personal timetable and track       your attendance',
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              fontSize: heightFactor * 0.038,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'PfDin',
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: heightFactor * 0.09,
+                                          ),
+                                          Text(
+                                            'The data will get lost on re-installation',
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              fontSize: heightFactor * 0.028,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'PfDin',
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),

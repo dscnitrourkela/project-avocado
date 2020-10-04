@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:scp/time_table_resources.dart';
-import 'package:scp/time_table.dart';
+
 import 'package:table_calendar/table_calendar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
@@ -23,10 +23,23 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
   List<String> subjects;
   SharedPreferences pref;
   DateTime currentDay;
-  //String theory = theorySection;
-  // String practical = practicalSection;
-  static String sequence = sectionSequence;
-  Map<dynamic, dynamic> codes = TimeTableResources.sequence[sequence];
+  var theorySection;
+  var practicalSection;
+  static var sectionSequence;
+
+  Future fetchSectionData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    theorySection = prefs.getString('theory_section');
+    practicalSection = prefs.getString('prac_section');
+    if ((theorySection.compareTo('Ar.') == 0) ||
+        (theorySection.compareTo('A') == 0) ||
+        (theorySection.compareTo('D') == 0) ||
+        (theorySection.compareTo('C') == 0) ||
+        (theorySection.compareTo('B') == 0)) {
+      sectionSequence = 'tp';
+    }
+  }
+
   @override
   void initState() {
     currentDay = DateTime.now();
@@ -64,23 +77,22 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
 
   @override
   Widget build(BuildContext context) {
+    fetchSectionData();
+    Map<dynamic, dynamic> codes = TimeTableResources.sequence[sectionSequence];
     List<String> items(DateTime day) {
       List<String> subList = new List<String>();
       List<String> dayList = new List<String>();
       String weekday = DateFormat('EEEE').format(day);
-      print(weekday);
+
       dayList = codes[weekday];
-      print(dayList);
+
       for (var ele in dayList) {
         if (day.weekday <= 5) {
           if (TimeTableResources.theory[theorySection].containsKey(ele)) {
-            print(TimeTableResources.theory[theorySection][ele].toString());
             subList
                 .add(TimeTableResources.theory[theorySection][ele].toString());
           } else if (TimeTableResources.practical[practicalSection]
               .containsKey(ele)) {
-            print(
-                TimeTableResources.practical[practicalSection][ele].toString());
             subList.add(
                 TimeTableResources.practical[practicalSection][ele].toString());
           }
@@ -179,7 +191,6 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                             },
                             value: markedValue,
                             items: items(currentDay).map((entry) {
-                              print("true block");
                               return DropdownMenuItem(
                                   value: entry,
                                   child: Text(
