@@ -59,7 +59,7 @@ $ git merge upstream/master
 $ git push origin <type>/<issue|issue-number>/{<additional-fixes>}
 
 ## Creating the PR using GitHub Website
-# Create Pull Request from <type>/<issue|issue-number>/{<additional-fixes>} branch in your forked repository to the dev branch in the upstream repository
+# Create Pull Request from <type>/<issue|issue-number>/{<additional-fixes>} branch in your forked repository to the master branch in the upstream repository
 # After creating PR, add a Reviewer (Any Admin) and yourself as the assignee
 # Link Pull Request to appropriate Issue, or Project+Milestone (if no issue created)
 # IMPORTANT: Do Not Merge the PR unless specifically asked to by an admin.
