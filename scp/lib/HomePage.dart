@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:scp/drawer_screens/about_scs.dart';
-import 'package:scp/drawer_screens/dev_info.dart';
-import 'package:scp/drawer_screens/important_documents.dart';
-import 'package:scp/drawer_screens/notifications.dart';
-import 'package:scp/login.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:scp/utils/sizeConfig.dart';
 import 'package:scp/timetablecardsplit.dart';
@@ -19,8 +14,8 @@ import 'package:flutter/services.dart';
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
 
-  static const String id = 'homePage';
   final String title;
+  static const String id = 'homepage';
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -95,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                     children: <Widget>[
                       ListTile(
                         onTap: () {
-                          Navigator.of(context).pushNamed(ImpDocs.id);
+                          Navigator.of(context).pushNamed('/imp_docs');
                         },
                         title: Text(
                           "Important Documents",
@@ -106,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ListTile(
                         onTap: () {
-                          Navigator.pushNamed(context, AboutSCP.id);
+                          Navigator.pushNamed(context, '/about_scp');
                         },
                         title: Text(
                           "About ICS",
@@ -128,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ListTile(
                         onTap: () {
-                          Navigator.of(context).pushNamed(DevInfo.id);
+                          Navigator.of(context).pushNamed('/dev_info');
                         },
                         title: Text(
                           "Developer Info",
@@ -188,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                     size: 35.0,
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, Nots.id);
+                    Navigator.pushNamed(context, '/nots');
                   },
                 )
               ],
@@ -234,7 +229,7 @@ class _HomePageState extends State<HomePage> {
     prefs.clear();
     await firebaseInstance.signOut();
     Navigator.of(context)
-        .pushNamedAndRemoveUntil(Login.id, (Route<dynamic> route) => false);
+        .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
   }
 
   reset() async {
@@ -285,13 +280,13 @@ class _HomePageState extends State<HomePage> {
     _fcm.subscribeToTopic('ics-not');
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
-        Navigator.pushNamed(context, Nots.id);
+        Navigator.pushNamed(context, '/nots');
       },
       onLaunch: (Map<String, dynamic> message) async {
-        Navigator.pushNamed(context, Nots.id);
+        Navigator.pushNamed(context, '/nots');
       },
       onResume: (Map<String, dynamic> message) async {
-        Navigator.pushNamed(context, Nots.id);
+        Navigator.pushNamed(context, '/nots');
       },
     );
 
