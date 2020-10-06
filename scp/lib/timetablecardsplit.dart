@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scp/ui/gradients.dart';
+import 'package:scp/utils/routes.dart';
 
 class TimetableCardSplit extends StatefulWidget {
   BuildContext cxt;
@@ -68,10 +69,12 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
               /*cardType helps us determine upon which card have we registered the tap
               0 is for regular classes, 1 is for remedial classes*/
               if (cardType == 0) //Regular
-                Navigator.pushNamed(context, '/timetable');
+                Navigator.pushNamed(context, Routes.rTimetable);
               if (cardType == 1) //Remedial
-                Navigator.pushNamed(context,
-                    '/tutorial'); // TODO: Change the route accordingly, currently for debug purposes
+                Navigator.pushNamed(
+                    context,
+                    Routes
+                        .rTutorial); // TODO: Change the route accordingly, currently for debug purposes
             }
           });
         },

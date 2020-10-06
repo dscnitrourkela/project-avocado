@@ -1,20 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:scp/booking.dart';
-import 'package:scp/drawer_screens/about_scs.dart';
-import 'package:scp/drawer_screens/notifications.dart';
-import 'package:scp/drawer_screens/dev_info.dart';
-import 'package:scp/drawer_screens/important_documents.dart';
-import 'package:scp/login.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:scp/appointments.dart';
+import 'package:scp/utils/routes.dart';
 import 'dart:async';
-import 'mentor_search/mentors.dart';
-import 'package:scp/userdata.dart';
-import 'timetable/theorySection.dart';
-import 'package:scp/timetable/tutorialSection.dart';
-import 'HomePage.dart';
 import 'myApp.dart';
 
 var firebaseInstance = FirebaseAuth.instance;
@@ -42,21 +31,7 @@ void main() {
     runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ICS',
-      routes: <String, WidgetBuilder>{
-        '/homePage': (BuildContext context) => HomePage(title: 'ICS Home Page'),
-        '/loginPage': (BuildContext context) => Login(),
-        '/appointments': (BuildContext context) => Appointments(),
-        '/timetable': (BuildContext context) => TheorySection(),
-        '/userdata': (BuildContext context) => Userdata(),
-        '/login': (BuildContext context) => Login(),
-        '/booking': (BuildContext context) => Booking(),
-        '/about_scp': (BuildContext context) => AboutSCP(),
-        '/mentors': (BuildContext context) => Mentors(),
-        '/imp_docs': (BuildContext context) => ImpDocs(),
-        '/dev_info': (BuildContext context) => DevInfo(),
-        '/nots': (BuildContext context) => Nots(),
-        '/tutorial': (BuildContext context) => TutorialSection()
-      },
+      routes: Routes.getRoutes(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -67,5 +42,3 @@ void main() {
     Crashlytics.instance.recordFlutterError(details);
   };
 }
-
-
