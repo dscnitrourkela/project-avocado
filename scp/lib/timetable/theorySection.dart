@@ -5,7 +5,17 @@ import 'package:scp/time_table.dart';
 import 'package:scp/timetable/pracSection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const List<String> sectionArray = ["Ar.", "A", "B", "C", "D", "E", "F", "G", "H"];
+const List<String> sectionArray = [
+  "Ar.",
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H"
+];
 const FULL_SCALE = 1.0;
 const SCALE_FRACTION = 0.7;
 const VIEWPORT_FRACTION = 0.4;
@@ -15,6 +25,7 @@ PageController pageController;
 double pagerHeight = 140.0;
 
 class TheorySection extends StatefulWidget {
+  static const String id = 'timetable';
   @override
   _TheorySectionState createState() => _TheorySectionState();
 }
@@ -27,15 +38,14 @@ class _TheorySectionState extends State<TheorySection> {
     super.initState();
   }
 
-  Future fetchSection() async{
+  Future fetchSection() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool showTimeTable =prefs.getBool('show_timetable');
-    if(showTimeTable){
+    bool showTimeTable = prefs.getBool('show_timetable');
+    if (showTimeTable) {
       Navigator.of(context).pop();
       Navigator.push(
         context,
-        MaterialPageRoute(
-            builder: (context) => TimeTable()),
+        MaterialPageRoute(builder: (context) => TimeTable()),
       );
     }
   }
@@ -43,103 +53,101 @@ class _TheorySectionState extends State<TheorySection> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: fetchSection(),
-      builder:(context,snap) {
-        return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Color.fromRGBO(25, 39, 45, 1),
-            title: Text(
-              "Timetable Selector",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w500,
-                fontFamily: 'PfDin',
-                color: Colors.white,
+        future: fetchSection(),
+        builder: (context, snap) {
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Color.fromRGBO(25, 39, 45, 1),
+              title: Text(
+                "Timetable Selector",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'PfDin',
+                  color: Colors.white,
+                ),
               ),
             ),
-          ),
-          body: Container(
-            alignment: Alignment.center,
-            child: Center(
-              child: Stack(
-                  children: <Widget>[
-              Align(
-              alignment: Alignment(0, -0.6),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+            body: Container(
+              alignment: Alignment.center,
+              child: Center(
+                  child: Stack(
                 children: <Widget>[
-                  Center(
-                    child: Text(
-                      "Step 1",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'PfDin',
-                        color: Color.fromRGBO(74, 232, 190, 1),
-                      ),
+                  Align(
+                    alignment: Alignment(0, -0.6),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Center(
+                          child: Text(
+                            "Step 1",
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'PfDin',
+                              color: Color.fromRGBO(74, 232, 190, 1),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                            child: Text(
+                              "Select your theory section",
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'PfDin',
+                                color: Color.fromRGBO(25, 39, 45, 1),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  Align(
+                    alignment: Alignment(0, 0.6),
+                    child: FloatingActionButton(
+                      onPressed: () => {
+                        Navigator.of(context).pop(),
+                        Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (ctxt) => PracticalSection(sectionArray[
+                                  (pageController.page.round().toInt())])),
+                        )
+                      },
+                      child: Icon(Icons.arrow_forward),
+                      backgroundColor: Color.fromRGBO(74, 232, 190, 1),
+                    ),
+                  ),
+                  Center(
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(16.0))),
+                      child: Container(
+                        height: pagerHeight,
+                        width: pagerHeight,
+                      ),
+                      elevation: 20,
+                    ),
+                  ),
+                  Align(
+                      alignment: Alignment.center,
+                      child: _buildCarousel(this, context, 8)),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Text(
-                        "Select your theory section",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'PfDin',
-                          color: Color.fromRGBO(25, 39, 45, 1),
-                        ),
-                      ),
-                    ),
-                  ),
+                    child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Text("The timetable is subject to change")),
+                  )
                 ],
-              ),
+              )),
             ),
-            Align(
-              alignment: Alignment(0, 0.6),
-              child: FloatingActionButton(
-                  onPressed: () => {
-                  Navigator.of(context).pop(),
-              Navigator.push(
-                context,
-                new MaterialPageRoute(
-                    builder: (ctxt) =>
-                        PracticalSection(sectionArray[
-                        (pageController.page.round().toInt())])),
-              )
-              },
-              child: Icon(Icons.arrow_forward),
-              backgroundColor: Color.fromRGBO(74, 232, 190, 1),
-            ),
-          ),
-          Center(
-            child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(16.0))),
-              child: Container(
-                height: pagerHeight,
-                width: pagerHeight,
-              ),
-              elevation: 20,
-            ),
-          ),
-          Align(
-              alignment: Alignment.center,
-              child: _buildCarousel(this, context, 8)),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Text("The timetable is subject to change")),
-          )
-          ],
-        )),
-        )
-        ,
-        );
-      }
-    );
+          );
+        });
   }
 }
 

@@ -1,7 +1,10 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:scp/appointments.dart';
 import 'package:scp/booking.dart';
+import 'package:scp/mentor_search/mentors.dart';
+import 'package:scp/timetable/theorySection.dart';
 import 'package:scp/ui/gradients.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
 import 'package:scp/utils/sizeConfig.dart';
@@ -26,7 +29,7 @@ Widget appointmentCard(BuildContext context) {
                 builder: (BuildContext context) =>
                     Booking(counselDay: gCounselDay, time: gTime)));
           } else
-            Navigator.of(context).pushNamed('/appointments');
+            Navigator.of(context).pushNamed(Appointments.id);
         },
         // onTap: () async {
         //   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -182,7 +185,7 @@ Widget mentorsCard(BuildContext context) {
     height: heightFactor * 0.58,
     child: InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed('/mentors');
+        Navigator.of(context).pushNamed(Mentors.id);
       },
       child: Card(
         shape:
@@ -387,7 +390,7 @@ Widget timetableCard(BuildContext context) {
     height: heightFactor * 0.58,
     child: InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/timetable');
+        Navigator.pushNamed(context, TheorySection.id);
       },
       child: Card(
         shape:
@@ -486,21 +489,17 @@ Widget timetableCard(BuildContext context) {
 
 var gKey, gCounselDay, gTime;
 
-Widget slotCard(
-    BuildContext context,
-    String titleText,
-    String type,
-    String designation,
-    int count,
-    double scaleHeight) {
+Widget slotCard(BuildContext context, String titleText, String type,
+    String designation, int count, double scaleHeight) {
   SizeConfig().init(context);
   double heightFactor = SizeConfig.screenWidth;
-  Widget slotWidget(String status, String key, String time, String index, String date, String day) {
+  Widget slotWidget(String status, String key, String time, String index,
+      String date, String day) {
     final bool visible = false;
     bool isSelected = false;
     SizeConfig().init(context);
     double heightFactor = SizeConfig.screenWidth;
-    print('$day'+'smarak');
+    print('$day' + 'smarak');
 
     return StatefulBuilder(
       builder: (BuildContext context, StateSetter setSlotWidgetState) {
@@ -609,7 +608,6 @@ Widget slotCard(
         ),
         elevation: 5.0,
         child: ListView(
-          
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
@@ -655,7 +653,8 @@ Widget slotCard(
                       itemBuilder: (BuildContext context, int index) {
                         var slot =
                             Slot.map(_slotsSnapshot.value['slot${index + 1}']);
-                        return slotWidget(slot.status, slot.key, slot.time, (index + 1).toString(), slot.date, slot.day);
+                        return slotWidget(slot.status, slot.key, slot.time,
+                            (index + 1).toString(), slot.date, slot.day);
                       });
                 }),
           ],
@@ -664,4 +663,3 @@ Widget slotCard(
     ),
   );
 }
-

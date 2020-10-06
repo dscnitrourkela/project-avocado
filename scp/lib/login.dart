@@ -8,6 +8,7 @@ final Shader linearGradient = LinearGradient(
 ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
 
 class Login extends StatefulWidget {
+  static const String id = 'login';
   @override
   _LoginState createState() => _LoginState();
 }
@@ -194,7 +195,7 @@ class _LoginState extends State<Login> {
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontFamily: 'PfDin',
-                      fontSize: SizeConfig.screenWidth*0.047,
+                      fontSize: SizeConfig.screenWidth * 0.047,
                     ),
                   ),
                   textColor: Colors.white,

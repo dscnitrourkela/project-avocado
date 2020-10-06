@@ -6,6 +6,7 @@ final String aboutText =
     "DSC NIT Rourkela (DSC NITR) is a student chapter of DSC India with a motive to nurture developers within the community and solve real-life problems in the community through technology.";
 
 class DevInfo extends StatelessWidget {
+  static const String id = 'dev_info';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,9 +94,7 @@ class DevInfo extends StatelessWidget {
 
   Widget contactCard(BuildContext context, String name, String contact) {
     //var queryWidth = MediaQuery.of(context).size.width;
-    var textScaleFactor = MediaQuery
-        .of(context)
-        .textScaleFactor;
+    var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(

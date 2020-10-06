@@ -43,19 +43,18 @@ void main() {
       debugShowCheckedModeBanner: false,
       title: 'ICS',
       routes: <String, WidgetBuilder>{
-        '/homePage': (BuildContext context) => HomePage(title: 'ICS Home Page'),
-        '/loginPage': (BuildContext context) => Login(),
-        '/appointments': (BuildContext context) => Appointments(),
-        '/timetable': (BuildContext context) => TheorySection(),
-        '/userdata': (BuildContext context) => Userdata(),
-        '/login': (BuildContext context) => Login(),
-        '/booking': (BuildContext context) => Booking(),
-        '/about_scp': (BuildContext context) => AboutSCP(),
-        '/mentors': (BuildContext context) => Mentors(),
-        '/imp_docs': (BuildContext context) => ImpDocs(),
-        '/dev_info': (BuildContext context) => DevInfo(),
-        '/nots': (BuildContext context) => Nots(),
-        '/tutorial': (BuildContext context) => TutorialSection()
+        HomePage.id: (BuildContext context) => HomePage(title: 'ICS Home Page'),
+        Appointments.id: (BuildContext context) => Appointments(),
+        TheorySection.id: (BuildContext context) => TheorySection(),
+        Userdata.id: (BuildContext context) => Userdata(),
+        Login.id: (BuildContext context) => Login(),
+        Booking.id: (BuildContext context) => Booking(),
+        AboutSCP.id: (BuildContext context) => AboutSCP(),
+        Mentors.id: (BuildContext context) => Mentors(),
+        ImpDocs.id: (BuildContext context) => ImpDocs(),
+        DevInfo.id: (BuildContext context) => DevInfo(),
+        Nots.id: (BuildContext context) => Nots(),
+        TutorialSection.id: (BuildContext context) => TutorialSection()
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -67,5 +66,3 @@ void main() {
     Crashlytics.instance.recordFlutterError(details);
   };
 }
-
-

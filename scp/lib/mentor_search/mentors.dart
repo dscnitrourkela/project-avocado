@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:scp/HomePage.dart';
 import 'package:scp/mentor_search/appbase_search_manager.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:native_contact_dialog/native_contact_dialog.dart';
 import 'dart:io';
 
 class Mentors extends StatefulWidget {
+  static const String id = 'mentors';
   @override
   _MentorsState createState() => _MentorsState();
 }
@@ -48,7 +50,7 @@ class _MentorsState extends State<Mentors> {
             child: IconButton(
               onPressed: () {
                 Navigator.of(context);
-                Navigator.pushNamed(context, '/homePage');
+                Navigator.pushNamed(context, HomePage.id);
               },
               icon: Icon(
                 Icons.arrow_back_ios,
