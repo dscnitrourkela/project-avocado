@@ -1,0 +1,9 @@
+name: Woofy
+on: pull_request_target
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:      
+      - uses: HarishTeens/hacktoberfest-greet@v1.1.0
+        with:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
