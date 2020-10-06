@@ -1,0 +1,123 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "DesignrKnight",
+      "name": "Abel Mathew",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/27865704?v=4",
+      "profile": "https://designrknight-website.web.app/",
+      "contributions": [
+        "code",
+        "projectManagement",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "all-contributors",
+      "name": "All Contributors",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/46410174?v=4",
+      "profile": "https://allcontributors.org",
+      "contributions": [
+        "tool"
+      ]
+    },
+    {
+      "login": "SriramPatibanda",
+      "name": "SriramPatibanda",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/56649197?v=4",
+      "profile": "https://www.linkedin.com/in/patibanda-sriram-237a0b193/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "nayakastha",
+      "name": "Astha Nayak",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/58568514?v=4",
+      "profile": "https://github.com/nayakastha",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Thesmader",
+      "name": "Smarak Das",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/34758667?v=4",
+      "profile": "https://github.com/Thesmader",
+      "contributions": [
+        "code",
+        "projectManagement",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "ankank30",
+      "name": "Ankesh Anku",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/35187467?v=4",
+      "profile": "https://github.com/ankank30",
+      "contributions": [
+        "code",
+        "projectManagement"
+      ]
+    },
+    {
+      "login": "Chinmay-KB",
+      "name": "Chinmay Kabi",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/13520364?v=4",
+      "profile": "https://github.com/Chinmay-KB",
+      "contributions": [
+        "code",
+        "projectManagement",
+        "platform"
+      ]
+    },
+    {
+      "login": "abhibhaw",
+      "name": "Abhibhaw Asthana",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/39991296?v=4",
+      "profile": "https://abhibhaw.team",
+      "contributions": [
+        "code",
+        "a11y"
+      ]
+    },
+    {
+      "login": "hkp27299",
+      "name": "harsh patel",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/44067918?v=4",
+      "profile": "http://harshpatel.netlify.app",
+      "contributions": [
+        "doc",
+        "example"
+      ]
+    },
+    {
+      "login": "rajnis09",
+      "name": "Rajnish Singh",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/46453101?v=4",
+      "profile": "https://github.com/rajnis09",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "priyanshu0405",
+      "name": "priyanshu0405",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/58037946?v=4",
+      "profile": "https://github.com/priyanshu0405",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "project-avocado",
+  "projectOwner": "dscnitrourkela",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
