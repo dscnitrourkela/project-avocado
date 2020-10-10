@@ -16,3 +16,4 @@ public class Application extends FlutterApplication{
         GeneratedPluginRegistrant.registerWith(flutterEngine);
     }
 }
+
