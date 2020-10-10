@@ -23,3 +23,4 @@ class MainActivity:FlutterActivity() {
       private val CHANNEL = "FAQ_ACTIVITY"
     }
   }
+
