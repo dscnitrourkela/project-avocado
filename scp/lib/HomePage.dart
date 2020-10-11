@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:scp/utils/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:scp/utils/sizeConfig.dart';
 import 'package:scp/timetablecardsplit.dart';
@@ -89,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                     children: <Widget>[
                       ListTile(
                         onTap: () {
-                          Navigator.of(context).pushNamed('/imp_docs');
+                          Navigator.of(context).pushNamed(Routes.rImpDocs);
                         },
                         title: Text(
                           "Important Documents",
@@ -100,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ListTile(
                         onTap: () {
-                          Navigator.pushNamed(context, '/about_scp');
+                          Navigator.pushNamed(context, Routes.rAboutScp);
                         },
                         title: Text(
                           "About ICS",
@@ -122,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ListTile(
                         onTap: () {
-                          Navigator.of(context).pushNamed('/dev_info');
+                          Navigator.of(context).pushNamed(Routes.rDevInfo);
                         },
                         title: Text(
                           "Developer Info",
@@ -182,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                     size: 35.0,
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/nots');
+                    Navigator.pushNamed(context, Routes.rNots);
                   },
                 )
               ],
@@ -227,8 +228,8 @@ class _HomePageState extends State<HomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
     await firebaseInstance.signOut();
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        Routes.rLogin, (Route<dynamic> route) => false);
   }
 
   reset() async {
@@ -279,13 +280,13 @@ class _HomePageState extends State<HomePage> {
     _fcm.subscribeToTopic('ics-not');
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
-        Navigator.pushNamed(context, '/nots');
+        Navigator.pushNamed(context, Routes.rNots);
       },
       onLaunch: (Map<String, dynamic> message) async {
-        Navigator.pushNamed(context, '/nots');
+        Navigator.pushNamed(context, Routes.rNots);
       },
       onResume: (Map<String, dynamic> message) async {
-        Navigator.pushNamed(context, '/nots');
+        Navigator.pushNamed(context, Routes.rNots);
       },
     );
 

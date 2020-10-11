@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scp/mentor_search/appbase_search_manager.dart';
+import 'package:scp/utils/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:native_contact_dialog/native_contact_dialog.dart';
 import 'dart:io';
@@ -48,7 +49,7 @@ class _MentorsState extends State<Mentors> {
             child: IconButton(
               onPressed: () {
                 Navigator.of(context);
-                Navigator.pushNamed(context, '/homePage');
+                Navigator.pushNamed(context, Routes.rHomepage);
               },
               icon: Icon(
                 Icons.arrow_back_ios,
