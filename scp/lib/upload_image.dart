@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:scp/camera.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
+import 'package:scp/utils/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:scp/dateConfig.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
@@ -19,7 +20,12 @@ class UploadImageScreen extends StatefulWidget {
   final String index;
 
   UploadImageScreen(
-      {this.bookingKey, this.time, this.type, this.date, this.counselDay, this.index});
+      {this.bookingKey,
+      this.time,
+      this.type,
+      this.date,
+      this.counselDay,
+      this.index});
 
   @override
   UploadImageState createState() => UploadImageState();
@@ -84,13 +90,14 @@ class UploadImageState extends State<UploadImageScreen> {
       print("Value updated");
       Navigator.of(context).pop();
       Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (BuildContext context) => Booking(
-                    counselDay: widget.counselDay,
-                    time: widget.time,
-                  )),
-          /*ModalRoute.withName('/appointments')*/);
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => Booking(
+                  counselDay: widget.counselDay,
+                  time: widget.time,
+                )),
+        /*ModalRoute.withName('/appointments')*/
+      );
       //Navigator.push(context, MaterialPageRoute(
       //  builder: (BuildContext context) =>
       //    Booking(keyCode: key, counselDay: widget.counselDay, time: widget.time)));
@@ -135,7 +142,7 @@ class UploadImageState extends State<UploadImageScreen> {
             child: IconButton(
               onPressed: () {
                 Navigator.of(context);
-                Navigator.pushNamed(context, '/appointments');
+                Navigator.pushNamed(context, Routes.rAppointments);
               },
               icon: Icon(
                 Icons.arrow_back_ios,

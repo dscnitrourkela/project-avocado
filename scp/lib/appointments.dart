@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:scp/ui/cards.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
+import 'package:scp/utils/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Appointments extends StatefulWidget {
@@ -82,7 +83,7 @@ class _AppointmentsState extends State<Appointments> {
               child: IconButton(
                 onPressed: () {
                   Navigator.of(context);
-                  Navigator.pushNamed(context, '/homePage');
+                  Navigator.pushNamed(context, Routes.rHomepage);
                 },
                 icon: Icon(
                   Icons.arrow_back_ios,
@@ -113,13 +114,13 @@ class _AppointmentsState extends State<Appointments> {
         SizedBox(
           height: 20.0,
         ),
-        slotCard(context, counselorName, 'counsel',
-            'Counsellor', ScpDatabase.counselCount, 0.85),
+        slotCard(context, counselorName, 'counsel', 'Counsellor',
+            ScpDatabase.counselCount, 0.85),
         SizedBox(
           height: 40.0,
         ),
-        slotCard(context, psychName, 'psych',
-            'Psychiatrist', ScpDatabase.psychCount, 1.1),
+        slotCard(context, psychName, 'psych', 'Psychiatrist',
+            ScpDatabase.psychCount, 1.1),
       ],
     );
   }
