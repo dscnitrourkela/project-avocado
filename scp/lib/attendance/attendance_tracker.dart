@@ -1,12 +1,43 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:scp/time_table_resources.dart';
-
 import 'package:table_calendar/table_calendar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:intl/intl.dart';
+
+String theory;
+List<String> electronics = [
+  "Physics",
+  "Mathematics",
+  "Biology",
+  "Environment and Safety",
+  "Basic Electronics",
+  "Communicative English",
+  "Chemistry Lab",
+  "Engineering Drawing"
+];
+
+List<String> electrical = [
+  "Physics",
+  "Mathematics",
+  "Chemistry",
+  "Basic Electrical",
+  "Engineering Mechanics",
+  "Workshop Practice",
+  "Basic Programming",
+  "Physics Lab"
+];
+
+List<String> arch = [
+  "Evolution of Architecture-I",
+  'Engineering Mechanics',
+  'Principles of Architectural Designs',
+  'Building Materials-I',
+  'Communicative English',
+];
 
 class AttendanceTracker extends StatefulWidget {
+  AttendanceTracker(String theorySection) {
+    theory = theorySection;
+  }
   @override
   _AttendanceTrackerState createState() => _AttendanceTrackerState();
 }
@@ -23,24 +54,7 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
   String markedValue;
   List<String> subjects;
   SharedPreferences pref;
-
   DateTime currentDay;
-  var theorySection;
-  var practicalSection;
-  static var sectionSequence;
-
-  Future fetchSectionData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    theorySection = prefs.getString('theory_section');
-    practicalSection = prefs.getString('prac_section');
-    if ((theorySection.compareTo('Ar.') == 0) ||
-        (theorySection.compareTo('A') == 0) ||
-        (theorySection.compareTo('D') == 0) ||
-        (theorySection.compareTo('C') == 0) ||
-        (theorySection.compareTo('B') == 0)) {
-      sectionSequence = 'tp';
-    }
-  }
 
   @override
   void initState() {
@@ -98,31 +112,28 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
 
   @override
   Widget build(BuildContext context) {
-    fetchSectionData();
-    Map<dynamic, dynamic> codes = TimeTableResources.sequence[sectionSequence];
     List<String> items(DateTime day) {
-      List<String> subList = new List<String>();
-      List<String> dayList = new List<String>();
-      String weekday = DateFormat('EEEE').format(day);
-
-      dayList = codes[weekday];
-
-      for (var ele in dayList) {
-        if (day.weekday <= 5) {
-          if (TimeTableResources.theory[theorySection].containsKey(ele)) {
-            subList
-                .add(TimeTableResources.theory[theorySection][ele].toString());
-          } else if (TimeTableResources.practical[practicalSection]
-                  .containsKey(ele) &&
-              !subList.contains(TimeTableResources.practical[practicalSection]
-                      [ele]
-                  .toString())) {
-            subList.add(
-                TimeTableResources.practical[practicalSection][ele].toString());
-          }
-        }
+      List<String> subList = [];
+      if (theory.toString() == "Ar.")
+        subList = arch;
+      else if (day.month.toInt() <= 12 && day.month.toInt() >= 7) {
+        if (theory.toString() == "A" ||
+            theory.toString() == "B" ||
+            theory.toString() == "C" ||
+            theory.toString() == "D")
+          subList = electrical;
+        else
+          subList = electronics;
+      } else {
+        if (theory.toString() == "A" ||
+            theory.toString() == "B" ||
+            theory.toString() == "C" ||
+            theory.toString() == "D")
+          subList = electronics;
+        else
+          subList = electrical;
       }
-      print(subList);
+
       return subList;
     }
 
@@ -277,27 +288,29 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                     )
                   : Container(),
               (_selectedEvents.length != null && currentDay.weekday <= 5)
-                  ? ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: _selectedEvents.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 24.0, vertical: 8.0),
-                          child: SizedBox(
-                            height: 12,
-                            child: Text(
-                              _selectedEvents[index] +
-                                  " - " +
-                                  _absents[_selectedEvents[index]].toString(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: primaryColor),
+                  ? SingleChildScrollView(
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: _selectedEvents.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 24.0, vertical: 8.0),
+                            child: SizedBox(
+                              height: 12,
+                              child: Text(
+                                _selectedEvents[index] +
+                                    " - " +
+                                    _absents[_selectedEvents[index]].toString(),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: primaryColor),
+                              ),
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     )
                   : Container()
             ],

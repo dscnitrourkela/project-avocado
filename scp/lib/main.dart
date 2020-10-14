@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
-import 'package:scp/attendance_tracker.dart';
 
+import 'package:scp/attendance/theory_section.dart';
 import 'package:scp/booking.dart';
 import 'package:scp/drawer_screens/about_scs.dart';
 import 'package:scp/drawer_screens/notifications.dart';
@@ -16,8 +15,7 @@ import 'dart:async';
 import 'mentor_search/mentors.dart';
 import 'package:scp/userdata.dart';
 import 'timetable/theorySection.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:scp/timetable/tutorialSection.dart';
+
 import 'HomePage.dart';
 import 'myApp.dart';
 
@@ -59,7 +57,7 @@ void main() {
         '/imp_docs': (BuildContext context) => ImpDocs(),
         '/dev_info': (BuildContext context) => DevInfo(),
         '/nots': (BuildContext context) => Nots(),
-        '/attendance': (BuildContext context) => AttendanceTracker()
+        '/attendance': (BuildContext context) => Theory(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
