@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scp/utils/routes.dart';
 import 'package:scp/utils/sizeConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'time_table_resources.dart';
@@ -15,8 +16,7 @@ class TimeTableState extends State<TimeTable> {
   String theorySection = 'E';
   String practicalSection = 'P6';
   String sectionSequence = 'pt';
-  bool allowedSection=true;
-
+  bool allowedSection = true;
   bool showTimeTable = false;
 
   final Color primaryColor = Color.fromARGB(255, 49, 68, 76);
@@ -25,34 +25,35 @@ class TimeTableState extends State<TimeTable> {
   final double unitHeight = 80.0;
   double screenWidth, screenHeight;
 
-
   Future _fetchSectionData(BuildContext context) async {
     TimeTableResources.setCourseNumber(); // Sets the course number of Maths and Physics for corresponding semester.
-    int currentMonth = DateTime.now().month; // If current month is greater than august, usual TT, else modify.
     SharedPreferences prefs = await SharedPreferences.getInstance();
     theorySection = prefs.getString('theory_section');
     practicalSection = prefs.getString('prac_section');
-    if((theorySection.compareTo('Ar.')==0)||(theorySection.compareTo('A')==0)||(theorySection.compareTo('D')==0)||(theorySection.compareTo('C')==0)||(theorySection.compareTo('B')==0))
-      {
-        sectionSequence = currentMonth>=8 ? 'tp' : 'pt';
-      }else{
-      sectionSequence = currentMonth>=8 ? 'pt' : 'tp';
+    bool isAutumnSemester = TimeTableResources.checkAutumnSemester();
+    if ((theorySection.compareTo('Ar.') == 0) ||
+        (theorySection.compareTo('A') == 0) ||
+        (theorySection.compareTo('D') == 0) ||
+        (theorySection.compareTo('C') == 0) ||
+        (theorySection.compareTo('B') == 0)) {
+      sectionSequence = isAutumnSemester ? 'tp' : 'pt';
+    }else {
+      sectionSequence = isAutumnSemester ? 'pt' : 'tp';
     }
-
-    if(currentMonth < 8){
+    if(!isAutumnSemester){
       theorySection = TimeTableResources.substituteTheorySection[theorySection];
       practicalSection = TimeTableResources.substitutePracticalSection[practicalSection];
     }
   }
 
-  _resetSections(BuildContext context) async{
-    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
+  _resetSections(BuildContext context) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.getKeys();
     sharedPreferences.remove('theory_section');
     sharedPreferences.remove('prac_section');
     sharedPreferences.setBool('show_timetable', false);
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil('/homePage', (Route<dynamic> route) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        Routes.rHomepage, (Route<dynamic> route) => false);
   }
 
   @override
@@ -60,7 +61,7 @@ class TimeTableState extends State<TimeTable> {
     SizeConfig().init(context);
     screenWidth = SizeConfig.screenWidth;
     screenHeight = SizeConfig.screenHeight;
-    if(allowedSection){}
+    if (allowedSection) {}
     return FutureBuilder(
       future: _fetchSectionData(context),
       builder: (context, snap) {
@@ -71,7 +72,6 @@ class TimeTableState extends State<TimeTable> {
               PopupMenuButton<String>(
                 onSelected: (val) {
                   _resetSections(context);
-
                 },
                 itemBuilder: (BuildContext context) {
                   return <PopupMenuEntry<String>>[
@@ -109,20 +109,20 @@ class TimeTableState extends State<TimeTable> {
                     unselectedLabelStyle: TextStyle(
                         color: primaryColor.withAlpha(100), fontSize: 20),
                     labelPadding:
-                        EdgeInsets.symmetric(vertical: 16.0, horizontal: 48.0),
+                    EdgeInsets.symmetric(vertical: 16.0, horizontal: 48.0),
                     indicatorColor: Colors.transparent,
                     tabs: TimeTableResources.sequence[sectionSequence].keys
                         .map(
                           (day) => Tab(
-                            child: Text(
-                              day,
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
+                        child: Text(
+                          day,
+                          style: TextStyle(
+                            color: primaryColor,
+                            fontWeight: FontWeight.w700,
                           ),
-                        )
+                        ),
+                      ),
+                    )
                         .toList(),
                     isScrollable: true,
                   ),
@@ -131,7 +131,7 @@ class TimeTableState extends State<TimeTable> {
               body: TabBarView(
                   children: TimeTableResources.sequence[sectionSequence].entries
                       .map((entry) => Container(
-                          child: buildList(context, entry.key, entry.value)))
+                      child: buildList(context, entry.key, entry.value)))
                       .toList()),
             ),
           ),
@@ -188,24 +188,24 @@ class TimeTableState extends State<TimeTable> {
                       alignment: Alignment.topLeft,
                       child: RichText(
                           text: TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: periodDetail.name + '\n',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w700),
-                          ),
-                          TextSpan(
-                            text: periodDetail.slotTime,
-                            style: TextStyle(
-                              color: Colors.white.withAlpha(200),
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      )),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: periodDetail.name + '\n',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              TextSpan(
+                                text: periodDetail.slotTime,
+                                style: TextStyle(
+                                  color: Colors.white.withAlpha(200),
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          )),
                     ),
                     Align(
                       alignment: Alignment.centerRight,
@@ -264,24 +264,24 @@ class TimeTableState extends State<TimeTable> {
                       alignment: Alignment.topLeft,
                       child: RichText(
                           text: TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: periodDetail.name + '\n',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w700),
-                          ),
-                          TextSpan(
-                            text: periodDetail.slotTime,
-                            style: TextStyle(
-                              color: Colors.white.withAlpha(200),
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      )),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: periodDetail.name + '\n',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              TextSpan(
+                                text: periodDetail.slotTime,
+                                style: TextStyle(
+                                  color: Colors.white.withAlpha(200),
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          )),
                     ),
                   ]),
                 ),
@@ -316,24 +316,24 @@ class TimeTableState extends State<TimeTable> {
                       alignment: Alignment.topLeft,
                       child: RichText(
                           text: TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: periodDetail.name + '\n',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w700),
-                          ),
-                          TextSpan(
-                            text: periodDetail.slotTime,
-                            style: TextStyle(
-                              color: Colors.white.withAlpha(200),
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      )),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: periodDetail.name + '\n',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              TextSpan(
+                                text: periodDetail.slotTime,
+                                style: TextStyle(
+                                  color: Colors.white.withAlpha(200),
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          )),
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
@@ -377,24 +377,24 @@ class TimeTableState extends State<TimeTable> {
                       alignment: Alignment.topLeft,
                       child: RichText(
                           text: TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: periodDetail.name + '\n',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w700),
-                          ),
-                          TextSpan(
-                            text: periodDetail.slotTime,
-                            style: TextStyle(
-                              color: Colors.white.withAlpha(200),
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      )),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: periodDetail.name + '\n',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              TextSpan(
+                                text: periodDetail.slotTime,
+                                style: TextStyle(
+                                  color: Colors.white.withAlpha(200),
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          )),
                     ),
                   ]),
                 ),
@@ -454,7 +454,7 @@ class TimeTableState extends State<TimeTable> {
           slotLength: 1,
           type: 'theory',
           location:
-              'https://www.google.com/maps/search/?api=1&query=22.2513332,84.9048918',
+          'https://www.google.com/maps/search/?api=1&query=22.2513332,84.9048918',
           locationName: 'LA1',
         );
         slotFilled[j] = true;
@@ -462,7 +462,7 @@ class TimeTableState extends State<TimeTable> {
           .containsKey(codes[i])) {
         dayList[j] = PeriodDetails(
           name: TimeTableResources.practicalDetails[
-              TimeTableResources.practical[practicalSection][codes[i]]]['name'],
+          TimeTableResources.practical[practicalSection][codes[i]]]['name'],
           slotTime: getSlotTime(j, j + 2),
           location: TimeTableResources.practicalDetails[TimeTableResources
               .practical[practicalSection][codes[i]]]['location'],
@@ -532,8 +532,8 @@ class TimeTableState extends State<TimeTable> {
   }
 
   String getSlotTime(int startSlotIndex, int endSlotIndex) {
-    print("startSlotIndex"+startSlotIndex.toString());
-    print("endSlotIndex"+endSlotIndex.toString());
+    print("startSlotIndex" + startSlotIndex.toString());
+    print("endSlotIndex" + endSlotIndex.toString());
     return TimeTableResources.slotTime[startSlotIndex]['start'] +
         '-' +
         TimeTableResources.slotTime[endSlotIndex]['end'];

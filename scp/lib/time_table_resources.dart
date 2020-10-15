@@ -1,8 +1,10 @@
 abstract class TimeTableResources {
-
-  static String courseNumber = DateTime.now().month >=8 ? 'I':'II';
+  static checkAutumnSemester(){
+    return DateTime.now().month > 6;
+  }
+  static String courseNumber = checkAutumnSemester() ? 'I':'II';
   static void setCourseNumber(){
-    courseNumber = DateTime.now().month>=8 ? 'I' : 'II';
+    courseNumber = checkAutumnSemester() ? 'I' : 'II';
     theory['A']['TA'] = theory['B']['TA']
     = theory['C']['TB'] = theory['D']['TB']
     = theory['E']['TK'] = theory['F']['TK'] = theory['G']['TM']
