@@ -1,4 +1,19 @@
 abstract class TimeTableResources {
+
+  static String mathsPhysicsCourseNumber = DateTime.now().month >=8 ? 'I':'II';
+  static void setMathsPhysicsCourseNumber(){
+    mathsPhysicsCourseNumber = DateTime.now().month>=8 ? 'I' : 'II';
+    theory['A']['TA'] = theory['B']['TA']
+    = theory['C']['TB'] = theory['D']['TB']
+    = theory['E']['TK'] = theory['F']['TK'] = theory['G']['TM']
+    = theory['H']['TM'] = 'Physics-$mathsPhysicsCourseNumber';
+
+    theory['A']['TC'] = theory['B']['TC']
+    = theory['C']['TD'] = theory['D']['TD']
+    = theory['E']['TJ'] = theory['F']['TJ']
+    = theory['G']['TL'] = theory['H']['TL'] = 'Mathematics-$mathsPhysicsCourseNumber';
+
+  }
   static final tpSequence = {
     'Monday': ['TA', 'TB', 'TC', 'TE', 'PA', 'PA', 'PA', 'TF', 'ZA'],
     'Tuesday': ['TB', 'TC', 'TD', 'TE', 'PB', 'PB', 'PB', 'TF', 'ZB'],
@@ -55,9 +70,9 @@ abstract class TimeTableResources {
       'TG3': 'Communicative English'
     },
     'A': {
-      'TA': 'Physics-I',
+      'TA': 'Physics-$mathsPhysicsCourseNumber',
       'TB': 'Engineering Mechanics',
-      'TC': 'Mathematics-I',
+      'TC': 'Mathematics-$mathsPhysicsCourseNumber',
       'TD': 'Basic Electrical Engineering',
       'TF': 'Chemistry',
       'SA': 'Physics-Tutorial',
@@ -66,9 +81,9 @@ abstract class TimeTableResources {
       'TG3': 'Chemistry-Tutorial'
     },
     'B': {
-      'TA': 'Physics-I',
+      'TA': 'Physics-$mathsPhysicsCourseNumber',
       'TB': 'Engineering Mechanics',
-      'TC': 'Mathematics-I',
+      'TC': 'Mathematics-$mathsPhysicsCourseNumber',
       'TD': 'Basic Electrical Engineering',
       'TF': 'Chemistry',
       'SA': 'Physics-Tutorial',
@@ -78,9 +93,9 @@ abstract class TimeTableResources {
     },
     'C': {
       'TA': 'Engineering Mechanics',
-      'TB': 'Physics-I',
+      'TB': 'Physics-$mathsPhysicsCourseNumber',
       'TC': 'Basic Electrical Engineering',
-      'TD': 'Mathematics-I',
+      'TD': 'Mathematics-$mathsPhysicsCourseNumber',
       'TF': 'Chemistry',
       'SA': 'Engineering Mechanics-Tutorial',
       'SB': 'Physics-Tutorial',
@@ -89,9 +104,9 @@ abstract class TimeTableResources {
     },
     'D': {
       'TA': 'Engineering Mechanics',
-      'TB': 'Physics-I',
+      'TB': 'Physics-$mathsPhysicsCourseNumber',
       'TC': 'Basic Electrical Engineering',
-      'TD': 'Mathematics-I',
+      'TD': 'Mathematics-$mathsPhysicsCourseNumber',
       'TF': 'Chemistry',
       'SA': 'Engineering Mechanics-Tutorial',
       'SB': 'Physics-Tutorial',
@@ -100,8 +115,8 @@ abstract class TimeTableResources {
     },
     'E': {
       'TE': 'Biology',
-      'TJ': 'Mathematics-I',
-      'TK': 'Physics-I',
+      'TJ': 'Mathematics-$mathsPhysicsCourseNumber',
+      'TK': 'Physics-$mathsPhysicsCourseNumber',
       'TL': 'Basic Electronics Engineering',
       'TM': 'Environment And Safety Engineering',
       'TF': 'Communicative English',
@@ -110,8 +125,8 @@ abstract class TimeTableResources {
     },
     'F': {
       'TE': 'Biology',
-      'TJ': 'Mathematics-I',
-      'TK': 'Physics-I',
+      'TJ': 'Mathematics-$mathsPhysicsCourseNumber',
+      'TK': 'Physics-$mathsPhysicsCourseNumber',
       'TL': 'Basic Electronics Engineering',
       'TM': 'Environment And Safety Engineering',
       'TF': 'Communicative English',
@@ -122,8 +137,8 @@ abstract class TimeTableResources {
       'TE': 'Environment And Safety Engineering',
       'TJ': 'Basic Electronics Engineering',
       'TK': 'Biology',
-      'TL': 'Mathematics-I',
-      'TM': 'Physics-I',
+      'TL': 'Mathematics-$mathsPhysicsCourseNumber',
+      'TM': 'Physics-$mathsPhysicsCourseNumber',
       'TG1': 'Communicative English',
       'TG2': 'Communicative English',
       'TG3': 'Communicative English',
@@ -134,8 +149,8 @@ abstract class TimeTableResources {
       'TE': 'Environment And Safety Engineering',
       'TJ': 'Basic Electronics Engineering',
       'TK': 'Biology',
-      'TL': 'Mathematics-I',
-      'TM': 'Physics-I',
+      'TL': 'Mathematics-$mathsPhysicsCourseNumber',
+      'TM': 'Physics-$mathsPhysicsCourseNumber',
       'TG1': 'Communicative English',
       'TG2': 'Communicative English',
       'TG3': 'Communicative English',
@@ -168,6 +183,30 @@ abstract class TimeTableResources {
     'WP': {'name': 'Workshop Practices', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2526002,84.9029979', 'locationName': 'Central Workshop'},
     'CL': {'name': 'Chemistry Laboratory', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777', 'locationName': 'Main Building'},
     'ED': {'name': 'Engineering Drawing', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2513332,84.9048918', 'locationName': 'LA1'},
+  };
+
+
+  static final substituteTheorySection = {
+    'A' : 'E',
+    'B' : 'F',
+    'C' : 'G',
+    'D' : 'H',
+    'E' : 'A',
+    'F' : 'B',
+    'G' : 'C',
+    'H' : 'D'
+  };
+  static final substitutePracticalSection ={
+    'P1' : 'P6',
+    'P2' : 'P7',
+    'P3' : 'P8',
+    'P4' : 'P9',
+    'P5' : 'P10',
+    'P6' : 'P1',
+    'P7' : 'P2',
+    'P8' : 'P3',
+    'P9' : 'P4',
+    'P10' : 'P5'
   };
 }
 
