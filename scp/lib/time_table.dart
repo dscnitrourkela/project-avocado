@@ -5,9 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'time_table_resources.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-String theorySection = 'E';
-String practicalSection = 'P6';
-String sectionSequence = 'pt';
 
 class TimeTable extends StatefulWidget {
   TimeTable();
@@ -17,9 +14,9 @@ class TimeTable extends StatefulWidget {
 }
 
 class TimeTableState extends State<TimeTable> {
-  /* String theorySection = 'E';
+  String theorySection = 'E';
   String practicalSection = 'P6';
-  String sectionSequence = 'pt'; */
+  String sectionSequence = 'pt'; 
   bool allowedSection = true;
 
   bool showTimeTable = false;
