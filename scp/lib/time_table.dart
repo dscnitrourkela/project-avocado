@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scp/utils/routes.dart';
 import 'package:scp/utils/sizeConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'time_table_resources.dart';
@@ -29,7 +30,7 @@ class TimeTableState extends State<TimeTable> {
   final double unitHeight = 80.0;
   double screenWidth, screenHeight;
 
-  Future fetchSectionData(BuildContext context) async {
+  Future _fetchSectionData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     theorySection = prefs.getString('theory_section');
     practicalSection = prefs.getString('prac_section');
@@ -51,8 +52,8 @@ class TimeTableState extends State<TimeTable> {
     sharedPreferences.remove('theory_section');
     sharedPreferences.remove('prac_section');
     sharedPreferences.setBool('show_timetable', false);
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil('/homePage', (Route<dynamic> route) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        Routes.rHomepage, (Route<dynamic> route) => false);
   }
 
   @override
@@ -62,7 +63,7 @@ class TimeTableState extends State<TimeTable> {
     screenHeight = SizeConfig.screenHeight;
     if (allowedSection) {}
     return FutureBuilder(
-      future: fetchSectionData(context),
+      future: _fetchSectionData(context),
       builder: (context, snap) {
         return Scaffold(
           backgroundColor: Colors.white,

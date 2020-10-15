@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:scp/main.dart';
+import 'package:scp/utils/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ScpAuth {
@@ -75,7 +76,7 @@ class ScpAuth {
                           signIn(context);
                         } else {
                           print("Navigatr push");
-                          Navigator.of(context).pushNamed('/userdata');
+                          Navigator.of(context).pushNamed(Routes.rUserData);
                         }
                       });
                     },
@@ -121,13 +122,11 @@ class ScpAuth {
     print(smsCode);
     final AuthCredential credential = PhoneAuthProvider.getCredential(
         verificationId: verificationId, smsCode: smsCode);
-    final FirebaseUser user = await firebaseInstance
-        .signInWithCredential(credential)
-        .then((user) {
+    final FirebaseUser user =
+        await firebaseInstance.signInWithCredential(credential).then((user) {
+      print(user.displayName);
 
-          print(user.displayName);
-
-          _storeUserData(context,user);
+      _storeUserData(context, user);
     }).catchError((error) {
       print(error);
     });
@@ -136,12 +135,9 @@ class ScpAuth {
   static signInSpecial(BuildContext context, AuthCredential credential) async {
     print(verificationId);
     print(smsCode);
-    final FirebaseUser user = await firebaseInstance
-        .signInWithCredential(credential)
-        .then((user) {
-
-      _storeUserData(context,user);
-
+    final FirebaseUser user =
+        await firebaseInstance.signInWithCredential(credential).then((user) {
+      _storeUserData(context, user);
     }).catchError((error) {
       print(error);
     });
@@ -149,8 +145,7 @@ class ScpAuth {
 
   static _storeUserData(BuildContext context, FirebaseUser firebaseUser) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('roll_no',firebaseUser.displayName);
-    Navigator.of(context).pushNamed('/userdata');
-
+    await prefs.setString('roll_no', firebaseUser.displayName);
+    Navigator.of(context).pushNamed(Routes.rUserData);
   }
 }
