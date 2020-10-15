@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scp/HomePage.dart';
+import 'package:scp/attendance/theory_section.dart';
 import 'package:scp/booking.dart';
 import 'package:scp/drawer_screens/about_scs.dart';
 import 'package:scp/drawer_screens/dev_info.dart';
@@ -8,7 +9,6 @@ import 'package:scp/drawer_screens/notifications.dart';
 import 'package:scp/login.dart';
 import 'package:scp/mentor_search/mentors.dart';
 import 'package:scp/timetable/theorySection.dart';
-import 'package:scp/timetable/tutorialSection.dart';
 import 'package:scp/appointments.dart';
 import 'package:scp/userdata.dart';
 
@@ -24,7 +24,7 @@ class Routes {
   static const String rImpDocs = '/imp_docs';
   static const String rDevInfo = '/dev_info';
   static const String rNots = '/nots';
-  static const String rTutorial = '/tutorial';
+  static const String rAttendance = '/attendance';
 
   static Map<String, WidgetBuilder> getRoutes() {
     return {
@@ -39,7 +39,7 @@ class Routes {
       Routes.rImpDocs: (context) => ImpDocs(),
       Routes.rDevInfo: (context) => DevInfo(),
       Routes.rNots: (context) => Nots(),
-      Routes.rTutorial: (context) => TutorialSection()
+      Routes.rAttendance: (context) => Theory(),
     };
   }
 }
