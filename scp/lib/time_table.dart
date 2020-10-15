@@ -27,7 +27,7 @@ class TimeTableState extends State<TimeTable> {
 
 
   Future _fetchSectionData(BuildContext context) async {
-    TimeTableResources.setMathsPhysicsCourseNumber(); // Sets the course number of Maths and Physics for corresponding semester.
+    TimeTableResources.setCourseNumber(); // Sets the course number of Maths and Physics for corresponding semester.
     int currentMonth = DateTime.now().month; // If current month is greater than august, usual TT, else modify.
     SharedPreferences prefs = await SharedPreferences.getInstance();
     theorySection = prefs.getString('theory_section');
@@ -39,9 +39,6 @@ class TimeTableState extends State<TimeTable> {
       sectionSequence = currentMonth>=8 ? 'pt' : 'tp';
     }
 
-    print("Sequence"+sectionSequence);
-    print("Theory"+theorySection);
-    print("Practical"+practicalSection);
     if(currentMonth < 8){
       theorySection = TimeTableResources.substituteTheorySection[theorySection];
       practicalSection = TimeTableResources.substitutePracticalSection[practicalSection];
@@ -60,7 +57,6 @@ class TimeTableState extends State<TimeTable> {
 
   @override
   Widget build(BuildContext context) {
-    print("Section : $sectionSequence");
     SizeConfig().init(context);
     screenWidth = SizeConfig.screenWidth;
     screenHeight = SizeConfig.screenHeight;
