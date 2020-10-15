@@ -91,7 +91,7 @@ class UserdataState extends State<Userdata> {
                                     hintText: 'Enter Roll No.',
                                     border: InputBorder.none),
                                 onChanged: (value) {
-                                  rollNo = value;
+                                  rollNo = value.trim();
                                 },
                                 controller: rollController,
                               ),
