@@ -67,7 +67,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
               width2 = width1;
             } else {
               /*cardType helps us determine upon which card have we registered the tap
-              0 is for regular classes, 1 is for remedial classes*/
+              0 is for left card, 1 is for right card*/
               if (cardType == 0) //Regular
                 Navigator.pushNamed(context, Routes.rTimetable);
               if (cardType == 1) //Remedial

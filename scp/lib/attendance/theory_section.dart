@@ -4,6 +4,8 @@ import 'package:scp/attendance/attendance_tracker.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+// UNUSED CODE as per present code. handled together via theorySection.dart
+
 const List<String> sectionArray = [
   "Ar.",
   "A",

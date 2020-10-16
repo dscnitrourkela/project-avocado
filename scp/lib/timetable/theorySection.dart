@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:scp/time_table.dart';
 import 'package:scp/timetable/pracSection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:scp/attendance/attendance_tracker.dart';
 
 const List<String> sectionArray = [
   "Ar.",
@@ -22,8 +23,12 @@ double page = 0.0;
 int currentPage = 0;
 PageController pageController;
 double pagerHeight = 140.0;
+int cardNumber;
 
 class TheorySection extends StatefulWidget {
+  TheorySection(int number) {
+    cardNumber = number;
+  }
   @override
   _TheorySectionState createState() => _TheorySectionState();
 }
@@ -40,11 +45,20 @@ class _TheorySectionState extends State<TheorySection> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool showTimeTable = prefs.getBool('show_timetable');
     if (showTimeTable) {
-      Navigator.of(context).pop();
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => TimeTable()),
-      );
+      if (cardNumber == 0) {
+        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TimeTable()),
+        );
+      } else if (cardNumber == 1) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AttendanceTracker(
+                      theorySection,
+                    )));
+      }
     }
   }
 
@@ -112,8 +126,10 @@ class _TheorySectionState extends State<TheorySection> {
                         Navigator.push(
                           context,
                           new MaterialPageRoute(
-                              builder: (ctxt) => PracticalSection(sectionArray[
-                                  (pageController.page.round().toInt())])),
+                              builder: (ctxt) => PracticalSection(
+                                  sectionArray[
+                                      (pageController.page.round().toInt())],
+                                  cardNumber)),
                         )
                       },
                       child: Icon(Icons.arrow_forward),

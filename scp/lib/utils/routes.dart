@@ -30,7 +30,7 @@ class Routes {
     return {
       Routes.rHomepage: (context) => HomePage(title: 'ICS Home Page'),
       Routes.rAppointments: (context) => Appointments(),
-      Routes.rTimetable: (context) => TheorySection(),
+      Routes.rTimetable: (context) => TheorySection(0), //0 for left card
       Routes.rUserData: (context) => Userdata(),
       Routes.rLogin: (context) => Login(),
       Routes.rBooking: (context) => Booking(),
@@ -39,7 +39,7 @@ class Routes {
       Routes.rImpDocs: (context) => ImpDocs(),
       Routes.rDevInfo: (context) => DevInfo(),
       Routes.rNots: (context) => Nots(),
-      Routes.rAttendance: (context) => Theory(),
+      Routes.rAttendance: (context) => TheorySection(1), //1 for right card
     };
   }
 }
