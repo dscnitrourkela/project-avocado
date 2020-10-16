@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:scp/attendance/theory_section.dart';
 import 'dart:convert';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 String theory;
+
 List<String> electronics = [
   "Physics",
   "Mathematics",
@@ -250,21 +252,25 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                                   _absents[markedValue.toString()] = 1;
                                 }
                                 if (_selectedEvents.contains(markedValue)) {
+                                  print(markedValue + " 1");
                                   return;
                                 } else {
                                   if (_events[
                                           _calendarController.selectedDay] !=
                                       null) {
+                                    print(markedValue + " b");
                                     _selectedEvents.add(markedValue);
                                     _events[_calendarController.selectedDay]
                                         .add(markedValue);
                                   } else {
+                                    print(markedValue + " a");
                                     _selectedEvents.add(markedValue);
                                     _events[_calendarController.selectedDay] = [
                                       markedValue
                                     ];
                                   }
                                 }
+                                print(_selectedEvents);
                                 pref.setString('absents',
                                     json.encode(encodeAbs(_absents)));
                                 pref.setString(
@@ -298,7 +304,7 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 24.0, vertical: 8.0),
                             child: SizedBox(
-                              height: 12,
+                              height: 16,
                               child: Text(
                                 _selectedEvents[index] +
                                     " - " +

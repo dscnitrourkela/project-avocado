@@ -16,12 +16,13 @@ const List<String> sectionArray = [
   "H"
 ];
 const FULL_SCALE = 1.0;
-const SCALE_FRACTION = 1.7;
+const SCALE_FRACTION = 0.7;
 const VIEWPORT_FRACTION = 0.4;
 double page = 0.0;
 int currentPage = 0;
 PageController pageController;
 double pagerHeight = 140.0;
+bool showTracker = false;
 
 class Theory extends StatefulWidget {
   @override
@@ -38,8 +39,10 @@ class _TheoryState extends State<Theory> {
 
   Future fetchSection() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool showTracker = prefs.getBool('show_tracker');
-    if (showTracker) {
+
+    print(prefs.getBool('show_tracker'));
+
+    if (showTracker != null || showTracker == true) {
       Navigator.of(context).pop();
       Navigator.push(
           context,
@@ -52,8 +55,8 @@ class _TheoryState extends State<Theory> {
 
   storeSectionData(BuildContext context, String theory) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs = prefs;
     await prefs.setString('theory_section', theory);
-
     await prefs.setBool('show_tracker', true);
   }
 
@@ -113,9 +116,10 @@ class _TheoryState extends State<Theory> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => AttendanceTracker(
-                                    sectionArray[(pageController.page
-                                        .round()
-                                        .toInt())]))),
+                                      sectionArray[(pageController.page
+                                          .round()
+                                          .toInt())],
+                                    ))),
                       },
                       child: Icon(Icons.arrow_forward),
                       backgroundColor: Color.fromRGBO(74, 232, 190, 1),

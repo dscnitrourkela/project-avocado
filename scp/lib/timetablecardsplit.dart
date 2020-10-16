@@ -72,11 +72,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                 Navigator.pushNamed(context, Routes.rTimetable);
               if (cardType == 1) //Remedial
 
-                Navigator.pushNamed(
-                    context,
-                    Routes
-                        .rAttendance); // TODO: Change the route accordingly, currently for debug purposes
-
+                Navigator.pushNamed(context, Routes.rAttendance);
             }
           });
         },
@@ -169,10 +165,10 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                                             ),
                                           ),
                                           SizedBox(
-                                            height: heightFactor * 0.09,
+                                            height: heightFactor * 0.055,
                                           ),
                                           Text(
-                                            'The data will gets reset on re-installation',
+                                            'Data will get reset on re-installation',
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               fontSize: heightFactor * 0.028,
