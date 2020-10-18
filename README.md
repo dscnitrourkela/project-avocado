@@ -52,7 +52,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
+<!-- markdownlint-disable --
 <table>
   <tr>
     <td align="center"><a href="https://designrknight-website.web.app/"><img src="https://avatars0.githubusercontent.com/u/27865704?v=4" width="100px;" alt=""/><br /><sub><b>Abel Mathew</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado/commits?author=DesignrKnight" title="Code">💻</a> <a href="#projectManagement-DesignrKnight" title="Project Management">📆</a> <a href="#maintenance-DesignrKnight" title="Maintenance">🚧</a></td>
