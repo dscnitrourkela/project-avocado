@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:scp/time_table.dart';
 import 'package:scp/timetable/pracSection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:scp/attendance/attendance_tracker.dart';
+import 'package:scp/attendance_tracker.dart';
 
 const List<String> sectionArray = [
   "Ar.",
@@ -17,7 +17,7 @@ const List<String> sectionArray = [
   "H"
 ];
 const FULL_SCALE = 1.0;
-const SCALE_FRACTION = 1.7;
+const SCALE_FRACTION = 0.7;
 const VIEWPORT_FRACTION = 0.4;
 double page = 0.0;
 int currentPage = 0;

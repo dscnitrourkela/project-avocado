@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scp/HomePage.dart';
-import 'package:scp/attendance/theory_section.dart';
+
 import 'package:scp/booking.dart';
 import 'package:scp/drawer_screens/about_scs.dart';
 import 'package:scp/drawer_screens/dev_info.dart';

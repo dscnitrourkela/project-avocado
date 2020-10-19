@@ -1,10 +1,9 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:scp/time_table.dart';
 import 'package:scp/utils/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:scp/attendance/attendance_tracker.dart';
+import 'package:scp/attendance_tracker.dart';
 
 const List<String> sectionArray = [
   "Ar.",

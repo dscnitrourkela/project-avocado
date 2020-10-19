@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scp/attendance/theory_section.dart';
+import 'package:scp/utils/routes.dart';
 import 'dart:convert';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -112,6 +112,20 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
     return newMap;
   }
 
+  resetSection(BuildContext context) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    print(pref.getString('theory_section'));
+    print(pref.get('events'));
+    pref.getKeys();
+    pref.remove('theory_section');
+    pref.remove('events');
+    pref.remove('absents');
+    pref.remove('prac_section');
+    pref.setBool('show_timetable', false);
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        Routes.rHomepage, (Route<dynamic> route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     List<String> items(DateTime day) {
@@ -143,6 +157,16 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(25, 39, 45, 1),
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  Routes.rHomepage, (Route<dynamic> route) => false);
+            },
+          ),
           title: Text(
             "Attendance Tracker",
             style: TextStyle(
@@ -152,6 +176,21 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
               color: Colors.white,
             ),
           ),
+          actions: <Widget>[
+            PopupMenuButton<String>(
+              onSelected: (val) {
+                resetSection(context);
+              },
+              itemBuilder: (BuildContext context) {
+                return <PopupMenuEntry<String>>[
+                  PopupMenuItem<String>(
+                    value: "Reset",
+                    child: Text("Reset section"),
+                  )
+                ];
+              },
+            )
+          ],
         ),
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -163,7 +202,7 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                 initialSelectedDay: DateTime.now(),
                 calendarController: _calendarController,
                 initialCalendarFormat: CalendarFormat.month,
-                onDaySelected: (day, events, holidays) {
+                onDaySelected: (day, events) {
                   setState(() {
                     markedValue = items(day)[0];
                     currentDay = day;
