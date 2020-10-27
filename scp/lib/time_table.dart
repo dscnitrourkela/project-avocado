@@ -28,19 +28,24 @@ class TimeTableState extends State<TimeTable> {
   double screenWidth, screenHeight;
 
   Future _fetchSectionData(BuildContext context) async {
+    TimeTableResources.setCourseNumber();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     theorySection = prefs.getString('theory_section');
     practicalSection = prefs.getString('prac_section');
+    bool isAutumnSemester = TimeTableResources.isAutumnSemester();
     if ((theorySection.compareTo('Ar.') == 0) ||
         (theorySection.compareTo('A') == 0) ||
         (theorySection.compareTo('D') == 0) ||
         (theorySection.compareTo('C') == 0) ||
         (theorySection.compareTo('B') == 0)) {
-      sectionSequence = 'tp';
+      sectionSequence = isAutumnSemester ? 'tp' :'pt';
+    }else{
+      sectionSequence = isAutumnSemester? 'pt' : 'tp';
     }
-    print("Sequence" + sectionSequence);
-    print("Theory" + theorySection);
-    print("Practical" + practicalSection);
+    if(!isAutumnSemester && theorySection.compareTo('Ar.')!=0){
+      theorySection = TimeTableResources.subsituteTheorySection[theorySection];
+      practicalSection = TimeTableResources.substitutePracticalSection[practicalSection];
+    }
   }
 
   _resetSections(BuildContext context) async {
