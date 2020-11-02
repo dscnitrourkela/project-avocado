@@ -10,7 +10,7 @@
 .history
 .svn/
 android/app/google-services.json
-
+android/google-services.json
 android/app/key.jks
 android/key.properties
 android/key.jks
@@ -28,10 +28,12 @@ android/key.jks
 **/doc/api/
 .dart_tool/
 .flutter-plugins
+.flutter-plugins-dependencies
 .packages
 .pub-cache/
 .pub/
 build/
+.flutter-plugins-dependencies
 
 # Android related
 **/android/**/gradle-wrapper.jar

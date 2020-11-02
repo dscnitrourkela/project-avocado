@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
+import 'package:scp/utils/routes.dart';
 import 'package:scp/utils/sizeConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,7 +30,7 @@ class _BookingState extends State<Booking> {
     getSharedPrefs();
     super.initState();
   }
-  
+
   getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     type = prefs.getString('bookingType');
@@ -120,10 +121,9 @@ class _BookingState extends State<Booking> {
           leading: Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: IconButton(
-
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.pushNamed(context, '/homePage');
+                Navigator.pushNamed(context, Routes.rHomepage);
               },
               icon: Icon(
                 Icons.arrow_back_ios,
@@ -169,10 +169,10 @@ class _BookingState extends State<Booking> {
                                   }).then((_) {
                                     print("Booking canceled");
                                     prefs.setBool('hasBooked', false);
-                                    prefs.setString('bookedSlot',"");
+                                    prefs.setString('bookedSlot', "");
                                     Navigator.of(context).pop();
                                     Navigator.of(context)
-                                        .pushNamed('/appointments');
+                                        .pushNamed(Routes.rAppointments);
                                   });
                                 } else {
                                   ScpDatabase.counselRef
@@ -187,7 +187,7 @@ class _BookingState extends State<Booking> {
                                     prefs.setBool('hasBooked', false);
                                     Navigator.of(context).pop();
                                     Navigator.of(context)
-                                        .pushNamed('/appointments');
+                                        .pushNamed(Routes.rAppointments);
                                   });
                                 }
                               },

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:scp/utils/routes.dart';
 import 'package:scp/utils/sizeConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'time_table_resources.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 
 class TimeTable extends StatefulWidget {
   TimeTable();
@@ -14,8 +16,8 @@ class TimeTable extends StatefulWidget {
 class TimeTableState extends State<TimeTable> {
   String theorySection = 'E';
   String practicalSection = 'P6';
-  String sectionSequence = 'pt';
-  bool allowedSection=true;
+  String sectionSequence = 'pt'; 
+  bool allowedSection = true;
 
   bool showTimeTable = false;
 
@@ -25,28 +27,35 @@ class TimeTableState extends State<TimeTable> {
   final double unitHeight = 80.0;
   double screenWidth, screenHeight;
 
-
   Future _fetchSectionData(BuildContext context) async {
+    TimeTableResources.setCourseNumber();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     theorySection = prefs.getString('theory_section');
     practicalSection = prefs.getString('prac_section');
-    if((theorySection.compareTo('Ar.')==0)||(theorySection.compareTo('A')==0)||(theorySection.compareTo('D')==0)||(theorySection.compareTo('C')==0)||(theorySection.compareTo('B')==0))
-      {
-        sectionSequence = 'tp';
-      }
-    print("Sequence"+sectionSequence);
-    print("Theory"+theorySection);
-    print("Practical"+practicalSection);
+    bool isAutumnSemester = TimeTableResources.isAutumnSemester();
+    if ((theorySection.compareTo('Ar.') == 0) ||
+        (theorySection.compareTo('A') == 0) ||
+        (theorySection.compareTo('D') == 0) ||
+        (theorySection.compareTo('C') == 0) ||
+        (theorySection.compareTo('B') == 0)) {
+      sectionSequence = isAutumnSemester ? 'tp' :'pt';
+    }else{
+      sectionSequence = isAutumnSemester? 'pt' : 'tp';
+    }
+    if(!isAutumnSemester && theorySection.compareTo('Ar.')!=0){
+      theorySection = TimeTableResources.subsituteTheorySection[theorySection];
+      practicalSection = TimeTableResources.substitutePracticalSection[practicalSection];
+    }
   }
 
-  _resetSections(BuildContext context) async{
-    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
+  _resetSections(BuildContext context) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.getKeys();
     sharedPreferences.remove('theory_section');
     sharedPreferences.remove('prac_section');
     sharedPreferences.setBool('show_timetable', false);
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil('/homePage', (Route<dynamic> route) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        Routes.rHomepage, (Route<dynamic> route) => false);
   }
 
   @override
@@ -54,7 +63,7 @@ class TimeTableState extends State<TimeTable> {
     SizeConfig().init(context);
     screenWidth = SizeConfig.screenWidth;
     screenHeight = SizeConfig.screenHeight;
-    if(allowedSection){}
+    if (allowedSection) {}
     return FutureBuilder(
       future: _fetchSectionData(context),
       builder: (context, snap) {
@@ -65,7 +74,6 @@ class TimeTableState extends State<TimeTable> {
               PopupMenuButton<String>(
                 onSelected: (val) {
                   _resetSections(context);
-
                 },
                 itemBuilder: (BuildContext context) {
                   return <PopupMenuEntry<String>>[
@@ -526,8 +534,8 @@ class TimeTableState extends State<TimeTable> {
   }
 
   String getSlotTime(int startSlotIndex, int endSlotIndex) {
-    print("startSlotIndex"+startSlotIndex.toString());
-    print("endSlotIndex"+endSlotIndex.toString());
+    print("startSlotIndex" + startSlotIndex.toString());
+    print("endSlotIndex" + endSlotIndex.toString());
     return TimeTableResources.slotTime[startSlotIndex]['start'] +
         '-' +
         TimeTableResources.slotTime[endSlotIndex]['end'];

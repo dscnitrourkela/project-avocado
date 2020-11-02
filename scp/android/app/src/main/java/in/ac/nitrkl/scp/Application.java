@@ -2,19 +2,18 @@ package io.flutter.plugins.firebasemessagingexample;
 
 import io.flutter.app.FlutterApplication;
 import io.flutter.plugin.common.PluginRegistry;
+import androidx.annotation.NonNull;
 import io.flutter.plugin.common.PluginRegistry.PluginRegistrantCallback;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 import io.flutter.plugins.firebasemessaging.FlutterFirebaseMessagingService;
+import io.flutter.embedding.engine.FlutterEngine;
+import io.flutter.embedding.android.FlutterActivity;
 
-public class Application extends FlutterApplication implements PluginRegistrantCallback {
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        FlutterFirebaseMessagingService.setPluginRegistrant(this);
-    }
+public class Application extends FlutterApplication{
 
-    @Override
-    public void registerWith(PluginRegistry registry) {
-        GeneratedPluginRegistrant.registerWith(registry);
+
+    public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
+        GeneratedPluginRegistrant.registerWith(flutterEngine);
     }
 }
+
