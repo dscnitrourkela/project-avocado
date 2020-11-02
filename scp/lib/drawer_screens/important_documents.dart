@@ -23,6 +23,7 @@ class ImpDocs extends StatelessWidget {
             docCard(context, "Academic Calendar", "https://nitrkl.ac.in/Academics/AcademicProcess/AcademicCalendar.aspx"),
             docCard(context, "Academic Forms", "https://nitrkl.ac.in/Academics/AcademicProcess/AcademicForms.aspx"),
             docCard(context, "Academic Regulations", "https://nitrkl.ac.in/Academics/AcademicProcess/AcademicRegulations.aspx"),
+            docCard(context, "Branch-wise Syllabus", "https://nitrkl.ac.in/Academics/AcademicProcess/Curricula-Syllabi/aspx"),
             docCard(context, "Communication Handbook", "https://nitrkl.ac.in/docs/Misc/CommunicationHandBook.pdf"),
             docCard(context, "Curriculum", "https://nitrkl.ac.in/Academics/AcademicProcess/Curricula.aspx"),
             docCard(context, "Faculty Directory", "https://nitrkl.ac.in/FacultyStaff/EmployeeDirectory/Faculty.aspx"),
@@ -70,6 +71,7 @@ class ImpDocs extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                       fontSize: textScaleFactor*15,
+                      color: Colors.blue,
                       fontFamily: 'PfDin',
                       fontWeight: FontWeight.w500
                   ),)),
