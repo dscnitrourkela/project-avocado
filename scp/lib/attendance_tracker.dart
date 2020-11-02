@@ -202,7 +202,7 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                 initialSelectedDay: DateTime.now(),
                 calendarController: _calendarController,
                 initialCalendarFormat: CalendarFormat.month,
-                onDaySelected: (day, events) {
+                onDaySelected: (day, events, holidays) {
                   setState(() {
                     markedValue = items(day)[0];
                     currentDay = day;
