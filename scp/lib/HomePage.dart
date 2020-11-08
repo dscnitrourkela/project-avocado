@@ -84,6 +84,9 @@ class _HomePageState extends State<HomePage> {
                     )
                   ],
                 )),
+                Divider(
+                  color: Colors.grey,
+                ),
                 Expanded(
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
@@ -93,6 +96,7 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           Navigator.of(context).pushNamed(Routes.rImpDocs);
                         },
+                        leading: Icon(Icons.insert_drive_file_outlined),
                         title: Text(
                           "Important Documents",
                           style: TextStyle(
@@ -102,8 +106,21 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ListTile(
                         onTap: () {
+                          Navigator.of(context).pushNamed(Routes.rSettings);
+                        },
+                        leading: Icon(Icons.settings),
+                        title: Text(
+                          "Settings",
+                          style: TextStyle(
+                              fontSize: SizeConfig.drawerItemTextSize,
+                              fontFamily: 'PfDin'),
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
                           Navigator.pushNamed(context, Routes.rAboutScp);
                         },
+                        leading: Icon(Icons.mediation),
                         title: Text(
                           "About ICS",
                           style: TextStyle(
@@ -115,6 +132,7 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           _launchURL();
                         },
+                        leading: Icon(Icons.policy_outlined),
                         title: Text(
                           "Privacy Policy",
                           style: TextStyle(
@@ -126,6 +144,7 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           Navigator.of(context).pushNamed(Routes.rDevInfo);
                         },
+                        leading: Icon(Icons.people_alt),
                         title: Text(
                           "Developer Info",
                           style: TextStyle(
