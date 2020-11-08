@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -285,10 +284,7 @@ class _HomePageState extends State<HomePage> {
         .where('devToken', isEqualTo: token)
         .getDocuments()
         .then((QuerySnapshot deviceToken) async {
-      if (deviceToken.documents.isNotEmpty) {
-        print('Token Exist');
-      } else {
-        print('Token Required');
+      if (deviceToken.documents.isEmpty) {
         await Firestore.instance.collection('tokens').add(deviceData);
       }
     });
