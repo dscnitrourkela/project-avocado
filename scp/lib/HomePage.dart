@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:scp/utils/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:scp/utils/sizeConfig.dart';
@@ -269,6 +271,29 @@ class _HomePageState extends State<HomePage> {
   //     print(e.message);
   //   }
   // }
+
+  Future<void> saveTokenToFirestore(String token) async {
+    Map<String, dynamic> deviceData = {
+      'devToken': token,
+      'username': username,
+      'roll': rollNo,
+      'Mobile': phoneNo,
+      'CreatedAt': FieldValue.serverTimestamp(),
+    };
+    Firestore.instance
+        .collection('tokens')
+        .where('devToken', isEqualTo: token)
+        .getDocuments()
+        .then((QuerySnapshot deviceToken) async {
+      if (deviceToken.documents.isNotEmpty) {
+        print('Token Exist');
+      } else {
+        print('Token Required');
+        await Firestore.instance.collection('tokens').add(deviceData);
+      }
+    });
+  }
+
   FirebaseMessaging _fcm = new FirebaseMessaging();
 
   @override
@@ -278,6 +303,14 @@ class _HomePageState extends State<HomePage> {
     fetchUserData(context);
     reset();
     _fcm.subscribeToTopic('ics-not');
+    _fcm.subscribeToTopic('academic');
+    _fcm.subscribeToTopic('Academic');
+    _fcm.subscribeToTopic('academics');
+    _fcm.subscribeToTopic('Academics');
+    _fcm.subscribeToTopic('other');
+    _fcm.subscribeToTopic('others');
+    _fcm.subscribeToTopic('Other');
+    _fcm.subscribeToTopic('Others');
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
         Navigator.pushNamed(context, Routes.rNots);
@@ -289,6 +322,9 @@ class _HomePageState extends State<HomePage> {
         Navigator.pushNamed(context, Routes.rNots);
       },
     );
+    final token = _fcm
+        .getToken()
+        .then((token) async => await saveTokenToFirestore(token.toString()));
 
     /*if(DateTime.now().weekday == 3){
      if(DateTime.now().hour >= 4){
