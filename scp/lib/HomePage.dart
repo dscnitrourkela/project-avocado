@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -84,10 +85,8 @@ class _HomePageState extends State<HomePage> {
                     )
                   ],
                 )),
-                Divider(
-                  color: Colors.grey,
-                ),
                 Expanded(
+                  flex: 3,
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -96,7 +95,6 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           Navigator.of(context).pushNamed(Routes.rImpDocs);
                         },
-                        leading: Icon(Icons.insert_drive_file_outlined),
                         title: Text(
                           "Important Documents",
                           style: TextStyle(
@@ -108,7 +106,6 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           Navigator.of(context).pushNamed(Routes.rSettings);
                         },
-                        leading: Icon(Icons.settings),
                         title: Text(
                           "Settings",
                           style: TextStyle(
@@ -120,7 +117,6 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           Navigator.pushNamed(context, Routes.rAboutScp);
                         },
-                        leading: Icon(Icons.mediation),
                         title: Text(
                           "About ICS",
                           style: TextStyle(
@@ -132,7 +128,6 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           _launchURL();
                         },
-                        leading: Icon(Icons.policy_outlined),
                         title: Text(
                           "Privacy Policy",
                           style: TextStyle(
@@ -144,7 +139,6 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           Navigator.of(context).pushNamed(Routes.rDevInfo);
                         },
-                        leading: Icon(Icons.people_alt),
                         title: Text(
                           "Developer Info",
                           style: TextStyle(
@@ -156,29 +150,30 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Expanded(
+                    flex: 2,
                     child: Align(
-                  alignment: Alignment.center,
-                  child: ButtonTheme(
-                    minWidth: SizeConfig.screenWidth * 0.463,
-                    height: SizeConfig.screenWidth * 0.093,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0)),
-                      color: Color.fromRGBO(25, 39, 45, 1),
-                      onPressed: () {
-                        _removeUserData(context);
-                      },
-                      child: Text(
-                        "Log Out",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'PfDin',
-                            color: Colors.white,
-                            fontSize: SizeConfig.screenWidth * 0.046),
+                      alignment: Alignment.center,
+                      child: ButtonTheme(
+                        minWidth: SizeConfig.screenWidth * 0.463,
+                        height: SizeConfig.screenWidth * 0.093,
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0)),
+                          color: Color.fromRGBO(25, 39, 45, 1),
+                          onPressed: () {
+                            _removeUserData(context);
+                          },
+                          child: Text(
+                            "Log Out",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'PfDin',
+                                color: Colors.white,
+                                fontSize: SizeConfig.screenWidth * 0.046),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ))
+                    ))
               ],
             )),
             appBar: AppBar(
@@ -293,10 +288,11 @@ class _HomePageState extends State<HomePage> {
   Future<void> saveTokenToFirestore(String token) async {
     Map<String, dynamic> deviceData = {
       'devToken': token,
-      'username': username,
+      'displayName': username,
       'roll': rollNo,
-      'Mobile': phoneNo,
-      'CreatedAt': FieldValue.serverTimestamp(),
+      'mobile': phoneNo,
+      'optionalSub': true,
+      'createdAt': FieldValue.serverTimestamp(),
     };
     Firestore.instance
         .collection('tokens')
@@ -304,7 +300,23 @@ class _HomePageState extends State<HomePage> {
         .getDocuments()
         .then((QuerySnapshot deviceToken) async {
       if (deviceToken.documents.isEmpty) {
-        await Firestore.instance.collection('tokens').add(deviceData);
+        await Firestore.instance
+            .collection('tokens')
+            .document(phoneNo)
+            .setData(deviceData);
+      }
+    });
+    Firestore.instance
+        .collection('tokens')
+        .document(phoneNo)
+        .get()
+        .then((devValue) {
+      if (devValue.data['optionalSub']) {
+        _fcm.subscribeToTopic('other');
+        print('Subscribed');
+      } else {
+        _fcm.unsubscribeFromTopic('other');
+        print('Unsubscribed');
       }
     });
   }
@@ -319,13 +331,6 @@ class _HomePageState extends State<HomePage> {
     reset();
     _fcm.subscribeToTopic('ics-not');
     _fcm.subscribeToTopic('academic');
-    _fcm.subscribeToTopic('Academic');
-    _fcm.subscribeToTopic('academics');
-    _fcm.subscribeToTopic('Academics');
-    _fcm.subscribeToTopic('other');
-    _fcm.subscribeToTopic('others');
-    _fcm.subscribeToTopic('Other');
-    _fcm.subscribeToTopic('Others');
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
         Navigator.pushNamed(context, Routes.rNots);
