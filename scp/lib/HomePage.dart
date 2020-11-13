@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:scp/utils/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:scp/utils/sizeConfig.dart';
@@ -285,42 +284,6 @@ class _HomePageState extends State<HomePage> {
   //   }
   // }
 
-  Future<void> saveTokenToFirestore(String token) async {
-    Map<String, dynamic> deviceData = {
-      'devToken': token,
-      'displayName': username,
-      'roll': rollNo,
-      'mobile': phoneNo,
-      'optionalSub': true,
-      'createdAt': FieldValue.serverTimestamp(),
-    };
-    Firestore.instance
-        .collection('tokens')
-        .where('devToken', isEqualTo: token)
-        .getDocuments()
-        .then((QuerySnapshot deviceToken) async {
-      if (deviceToken.documents.isEmpty) {
-        await Firestore.instance
-            .collection('tokens')
-            .document(phoneNo)
-            .setData(deviceData);
-      }
-    });
-    Firestore.instance
-        .collection('tokens')
-        .document(phoneNo)
-        .get()
-        .then((devValue) {
-      if (devValue.data['optionalSub']) {
-        _fcm.subscribeToTopic('other');
-        print('Subscribed');
-      } else {
-        _fcm.unsubscribeFromTopic('other');
-        print('Unsubscribed');
-      }
-    });
-  }
-
   FirebaseMessaging _fcm = new FirebaseMessaging();
 
   @override
@@ -329,7 +292,6 @@ class _HomePageState extends State<HomePage> {
     DateConfig().init();
     fetchUserData(context);
     reset();
-    _fcm.subscribeToTopic('ics-not');
     _fcm.subscribeToTopic('academic');
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
@@ -342,9 +304,6 @@ class _HomePageState extends State<HomePage> {
         Navigator.pushNamed(context, Routes.rNots);
       },
     );
-    final token = _fcm
-        .getToken()
-        .then((token) async => await saveTokenToFirestore(token.toString()));
 
     /*if(DateTime.now().weekday == 3){
      if(DateTime.now().hour >= 4){

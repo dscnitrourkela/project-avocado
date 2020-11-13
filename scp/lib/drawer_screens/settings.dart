@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -50,17 +51,7 @@ class _SettingsState extends State<Settings> {
                         iconOn: Icons.notifications_outlined,
                         textSize: 16.0,
                         onChanged: (state) async {
-                          if (state == false) {
-                            Firestore.instance
-                                .collection('tokens')
-                                .document(phoneNo)
-                                .updateData({'optionalSub': false});
-                          } else {
-                            Firestore.instance
-                                .collection('tokens')
-                                .document(phoneNo)
-                                .updateData({'optionalSub': true});
-                          }
+                          unSubOther(state);
                         },
                       )
                     ],
@@ -85,5 +76,23 @@ class _SettingsState extends State<Settings> {
     state = await qn.data['optionalSub'];
 
     return qn;
+  }
+
+  FirebaseMessaging _fcm = FirebaseMessaging();
+
+  unSubOther(state) {
+    if (state == false) {
+      Firestore.instance
+          .collection('tokens')
+          .document(phoneNo)
+          .updateData({'optionalSub': false});
+      _fcm.unsubscribeFromTopic('other');
+    } else {
+      Firestore.instance
+          .collection('tokens')
+          .document(phoneNo)
+          .updateData({'optionalSub': true});
+      _fcm.subscribeToTopic('other');
+    }
   }
 }
