@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:scp/utils/routes.dart';
@@ -151,6 +153,10 @@ class UserdataState extends State<Userdata> {
                                           updateUser.displayName = rollNo;
                                           val.updateProfile(updateUser);
                                           _storeUserData(context);
+                                          final token = _fcm.getToken().then(
+                                              (token) async =>
+                                                  await saveTokenToFirestore(
+                                                      token.toString()));
                                         });
                                       }
                                     } else {
@@ -219,5 +225,37 @@ class UserdataState extends State<Userdata> {
     final FirebaseUser user = await FirebaseAuth.instance.currentUser();
     phoneNo = user.phoneNumber;
     return "return";
+  }
+
+  FirebaseMessaging _fcm = new FirebaseMessaging();
+
+  Future<void> saveTokenToFirestore(String token) async {
+    Firestore.instance
+        .collection('tokens')
+        .where('mobile', isEqualTo: phoneNo)
+        .getDocuments()
+        .then((QuerySnapshot deviceToken) async {
+      if (deviceToken.documents.isEmpty) {
+        await Firestore.instance
+            .collection('tokens')
+            .document(phoneNo)
+            .setData({
+          'devToken': token,
+          'displayName': username,
+          'roll': rollNo,
+          'mobile': phoneNo,
+          'optionalSub': true,
+          'createdAt': FieldValue.serverTimestamp(),
+        });
+      } else {
+        await Firestore.instance
+            .collection('tokens')
+            .document(phoneNo)
+            .updateData({
+          'devToken': token,
+          'displayName': username,
+        });
+      }
+    });
   }
 }
