@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:scp/utils/routes.dart';
@@ -84,6 +85,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 )),
                 Expanded(
+                  flex: 3,
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -94,6 +96,17 @@ class _HomePageState extends State<HomePage> {
                         },
                         title: Text(
                           "Important Documents",
+                          style: TextStyle(
+                              fontSize: SizeConfig.drawerItemTextSize,
+                              fontFamily: 'PfDin'),
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(Routes.rSettings);
+                        },
+                        title: Text(
+                          "Settings",
                           style: TextStyle(
                               fontSize: SizeConfig.drawerItemTextSize,
                               fontFamily: 'PfDin'),
@@ -136,29 +149,30 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Expanded(
+                    flex: 2,
                     child: Align(
-                  alignment: Alignment.center,
-                  child: ButtonTheme(
-                    minWidth: SizeConfig.screenWidth * 0.463,
-                    height: SizeConfig.screenWidth * 0.093,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0)),
-                      color: Color.fromRGBO(25, 39, 45, 1),
-                      onPressed: () {
-                        _removeUserData(context);
-                      },
-                      child: Text(
-                        "Log Out",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'PfDin',
-                            color: Colors.white,
-                            fontSize: SizeConfig.screenWidth * 0.046),
+                      alignment: Alignment.center,
+                      child: ButtonTheme(
+                        minWidth: SizeConfig.screenWidth * 0.463,
+                        height: SizeConfig.screenWidth * 0.093,
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0)),
+                          color: Color.fromRGBO(25, 39, 45, 1),
+                          onPressed: () {
+                            _removeUserData(context);
+                          },
+                          child: Text(
+                            "Log Out",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'PfDin',
+                                color: Colors.white,
+                                fontSize: SizeConfig.screenWidth * 0.046),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ))
+                    ))
               ],
             )),
             appBar: AppBar(
@@ -269,6 +283,7 @@ class _HomePageState extends State<HomePage> {
   //     print(e.message);
   //   }
   // }
+
   FirebaseMessaging _fcm = new FirebaseMessaging();
 
   @override
@@ -277,7 +292,7 @@ class _HomePageState extends State<HomePage> {
     DateConfig().init();
     fetchUserData(context);
     reset();
-    _fcm.subscribeToTopic('ics-not');
+    _fcm.subscribeToTopic('academic');
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
         Navigator.pushNamed(context, Routes.rNots);

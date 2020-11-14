@@ -6,6 +6,7 @@ import 'package:scp/drawer_screens/about_scs.dart';
 import 'package:scp/drawer_screens/dev_info.dart';
 import 'package:scp/drawer_screens/important_documents.dart';
 import 'package:scp/drawer_screens/notifications.dart';
+import 'package:scp/drawer_screens/settings.dart';
 import 'package:scp/login.dart';
 import 'package:scp/mentor_search/mentors.dart';
 import 'package:scp/timetable/theorySection.dart';
@@ -25,6 +26,7 @@ class Routes {
   static const String rDevInfo = '/dev_info';
   static const String rNots = '/nots';
   static const String rAttendance = '/attendance';
+  static const String rSettings = '/settings';
 
   static Map<String, WidgetBuilder> getRoutes() {
     return {
@@ -39,6 +41,7 @@ class Routes {
       Routes.rImpDocs: (context) => ImpDocs(),
       Routes.rDevInfo: (context) => DevInfo(),
       Routes.rNots: (context) => Nots(),
+      Routes.rSettings: (context) => Settings(),
       Routes.rAttendance: (context) => TheorySection(1), //1 for right card
     };
   }

@@ -35,6 +35,7 @@ dependencies:
   path_provider: ^1.0.0
   firebase_storage: ^3.0.8
   table_calendar: ^2.2.3
+  lite_rolling_switch: ^0.1.1
 
 dev_dependencies:
   flutter_launcher_icons: "^0.7.2"
