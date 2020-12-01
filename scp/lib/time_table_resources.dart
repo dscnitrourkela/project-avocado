@@ -1,4 +1,18 @@
 abstract class TimeTableResources {
+  static bool isAutumnSemester ()=> DateTime.now().month>6;
+  static String courseNumber = 'I';
+  static void setCourseNumber(){
+    courseNumber = isAutumnSemester() ? 'I' : 'II';
+    theory['A']['TA'] = theory['B']['TA']
+    = theory['C']['TB'] = theory['D']['TB']
+    = theory['E']['TK'] = theory['F']['TK']
+    = theory['G']['TM'] = theory['H']['TM'] = 'Physics-$courseNumber';
+
+    theory['A']['TC'] = theory['B']['TC']
+    = theory['C']['TD'] = theory['D']['TD']
+    = theory['E']['TJ'] = theory['F']['TJ']
+    = theory['G']['TL'] = theory['H']['TL'] = 'Mathematics-$courseNumber';
+  }
   static final tpSequence = {
     'Monday': ['TA', 'TB', 'TC', 'TE', 'PA', 'PA', 'PA', 'TF', 'ZA'],
     'Tuesday': ['TB', 'TC', 'TD', 'TE', 'PB', 'PB', 'PB', 'TF', 'ZB'],
@@ -168,6 +182,30 @@ abstract class TimeTableResources {
     'WP': {'name': 'Workshop Practices', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2526002,84.9029979', 'locationName': 'Central Workshop'},
     'CL': {'name': 'Chemistry Laboratory', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777', 'locationName': 'Main Building'},
     'ED': {'name': 'Engineering Drawing', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2513332,84.9048918', 'locationName': 'LA1'},
+  };
+
+  static final subsituteTheorySection = {
+    'A' : 'E',
+    'B' : 'F',
+    'C' : 'G',
+    'D' : 'H',
+    'E' : 'A',
+    'F' : 'B',
+    'G' : 'C',
+    'H' : 'D'
+  };
+
+  static final substitutePracticalSection = {
+    'P1' : 'P6',
+    'P2' : 'P7',
+    'P3' : 'P8',
+    'P4' : 'P9',
+    'P5' : 'P10',
+    'P6' : 'P1',
+    'P7' : 'P2',
+    'P8' : 'P3',
+    'P9' : 'P4',
+    'P10': 'P5'
   };
 }
 
