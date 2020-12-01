@@ -33,7 +33,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
           children: <Widget>[
             Flexible(
                 child: timetableCard(widget.cxt, widget.heightFactor,
-                    widget.textSc, width1, "ICS Classes", 1)),
+                    widget.textSc, width1, "Attendance Tracker", 1)),
           ],
         ),
         Row(
@@ -67,14 +67,12 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
               width2 = width1;
             } else {
               /*cardType helps us determine upon which card have we registered the tap
-              0 is for regular classes, 1 is for remedial classes*/
+              0 is for left card, 1 is for right card*/
               if (cardType == 0) //Regular
                 Navigator.pushNamed(context, Routes.rTimetable);
               if (cardType == 1) //Remedial
-                Navigator.pushNamed(
-                    context,
-                    Routes
-                        .rTutorial); // TODO: Change the route accordingly, currently for debug purposes
+
+                Navigator.pushNamed(context, Routes.rAttendance);
             }
           });
         },
@@ -150,15 +148,36 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                                     alignment: Alignment.centerLeft,
                                     child: SizedBox(
                                       width: 200.0,
-                                      child: Text(
-                                        'Set your personal timetable and get information about class timings and location',
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                          fontSize: heightFactor * 0.038,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily: 'PfDin',
-                                        ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: <Widget>[
+                                          Text(
+                                            'Set your personal timetable and track       your attendance',
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              fontSize: heightFactor * 0.038,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'PfDin',
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: heightFactor * 0.055,
+                                          ),
+                                          Text(
+                                            'Data will get reset on re-installation',
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              fontSize: heightFactor * 0.028,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'PfDin',
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),

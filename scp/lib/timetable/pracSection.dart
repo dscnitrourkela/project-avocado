@@ -1,9 +1,9 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:scp/time_table.dart';
 import 'package:scp/utils/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:scp/attendance_tracker.dart';
 
 const List<String> sectionArray = [
   "Ar.",
@@ -27,10 +27,12 @@ PageController pageController;
 double pagerHeight = 140.0;
 String theorySection;
 String practicalSection;
+int cardNumber;
 
 class PracticalSection extends StatefulWidget {
-  PracticalSection(String section) {
+  PracticalSection(String section, int number) {
     theorySection = section;
+    cardNumber = number;
   }
 
   @override
@@ -183,10 +185,19 @@ storeSectionData(BuildContext context) async {
       'prac_section', sectionArray[(pageController.page.round().toInt())]);
   await prefs.setBool('show_timetable', true);
   Navigator.of(context).pop();
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => TimeTable()),
-  );
+  if (cardNumber == 0) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => TimeTable()),
+    );
+  } else if (cardNumber == 1) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => AttendanceTracker(
+                  theorySection,
+                )));
+  }
 }
 
 Widget _buildCarousel(_PracticalSectionState timetableState,
