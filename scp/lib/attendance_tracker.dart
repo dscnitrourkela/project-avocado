@@ -315,7 +315,20 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                                 pref.setString(
                                     'events', json.encode(encodeMap(_events)));
                               });
-                            })
+                            }),
+                        IconButton(
+                            icon: Icon(Icons.delete,color: primaryColor,),
+                            onPressed: () {
+                                 setState(() {
+                                    for (String selectClass in _selectedEvents) {
+                                          if (_absents.containsKey(selectClass)) {
+                                              _absents[selectClass]--;}}
+                                    _selectedEvents.clear();
+                                    _events[_calendarController.selectedDay].clear();
+                                    print(_selectedEvents);
+
+                                    });
+                               })
                       ],
                     )
                   : Container(),
