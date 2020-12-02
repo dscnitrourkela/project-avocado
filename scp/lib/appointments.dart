@@ -33,11 +33,6 @@ class _AppointmentsState extends State<Appointments> {
     getDate();
     //isBookingAnonymously = false;
     scpDatabase = ScpDatabase();
-    scpDatabase.init();
-    _onCounselChangedSubscription =
-        ScpDatabase.counselRef.onChildChanged.listen(_onSlotsUpdated);
-    _onPsychChangedSubscription =
-        ScpDatabase.psychRef.onChildChanged.listen(_onSlotsUpdated);
     super.initState();
   }
 
@@ -54,54 +49,58 @@ class _AppointmentsState extends State<Appointments> {
     textScaleFactor = MediaQuery.of(context).textScaleFactor;
 
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(
-            60.0,
-          ),
-          child: AppBar(
-            title: Padding(
-              padding: const EdgeInsets.only(
-                top: 8.0,
-              ),
-              child: Text(
-                'Book your appointment',
-                style: TextStyle(
-                    fontSize: queryWidth * 0.065,
-                    fontFamily: 'PfDin',
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-            backgroundColor: Color.fromRGBO(
-              54,
-              66,
-              87,
-              1.0,
-            ),
-            leading: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: IconButton(
-                onPressed: () {
-                  Navigator.of(context);
-                  Navigator.pushNamed(context, Routes.rHomepage);
-                },
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                ),
-              ),
-            ),
-            elevation: 0.0,
-          ),
+      backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(
+          60.0,
         ),
-        body: FutureBuilder(
-            future: _setupRemoteConfig(),
-            builder:
-                (BuildContext context, AsyncSnapshot<RemoteConfig> snapshot) {
-              return Center(
-                  child: snapshot.hasData
-                      ? appointmentScreen(context, snapshot.data)
-                      : CircularProgressIndicator());
-            }));
+        child: AppBar(
+          title: Padding(
+            padding: const EdgeInsets.only(
+              top: 8.0,
+            ),
+            child: Text(
+              'Book your appointment',
+              style: TextStyle(
+                  fontSize: queryWidth * 0.065,
+                  fontFamily: 'PfDin',
+                  fontWeight: FontWeight.w500),
+            ),
+          ),
+          backgroundColor: Color.fromRGBO(
+            54,
+            66,
+            87,
+            1.0,
+          ),
+          leading: Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context);
+                Navigator.pushNamed(context, Routes.rHomepage);
+              },
+              icon: Icon(
+                Icons.arrow_back_ios,
+              ),
+            ),
+          ),
+          elevation: 0.0,
+        ),
+      ),
+      body: FutureBuilder(
+        future: _setupRemoteConfig(),
+        builder: (BuildContext context, AsyncSnapshot<RemoteConfig> snapshot) {
+          return Center(
+            child: snapshot.hasData
+                ? appointmentScreen(context, snapshot.data)
+                : Center(
+                    child: CircularProgressIndicator(),
+                  ),
+          );
+        },
+      ),
+    );
   }
 
   Widget appointmentScreen(BuildContext context, RemoteConfig remoteConfig) {
@@ -142,6 +141,11 @@ class _AppointmentsState extends State<Appointments> {
     psychName = remoteConfig.getString('psych_name');
     psychDay = remoteConfig.getString('psych_day');
     print(counselDay + 'hola');
+    await scpDatabase.init(); // TODO: Makeshift
+    _onCounselChangedSubscription =
+        ScpDatabase.counselRef.onChildChanged.listen(_onSlotsUpdated);
+    _onPsychChangedSubscription =
+        ScpDatabase.psychRef.onChildChanged.listen(_onSlotsUpdated);
     return remoteConfig;
   }
 }
