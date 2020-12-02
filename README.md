@@ -43,6 +43,7 @@ Your appreciation makes us grow and glow up. ⭐
 ## Use
 - Make appointments
 - Timetable selector
+- Attendance tracker
 - Manage your mentors
 - Get Notifications
 
