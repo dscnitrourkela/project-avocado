@@ -45,6 +45,8 @@ Your appreciation makes us grow and glow up. ⭐
 - Timetable selector
 - Manage your mentors
 - Get Notifications
+- Attendance Tracker
+- Freshers Chat Support
 
 ## Contributors ✨
 

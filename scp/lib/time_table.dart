@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'time_table_resources.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class TimeTable extends StatefulWidget {
   TimeTable();
 
@@ -16,7 +15,7 @@ class TimeTable extends StatefulWidget {
 class TimeTableState extends State<TimeTable> {
   String theorySection = 'E';
   String practicalSection = 'P6';
-  String sectionSequence = 'pt'; 
+  String sectionSequence = 'pt';
   bool allowedSection = true;
 
   bool showTimeTable = false;
@@ -30,6 +29,7 @@ class TimeTableState extends State<TimeTable> {
   Future _fetchSectionData(BuildContext context) async {
     TimeTableResources.setCourseNumber();
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.getKeys();
     theorySection = prefs.getString('theory_section');
     practicalSection = prefs.getString('prac_section');
     bool isAutumnSemester = TimeTableResources.isAutumnSemester();
@@ -38,13 +38,14 @@ class TimeTableState extends State<TimeTable> {
         (theorySection.compareTo('D') == 0) ||
         (theorySection.compareTo('C') == 0) ||
         (theorySection.compareTo('B') == 0)) {
-      sectionSequence = isAutumnSemester ? 'tp' :'pt';
-    }else{
-      sectionSequence = isAutumnSemester? 'pt' : 'tp';
+      sectionSequence = isAutumnSemester ? 'tp' : 'pt';
+    } else {
+      sectionSequence = isAutumnSemester ? 'pt' : 'tp';
     }
-    if(!isAutumnSemester && theorySection.compareTo('Ar.')!=0){
+    if (!isAutumnSemester && theorySection.compareTo('Ar.') != 0) {
       theorySection = TimeTableResources.subsituteTheorySection[theorySection];
-      practicalSection = TimeTableResources.substitutePracticalSection[practicalSection];
+      practicalSection =
+          TimeTableResources.substitutePracticalSection[practicalSection];
     }
   }
 
