@@ -155,7 +155,8 @@ class _TheorySectionState extends State<TheorySection> {
                     padding: const EdgeInsets.all(8.0),
                     child: Align(
                         alignment: Alignment.bottomCenter,
-                        child: Text("The timetable is subject to change")),
+                        child: Text(
+                            ' The timetable is subject to change \n Data will get reset on re-installation')),
                   )
                 ],
               )),
