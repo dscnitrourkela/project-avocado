@@ -203,6 +203,7 @@ class UserdataState extends State<Userdata> {
 
   _storeUserData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.getKeys();
     await prefs.setString('username', username);
     await prefs.setString('roll_no', rollNo.toUpperCase());
     await prefs.setString('phone_no', phoneNo);

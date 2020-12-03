@@ -71,7 +71,6 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
               if (cardType == 0) //Regular
                 Navigator.pushNamed(context, Routes.rTimetable);
               if (cardType == 1) //Remedial
-
                 Navigator.pushNamed(context, Routes.rAttendance);
             }
           });
