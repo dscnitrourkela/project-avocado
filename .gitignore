@@ -10,3 +10,4 @@ scp/ios/Flutter/flutter_export_environment.sh
 .github/
 scp/android/encodedOutputFileName
 scp/.flutter-plugins-dependencies
+.vscode/

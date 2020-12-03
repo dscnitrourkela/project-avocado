@@ -155,7 +155,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                                             CrossAxisAlignment.end,
                                         children: <Widget>[
                                           Text(
-                                            'Set your personal timetable and track       your attendance',
+                                            'Set your personal timetable and track your attendance',
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               fontSize: heightFactor * 0.038,
@@ -166,16 +166,6 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                                           ),
                                           SizedBox(
                                             height: heightFactor * 0.055,
-                                          ),
-                                          Text(
-                                            'Data will get reset on re-installation',
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                              fontSize: heightFactor * 0.028,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w500,
-                                              fontFamily: 'PfDin',
-                                            ),
                                           ),
                                         ],
                                       ),

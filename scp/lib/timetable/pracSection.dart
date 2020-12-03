@@ -168,8 +168,10 @@ class _PracticalSectionState extends State<PracticalSection> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Text("The timetable is subject to change")),
+                    alignment: Alignment.bottomCenter,
+                    child: Text(
+                        ' The timetable is subject to change \n Data will get reset on re-installation'),
+                  ),
                 )
               ],
             )),
