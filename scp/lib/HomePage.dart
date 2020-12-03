@@ -1,6 +1,8 @@
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:scp/utils/chatArgs.dart';
 import 'package:scp/utils/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:scp/utils/sizeConfig.dart';
@@ -26,6 +28,9 @@ class _HomePageState extends State<HomePage> {
   String username = " ", rollNo = " ", phoneNo = " ";
   DatabaseReference slotsRefMain;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  RemoteConfig remoteConfig;
+  bool isChat = false;
+  String chatUrl;
 
   static const platform = const MethodChannel("FAQ_ACTIVITY");
 
@@ -85,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 )),
                 Expanded(
-                  flex: 3,
+                  flex: 4,
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -96,6 +101,17 @@ class _HomePageState extends State<HomePage> {
                         },
                         title: Text(
                           "Important Documents",
+                          style: TextStyle(
+                              fontSize: SizeConfig.drawerItemTextSize,
+                              fontFamily: 'PfDin'),
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.rNots);
+                        },
+                        title: Text(
+                          "Notifications",
                           style: TextStyle(
                               fontSize: SizeConfig.drawerItemTextSize,
                               fontFamily: 'PfDin'),
@@ -187,19 +203,25 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () => _scaffoldKey.currentState.openDrawer()),
               ),
               actions: <Widget>[
-                IconButton(
-                  padding: EdgeInsets.only(
-                      top: SizeConfig.screenWidth * 0.048,
-                      right: SizeConfig.screenWidth * 0.06),
-                  icon: Icon(
-                    Icons.notifications,
-                    color: Colors.black,
-                    size: 35.0,
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, Routes.rNots);
-                  },
-                )
+                (snap.connectionState != ConnectionState.waiting ||
+                        snap.connectionState != ConnectionState.waiting)
+                    ? (isChat
+                        ? IconButton(
+                            padding: EdgeInsets.only(
+                                top: SizeConfig.screenWidth * 0.048,
+                                right: SizeConfig.screenWidth * 0.06),
+                            icon: Icon(
+                              Icons.chat,
+                              color: Colors.black,
+                              size: 35.0,
+                            ),
+                            onPressed: () {
+                              Navigator.pushNamed(context, Routes.rChat,
+                                  arguments: ChatArguments(chatUrl));
+                            },
+                          )
+                        : Container())
+                    : Container(),
               ],
               backgroundColor: Colors.white,
               elevation: 0,
@@ -321,6 +343,12 @@ class _HomePageState extends State<HomePage> {
 
   Future fetchUserData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    remoteConfig = await RemoteConfig.instance;
+    remoteConfig.setConfigSettings(RemoteConfigSettings(debugMode: true));
+    await remoteConfig.fetch(expiration: const Duration(seconds: 0));
+    await remoteConfig.activateFetched();
+    isChat = remoteConfig.getBool('is_chat_active');
+    chatUrl = remoteConfig.getString('chatLink');
     username = prefs.getString('username');
     rollNo = prefs.getString('roll_no');
     phoneNo = prefs.getString('phone_no');
