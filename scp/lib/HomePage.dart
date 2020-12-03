@@ -262,6 +262,7 @@ class _HomePageState extends State<HomePage> {
 
   _removeUserData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.getKeys();
     prefs.clear();
     await firebaseInstance.signOut();
     Navigator.of(context).pushNamedAndRemoveUntil(
@@ -312,8 +313,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     DateConfig().init();
-    fetchUserData(context);
-    reset();
     _fcm.subscribeToTopic('academic');
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
@@ -343,17 +342,34 @@ class _HomePageState extends State<HomePage> {
 
   Future fetchUserData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.getKeys();
     remoteConfig = await RemoteConfig.instance;
     remoteConfig.setConfigSettings(RemoteConfigSettings(debugMode: true));
-    await remoteConfig.fetch(expiration: const Duration(seconds: 0));
-    await remoteConfig.activateFetched();
+    try {
+      await remoteConfig.fetch(expiration: const Duration(seconds: 0));
+      await remoteConfig.activateFetched();
+      isChat = remoteConfig.getBool('is_chat_active');
+      chatUrl = remoteConfig.getString('chatLink');
+      await prefs.setBool('is_chat_active', isChat);
+      await prefs.setString('chatLink', chatUrl);
+    } on FetchThrottledException catch (exception) {
+      isChat = prefs.getBool('is_chat_active');
+      chatUrl = prefs.getString('chatLink');
+      // Fetch throttled.
+      print(exception);
+    } catch (exception) {
+      isChat = prefs.getBool('is_chat_active');
+      chatUrl = prefs.getString('chatLink');
+    }
+
     isChat = remoteConfig.getBool('is_chat_active');
     chatUrl = remoteConfig.getString('chatLink');
     username = prefs.getString('username');
     rollNo = prefs.getString('roll_no');
     phoneNo = prefs.getString('phone_no');
-    prefs.setBool('hasBooked', prefs.getBool('hasBooked') ?? false);
+    await prefs.setBool('hasBooked', prefs.getBool('hasBooked') ?? false);
     print(username + rollNo + phoneNo);
+    reset();
   }
 
   _launchURL() async {

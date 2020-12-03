@@ -45,6 +45,7 @@ class _TheorySectionState extends State<TheorySection> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool showTimeTable = prefs.getBool('show_timetable');
     if (showTimeTable) {
+      String theorySection = prefs.getString('theorySection');
       if (cardNumber == 0) {
         Navigator.of(context).pop();
         Navigator.push(
@@ -52,12 +53,9 @@ class _TheorySectionState extends State<TheorySection> {
           MaterialPageRoute(builder: (context) => TimeTable()),
         );
       } else if (cardNumber == 1) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => AttendanceTracker(
-                      theorySection,
-                    )));
+        Navigator.of(context).pop();
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => AttendanceTracker()));
       }
     }
   }

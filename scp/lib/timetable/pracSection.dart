@@ -194,11 +194,7 @@ storeSectionData(BuildContext context) async {
     );
   } else if (cardNumber == 1) {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => AttendanceTracker(
-                  theorySection,
-                )));
+        context, MaterialPageRoute(builder: (context) => AttendanceTracker()));
   }
 }
 
