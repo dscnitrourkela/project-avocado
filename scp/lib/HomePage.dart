@@ -1,5 +1,8 @@
+import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:scp/utils/chatArgs.dart';
 import 'package:scp/utils/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:scp/utils/sizeConfig.dart';
@@ -25,6 +28,9 @@ class _HomePageState extends State<HomePage> {
   String username = " ", rollNo = " ", phoneNo = " ";
   DatabaseReference slotsRefMain;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  RemoteConfig remoteConfig;
+  bool isChat = false;
+  String chatUrl;
 
   static const platform = const MethodChannel("FAQ_ACTIVITY");
 
@@ -84,6 +90,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 )),
                 Expanded(
+                  flex: 4,
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -94,6 +101,28 @@ class _HomePageState extends State<HomePage> {
                         },
                         title: Text(
                           "Important Documents",
+                          style: TextStyle(
+                              fontSize: SizeConfig.drawerItemTextSize,
+                              fontFamily: 'PfDin'),
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.rNots);
+                        },
+                        title: Text(
+                          "Notifications",
+                          style: TextStyle(
+                              fontSize: SizeConfig.drawerItemTextSize,
+                              fontFamily: 'PfDin'),
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(Routes.rSettings);
+                        },
+                        title: Text(
+                          "Settings",
                           style: TextStyle(
                               fontSize: SizeConfig.drawerItemTextSize,
                               fontFamily: 'PfDin'),
@@ -136,29 +165,30 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Expanded(
+                    flex: 2,
                     child: Align(
-                  alignment: Alignment.center,
-                  child: ButtonTheme(
-                    minWidth: SizeConfig.screenWidth * 0.463,
-                    height: SizeConfig.screenWidth * 0.093,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0)),
-                      color: Color.fromRGBO(25, 39, 45, 1),
-                      onPressed: () {
-                        _removeUserData(context);
-                      },
-                      child: Text(
-                        "Log Out",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'PfDin',
-                            color: Colors.white,
-                            fontSize: SizeConfig.screenWidth * 0.046),
+                      alignment: Alignment.center,
+                      child: ButtonTheme(
+                        minWidth: SizeConfig.screenWidth * 0.463,
+                        height: SizeConfig.screenWidth * 0.093,
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0)),
+                          color: Color.fromRGBO(25, 39, 45, 1),
+                          onPressed: () {
+                            _removeUserData(context);
+                          },
+                          child: Text(
+                            "Log Out",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'PfDin',
+                                color: Colors.white,
+                                fontSize: SizeConfig.screenWidth * 0.046),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ))
+                    ))
               ],
             )),
             appBar: AppBar(
@@ -173,19 +203,25 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () => _scaffoldKey.currentState.openDrawer()),
               ),
               actions: <Widget>[
-                IconButton(
-                  padding: EdgeInsets.only(
-                      top: SizeConfig.screenWidth * 0.048,
-                      right: SizeConfig.screenWidth * 0.06),
-                  icon: Icon(
-                    Icons.notifications,
-                    color: Colors.black,
-                    size: 35.0,
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, Routes.rNots);
-                  },
-                )
+                (snap.connectionState != ConnectionState.waiting ||
+                        snap.connectionState != ConnectionState.waiting)
+                    ? (isChat
+                        ? IconButton(
+                            padding: EdgeInsets.only(
+                                top: SizeConfig.screenWidth * 0.048,
+                                right: SizeConfig.screenWidth * 0.06),
+                            icon: Icon(
+                              Icons.chat,
+                              color: Colors.black,
+                              size: 35.0,
+                            ),
+                            onPressed: () {
+                              Navigator.pushNamed(context, Routes.rChat,
+                                  arguments: ChatArguments(chatUrl));
+                            },
+                          )
+                        : Container())
+                    : Container(),
               ],
               backgroundColor: Colors.white,
               elevation: 0,
@@ -226,6 +262,7 @@ class _HomePageState extends State<HomePage> {
 
   _removeUserData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.getKeys();
     prefs.clear();
     await firebaseInstance.signOut();
     Navigator.of(context).pushNamedAndRemoveUntil(
@@ -269,15 +306,14 @@ class _HomePageState extends State<HomePage> {
   //     print(e.message);
   //   }
   // }
+
   FirebaseMessaging _fcm = new FirebaseMessaging();
 
   @override
   void initState() {
     super.initState();
     DateConfig().init();
-    fetchUserData(context);
-    reset();
-    _fcm.subscribeToTopic('ics-not');
+    _fcm.subscribeToTopic('academic');
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
         Navigator.pushNamed(context, Routes.rNots);
@@ -306,11 +342,34 @@ class _HomePageState extends State<HomePage> {
 
   Future fetchUserData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.getKeys();
+    remoteConfig = await RemoteConfig.instance;
+    remoteConfig.setConfigSettings(RemoteConfigSettings(debugMode: true));
+    try {
+      await remoteConfig.fetch(expiration: const Duration(seconds: 0));
+      await remoteConfig.activateFetched();
+      isChat = remoteConfig.getBool('is_chat_active');
+      chatUrl = remoteConfig.getString('chatLink');
+      await prefs.setBool('is_chat_active', isChat);
+      await prefs.setString('chatLink', chatUrl);
+    } on FetchThrottledException catch (exception) {
+      isChat = prefs.getBool('is_chat_active');
+      chatUrl = prefs.getString('chatLink');
+      // Fetch throttled.
+      print(exception);
+    } catch (exception) {
+      isChat = prefs.getBool('is_chat_active');
+      chatUrl = prefs.getString('chatLink');
+    }
+
+    isChat = remoteConfig.getBool('is_chat_active');
+    chatUrl = remoteConfig.getString('chatLink');
     username = prefs.getString('username');
     rollNo = prefs.getString('roll_no');
     phoneNo = prefs.getString('phone_no');
-    prefs.setBool('hasBooked', prefs.getBool('hasBooked') ?? false);
+    await prefs.setBool('hasBooked', prefs.getBool('hasBooked') ?? false);
     print(username + rollNo + phoneNo);
+    reset();
   }
 
   _launchURL() async {
