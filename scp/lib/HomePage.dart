@@ -250,7 +250,7 @@ class _HomePageState extends State<HomePage> {
                   TimetableCardSplit(context, MediaQuery.of(context).size.width,
                       MediaQuery.of(context).textScaleFactor),
                   faqCard(context),
-                  mentorsCard(context),
+                  mentorsCard(context, rollNo),
                 ],
               ),
             ),
