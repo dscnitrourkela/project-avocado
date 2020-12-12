@@ -5,7 +5,6 @@ import 'package:scp/connectivity/connectivity_handler_widget.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
 import 'login.dart';
 
-
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
@@ -37,6 +36,7 @@ class _MyAppState extends State<MyApp> {
 
   Future checkLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.getKeys();
     _loggedin = (prefs.getBool('loggedin') ?? false);
     print(_loggedin);
   }

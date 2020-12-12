@@ -126,6 +126,7 @@ class _AppointmentsState extends State<Appointments> {
 
   getDate() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.getKeys();
     psychDate = prefs.getString('psychDate');
     counselDate = prefs.getString('counselDate');
   }
