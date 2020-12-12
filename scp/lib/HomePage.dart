@@ -2,6 +2,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:ndialog/ndialog.dart';
 import 'package:scp/utils/chatArgs.dart';
 import 'package:scp/utils/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,6 +15,9 @@ import 'package:firebase_database/firebase_database.dart';
 import 'main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
+import 'package:package_info/package_info.dart';
+import 'package:rate_my_app/rate_my_app.dart';
+import 'package:in_app_review/in_app_review.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -31,6 +35,8 @@ class _HomePageState extends State<HomePage> {
   RemoteConfig remoteConfig;
   bool isChat = false;
   String chatUrl;
+  int buildNumber;
+  int publishVersion;
 
   static const platform = const MethodChannel("FAQ_ACTIVITY");
 
@@ -51,6 +57,7 @@ class _HomePageState extends State<HomePage> {
       body: FutureBuilder(
         future: fetchUserData(context),
         builder: (context, snap) {
+          checkUpdate();
           return Scaffold(
             key: _scaffoldKey,
             drawer: Drawer(
@@ -325,13 +332,24 @@ class _HomePageState extends State<HomePage> {
         Navigator.pushNamed(context, Routes.rNots);
       },
     );
+    rateApp(context);
+  }
 
-    /*if(DateTime.now().weekday == 3){
-     if(DateTime.now().hour >= 4){
-       slotsRefMain = FirebaseDatabase.instance.reference().child("slots").child('week1').child('counselor');
-       ScpDatabase.pushNewWeek(slotsRefMain);
-     }
-    }*/
+  void rateApp(BuildContext context) async {
+    RateMyApp rateMyApp = RateMyApp(
+      preferencesPrefix: 'rateMyApp_',
+      minDays: 7,
+      minLaunches: 10,
+      remindDays: 7,
+      remindLaunches: 10,
+      googlePlayIdentifier: 'in.ac.nitrkl.scp.scp',
+    );
+    final InAppReview inAppReview = InAppReview.instance;
+    rateMyApp.init().then((value) async {
+      if (await inAppReview.isAvailable()) {
+        inAppReview.requestReview();
+      }
+    });
   }
 
   @override
@@ -343,6 +361,8 @@ class _HomePageState extends State<HomePage> {
   Future fetchUserData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.getKeys();
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    buildNumber = int.parse(packageInfo.buildNumber);
     remoteConfig = await RemoteConfig.instance;
     remoteConfig.setConfigSettings(RemoteConfigSettings(debugMode: true));
     try {
@@ -350,6 +370,7 @@ class _HomePageState extends State<HomePage> {
       await remoteConfig.activateFetched();
       isChat = remoteConfig.getBool('is_chat_active');
       chatUrl = remoteConfig.getString('chatLink');
+      publishVersion = int.parse(remoteConfig.getString("version"));
       await prefs.setBool('is_chat_active', isChat);
       await prefs.setString('chatLink', chatUrl);
     } on FetchThrottledException catch (exception) {
@@ -370,6 +391,43 @@ class _HomePageState extends State<HomePage> {
     await prefs.setBool('hasBooked', prefs.getBool('hasBooked') ?? false);
     print(username + rollNo + phoneNo);
     reset();
+    print(
+        "Version number is $buildNumber and version on remote config is $publishVersion");
+    if (buildNumber < publishVersion) {}
+  }
+
+  void checkUpdate() async {
+    if (buildNumber < publishVersion) {
+      Future.delayed(const Duration(milliseconds: 2000), () async {
+        print("It should update");
+        await DialogBackground(
+          dismissable: true,
+          blur: 2.0,
+          dialog: AlertDialog(
+            title: Text("Update Available"),
+            content: Text(
+                "The current version of the ICS app is outdated. Kindly update the app to get new features/bug fixes."),
+            actions: <Widget>[
+              FlatButton(
+                  child: Text("Update"), onPressed: () => _launchUpdate()),
+              FlatButton(
+                child: Text("Later"),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          ),
+        ).show(context);
+      });
+    } else
+      print("Not updating");
+  }
+
+  _launchUpdate() async {
+    if (await canLaunch(playstoreURL)) {
+      await launch(playstoreURL);
+    } else {
+      throw 'Could not launch $playstoreURL';
+    }
   }
 
   _launchURL() async {
@@ -379,12 +437,4 @@ class _HomePageState extends State<HomePage> {
       throw 'Could not launch $privacyPolicy';
     }
   }
-
-// _startFAQActivity() async {
-//   try {
-//     await platform.invokeMethod('startFaqActivity');
-//   } on PlatformException catch (e) {
-//     print(e.message);
-//   }
-// }
 }

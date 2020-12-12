@@ -8,6 +8,8 @@ import 'myApp.dart';
 
 var firebaseInstance = FirebaseAuth.instance;
 final privacyPolicy = "https://project-avocado-8b3e1.firebaseapp.com";
+final playstoreURL =
+    "https://play.google.com/store/apps/details?id=in.ac.nitrkl.scp.scp";
 
 Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
   if (message.containsKey('data')) {
