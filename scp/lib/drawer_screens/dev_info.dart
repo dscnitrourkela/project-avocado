@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:scp/ui/dsc_social.dart';
 
 final String aboutText =
     "Developer Student Clubs (DSC) is a Google Developers powered program for university students to learn mobile and web development skills. The clubs will be open to any student interested to learn, ranging from novice developers who are just starting, to advanced developers who want to further their skills. The clubs are intended as a space for students to try out new ideas and collaborate to solve mobile and web development problems.\n\n"
@@ -55,6 +56,7 @@ class DevInfo extends StatelessWidget {
                 ),
               ),
             ),
+            dscSocial(),
             Padding(
               padding: const EdgeInsets.only(top: 10, bottom: 10),
               child: Center(

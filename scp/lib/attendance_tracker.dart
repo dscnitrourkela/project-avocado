@@ -37,9 +37,7 @@ List<String> arch = [
 ];
 
 class AttendanceTracker extends StatefulWidget {
-  AttendanceTracker(String theorySection) {
-    theory = theorySection;
-  }
+  AttendanceTracker() {}
   @override
   _AttendanceTrackerState createState() => _AttendanceTrackerState();
 }
@@ -72,7 +70,10 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
 
   initPrefs() async {
     pref = await SharedPreferences.getInstance();
+    pref.getKeys();
     setState(() {
+      theory = pref.getString('theory_section');
+      print("Abel" + theory.toString());
       _events = Map<DateTime, List<dynamic>>.from(
           decodeMap(json.decode(pref.getString('events') ?? "{}")));
       _absents = Map<String, int>.from(
@@ -317,18 +318,23 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                               });
                             }),
                         IconButton(
-                            icon: Icon(Icons.delete,color: primaryColor,),
+                            icon: Icon(
+                              Icons.delete,
+                              color: primaryColor,
+                            ),
                             onPressed: () {
-                                 setState(() {
-                                    for (String selectClass in _selectedEvents) {
-                                          if (_absents.containsKey(selectClass)) {
-                                              _absents[selectClass]--;}}
-                                    _selectedEvents.clear();
-                                    _events[_calendarController.selectedDay].clear();
-                                    print(_selectedEvents);
-
-                                    });
-                               })
+                              setState(() {
+                                for (String selectClass in _selectedEvents) {
+                                  if (_absents.containsKey(selectClass)) {
+                                    _absents[selectClass]--;
+                                  }
+                                }
+                                _selectedEvents.clear();
+                                _events[_calendarController.selectedDay]
+                                    .clear();
+                                print(_selectedEvents);
+                              });
+                            })
                       ],
                     )
                   : Container(),

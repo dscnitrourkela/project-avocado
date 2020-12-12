@@ -33,6 +33,7 @@ class _BookingState extends State<Booking> {
 
   getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.getKeys();
     type = prefs.getString('bookingType');
     hasBooked = prefs.getBool('hasBooked');
     bookedDate = prefs.getString('bookedDate');
