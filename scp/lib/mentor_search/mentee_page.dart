@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import '../utils/grapgQLconfig.dart';
 
 final Color primaryColor = Color.fromARGB(255, 49, 68, 76);
 final Color secondaryColor = Color.fromARGB(255, 158, 218, 224);
 final Color lunchColor = Color.fromARGB(255, 238, 71, 89);
 
-final HttpLink httpLink =
-    HttpLink(uri: "https://ics.dscnitrourkela.org/graphql");
-
-final ValueNotifier<GraphQLClient> valueclient = ValueNotifier<GraphQLClient>(
-    GraphQLClient(
-        link: httpLink,
-        cache: OptimisticCache(dataIdFromObject: typenameDataIdFromObject)));
-
-String readMentees = """
+final String readMentees = """
 query Mentees(\$roll : String){
   mentor(rollNumber : \$roll){
     name
@@ -128,20 +121,25 @@ class MenteeDetails extends StatelessWidget {
                         color: primaryColor,
                         fontSize: queryWidth * 0.075,
                         fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: queryWidth * 0.07,
+                ),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: queryWidth * 0.05),
                   child: ListTile(
                     dense: true,
                     title: Text(
                       "MENTEE NAME",
+                      textAlign: TextAlign.left,
                       style: TextStyle(
-                          fontSize: queryWidth * 0.055,
+                          fontSize: queryWidth * 0.06,
                           fontWeight: FontWeight.bold),
                     ),
                     trailing: Text(
-                      "ROLL NO.",
+                      "ROLL NO",
+                      textAlign: TextAlign.right,
                       style: TextStyle(
-                          fontSize: queryWidth * 0.05,
+                          fontSize: queryWidth * 0.055,
                           fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -157,12 +155,14 @@ class MenteeDetails extends StatelessWidget {
                         dense: true,
                         title: Text(
                           result.data["mentor"]["mentees"][index]["name"],
+                          textAlign: TextAlign.justify,
                           style: TextStyle(
                               fontSize: queryWidth * 0.042,
                               fontWeight: FontWeight.bold),
                         ),
                         trailing: Text(
                           result.data["mentor"]["mentees"][index]["rollNumber"],
+                          textAlign: TextAlign.left,
                           style: TextStyle(
                               fontSize: queryWidth * 0.038,
                               fontWeight: FontWeight.bold),

@@ -3,20 +3,13 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:native_contact_dialog/native_contact_dialog.dart';
+import '../utils/grapgQLconfig.dart';
 
 final Color primaryColor = Color.fromARGB(255, 49, 68, 76);
 final Color secondaryColor = Color.fromARGB(255, 158, 218, 224);
 final Color lunchColor = Color.fromARGB(255, 238, 71, 89);
 
-final HttpLink httpLink =
-    HttpLink(uri: "https://ics.dscnitrourkela.org/graphql");
-
-final ValueNotifier<GraphQLClient> valueclient = ValueNotifier<GraphQLClient>(
-    GraphQLClient(
-        link: httpLink,
-        cache: OptimisticCache(dataIdFromObject: typenameDataIdFromObject)));
-
-String readMentorDetails = """
+final String readMentorDetails = """
 query MentorDetails(\$roll : String){
   mentee(rollNumber : \$roll){
     mentor{
