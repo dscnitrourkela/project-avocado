@@ -240,9 +240,7 @@ Widget mentorsCard(BuildContext context, String roll) {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  (roll.toString()[2] == "0")
-                                      ? 'MENTOR'
-                                      : "MENTEES",
+                                  (roll[2] == "0") ? 'MENTOR' : "MENTEES",
                                   style: TextStyle(
                                       fontFamily: 'PfDin',
                                       fontSize: heightFactor * 0.07,
@@ -262,7 +260,7 @@ Widget mentorsCard(BuildContext context, String roll) {
                           child: SizedBox(
                             width: 200.0,
                             child: Text(
-                              (roll.toString()[2] == "0")
+                              (roll[2] == "0")
                                   ? 'Find more about your ICS Mentor'
                                   : 'Find the list of your Mentees',
                               textAlign: TextAlign.left,
