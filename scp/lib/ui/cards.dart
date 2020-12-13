@@ -180,7 +180,11 @@ Widget appointmentCard(BuildContext context) {
 Widget mentorsCard(BuildContext context, String roll) {
   Gradients().init(context);
   SizeConfig().init(context);
+  if (roll == null) {
+    return Center(child: CircularProgressIndicator());
+  }
   double heightFactor = SizeConfig.screenWidth;
+  print(roll);
   return SizedBox(
     height: heightFactor * 0.58,
     child: InkWell(
@@ -236,7 +240,9 @@ Widget mentorsCard(BuildContext context, String roll) {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'MENTORS',
+                                  (roll.toString()[2] == "0")
+                                      ? 'MENTOR'
+                                      : "MENTEES",
                                   style: TextStyle(
                                       fontFamily: 'PfDin',
                                       fontSize: heightFactor * 0.07,
@@ -256,7 +262,9 @@ Widget mentorsCard(BuildContext context, String roll) {
                           child: SizedBox(
                             width: 200.0,
                             child: Text(
-                              'Find the complete database of ICS Mentors',
+                              (roll.toString()[2] == "0")
+                                  ? 'Find more about your ICS Mentor'
+                                  : 'Find the list of your Mentees',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontSize: heightFactor * 0.038,

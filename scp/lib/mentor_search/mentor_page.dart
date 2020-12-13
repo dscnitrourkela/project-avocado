@@ -98,6 +98,11 @@ class MentorDetails extends StatelessWidget {
               child: Text("Please check your internet connection"),
             );
           }
+          if (result.loading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           if (result.data["mentee"] != null) {
             var message = 'Save Contact';
             var dataRef = result.data["mentee"]["mentor"];
@@ -112,187 +117,206 @@ class MentorDetails extends StatelessWidget {
             return Padding(
               padding: EdgeInsets.only(top: queryWidth * 0.3),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                    height: queryWidth * 0.047,
-                  ),
-                  Text(
-                    mentorName,
-                    style: TextStyle(
-                        fontFamily: 'PfDin', fontSize: queryWidth * 0.1),
-                  ),
-                  SizedBox(
-                    height: queryWidth * 0.03,
-                  ),
-                  Text(
-                    mentorRoll,
-                    style: TextStyle(
-                        fontFamily: 'PfDin', fontSize: queryWidth * 0.06),
-                  ),
-                  Text(
-                    "Prefect - " + mentorPrefect,
-                    style: TextStyle(
-                        fontFamily: 'PfDin', fontSize: queryWidth * 0.06),
-                  ),
-                  Text(
-                    "Co-ordinator - " + mentorCoordinator,
-                    style: TextStyle(
-                        fontFamily: 'PfDin', fontSize: queryWidth * 0.06),
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: queryWidth * 0.07),
-                    child: Card(
-                      color: Colors.white,
-                      margin: EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 25.0),
-                      child: ListTile(
-                        leading: Container(
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  right: BorderSide(
-                            width: 1.0,
-                            color: secondaryColor,
-                          ))),
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 12.0),
-                            child: Icon(
-                              Icons.phone,
-                              color: Color.fromRGBO(74, 232, 190, 1),
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: queryWidth * 0.047,
+                      ),
+                      Text(
+                        mentorName,
+                        style: TextStyle(
+                            fontFamily: 'PfDin', fontSize: queryWidth * 0.1),
+                      ),
+                      SizedBox(
+                        height: queryWidth * 0.03,
+                      ),
+                      Text(
+                        mentorRoll,
+                        style: TextStyle(
+                            fontFamily: 'PfDin', fontSize: queryWidth * 0.06),
+                      ),
+                      Text(
+                        "Prefect - " + mentorPrefect,
+                        style: TextStyle(
+                            fontFamily: 'PfDin', fontSize: queryWidth * 0.06),
+                      ),
+                      Text(
+                        "Co-ordinator - " + mentorCoordinator,
+                        style: TextStyle(
+                            fontFamily: 'PfDin', fontSize: queryWidth * 0.06),
+                      ),
+                      Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: queryWidth * 0.07),
+                        child: Card(
+                          color: Colors.white,
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 25.0),
+                          child: ListTile(
+                            leading: Container(
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      right: BorderSide(
+                                width: 1.0,
+                                color: secondaryColor,
+                              ))),
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 12.0),
+                                child: Icon(
+                                  Icons.phone,
+                                  color: Color.fromRGBO(74, 232, 190, 1),
+                                ),
+                              ),
+                            ),
+                            title: Center(
+                              child: Text(
+                                mentorContact,
+                                style: TextStyle(
+                                  fontSize: queryWidth * 0.06,
+                                  fontFamily: 'PfDin',
+                                  color: primaryColor,
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                        title: Center(
+                      ),
+                      SizedBox(
+                        height: queryWidth * 0.027,
+                      ),
+                      Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: queryWidth * 0.07),
+                        child: Card(
+                          color: Colors.white,
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 25.0),
+                          child: ListTile(
+                            leading: Container(
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      right: BorderSide(
+                                width: 1.0,
+                                color: secondaryColor,
+                              ))),
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 12.0),
+                                child: Icon(
+                                  Icons.email,
+                                  color: Color.fromRGBO(74, 232, 190, 1),
+                                ),
+                              ),
+                            ),
+                            title: Center(
+                              child: Text(
+                                mentorEmail,
+                                style: TextStyle(
+                                  fontSize: queryWidth * 0.053,
+                                  fontFamily: 'PfDin',
+                                  color: primaryColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: queryWidth * 0.027,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.all(20),
+                              child: FloatingActionButton(
+                                heroTag: "btn1",
+                                backgroundColor:
+                                    Color.fromRGBO(74, 232, 190, 1),
+                                shape: CircleBorder(),
+                                child: Icon(Icons.call),
+                                onPressed: () async {
+                                  var url = "tel:" + mentorContact;
+                                  if (await canLaunch(url)) {
+                                    await launch(url);
+                                  } else {
+                                    throw 'Could not launch $url';
+                                  }
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(20),
+                              child: FloatingActionButton(
+                                heroTag: "btn2",
+                                backgroundColor:
+                                    Color.fromRGBO(74, 232, 190, 1),
+                                shape: CircleBorder(),
+                                child: Icon(Icons.mail),
+                                onPressed: () async {
+                                  var url = "mailto:" + mentorEmail;
+                                  if (await canLaunch(url)) {
+                                    await launch(url);
+                                  } else {
+                                    throw 'Could not launch $url';
+                                  }
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(20),
+                              child: FloatingActionButton(
+                                heroTag: "btn3",
+                                backgroundColor:
+                                    Color.fromRGBO(74, 232, 190, 1),
+                                shape: CircleBorder(),
+                                child: Icon(Icons.message),
+                                onPressed: () async {
+                                  var url = "sms:" + mentorContact;
+                                  if (await canLaunch(url)) {
+                                    await launch(url);
+                                  } else {
+                                    throw 'Could not launch $url';
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: queryWidth * 0.1,
+                        child: RaisedButton(
+                          color: Color.fromRGBO(
+                            54,
+                            66,
+                            87,
+                            1.0,
+                          ),
+                          shape: StadiumBorder(),
+                          onPressed: () {
+                            saveContact(Contact(
+                                givenName: mentorName,
+                                phones: [Item(value: mentorContact)],
+                                emails: [Item(value: mentorEmail)]));
+                          },
                           child: Text(
-                            mentorContact,
-                            style: TextStyle(
-                              fontSize: queryWidth * 0.06,
-                              fontFamily: 'PfDin',
-                              color: primaryColor,
-                            ),
+                            message,
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: queryWidth * 0.027,
+                      )
+                    ],
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: queryWidth * 0.07),
-                    child: Card(
-                      color: Colors.white,
-                      margin: EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 25.0),
-                      child: ListTile(
-                        leading: Container(
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  right: BorderSide(
-                            width: 1.0,
-                            color: secondaryColor,
-                          ))),
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 12.0),
-                            child: Icon(
-                              Icons.email,
-                              color: Color.fromRGBO(74, 232, 190, 1),
-                            ),
-                          ),
-                        ),
-                        title: Center(
-                          child: Text(
-                            mentorEmail,
-                            style: TextStyle(
-                              fontSize: queryWidth * 0.053,
-                              fontFamily: 'PfDin',
-                              color: primaryColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: queryWidth * 0.027,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.all(20),
-                          child: FloatingActionButton(
-                            backgroundColor: Color.fromRGBO(74, 232, 190, 1),
-                            shape: CircleBorder(),
-                            child: Icon(Icons.call),
-                            onPressed: () async {
-                              var url = "tel:" + mentorContact;
-                              if (await canLaunch(url)) {
-                                await launch(url);
-                              } else {
-                                throw 'Could not launch $url';
-                              }
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(20),
-                          child: FloatingActionButton(
-                            backgroundColor: Color.fromRGBO(74, 232, 190, 1),
-                            shape: CircleBorder(),
-                            child: Icon(Icons.mail),
-                            onPressed: () async {
-                              var url = "mailto:" + mentorEmail;
-                              if (await canLaunch(url)) {
-                                await launch(url);
-                              } else {
-                                throw 'Could not launch $url';
-                              }
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(20),
-                          child: FloatingActionButton(
-                            backgroundColor: Color.fromRGBO(74, 232, 190, 1),
-                            shape: CircleBorder(),
-                            child: Icon(Icons.message),
-                            onPressed: () async {
-                              var url = "sms:" + mentorContact;
-                              if (await canLaunch(url)) {
-                                await launch(url);
-                              } else {
-                                throw 'Could not launch $url';
-                              }
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: queryWidth * 0.1,
-                    child: RaisedButton(
-                      color: Color.fromRGBO(
-                        54,
-                        66,
-                        87,
-                        1.0,
-                      ),
-                      shape: StadiumBorder(),
-                      onPressed: () {
-                        saveContact(Contact(
-                            givenName: mentorName,
-                            phones: [Item(value: mentorContact)],
-                            emails: [Item(value: mentorEmail)]));
-                      },
-                      child: Text(
-                        message,
-                        style: TextStyle(color: Colors.white),
-                      ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    child: Text(
+                      "For details about Prefect and Co-ordinator visit \"About ICS\" section ",
+                      style: TextStyle(color: primaryColor),
                     ),
                   )
                 ],
