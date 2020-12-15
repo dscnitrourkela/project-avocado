@@ -24,6 +24,7 @@ dependencies:
   firebase_database: ^3.0.3
   firebase_messaging: ^5.1.6
   firebase_remote_config: ^0.2.0+3
+  get_it: ^5.1.0
   firebase_storage: ^3.0.8
   flutter_webview_plugin: ^0.3.11
   font_awesome_flutter: ^8.10.0
