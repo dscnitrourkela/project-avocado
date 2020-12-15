@@ -31,6 +31,7 @@ dependencies:
   in_app_review: ^1.0.4
   intl: ^0.15.2
   lite_rolling_switch: ^0.1.1
+  lottie: ^0.7.0+1
   native_contact_dialog: ^0.2.2
   ndialog: ^3.1.0
   package_info: ^0.4.3+2

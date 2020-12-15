@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:scp/SplashScreen.dart';
 import 'package:scp/utils/routes.dart';
 import 'dart:async';
 import 'myApp.dart';
@@ -37,7 +38,7 @@ void main() {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyApp(),
+      home: SplashScreen(),
     ));
   }, onError: Crashlytics.instance.recordError);
   FlutterError.onError = (FlutterErrorDetails details) {
