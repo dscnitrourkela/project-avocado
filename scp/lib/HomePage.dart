@@ -250,16 +250,22 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Colors.white,
             body: Padding(
               padding: const EdgeInsets.only(top: 16.0),
-              child: ListView(
-                scrollDirection: Axis.vertical,
-                children: <Widget>[
-                  appointmentCard(context),
-                  TimetableCardSplit(context, MediaQuery.of(context).size.width,
-                      MediaQuery.of(context).textScaleFactor),
-                  faqCard(context),
-                  mentorsCard(context),
-                ],
-              ),
+              child: (snap.connectionState == ConnectionState.done)
+                  ? ListView(
+                      scrollDirection: Axis.vertical,
+                      children: <Widget>[
+                        appointmentCard(context),
+                        TimetableCardSplit(
+                            context,
+                            MediaQuery.of(context).size.width,
+                            MediaQuery.of(context).textScaleFactor),
+                        faqCard(context),
+                        mentorsCard(context, rollNo)
+                      ],
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(),
+                    ),
             ),
           );
         },
