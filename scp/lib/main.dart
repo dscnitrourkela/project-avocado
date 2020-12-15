@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:scp/app/locator.dart';
 import 'package:scp/utils/routes.dart';
 import 'dart:async';
 import 'myApp.dart';
@@ -28,6 +29,7 @@ void main() {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
   runZoned<Future<void>>(() async {
+    setupLocator();
     runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ICS',
