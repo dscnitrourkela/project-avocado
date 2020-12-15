@@ -2,6 +2,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scp/booking.dart';
+import 'package:scp/mentor_search/mentee_page.dart';
+import 'package:scp/mentor_search/mentor_page.dart';
 import 'package:scp/ui/gradients.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
 import 'package:scp/utils/routes.dart';
@@ -175,15 +177,29 @@ Widget appointmentCard(BuildContext context) {
   );
 }
 
-Widget mentorsCard(BuildContext context) {
+Widget mentorsCard(BuildContext context, String roll) {
   Gradients().init(context);
   SizeConfig().init(context);
+  if (roll == null) {
+    return Center(child: CircularProgressIndicator());
+  }
   double heightFactor = SizeConfig.screenWidth;
+  print(roll);
   return SizedBox(
     height: heightFactor * 0.58,
     child: InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed(Routes.rMentors);
+        if (roll.toString()[2] == '0') {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DetailScreen(roll.toString())));
+        } else {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ListDetails(roll.toString())));
+        }
       },
       child: Card(
         shape:
@@ -224,7 +240,7 @@ Widget mentorsCard(BuildContext context) {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'MENTORS',
+                                  (roll[2] == "0") ? 'MENTOR' : "MENTEES",
                                   style: TextStyle(
                                       fontFamily: 'PfDin',
                                       fontSize: heightFactor * 0.07,
@@ -244,7 +260,9 @@ Widget mentorsCard(BuildContext context) {
                           child: SizedBox(
                             width: 200.0,
                             child: Text(
-                              'Find the complete database of ICS Mentors',
+                              (roll[2] == "0")
+                                  ? 'Find more about your ICS Mentor'
+                                  : 'Find the list of your Mentees',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontSize: heightFactor * 0.038,
