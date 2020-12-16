@@ -85,12 +85,14 @@ class DevInfo extends StatelessWidget {
                     context, "Astha Nayak", "https://github.com/nayakastha"),
                 contactCard(
                     context, "Chinmay Kabi", "https://github.com/Chinmay-KB"),
+                contactCard(context, "Manikandan L.",
+                    "https://github.com/Manikandan9206"),
+                contactCard(context, "Patibanda Sriram ",
+                    "https://github.com/SriramPatibanda"),
                 contactCard(
                     context, "Reuben Abraham", "http://reubenabraham.com/"),
                 contactCard(
                     context, "Smarak Das", "https://github.com/Thesmader"),
-                contactCard(context, "Patibanda Sriram ",
-                    "https://github.com/SriramPatibanda"),
               ],
             ),
             Padding(

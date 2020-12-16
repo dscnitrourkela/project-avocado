@@ -10,7 +10,7 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  String phoneNo = " ";
+  String username = " ", rollNo = " ", phoneNo = " ";
   bool state;
   @override
   Widget build(BuildContext context) {
@@ -71,6 +71,8 @@ class _SettingsState extends State<Settings> {
   Future fetchUserData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     phoneNo = prefs.getString('phone_no');
+    username = prefs.getString('username');
+    rollNo = prefs.getString('roll_no');
     DocumentSnapshot qn =
         await Firestore.instance.collection('tokens').document(phoneNo).get();
     state = await qn.data['optionalSub'];
@@ -79,6 +81,36 @@ class _SettingsState extends State<Settings> {
   }
 
   FirebaseMessaging _fcm = FirebaseMessaging();
+
+  saveTokenToFirestore(String token) async {
+    Firestore.instance
+        .collection('tokens')
+        .where('mobile', isEqualTo: phoneNo)
+        .getDocuments()
+        .then((QuerySnapshot deviceToken) async {
+      if (deviceToken.documents.isEmpty) {
+        await Firestore.instance
+            .collection('tokens')
+            .document(phoneNo)
+            .setData({
+          'devToken': token,
+          'displayName': username,
+          'roll': rollNo,
+          'mobile': phoneNo,
+          'optionalSub': true,
+          'createdAt': FieldValue.serverTimestamp(),
+        });
+      } else {
+        await Firestore.instance
+            .collection('tokens')
+            .document(phoneNo)
+            .updateData({
+          'devToken': token,
+          'displayName': username,
+        });
+      }
+    });
+  }
 
   unSubOther(state) {
     if (state == false) {
@@ -93,6 +125,17 @@ class _SettingsState extends State<Settings> {
           .document(phoneNo)
           .updateData({'optionalSub': true});
       _fcm.subscribeToTopic('other');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (state == null) {
+      state = true;
+      final token = _fcm
+          .getToken()
+          .then((token) async => await saveTokenToFirestore(token.toString()));
     }
   }
 }
