@@ -111,9 +111,10 @@ class MenteeDetails extends StatelessWidget {
               children: [
                 Text(
                   result.data["mentor"]["name"],
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                       color: primaryColor,
-                      fontSize: queryWidth * 0.12,
+                      fontSize: queryWidth * 0.1,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(result.data["mentor"]["rollNumber"],
@@ -155,14 +156,14 @@ class MenteeDetails extends StatelessWidget {
                         dense: true,
                         title: Text(
                           result.data["mentor"]["mentees"][index]["name"],
-                          textAlign: TextAlign.justify,
+                          textAlign: TextAlign.left,
                           style: TextStyle(
                               fontSize: queryWidth * 0.042,
                               fontWeight: FontWeight.bold),
                         ),
                         trailing: Text(
                           result.data["mentor"]["mentees"][index]["rollNumber"],
-                          textAlign: TextAlign.left,
+                          textAlign: TextAlign.right,
                           style: TextStyle(
                               fontSize: queryWidth * 0.038,
                               fontWeight: FontWeight.bold),

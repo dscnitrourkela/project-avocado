@@ -14,6 +14,7 @@ query Coordinator{
   coordinators{
     name
     contact
+    designation
   }
 }
 """;
@@ -139,7 +140,7 @@ class AboutSCP extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         var ref = result.data["coordinators"];
                         return contactCard(context, ref[index]["name"],
-                            "Student Coordinator", ref[index]["contact"]);
+                            ref[index]["designation"], ref[index]["contact"]);
                       });
                 },
               ),
