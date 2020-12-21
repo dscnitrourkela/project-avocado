@@ -14,8 +14,3 @@ class localStorageService {
     return _instance;
   }
 }
-
-Future setupLocator() async {
-  var instance = await LocalStorageService.getInstance();
-  locator.registerSingleton<LocalStorageService>(instance);
-}
