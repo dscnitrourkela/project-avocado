@@ -1,23 +1,40 @@
 abstract class TimeTableResources {
-  static bool isAutumnSemester ()=> DateTime.now().month>6;
+  static bool isAutumnSemester() => true;
   static String courseNumber = 'I';
-  static void setCourseNumber(){
+  static void setCourseNumber() {
     courseNumber = isAutumnSemester() ? 'I' : 'II';
-    theory['A']['TA'] = theory['B']['TA']
-    = theory['C']['TB'] = theory['D']['TB']
-    = theory['E']['TK'] = theory['F']['TK']
-    = theory['G']['TM'] = theory['H']['TM'] = 'Physics-$courseNumber';
+    theory['A']['TA'] = theory['B']['TA'] = theory['C']['TB'] =
+        theory['D']['TB'] = theory['E']['TK'] = theory['F']['TK'] =
+            theory['G']['TM'] = theory['H']['TM'] = 'Physics-$courseNumber';
 
-    theory['A']['TC'] = theory['B']['TC']
-    = theory['C']['TD'] = theory['D']['TD']
-    = theory['E']['TJ'] = theory['F']['TJ']
-    = theory['G']['TL'] = theory['H']['TL'] = 'Mathematics-$courseNumber';
+    theory['A']['TC'] = theory['B']['TC'] = theory['C']['TD'] =
+        theory['D']['TD'] = theory['E']['TJ'] = theory['F']['TJ'] =
+            theory['G']['TL'] = theory['H']['TL'] = 'Mathematics-$courseNumber';
   }
+
   static final tpSequence = {
     'Monday': ['TA', 'TB', 'TC', 'TE', 'PA', 'PA', 'PA', 'TF', 'ZA'],
     'Tuesday': ['TB', 'TC', 'TD', 'TE', 'PB', 'PB', 'PB', 'TF', 'ZB'],
-    'Wednesday': ['', 'PX', 'PX', 'PX', 'TG1', 'SA', 'SB', 'SC', 'ZA',
-      'SM1', 'SJ1', 'SK1', 'SL1', '', 'PY', 'PY', 'PY', ''],
+    'Wednesday': [
+      '',
+      'PX',
+      'PX',
+      'PX',
+      'TG1',
+      'SA',
+      'SB',
+      'SC',
+      'ZA',
+      'SM1',
+      'SJ1',
+      'SK1',
+      'SL1',
+      '',
+      'PY',
+      'PY',
+      'PY',
+      ''
+    ],
     'Thursday': ['TC', 'TD', 'TA', 'TG2', 'PC', 'PC', 'PC', 'TF', 'ZC'],
     'Friday': ['TD', 'TA', 'TB', 'TE', 'PD', 'PD', 'PD', 'TG3', 'ZA']
   };
@@ -26,16 +43,52 @@ abstract class TimeTableResources {
     'tp': {
       'Monday': ['TA', 'TB', 'TC', 'TE', 'PA', 'PA', 'PA', 'TF', 'ZA'],
       'Tuesday': ['TB', 'TC', 'TD', 'TE', 'PB', 'PB', 'PB', 'TF', 'ZB'],
-      'Wednesday': ['', 'PX', 'PX', 'PX', 'TG1', 'SA', 'SB', 'SC', 'ZA',
-        'SM1', 'SJ1', 'SK1', 'SL1', '', 'PY', 'PY', 'PY', ''],
+      'Wednesday': [
+        '',
+        'PX',
+        'PX',
+        'PX',
+        'TG1',
+        'SA',
+        'SB',
+        'SC',
+        'ZA',
+        'SM1',
+        'SJ1',
+        'SK1',
+        'SL1',
+        '',
+        'PY',
+        'PY',
+        'PY',
+        ''
+      ],
       'Thursday': ['TC', 'TD', 'TA', 'TG2', 'PC', 'PC', 'PC', 'TF', 'ZC'],
       'Friday': ['TD', 'TA', 'TB', 'TE', 'PD', 'PD', 'PD', 'TG3', 'ZA']
     },
     'pt': {
       'Monday': ['PE', 'PE', 'PE', 'TE', 'TJ', 'TK', 'TL', 'TF', 'ZA'],
       'Tuesday': ['PF', 'PF', 'PF', 'TE', 'TK', 'TL', 'TM', 'TF', 'ZB'],
-      'Wednesday': ['', 'PX', 'PX', 'PX', 'TG1', 'SA', 'SB', 'SC', 'ZA',
-        'SM1', 'SJ1', 'SK1', 'SL1', '', 'PY', 'PY', 'PY', ''],
+      'Wednesday': [
+        '',
+        'PX',
+        'PX',
+        'PX',
+        'TG1',
+        'SA',
+        'SB',
+        'SC',
+        'ZA',
+        'SM1',
+        'SJ1',
+        'SK1',
+        'SL1',
+        '',
+        'PY',
+        'PY',
+        'PY',
+        ''
+      ],
       'Thursday': ['PG', 'PG', 'PG', 'TG2', 'TL', 'TM', 'TJ', 'TF', 'ZC'],
       'Friday': ['PH', 'PH', 'PH', 'TE', 'TM', 'TJ', 'TK', 'TG3', 'ZA']
     }
@@ -159,7 +212,7 @@ abstract class TimeTableResources {
   };
 
   static final practical = {
-    'Ar.': {'PA': 'AR1', 'PB': 'AR2','PX': 'AR3', 'PC': 'AR4','PD': 'WP'},
+    'Ar.': {'PA': 'AR1', 'PB': 'AR2', 'PX': 'AR3', 'PC': 'AR4', 'PD': 'WP'},
     'P1': {'PA': 'PL', 'PB': 'BP', 'PD': 'WP'},
     'P2': {'PB': 'PL', 'PC': 'BP', 'PX': 'WP'},
     'P3': {'PC': 'PL', 'PD': 'BP', 'PA': 'WP'},
@@ -173,38 +226,83 @@ abstract class TimeTableResources {
   };
 
   static final practicalDetails = {
-    'AR1': {'name': 'Architectural Graphics-I', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777', 'locationName': 'TIIR'},
-    'AR2': {'name': 'Basic Design', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777', 'locationName': 'TIIR'},
-    'AR3': {'name': 'Visual Arts-I', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777', 'locationName': 'TIIR'},
-    'AR4': {'name': 'Non Graphic Computer Application', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777', 'locationName': 'TIIR'},
-    'PL': {'name': 'Physics Laboratory', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777', 'locationName': 'Main Building'},
-    'BP': {'name': 'Basic Programming', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2513332,84.9048918', 'locationName': 'LA1'},
-    'WP': {'name': 'Workshop Practices', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2526002,84.9029979', 'locationName': 'Central Workshop'},
-    'CL': {'name': 'Chemistry Laboratory', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777', 'locationName': 'Main Building'},
-    'ED': {'name': 'Engineering Drawing', 'location': 'https://www.google.com/maps/search/?api=1&query=22.2513332,84.9048918', 'locationName': 'LA1'},
+    'AR1': {
+      'name': 'Architectural Graphics-I',
+      'location':
+          'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
+      'locationName': 'TIIR'
+    },
+    'AR2': {
+      'name': 'Basic Design',
+      'location':
+          'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
+      'locationName': 'TIIR'
+    },
+    'AR3': {
+      'name': 'Visual Arts-I',
+      'location':
+          'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
+      'locationName': 'TIIR'
+    },
+    'AR4': {
+      'name': 'Non Graphic Computer Application',
+      'location':
+          'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
+      'locationName': 'TIIR'
+    },
+    'PL': {
+      'name': 'Physics Laboratory',
+      'location':
+          'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
+      'locationName': 'Main Building'
+    },
+    'BP': {
+      'name': 'Basic Programming',
+      'location':
+          'https://www.google.com/maps/search/?api=1&query=22.2513332,84.9048918',
+      'locationName': 'LA1'
+    },
+    'WP': {
+      'name': 'Workshop Practices',
+      'location':
+          'https://www.google.com/maps/search/?api=1&query=22.2526002,84.9029979',
+      'locationName': 'Central Workshop'
+    },
+    'CL': {
+      'name': 'Chemistry Laboratory',
+      'location':
+          'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
+      'locationName': 'Main Building'
+    },
+    'ED': {
+      'name': 'Engineering Drawing',
+      'location':
+          'https://www.google.com/maps/search/?api=1&query=22.2513332,84.9048918',
+      'locationName': 'LA1'
+    },
   };
 
   static final subsituteTheorySection = {
-    'A' : 'E',
-    'B' : 'F',
-    'C' : 'G',
-    'D' : 'H',
-    'E' : 'A',
-    'F' : 'B',
-    'G' : 'C',
-    'H' : 'D'
+    'A': 'E',
+    'B': 'F',
+    'C': 'G',
+    'D': 'H',
+    'E': 'A',
+    'F': 'B',
+    'G': 'C',
+    'H': 'D'
   };
 
   static final substitutePracticalSection = {
-    'P1' : 'P6',
-    'P2' : 'P7',
-    'P3' : 'P8',
-    'P4' : 'P9',
-    'P5' : 'P10',
-    'P6' : 'P1',
-    'P7' : 'P2',
-    'P8' : 'P3',
-    'P9' : 'P4',
+    'P1': 'P6',
+    'P2': 'P7',
+    'P3': 'P8',
+    'P4': 'P9',
+    'P5': 'P10',
+    'P6': 'P1',
+    'P7': 'P2',
+    'P8': 'P3',
+    'P9': 'P4',
     'P10': 'P5'
   };
 }
@@ -219,9 +317,9 @@ class PeriodDetails {
 
   PeriodDetails(
       {this.name,
-        this.slotTime,
-        this.location,
-        this.locationName,
-        this.slotLength,
-        this.type});
+      this.slotTime,
+      this.location,
+      this.locationName,
+      this.slotLength,
+      this.type});
 }
