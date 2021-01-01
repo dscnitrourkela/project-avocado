@@ -4,4 +4,5 @@
     <color name="faq_question_selected">#19272d</color>
     <color name="faq_actionBar">#2f434c</color>
     <color name="background">#dddddd</color>
+    <color name="ics_logo">#00AB6B</color>
 </resources>
