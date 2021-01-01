@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scp/time_table_resources.dart';
 import 'package:scp/utils/routes.dart';
 import 'dart:convert';
 import 'package:table_calendar/table_calendar.dart';
@@ -133,7 +134,7 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
       List<String> subList = [];
       if (theory.toString() == "Ar.")
         subList = arch;
-      else if (day.month.toInt() <= 12 && day.month.toInt() >= 7) {
+      else if (TimeTableResources.isAutumnSemester()) {
         if (theory.toString() == "A" ||
             theory.toString() == "B" ||
             theory.toString() == "C" ||
