@@ -10,7 +10,7 @@
 ### Description
 Please describe your pull request.
 
-💔Thank you!
+❤️Thank you!
 
 ### Post merge checklist
 - [ ] Follow steps from the [guidelines for contributing](../CONTRIBUTING.md) to this repository.
