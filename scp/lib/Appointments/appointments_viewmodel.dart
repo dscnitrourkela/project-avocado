@@ -27,7 +27,7 @@ class AppointmentViewModel extends BaseViewModel {
     //super.initState();
     notifyListeners();
   }
-  getDate() async {
+ void getDate() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.getKeys();
     psychDate = prefs.getString('psychDate');
