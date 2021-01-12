@@ -45,7 +45,6 @@ class AppointmentViewModel extends BaseViewModel {
     counselorName = remoteConfig.getString('counselor_name');
     psychName = remoteConfig.getString('psych_name');
     psychDay = remoteConfig.getString('psych_day');
-    print(counselDay + 'hola');
     await scpDatabase.init(); // TODO: Makeshift
     _onCounselChangedSubscription =
         ScpDatabase.counselRef.onChildChanged.listen(_onSlotsUpdated);
