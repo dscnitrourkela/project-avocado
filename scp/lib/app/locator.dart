@@ -4,4 +4,5 @@ final locator = GetIt.instance;
 
 void setupLocator(){
 
+
 }

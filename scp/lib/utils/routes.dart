@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scp/Appointments/appointments_view.dart';
 import 'package:scp/HomePage.dart';
 
 import 'package:scp/booking.dart';
@@ -32,7 +33,7 @@ class Routes {
   static Map<String, WidgetBuilder> getRoutes() {
     return {
       Routes.rHomepage: (context) => HomeView(),
-      Routes.rAppointments: (context) => Appointments(),
+      Routes.rAppointments: (context) => AppointmentView(),
       Routes.rTimetable: (context) => TheorySection(0), //0 for left card
       Routes.rUserData: (context) => Userdata(),
       Routes.rLogin: (context) => Login(),
