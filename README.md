@@ -1,6 +1,6 @@
 [![Starware](https://img.shields.io/badge/Starware-⭐-black?labelColor=f9b00d)](https://github.com/zepfietje/starware)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-14-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # About App
@@ -73,6 +73,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/priyanshu0405"><img src="https://avatars0.githubusercontent.com/u/58037946?v=4?s=100" width="100px;" alt=""/><br /><sub><b>priyanshu0405</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado/commits?author=priyanshu0405" title="Code">💻</a></td>
     <td align="center"><a href="https://sites.google.com/view/pratik-priyadarsan-third-year/home?authuser=0"><img src="https://avatars3.githubusercontent.com/u/53232687?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Pratik Priyadarsan</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado/commits?author=pratik0197" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/Priya-81199"><img src="https://avatars2.githubusercontent.com/u/46104353?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Priya Mishra</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado/commits?author=Priya-81199" title="Code">💻</a> <a href="#maintenance-Priya-81199" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/haru-02"><img src="https://avatars2.githubusercontent.com/u/56230164?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Rahul Balaji</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado/commits?author=haru-02" title="Code">💻</a> <a href="#maintenance-haru-02" title="Maintenance">🚧</a></td>
   </tr>
 </table>
 
