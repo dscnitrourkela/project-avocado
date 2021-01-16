@@ -131,6 +131,16 @@
         "code",
         "maintenance"
       ]
+    },
+    {
+      "login": "haru-02",
+      "name": "Rahul Balaji",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/56230164?v=4",
+      "profile": "https://github.com/haru-02",
+      "contributions": [
+        "code",
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 7,
