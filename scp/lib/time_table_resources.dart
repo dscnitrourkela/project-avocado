@@ -16,7 +16,7 @@ abstract class TimeTableResources {
   }
 
   //static bool isAutumnSemester() => true;
-  static String courseNumber = 'I';
+  static String courseNumber;
   static void setCourseNumber() {
     courseNumber = isAutumnSem() ? 'I' : 'II';
     theory['A']['TA'] = theory['B']['TA'] = theory['C']['TB'] =
