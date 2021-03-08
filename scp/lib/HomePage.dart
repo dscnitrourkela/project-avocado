@@ -381,6 +381,7 @@ class _HomePageState extends State<HomePage> {
       publishVersion = int.parse(remoteConfig.getString("version"));
       await prefs.setBool('is_chat_active', isChat);
       await prefs.setString('chatLink', chatUrl);
+      await prefs.setBool('is_autumn', isAutumn);
     } on FetchThrottledException catch (exception) {
       isChat = prefs.getBool('is_chat_active');
       chatUrl = prefs.getString('chatLink');
@@ -395,7 +396,7 @@ class _HomePageState extends State<HomePage> {
 
     isChat = remoteConfig.getBool('is_chat_active');
     chatUrl = remoteConfig.getString('chatLink');
-    isAutumn = prefs.getBool('is_autumn');
+    isAutumn = remoteConfig.getBool('is_autumn');
     username = prefs.getString('username');
     rollNo = prefs.getString('roll_no');
     phoneNo = prefs.getString('phone_no');
