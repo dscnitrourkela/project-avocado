@@ -35,6 +35,7 @@ class _HomePageState extends State<HomePage> {
   RemoteConfig remoteConfig;
   bool isChat = false;
   String chatUrl;
+  bool isAutumn;
   int buildNumber;
   int publishVersion;
 
@@ -376,26 +377,30 @@ class _HomePageState extends State<HomePage> {
       await remoteConfig.activateFetched();
       isChat = remoteConfig.getBool('is_chat_active');
       chatUrl = remoteConfig.getString('chatLink');
+      isAutumn = remoteConfig.getBool('is_autumn');
       publishVersion = int.parse(remoteConfig.getString("version"));
       await prefs.setBool('is_chat_active', isChat);
       await prefs.setString('chatLink', chatUrl);
     } on FetchThrottledException catch (exception) {
       isChat = prefs.getBool('is_chat_active');
       chatUrl = prefs.getString('chatLink');
+      isAutumn = prefs.getBool('is_autumn');
       // Fetch throttled.
       print(exception);
     } catch (exception) {
       isChat = prefs.getBool('is_chat_active');
       chatUrl = prefs.getString('chatLink');
+      isAutumn = prefs.getBool('is_autumn');
     }
 
     isChat = remoteConfig.getBool('is_chat_active');
     chatUrl = remoteConfig.getString('chatLink');
+    isAutumn = prefs.getBool('is_autumn');
     username = prefs.getString('username');
     rollNo = prefs.getString('roll_no');
     phoneNo = prefs.getString('phone_no');
     await prefs.setBool('hasBooked', prefs.getBool('hasBooked') ?? false);
-    print(username + rollNo + phoneNo);
+    print(username + rollNo + phoneNo + isAutumn.toString());
     reset();
     print(
         "Version number is $buildNumber and version on remote config is $publishVersion");

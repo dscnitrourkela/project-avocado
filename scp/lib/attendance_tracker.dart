@@ -134,7 +134,7 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
       List<String> subList = [];
       if (theory.toString() == "Ar.")
         subList = arch;
-      else if (TimeTableResources.isAutumnSemester()) {
+      else if (TimeTableResources.isAutumnSem()) {
         if (theory.toString() == "A" ||
             theory.toString() == "B" ||
             theory.toString() == "C" ||
@@ -254,88 +254,100 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        DropdownButton<String>(
-                            icon: Icon(Icons.keyboard_arrow_down),
-                            iconSize: 16,
-                            elevation: 10,
-                            style: TextStyle(
+                        Expanded(
+                          flex: 6,
+                          child: Container(
+                            child: DropdownButton<String>(
+                                icon: Icon(Icons.keyboard_arrow_down),
+                                iconSize: 16,
+                                elevation: 10,
+                                style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                onChanged: (value) {
+                                  setState(() {
+                                    markedValue = value;
+                                  });
+                                },
+                                value: markedValue,
+                                items: items(currentDay).map((entry) {
+                                  return DropdownMenuItem(
+                                      value: entry,
+                                      child: Container(
+                                        child: Text(
+                                          entry,
+                                          style: TextStyle(color: primaryColor),
+                                        ),
+                                      ));
+                                }).toList()),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: RaisedButton(
+                              elevation: 10,
                               color: primaryColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            onChanged: (value) {
-                              setState(() {
-                                markedValue = value;
-                              });
-                            },
-                            value: markedValue,
-                            items: items(currentDay).map((entry) {
-                              return DropdownMenuItem(
-                                  value: entry,
-                                  child: Text(
-                                    entry,
-                                    style: TextStyle(color: primaryColor),
-                                  ));
-                            }).toList()),
-                        RaisedButton(
-                            elevation: 10,
-                            color: primaryColor,
-                            textColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                            ),
-                            child: Text("Enter"),
-                            onPressed: () {
-                              setState(() {
-                                if (_absents.containsKey(markedValue)) {
-                                  _absents[markedValue.toString()]++;
-                                } else {
-                                  _absents[markedValue.toString()] = 1;
-                                }
-                                if (_selectedEvents.contains(markedValue)) {
-                                  print(markedValue + " 1");
-                                  return;
-                                } else {
-                                  if (_events[
-                                          _calendarController.selectedDay] !=
-                                      null) {
-                                    print(markedValue + " b");
-                                    _selectedEvents.add(markedValue);
-                                    _events[_calendarController.selectedDay]
-                                        .add(markedValue);
+                              textColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
+                              child: Text("Enter"),
+                              onPressed: () {
+                                setState(() {
+                                  if (_absents.containsKey(markedValue)) {
+                                    _absents[markedValue.toString()]++;
                                   } else {
-                                    print(markedValue + " a");
-                                    _selectedEvents.add(markedValue);
-                                    _events[_calendarController.selectedDay] = [
-                                      markedValue
-                                    ];
+                                    _absents[markedValue.toString()] = 1;
                                   }
-                                }
-                                print(_selectedEvents);
-                                pref.setString('absents',
-                                    json.encode(encodeAbs(_absents)));
-                                pref.setString(
-                                    'events', json.encode(encodeMap(_events)));
-                              });
-                            }),
-                        IconButton(
-                            icon: Icon(
-                              Icons.delete,
-                              color: primaryColor,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                for (String selectClass in _selectedEvents) {
-                                  if (_absents.containsKey(selectClass)) {
-                                    _absents[selectClass]--;
+                                  if (_selectedEvents.contains(markedValue)) {
+                                    print(markedValue + " 1");
+                                    return;
+                                  } else {
+                                    if (_events[
+                                            _calendarController.selectedDay] !=
+                                        null) {
+                                      print(markedValue + " b");
+                                      _selectedEvents.add(markedValue);
+                                      _events[_calendarController.selectedDay]
+                                          .add(markedValue);
+                                    } else {
+                                      print(markedValue + " a");
+                                      _selectedEvents.add(markedValue);
+                                      _events[_calendarController.selectedDay] =
+                                          [markedValue];
+                                    }
                                   }
-                                }
-                                _selectedEvents.clear();
-                                _events[_calendarController.selectedDay]
-                                    .clear();
-                                print(_selectedEvents);
-                              });
-                            })
+                                  print(_selectedEvents);
+                                  pref.setString('absents',
+                                      json.encode(encodeAbs(_absents)));
+                                  pref.setString('events',
+                                      json.encode(encodeMap(_events)));
+                                });
+                              }),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: IconButton(
+                              icon: Icon(
+                                Icons.delete,
+                                color: primaryColor,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  for (String selectClass in _selectedEvents) {
+                                    if (_absents.containsKey(selectClass)) {
+                                      _absents[selectClass]--;
+                                    }
+                                  }
+                                  _selectedEvents.clear();
+                                  _events[_calendarController.selectedDay]
+                                      .clear();
+                                  print(_selectedEvents);
+                                });
+                              }),
+                        )
                       ],
                     )
                   : Container(),
