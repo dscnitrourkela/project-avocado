@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scp/Appointments/appointments_view.dart';
 import 'package:scp/HomePage.dart';
-
 import 'package:scp/booking.dart';
 import 'package:scp/chat.dart';
 import 'package:scp/drawer_screens/about_scs.dart';
@@ -9,7 +7,6 @@ import 'package:scp/drawer_screens/dev_info.dart';
 import 'package:scp/drawer_screens/important_documents.dart';
 import 'package:scp/drawer_screens/notifications/notifications_view.dart';
 import 'package:scp/drawer_screens/settings.dart';
-import 'package:scp/homePage/homePage_view.dart';
 import 'package:scp/login.dart';
 import 'package:scp/timetable/theorySection.dart';
 import 'package:scp/appointments.dart';

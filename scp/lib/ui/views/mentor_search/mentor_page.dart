@@ -3,7 +3,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:native_contact_dialog/native_contact_dialog.dart';
-import '../utils/grapgQLconfig.dart';
+import 'package:scp/utils/grapgQLconfig.dart';
 
 final Color primaryColor = Color.fromARGB(255, 49, 68, 76);
 final Color secondaryColor = Color.fromARGB(255, 158, 218, 224);

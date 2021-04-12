@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:scp/mentor_search/mentee_page_viewmodel.dart';
-import 'package:stacked/stacked.dart';
-import '../utils/grapgQLconfig.dart';
+import 'package:scp/utils/grapgQLconfig.dart';
 
 final Color primaryColor = Color.fromARGB(255, 49, 68, 76);
 final Color secondaryColor = Color.fromARGB(255, 158, 218, 224);
 final Color lunchColor = Color.fromARGB(255, 238, 71, 89);
+
+final String readMentees = """
+query Mentees(\$roll : String){
+  mentor(rollNumber : \$roll){
+    name
+    rollNumber
+    mentees{
+      name
+      rollNumber
+      
+    }
+  }
+}
+""";
 
 class ListDetails extends StatelessWidget {
   final String rollNo;
@@ -15,66 +27,61 @@ class ListDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     var queryWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(
-          60.0,
-        ),
-        child: AppBar(
-          title: Padding(
-            padding: const EdgeInsets.only(
-              top: 8.0,
-            ),
-            child: Text(
-              'Your Mentees',
-              style: TextStyle(
-                  fontSize: queryWidth * 0.065,
-                  fontFamily: 'PfDin',
-                  fontWeight: FontWeight.w500),
-            ),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(
+            60.0,
           ),
-          backgroundColor: Color.fromRGBO(
-            54,
-            66,
-            87,
-            1.0,
-          ),
-          leading: Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: IconButton(
-              onPressed: () {
-                Navigator.of(context);
-                Navigator.pop(context);
-              },
-              icon: Icon(
-                Icons.arrow_back_ios,
+          child: AppBar(
+            title: Padding(
+              padding: const EdgeInsets.only(
+                top: 8.0,
+              ),
+              child: Text(
+                'Your Mentees',
+                style: TextStyle(
+                    fontSize: queryWidth * 0.065,
+                    fontFamily: 'PfDin',
+                    fontWeight: FontWeight.w500),
               ),
             ),
+            backgroundColor: Color.fromRGBO(
+              54,
+              66,
+              87,
+              1.0,
+            ),
+            leading: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.of(context);
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                ),
+              ),
+            ),
+            elevation: 0.0,
           ),
-          elevation: 0.0,
         ),
-      ),
-      body: ViewModelBuilder.reactive(
-          builder: (context, model, child) {
-            if (model.isBusy())
-              return CircularProgressIndicator();
-            else
-              return MenteeDetails(model);
-          },
-          viewModelBuilder: () => MenteePageViewModel(rollNo),
-          onModelReady: (model)=>model.init(),
-          ),
-    );
+        body: GraphQLProvider(
+          client: valueclient,
+          child: MenteeDetails(rollNo),
+        ));
   }
 }
 
 class MenteeDetails extends StatelessWidget {
-  final MenteePageViewModel model;
-  MenteeDetails(this.model);
+  final String rollNo;
+  MenteeDetails(this.rollNo);
   @override
   Widget build(BuildContext context) {
     var queryWidth = MediaQuery.of(context).size.width;
     return Query(
-        options: model.query_options,
+        options: QueryOptions(
+            documentNode: gql(readMentees),
+            variables: <String, dynamic>{"roll": rollNo}),
         builder: (QueryResult result,
             {VoidCallback refetch, FetchMore fetchMore}) {
           if (result.hasException) {
@@ -104,9 +111,10 @@ class MenteeDetails extends StatelessWidget {
               children: [
                 Text(
                   result.data["mentor"]["name"],
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                       color: primaryColor,
-                      fontSize: queryWidth * 0.12,
+                      fontSize: queryWidth * 0.1,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(result.data["mentor"]["rollNumber"],
@@ -148,14 +156,14 @@ class MenteeDetails extends StatelessWidget {
                         dense: true,
                         title: Text(
                           result.data["mentor"]["mentees"][index]["name"],
-                          textAlign: TextAlign.justify,
+                          textAlign: TextAlign.left,
                           style: TextStyle(
                               fontSize: queryWidth * 0.042,
                               fontWeight: FontWeight.bold),
                         ),
                         trailing: Text(
                           result.data["mentor"]["mentees"][index]["rollNumber"],
-                          textAlign: TextAlign.left,
+                          textAlign: TextAlign.right,
                           style: TextStyle(
                               fontSize: queryWidth * 0.038,
                               fontWeight: FontWeight.bold),
