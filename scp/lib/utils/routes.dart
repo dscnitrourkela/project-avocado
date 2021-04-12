@@ -32,8 +32,8 @@ class Routes {
 
   static Map<String, WidgetBuilder> getRoutes() {
     return {
-      Routes.rHomepage: (context) => HomeView(),
-      Routes.rAppointments: (context) => AppointmentView(),
+      Routes.rHomepage: (context) => HomePage(),
+      Routes.rAppointments: (context) => Appointments(),
       Routes.rTimetable: (context) => TheorySection(0), //0 for left card
       Routes.rUserData: (context) => Userdata(),
       Routes.rLogin: (context) => Login(),

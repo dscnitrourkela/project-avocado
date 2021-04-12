@@ -77,8 +77,8 @@ class _AppointmentsState extends State<Appointments> {
             padding: const EdgeInsets.only(top: 8.0),
             child: IconButton(
               onPressed: () {
-                Navigator.of(context).pop();
-                //Navigator.pushNamed(context, Routes.rHomepage);
+                Navigator.of(context);
+                Navigator.pushNamed(context, Routes.rHomepage);
               },
               icon: Icon(
                 Icons.arrow_back_ios,
