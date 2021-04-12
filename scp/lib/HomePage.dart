@@ -371,15 +371,15 @@ class _HomePageState extends State<HomePage> {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     buildNumber = int.parse(packageInfo.buildNumber);
     remoteConfig = await RemoteConfig.instance;
-    remoteConfig.setConfigSettings(RemoteConfigSettings(debugMode: false));
+    remoteConfig.setConfigSettings(RemoteConfigSettings(debugMode: true));
     try {
-      await remoteConfig.fetch(expiration: const Duration(seconds: 2));
+      await remoteConfig.fetch(expiration: const Duration(seconds: 0));
       await remoteConfig.activateFetched();
       isChat = remoteConfig.getBool('is_chat_active');
-      print(isChat);
+
       chatUrl = remoteConfig.getString('chatLink');
       isAutumn = remoteConfig.getBool('is_autumn');
-      print(isAutumn);
+
       publishVersion = int.parse(remoteConfig.getString("version"));
       print(publishVersion);
       await prefs.setBool('is_chat_active', isChat);
@@ -406,7 +406,7 @@ class _HomePageState extends State<HomePage> {
     await prefs.setBool('hasBooked', prefs.getBool('hasBooked') ?? false);
     print(username + rollNo + phoneNo + isAutumn.toString());
     reset();
-    print("xxxxxx");
+
     print(
         "Version number is $buildNumber and version on remote config is $publishVersion");
     if (buildNumber < publishVersion) {}
