@@ -77,8 +77,8 @@ class _AppointmentsState extends State<Appointments> {
             padding: const EdgeInsets.only(top: 8.0),
             child: IconButton(
               onPressed: () {
-                Navigator.of(context);
-                Navigator.pushNamed(context, Routes.rHomepage);
+                Navigator.of(context).pop();
+                //Navigator.pushNamed(context, Routes.rHomepage);
               },
               icon: Icon(
                 Icons.arrow_back_ios,
@@ -142,7 +142,7 @@ class _AppointmentsState extends State<Appointments> {
     psychName = remoteConfig.getString('psych_name');
     psychDay = remoteConfig.getString('psych_day');
     print(counselDay + 'hola');
-    await scpDatabase.init(); // TODO: Makeshift
+    await scpDatabase.init();
     _onCounselChangedSubscription =
         ScpDatabase.counselRef.onChildChanged.listen(_onSlotsUpdated);
     _onPsychChangedSubscription =

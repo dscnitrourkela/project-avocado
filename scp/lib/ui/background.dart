@@ -4,7 +4,7 @@ class Background extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
@@ -15,8 +15,7 @@ class Background extends StatelessWidget {
             ],
           ),
           Expanded(
-            child: Container(
-            ),
+            child: Container(),
           ),
           Stack(
             alignment: Alignment.bottomLeft,
@@ -34,12 +33,12 @@ class Background extends StatelessWidget {
 
 const List<Color> aquaGradients = [
   Color.fromRGBO(107, 195, 145, 1.0),
-      Color.fromRGBO(8, 121, 191, 1.0),
+  Color.fromRGBO(8, 121, 191, 1.0),
 ];
 
 const List<Color> blueGradients = [
   Color.fromRGBO(48, 72, 142, 1.0),
-      Color.fromRGBO(0, 173, 239, 1.0),
+  Color.fromRGBO(0, 173, 239, 1.0),
 ];
 
 class WavyHeader extends StatelessWidget {

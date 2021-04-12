@@ -32,7 +32,7 @@ class TimeTableState extends State<TimeTable> {
     prefs.getKeys();
     theorySection = prefs.getString('theory_section');
     practicalSection = prefs.getString('prac_section');
-    bool isAutumnSemester = TimeTableResources.isAutumnSemester();
+    bool isAutumnSemester = await TimeTableResources.isAutumnSem();
     if ((theorySection.compareTo('Ar.') == 0) ||
         (theorySection.compareTo('A') == 0) ||
         (theorySection.compareTo('D') == 0) ||

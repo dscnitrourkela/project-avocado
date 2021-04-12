@@ -130,11 +130,11 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> items(DateTime day) {
+    Future<List<String>> items() async {
       List<String> subList = [];
       if (theory.toString() == "Ar.")
         subList = arch;
-      else if (TimeTableResources.isAutumnSemester()) {
+      else if (await TimeTableResources.isAutumnSem()) {
         if (theory.toString() == "A" ||
             theory.toString() == "B" ||
             theory.toString() == "C" ||
@@ -194,192 +194,218 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
             )
           ],
         ),
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              TableCalendar(
-                events: _events,
-                initialSelectedDay: DateTime.now(),
-                calendarController: _calendarController,
-                initialCalendarFormat: CalendarFormat.month,
-                onDaySelected: (day, events, holidays) {
-                  setState(() {
-                    markedValue = items(day)[0];
-                    currentDay = day;
-                    _selectedEvents = events;
-                  });
-                },
-                builders: CalendarBuilders(
-                    selectedDayBuilder: (context, date, events) {
-                  return RaisedButton(
-                      elevation: 4.0,
-                      child: Text(
-                        date.day.toString(),
-                        style: TextStyle(
-                            color: primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12),
-                      ),
-                      color: secondaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      onPressed: () {});
-                }),
-                calendarStyle: CalendarStyle(
-                    canEventMarkersOverflow: true,
-                    todayColor: primaryColor,
-                    selectedColor: secondaryColor,
-                    markersColor: primaryColor,
-                    markersMaxAmount: 4,
-                    todayStyle: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'PfDin',
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold)),
-                headerStyle: HeaderStyle(
-                  titleTextStyle:
-                      TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-                  centerHeaderTitle: true,
-                  formatButtonVisible: false,
-                  headerMargin: EdgeInsets.all(8.0),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              (currentDay.weekday <= 5)
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        DropdownButton<String>(
-                            icon: Icon(Icons.keyboard_arrow_down),
-                            iconSize: 16,
-                            elevation: 10,
+        body: FutureBuilder(
+          future: items(),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return CircularProgressIndicator();
+            }
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  TableCalendar(
+                    events: _events,
+                    initialSelectedDay: DateTime.now(),
+                    calendarController: _calendarController,
+                    initialCalendarFormat: CalendarFormat.month,
+                    onDaySelected: (day, events, holidays) {
+                      setState(() async {
+                        markedValue = snapshot.data[0];
+                        currentDay = day;
+                        _selectedEvents = events;
+                      });
+                    },
+                    builders: CalendarBuilders(
+                        selectedDayBuilder: (context, date, events) {
+                      return RaisedButton(
+                          elevation: 4.0,
+                          child: Text(
+                            date.day.toString(),
                             style: TextStyle(
-                              color: primaryColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            onChanged: (value) {
-                              setState(() {
-                                markedValue = value;
-                              });
-                            },
-                            value: markedValue,
-                            items: items(currentDay).map((entry) {
-                              return DropdownMenuItem(
-                                  value: entry,
-                                  child: Text(
-                                    entry,
-                                    style: TextStyle(color: primaryColor),
-                                  ));
-                            }).toList()),
-                        RaisedButton(
-                            elevation: 10,
-                            color: primaryColor,
-                            textColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                            ),
-                            child: Text("Enter"),
-                            onPressed: () {
-                              setState(() {
-                                if (_absents.containsKey(markedValue)) {
-                                  _absents[markedValue.toString()]++;
-                                } else {
-                                  _absents[markedValue.toString()] = 1;
-                                }
-                                if (_selectedEvents.contains(markedValue)) {
-                                  print(markedValue + " 1");
-                                  return;
-                                } else {
-                                  if (_events[
-                                          _calendarController.selectedDay] !=
-                                      null) {
-                                    print(markedValue + " b");
-                                    _selectedEvents.add(markedValue);
-                                    _events[_calendarController.selectedDay]
-                                        .add(markedValue);
-                                  } else {
-                                    print(markedValue + " a");
-                                    _selectedEvents.add(markedValue);
-                                    _events[_calendarController.selectedDay] = [
-                                      markedValue
-                                    ];
-                                  }
-                                }
-                                print(_selectedEvents);
-                                pref.setString('absents',
-                                    json.encode(encodeAbs(_absents)));
-                                pref.setString(
-                                    'events', json.encode(encodeMap(_events)));
-                              });
-                            }),
-                        IconButton(
-                            icon: Icon(
-                              Icons.delete,
-                              color: primaryColor,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                for (String selectClass in _selectedEvents) {
-                                  if (_absents.containsKey(selectClass)) {
-                                    _absents[selectClass]--;
-                                  }
-                                }
-                                _selectedEvents.clear();
-                                _events[_calendarController.selectedDay]
-                                    .clear();
-                                print(_selectedEvents);
-                              });
-                            })
-                      ],
-                    )
-                  : Container(),
-              (currentDay.weekday <= 5)
-                  ? Container(
-                      padding: EdgeInsets.only(top: 24.0, bottom: 16.0),
-                      child: Text(
-                        "Here are the classes you missed ",
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 24,
-                            color: primaryColor),
-                      ),
-                    )
-                  : Container(),
-              (_selectedEvents.length != null && currentDay.weekday <= 5)
-                  ? SingleChildScrollView(
-                      child: ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: _selectedEvents.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 24.0, vertical: 8.0),
-                            child: SizedBox(
-                              height: 16,
-                              child: Text(
-                                _selectedEvents[index] +
-                                    " - " +
-                                    _absents[_selectedEvents[index]].toString(),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: primaryColor),
+                                color: primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12),
+                          ),
+                          color: secondaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          onPressed: () {});
+                    }),
+                    calendarStyle: CalendarStyle(
+                        canEventMarkersOverflow: true,
+                        todayColor: primaryColor,
+                        selectedColor: secondaryColor,
+                        markersColor: primaryColor,
+                        markersMaxAmount: 4,
+                        todayStyle: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'PfDin',
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold)),
+                    headerStyle: HeaderStyle(
+                      titleTextStyle: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.bold),
+                      centerHeaderTitle: true,
+                      formatButtonVisible: false,
+                      headerMargin: EdgeInsets.all(8.0),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  (currentDay.weekday <= 5)
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Expanded(
+                              flex: 6,
+                              child: Container(
+                                child: DropdownButton<String>(
+                                    icon: Icon(Icons.keyboard_arrow_down),
+                                    iconSize: 16,
+                                    elevation: 10,
+                                    style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        markedValue = value;
+                                      });
+                                    },
+                                    value: markedValue,
+                                    items: snapshot.data.map((entry) {
+                                      return DropdownMenuItem(
+                                          value: entry,
+                                          child: Container(
+                                            child: Text(
+                                              entry,
+                                              style: TextStyle(
+                                                  color: primaryColor),
+                                            ),
+                                          ));
+                                    }).toList()),
                               ),
                             ),
-                          );
-                        },
-                      ),
-                    )
-                  : Container()
-            ],
-          ),
+                            Expanded(
+                              flex: 2,
+                              child: RaisedButton(
+                                  elevation: 10,
+                                  color: primaryColor,
+                                  textColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                  ),
+                                  child: Text("Enter"),
+                                  onPressed: () {
+                                    setState(() {
+                                      if (_absents.containsKey(markedValue)) {
+                                        _absents[markedValue.toString()]++;
+                                      } else {
+                                        _absents[markedValue.toString()] = 1;
+                                      }
+                                      if (_selectedEvents
+                                          .contains(markedValue)) {
+                                        print(markedValue + " 1");
+                                        return;
+                                      } else {
+                                        if (_events[_calendarController
+                                                .selectedDay] !=
+                                            null) {
+                                          print(markedValue + " b");
+                                          _selectedEvents.add(markedValue);
+                                          _events[_calendarController
+                                                  .selectedDay]
+                                              .add(markedValue);
+                                        } else {
+                                          print(markedValue + " a");
+                                          _selectedEvents.add(markedValue);
+                                          _events[_calendarController
+                                              .selectedDay] = [markedValue];
+                                        }
+                                      }
+                                      print(_selectedEvents);
+                                      pref.setString('absents',
+                                          json.encode(encodeAbs(_absents)));
+                                      pref.setString('events',
+                                          json.encode(encodeMap(_events)));
+                                    });
+                                  }),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: IconButton(
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: primaryColor,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      for (String selectClass
+                                          in _selectedEvents) {
+                                        if (_absents.containsKey(selectClass)) {
+                                          _absents[selectClass]--;
+                                        }
+                                      }
+                                      _selectedEvents.clear();
+                                      _events[_calendarController.selectedDay]
+                                          .clear();
+                                      print(_selectedEvents);
+                                    });
+                                  }),
+                            )
+                          ],
+                        )
+                      : Container(),
+                  (currentDay.weekday <= 5)
+                      ? Container(
+                          padding: EdgeInsets.only(top: 24.0, bottom: 16.0),
+                          child: Text(
+                            "Here are the classes you missed ",
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 24,
+                                color: primaryColor),
+                          ),
+                        )
+                      : Container(),
+                  (_selectedEvents.length != null && currentDay.weekday <= 5)
+                      ? SingleChildScrollView(
+                          child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: _selectedEvents.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 24.0, vertical: 8.0),
+                                child: SizedBox(
+                                  height: 16,
+                                  child: Text(
+                                    _selectedEvents[index] +
+                                        " - " +
+                                        _absents[_selectedEvents[index]]
+                                            .toString(),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: primaryColor),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        )
+                      : Container()
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

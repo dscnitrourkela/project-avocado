@@ -31,7 +31,7 @@ class UserdataState extends State<Userdata> {
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     _fetchUserData(context);
     return Scaffold(
-      resizeToAvoidBottomPadding: true,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
           backgroundColor: Color.fromRGBO(25, 39, 45, 1),
           title: Text(
