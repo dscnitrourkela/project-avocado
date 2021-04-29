@@ -3,7 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:scp/dateConfig.dart';
 import 'package:intl/intl.dart';
-import '../main.dart';
+import 'package:scp/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:package_info/package_info.dart';
 import 'package:rate_my_app/rate_my_app.dart';

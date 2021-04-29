@@ -38,7 +38,7 @@ class _LoginState extends State<Login> {
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     countryCodeController.text = countryCode;
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[
@@ -194,7 +194,7 @@ class _LoginState extends State<Login> {
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontFamily: 'PfDin',
-                      fontSize: SizeConfig.screenWidth*0.047,
+                      fontSize: SizeConfig.screenWidth * 0.047,
                     ),
                   ),
                   textColor: Colors.white,

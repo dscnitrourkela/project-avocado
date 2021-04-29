@@ -1,8 +1,16 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 abstract class TimeTableResources {
-  static bool isAutumnSemester() => true;
+  static Future<bool> isAutumnSem() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.getKeys();
+    return prefs.getBool('is_autumn');
+  }
+
+  //static bool isAutumnSemester() => true;
   static String courseNumber = 'I';
-  static void setCourseNumber() {
-    courseNumber = isAutumnSemester() ? 'I' : 'II';
+  static void setCourseNumber() async {
+    courseNumber = await isAutumnSem() ? 'I' : 'II';
     theory['A']['TA'] = theory['B']['TA'] = theory['C']['TB'] =
         theory['D']['TB'] = theory['E']['TK'] = theory['F']['TK'] =
             theory['G']['TM'] = theory['H']['TM'] = 'Physics-$courseNumber';

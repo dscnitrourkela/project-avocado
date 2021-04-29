@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scp/Appointments/appointments_view.dart';
 import 'package:scp/HomePage.dart';
-
 import 'package:scp/booking.dart';
 import 'package:scp/chat.dart';
 import 'package:scp/drawer_screens/about_scs.dart';
@@ -9,7 +7,6 @@ import 'package:scp/drawer_screens/dev_info.dart';
 import 'package:scp/drawer_screens/important_documents.dart';
 import 'package:scp/drawer_screens/notifications/notifications_view.dart';
 import 'package:scp/drawer_screens/settings.dart';
-import 'package:scp/homePage/homePage_view.dart';
 import 'package:scp/login.dart';
 import 'package:scp/timetable/theorySection.dart';
 import 'package:scp/appointments.dart';
@@ -32,8 +29,8 @@ class Routes {
 
   static Map<String, WidgetBuilder> getRoutes() {
     return {
-      Routes.rHomepage: (context) => HomeView(),
-      Routes.rAppointments: (context) => AppointmentView(),
+      Routes.rHomepage: (context) => HomePage(),
+      Routes.rAppointments: (context) => Appointments(),
       Routes.rTimetable: (context) => TheorySection(0), //0 for left card
       Routes.rUserData: (context) => Userdata(),
       Routes.rLogin: (context) => Login(),

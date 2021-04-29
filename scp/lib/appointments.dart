@@ -142,7 +142,7 @@ class _AppointmentsState extends State<Appointments> {
     psychName = remoteConfig.getString('psych_name');
     psychDay = remoteConfig.getString('psych_day');
     print(counselDay + 'hola');
-    await scpDatabase.init(); // TODO: Makeshift
+    await scpDatabase.init();
     _onCounselChangedSubscription =
         ScpDatabase.counselRef.onChildChanged.listen(_onSlotsUpdated);
     _onPsychChangedSubscription =
