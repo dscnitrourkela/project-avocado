@@ -45,16 +45,15 @@ class _ConnectivityHandlerWidgetState extends State<ConnectivityHandlerWidget> {
   }
 
   _showSnackBar(String data) {
-    Scaffold.of(ctx)
-      ..removeCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Text(
-            data,
-            style: TextStyle(color: Colors.amber),
-          ),
+    ScaffoldMessenger.of(ctx).removeCurrentSnackBar();
+    ScaffoldMessenger.of(ctx).showSnackBar(
+      SnackBar(
+        content: Text(
+          data,
+          style: TextStyle(color: Colors.amber),
         ),
-      );
+      ),
+    );
   }
 
   @override

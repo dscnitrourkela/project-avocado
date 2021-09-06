@@ -187,9 +187,9 @@ class HomeViewModel extends BaseViewModel {
             content: Text(
                 "The current version of the ICS app is outdated. Kindly update the app to get new features/bug fixes."),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   child: Text("Update"), onPressed: () => _launchUpdate()),
-              FlatButton(
+              TextButton(
                 child: Text("Later"),
                 onPressed: () => Navigator.pop(context),
               ),

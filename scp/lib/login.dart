@@ -181,27 +181,29 @@ class _LoginState extends State<Login> {
             child: ButtonTheme(
               minWidth: 200,
               height: SizeConfig.screenWidth * 0.094,
-              child: RaisedButton(
-                  onPressed: () {
-                    String finalPhoneNo = "+" +
-                        countryCodeController.text +
-                        " " +
-                        phoneController.text;
-                    ScpAuth(context).verifyPhone(finalPhoneNo);
-                  },
-                  child: Text(
-                    'VERIFY',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'PfDin',
-                      fontSize: SizeConfig.screenWidth * 0.047,
-                    ),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    onPrimary: Colors.white,
+                    elevation: 7.0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0)),
+                    primary: Color.fromRGBO(25, 39, 45, 1)),
+                onPressed: () {
+                  String finalPhoneNo = "+" +
+                      countryCodeController.text +
+                      " " +
+                      phoneController.text;
+                  ScpAuth(context).verifyPhone(finalPhoneNo);
+                },
+                child: Text(
+                  'VERIFY',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'PfDin',
+                    fontSize: SizeConfig.screenWidth * 0.047,
                   ),
-                  textColor: Colors.white,
-                  elevation: 7.0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0)),
-                  color: Color.fromRGBO(25, 39, 45, 1)),
+                ),
+              ),
             ),
           ),
         ],

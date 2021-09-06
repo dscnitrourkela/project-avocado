@@ -540,7 +540,7 @@ Widget slotCard(BuildContext context, String titleText, String type,
                             )));
                 break;
               case "1":
-                Scaffold.of(context).showSnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
                         'Selected slot is full. Please choose another slot.'),

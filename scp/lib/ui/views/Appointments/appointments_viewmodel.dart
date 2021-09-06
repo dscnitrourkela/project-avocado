@@ -17,17 +17,15 @@ class AppointmentViewModel extends BaseViewModel {
   ScpDatabase scpDatabase;
   String psychDate, counselDate;
 
-
-  @override
   void initState() {
-    /*ScpDatabase().init();*/
     getDate();
-    //isBookingAnonymously = false;
+
     scpDatabase = ScpDatabase();
-    //super.initState();
+
     notifyListeners();
   }
- void getDate() async {
+
+  void getDate() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.getKeys();
     psychDate = prefs.getString('psychDate');
@@ -45,7 +43,7 @@ class AppointmentViewModel extends BaseViewModel {
     counselorName = remoteConfig.getString('counselor_name');
     psychName = remoteConfig.getString('psych_name');
     psychDay = remoteConfig.getString('psych_day');
-    await scpDatabase.init(); // TODO: Makeshift
+    await scpDatabase.init();
     _onCounselChangedSubscription =
         ScpDatabase.counselRef.onChildChanged.listen(_onSlotsUpdated);
     _onPsychChangedSubscription =
@@ -63,5 +61,4 @@ class AppointmentViewModel extends BaseViewModel {
     _onCounselChangedSubscription.cancel();
     _onPsychChangedSubscription.cancel();
   }
-
 }

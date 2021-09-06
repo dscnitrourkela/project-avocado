@@ -38,7 +38,7 @@ List<String> arch = [
 ];
 
 class AttendanceTracker extends StatefulWidget {
-  AttendanceTracker() {}
+  AttendanceTracker();
   @override
   _AttendanceTrackerState createState() => _AttendanceTrackerState();
 }
@@ -220,18 +220,20 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                     },
                     builders: CalendarBuilders(
                         selectedDayBuilder: (context, date, events) {
-                      return RaisedButton(
-                          elevation: 4.0,
+                      return ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            elevation: 4.0,
+                            primary: secondaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                          ),
                           child: Text(
                             date.day.toString(),
                             style: TextStyle(
                                 color: primaryColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12),
-                          ),
-                          color: secondaryColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0),
                           ),
                           onPressed: () {});
                     }),
@@ -294,12 +296,14 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                             ),
                             Expanded(
                               flex: 2,
-                              child: RaisedButton(
-                                  elevation: 10,
-                                  color: primaryColor,
-                                  textColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    elevation: 10,
+                                    primary: primaryColor,
+                                    onPrimary: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                    ),
                                   ),
                                   child: Text("Enter"),
                                   onPressed: () {

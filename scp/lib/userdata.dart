@@ -134,55 +134,54 @@ class UserdataState extends State<Userdata> {
                             child: ButtonTheme(
                               height: 40,
                               minWidth: 100,
-                              child: RaisedButton(
-                                  onPressed: () {
-                                    //FirebaseUser fireuser;
-                                    //fireuser.displayName;
-
-                                    if (rollNo != "" &&
-                                        rollNo != null &&
-                                        rollNo != "null" &&
-                                        (rollNo.length == 9) &&
-                                        (pattern.hasMatch(rollNo))) {
-                                      {
-                                        FirebaseAuth.instance
-                                            .currentUser()
-                                            .then((val) {
-                                          UserUpdateInfo updateUser =
-                                              UserUpdateInfo();
-                                          updateUser.displayName = rollNo;
-                                          val.updateProfile(updateUser);
-                                          _storeUserData(context);
-                                          final token = _fcm.getToken().then(
-                                              (token) async =>
-                                                  await saveTokenToFirestore(
-                                                      token.toString()));
-                                        });
-                                      }
-                                    } else {
-                                      Scaffold.of(context)
-                                          .showSnackBar(new SnackBar(
-                                        content:
-                                            Text("Roll Number not correct"),
-                                      ));
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (rollNo != "" &&
+                                      rollNo != null &&
+                                      rollNo != "null" &&
+                                      (rollNo.length == 9) &&
+                                      (pattern.hasMatch(rollNo))) {
+                                    {
+                                      FirebaseAuth.instance
+                                          .currentUser()
+                                          .then((val) {
+                                        UserUpdateInfo updateUser =
+                                            UserUpdateInfo();
+                                        updateUser.displayName = rollNo;
+                                        val.updateProfile(updateUser);
+                                        _storeUserData(context);
+                                        final token = _fcm.getToken().then(
+                                            (token) async =>
+                                                await saveTokenToFirestore(
+                                                    token.toString()));
+                                      });
                                     }
-                                    if (username == "") {
-                                      // Scaffold.of(context).showSnackBar(new SnackBar(
-                                      //   content:Text("Username can't be empty"),));
-                                    }
-                                  },
-                                  child: Text(
-                                    'Confirm',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily: 'PfDin',
-                                        fontSize: 20 * textScaleFactor),
-                                  ),
-                                  textColor: Colors.white,
-                                  elevation: 7.0,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8.0)),
-                                  color: Color.fromRGBO(25, 39, 45, 1)),
+                                  } else {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(new SnackBar(
+                                      content: Text("Roll Number not correct"),
+                                    ));
+                                  }
+                                  if (username == "") {
+                                    // Scaffold.of(context).showSnackBar(new SnackBar(
+                                    //   content:Text("Username can't be empty"),));
+                                  }
+                                },
+                                child: Text(
+                                  'Confirm',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: 'PfDin',
+                                      fontSize: 20 * textScaleFactor),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                    onPrimary: Colors.white,
+                                    elevation: 7.0,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0)),
+                                    primary: Color.fromRGBO(25, 39, 45, 1)),
+                              ),
                             ),
                           ),
                         ]),

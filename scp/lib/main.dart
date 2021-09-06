@@ -12,7 +12,7 @@ final privacyPolicy = "https://project-avocado-8b3e1.firebaseapp.com";
 final playstoreURL =
     "https://play.google.com/store/apps/details?id=in.ac.nitrkl.scp.scp";
 
-Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
+/* Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
   if (message.containsKey('data')) {
     // Handle data message
     final dynamic data = message['data'];
@@ -23,25 +23,27 @@ Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
     final dynamic notification = message['notification'];
   }
   // Or do other work.
-}
+} */
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
-  runZoned<Future<void>>(() async {
-    setupLocator();
-    runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'ICS',
-      routes: Routes.getRoutes(),
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: SplashScreen(),
-    ));
-  }, onError: Crashlytics.instance.recordError);
+  runZoned<Future<void>>(
+    () async {
+      setupLocator();
+      runApp(MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'ICS',
+        routes: Routes.getRoutes(),
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: SplashScreen(),
+      ));
+    },
+  );
   FlutterError.onError = (FlutterErrorDetails details) {
     Crashlytics.instance.recordFlutterError(details);
   };

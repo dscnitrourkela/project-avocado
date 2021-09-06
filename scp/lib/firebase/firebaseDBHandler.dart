@@ -8,10 +8,10 @@ class ScpDatabase {
       database.reference().child("slots").child('week1').child('counselor');
   static DatabaseReference psychRef =
       database.reference().child("slots").child('week1').child('psych');
-  List<Slot> counselSlotsList = List();
-  List<Slot> psychSlotsList = List();
+  List<Slot> counselSlotsList = [];
+  List<Slot> psychSlotsList = [];
 
-  void init() async {
+  Future<void> init() async {
     database = new FirebaseDatabase();
     counselCount = (await counselRef.child('count').once()).value;
     psychCount = (await psychRef.child('count').once()).value;

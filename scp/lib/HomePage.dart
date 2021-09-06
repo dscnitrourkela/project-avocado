@@ -177,25 +177,26 @@ class _HomePageState extends State<HomePage> {
                     child: Align(
                       alignment: Alignment.center,
                       child: ButtonTheme(
-                        minWidth: SizeConfig.screenWidth * 0.463,
-                        height: SizeConfig.screenWidth * 0.093,
-                        child: RaisedButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0)),
-                          color: Color.fromRGBO(25, 39, 45, 1),
-                          onPressed: () {
-                            _removeUserData(context);
-                          },
-                          child: Text(
-                            "Log Out",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'PfDin',
-                                color: Colors.white,
-                                fontSize: SizeConfig.screenWidth * 0.046),
-                          ),
-                        ),
-                      ),
+                          minWidth: SizeConfig.screenWidth * 0.463,
+                          height: SizeConfig.screenWidth * 0.093,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              _removeUserData(context);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0)),
+                              primary: Color.fromRGBO(25, 39, 45, 1),
+                            ),
+                            child: Text(
+                              "Log Out",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'PfDin',
+                                  color: Colors.white,
+                                  fontSize: SizeConfig.screenWidth * 0.046),
+                            ),
+                          )),
                     ))
               ],
             )),
@@ -424,9 +425,9 @@ class _HomePageState extends State<HomePage> {
             content: Text(
                 "The current version of the ICS app is outdated. Kindly update the app to get new features/bug fixes."),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   child: Text("Update"), onPressed: () => _launchUpdate()),
-              FlatButton(
+              TextButton(
                 child: Text("Later"),
                 onPressed: () => Navigator.pop(context),
               ),
