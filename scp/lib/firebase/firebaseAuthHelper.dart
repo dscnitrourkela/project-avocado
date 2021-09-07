@@ -59,7 +59,12 @@ class ScpAuth {
                 ),
                 contentPadding: EdgeInsets.all(10.0),
                 actions: <Widget>[
-                  RaisedButton(
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromRGBO(25, 39, 45, 1),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0)),
+                    ),
                     child: Text(
                       'Next',
                       style: TextStyle(
@@ -67,9 +72,6 @@ class ScpAuth {
                           color: Colors.white,
                           fontFamily: 'PfDin'),
                     ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0)),
-                    color: Color.fromRGBO(25, 39, 45, 1),
                     onPressed: () {
                       firebaseInstance.currentUser().then((user) {
                         if (user == null) {
@@ -103,7 +105,8 @@ class ScpAuth {
 
     final PhoneVerificationFailed verificationFailed = (AuthException error) {
       print('${error.message}');
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Booooo!')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Booooo!')));
     };
 
     firebaseInstance.verifyPhoneNumber(
@@ -125,7 +128,6 @@ class ScpAuth {
     final FirebaseUser user =
         await firebaseInstance.signInWithCredential(credential).then((user) {
       print(user.displayName);
-
       _storeUserData(context, user);
     }).catchError((error) {
       print(error);

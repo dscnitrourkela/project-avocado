@@ -340,13 +340,12 @@ class TimeTableState extends State<TimeTable> {
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
-                      child: RaisedButton(
+                      child: ElevatedButton(
                           child: Text('Location'),
                           onPressed: () {
                             launchMap(periodDetail.location);
                           }),
                     ),
-                    // TODO: Map to be embedded
                   ]),
                 ),
               ),

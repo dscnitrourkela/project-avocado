@@ -4,14 +4,52 @@
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # About App
-- The project repository of the mobile app development for Institute Counselling Services, NIT Rourkela.
 
+The project repository of the mobile application for the [Institute Counselling Services, NIT Rourkela](https://ics.nitrkl.ac.in/). We are using the [Flutter](https://flutter.dev/) framework for the development of the application. This application has more than 3000 active users and is the most popular application at National Institute of Technology Rourkela. To use the android application, visit [play store](https://play.google.com/store/apps/details?id=in.ac.nitrkl.scp.scp).
 
-### DSC NIT Rourkela
+## DSC NIT Rourkela
+
 Project developed and maintained by [DSC NIT Rourkela](https://dscnitrourkela.org/)
 ![DSC NIT Rourkela Cover Image](./RepoCover.png)
 
-## Contributing 
+## Installation Guide
+
+1. **Install Flutter on your machine**
+
+    Install flutter by selecting the operating system on which you are installing Flutter: [Flutter installation tutorial](https://flutter.dev/docs/get-started/install)
+
+    To check if you have flutter installed along wtih proper necesarry SDKs installed
+    run `flutter doctor`
+
+2. **Fork and Clone the Repo**
+
+    Fork the repo by clicking on the **Fork** button on the top right corner of the page.
+    To clone this repository, run `git clone https://github.com/dscnitrourkela/project-avocado.git`
+    Then run `cd project-avocado`
+
+3. **Get Packages**
+
+     Make sure you are in the `project-avocado/scp` directory
+
+    - From the terminal: Run `flutter pub get`.
+      _OR_
+    - From Android Studio/IntelliJ: **Click Packages get** in the action ribbon at the top of `pubspec.yaml`.
+    - From VS Code: **Click Get Packages** located in right side of the action ribbon at the top of `pubspec.yaml`.
+
+    After the above steps, you should see the following message in the terminal:
+
+### Run the App
+
+  On terminal:
+
+- Check that an Android device is running by running `flutter devices`. If none are shown, follow the device-specific instructions on the [Install](https://flutter.dev/docs/get-started/install) page for your OS.
+- Run the app with the following command: `flutter run`
+
+Congrats 🥳 ! You just ran the _Project Avocado_.
+Feel free to use the application in whatever way possible and make sure to send us feedbacks and suggest changes.
+
+## Contributing
+
 ------------
 Our Slack Community: [Slack Invite](http://bit.ly/NITRDevs) <br>
 
@@ -29,7 +67,6 @@ NOTE 1: Please abide by the [Contributing Guidelines](https://github.com/dscnitr
 
 NOTE 2: Please abide by the [Code of Conduct](https://github.com/dscnitrourkela/project-avocado/blob/master/CODE_OF_CONDUCT.md).
 
-
 ## Starware
 
 dscnitrourkela/project-avocado is Starware.  
@@ -37,11 +74,14 @@ This means you're free to use the project, as long as you star its GitHub reposi
 Your appreciation makes us grow and glow up. ⭐
 
 ## Preview
+
 <pre>
+
 <a href="https://imgflip.com/gif/3cftti"><img src="https://i.imgflip.com/3cftti.gif" title="made at imgflip.com"/></a>      <a href="https://imgflip.com/gif/3cftvz"><img src="https://i.imgflip.com/3cftvz.gif" title="made at imgflip.com"/></a>
 </pre>
 
 ## Use
+
 - Make appointments
 - Timetable selector
 - Manage your mentors/mentees

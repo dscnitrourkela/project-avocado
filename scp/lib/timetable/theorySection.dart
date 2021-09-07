@@ -179,6 +179,7 @@ Widget _buildCarousel(_TheorySectionState timetableState, BuildContext context,
                 page = pageController.page;
               });
             }
+            return false;
           },
           child: PageView.builder(
             // store this controller in a State to save the carousel scroll position

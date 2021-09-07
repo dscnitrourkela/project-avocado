@@ -196,8 +196,10 @@ class UploadImageState extends State<UploadImageScreen> {
               ),
             ),
           ),
-          FlatButton(
-            padding: EdgeInsets.all(0),
+          TextButton(
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.all(0),
+            ),
             onPressed: () async {
               if (validImage) {
                 var file = File(imagePath);
@@ -221,7 +223,6 @@ class UploadImageState extends State<UploadImageScreen> {
 
               imagePath = path;
             },
-            splashColor: Colors.transparent,
             child: validImage
                 ? Container(
                     height: 120,
@@ -246,23 +247,25 @@ class UploadImageState extends State<UploadImageScreen> {
           ),
           Padding(
             padding: EdgeInsets.all(16.0),
-            child: RaisedButton(
-              color: !uploading
-                  ? Color.fromRGBO(54, 66, 87, 1.0)
-                  : Color.fromRGBO(164, 176, 197, 1.0),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: !uploading
+                    ? Color.fromRGBO(54, 66, 87, 1.0)
+                    : Color.fromRGBO(164, 176, 197, 1.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                onPrimary: Colors.white,
               ),
               onPressed: () {
                 if (!validImage) {
-                  _scafoldKey.currentState.showSnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('First upload an image')));
                 } else if (!uploading) {
                   bookAppointment(context, widget.bookingKey);
                 }
               },
               child: !uploading ? Text('Upload and Book') : Text('Uploading'),
-              textColor: Colors.white,
             ),
           ),
         ],

@@ -144,10 +144,12 @@ class HomeView extends StatelessWidget {
                         child: ButtonTheme(
                           minWidth: SizeConfig.screenWidth * 0.463,
                           height: SizeConfig.screenWidth * 0.093,
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0)),
-                            color: Color.fromRGBO(25, 39, 45, 1),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0)),
+                              primary: Color.fromRGBO(25, 39, 45, 1),
+                            ),
                             onPressed: () {
                               model.removeUserData(context);
                             },

@@ -145,7 +145,7 @@ class _PracticalSectionState extends State<PracticalSection> {
                               (practicalSection.compareTo('P10') == 0)))
                         storeSectionData(context);
                       else
-                        Scaffold.of(context).showSnackBar(snackBar);
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     },
                     child: Icon(Icons.arrow_forward),
                     backgroundColor: Color.fromRGBO(74, 232, 190, 1),
@@ -213,6 +213,7 @@ Widget _buildCarousel(_PracticalSectionState timetableState,
                 page = pageController.page;
               });
             }
+            return false;
           },
           child: PageView.builder(
             // store this controller in a State to save the carousel scroll position

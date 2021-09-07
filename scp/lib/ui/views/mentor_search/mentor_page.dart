@@ -289,14 +289,16 @@ class MentorDetails extends StatelessWidget {
                       ),
                       SizedBox(
                         height: queryWidth * 0.1,
-                        child: RaisedButton(
-                          color: Color.fromRGBO(
-                            54,
-                            66,
-                            87,
-                            1.0,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Color.fromRGBO(
+                              54,
+                              66,
+                              87,
+                              1.0,
+                            ),
+                            shape: StadiumBorder(),
                           ),
-                          shape: StadiumBorder(),
                           onPressed: () {
                             saveContact(Contact(
                                 givenName: mentorName,

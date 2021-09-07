@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:scp/time_tableTutotial.dart';
 
-
 const List<String> sectionArray = ["Bridge", "Tutorial"];
 const FULL_SCALE = 1.0;
 const SCALE_FRACTION = 0.7;
@@ -29,99 +28,100 @@ class _TutorialSectionState extends State<TutorialSection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Color.fromRGBO(25, 39, 45, 1),
-              title: Text(
-                "Timetable Selector",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'PfDin',
-                  color: Colors.white,
-                ),
+      appBar: AppBar(
+        backgroundColor: Color.fromRGBO(25, 39, 45, 1),
+        title: Text(
+          "Timetable Selector",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'PfDin',
+            color: Colors.white,
+          ),
+        ),
+      ),
+      body: Container(
+        alignment: Alignment.center,
+        child: Center(
+            child: Stack(
+          children: <Widget>[
+            Align(
+              alignment: Alignment(0, -0.6),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Center(
+                    child: Text(
+                      "Step 1",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'PfDin',
+                        color: Color.fromRGBO(74, 232, 190, 1),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Text(
+                        "Select your section",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'PfDin',
+                          color: Color.fromRGBO(25, 39, 45, 1),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            body: Container(
-              alignment: Alignment.center,
-              child: Center(
-                  child: Stack(
-                    children: <Widget>[
-                      Align(
-                        alignment: Alignment(0, -0.6),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Center(
-                              child: Text(
-                                "Step 1",
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'PfDin',
-                                  color: Color.fromRGBO(74, 232, 190, 1),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Center(
-                                child: Text(
-                                  "Select your section",
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'PfDin',
-                                    color: Color.fromRGBO(25, 39, 45, 1),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment(0, 0.6),
-                        child: FloatingActionButton(
-                          onPressed: () => {
-                            Navigator.of(context).pop(),
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) =>TutorialTimeTable())
-                              )
-                            },
-                          child: Icon(Icons.arrow_forward),
-                          backgroundColor: Color.fromRGBO(74, 232, 190, 1),
-                        ),
-                      ),
-                      Center(
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(16.0))),
-                          child: Container(
-                            height: pagerHeight,
-                            width: pagerHeight,
-                          ),
-                          elevation: 20,
-                        ),
-                      ),
-                      Align(
-                          alignment: Alignment.center,
-                          child: _buildCarousel(this, context, 8)),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Text("The timetable is subject to change. Stay in touch with the tutor")),
-                      )
-                    ],
-                  )),
+            Align(
+              alignment: Alignment(0, 0.6),
+              child: FloatingActionButton(
+                onPressed: () => {
+                  Navigator.of(context).pop(),
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TutorialTimeTable()))
+                },
+                child: Icon(Icons.arrow_forward),
+                backgroundColor: Color.fromRGBO(74, 232, 190, 1),
+              ),
+            ),
+            Center(
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(16.0))),
+                child: Container(
+                  height: pagerHeight,
+                  width: pagerHeight,
+                ),
+                elevation: 20,
+              ),
+            ),
+            Align(
+                alignment: Alignment.center,
+                child: _buildCarousel(this, context, 8)),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text(
+                      "The timetable is subject to change. Stay in touch with the tutor")),
             )
-            ,
-          );
-        }
+          ],
+        )),
+      ),
+    );
+  }
 }
 
-Widget _buildCarousel(_TutorialSectionState timetableState, BuildContext context,
-    int carouselIndex) {
+Widget _buildCarousel(_TutorialSectionState timetableState,
+    BuildContext context, int carouselIndex) {
   return Column(
     mainAxisSize: MainAxisSize.min,
     children: <Widget>[
@@ -135,6 +135,7 @@ Widget _buildCarousel(_TutorialSectionState timetableState, BuildContext context
                 page = pageController.page;
               });
             }
+            return false;
           },
           child: PageView.builder(
             // store this controller in a State to save the carousel scroll position

@@ -73,7 +73,7 @@ class MenteeDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     var queryWidth = MediaQuery.of(context).size.width;
     return Query(
-        options: model.query_options,
+        options: model.queryOptions,
         builder: (QueryResult result,
             {VoidCallback refetch, FetchMore fetchMore}) {
           if (result.hasException) {
