@@ -5,7 +5,7 @@
 
 # About App
 
-- The project repository of the mobile application for the Institute Counselling Services, NIT Rourkela. We are using the [Flutter](https://flutter.dev/) framework for the development of the application. This application has more than 3000 active users and is the most popular application at National Institute of Technology Rourkela.
+The project repository of the mobile application for the [Institute Counselling Services, NIT Rourkela](https://ics.nitrkl.ac.in/). We are using the [Flutter](https://flutter.dev/) framework for the development of the application. This application has more than 3000 active users and is the most popular application at National Institute of Technology Rourkela. To use the android application, visit [play store](https://play.google.com/store/apps/details?id=in.ac.nitrkl.scp.scp).
 
 ## DSC NIT Rourkela
 
