@@ -36,9 +36,13 @@ class AppointmentViewModel extends BaseViewModel {
   Future<RemoteConfig> setupRemoteConfig() async {
     RemoteConfig remoteConfig = await RemoteConfig.instance;
     // Enable developer mode to relax fetch throttling
-    remoteConfig.setConfigSettings(RemoteConfigSettings(debugMode: true));
-    await remoteConfig.fetch(expiration: const Duration(seconds: 0));
-    await remoteConfig.activateFetched();
+    remoteConfig = RemoteConfig.instance;
+    remoteConfig.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(seconds: 10),
+      minimumFetchInterval: Duration.zero,
+    ));
+    await remoteConfig.fetch();
+    await remoteConfig.fetchAndActivate();
     counselDay = remoteConfig.getString('counsel_day');
     counselorName = remoteConfig.getString('counselor_name');
     psychName = remoteConfig.getString('psych_name');
