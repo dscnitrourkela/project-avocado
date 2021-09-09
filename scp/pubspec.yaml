@@ -17,14 +17,13 @@ dependencies:
     sdk: flutter
   camera: ^0.5.7
   cloud_firestore: ^2.5.2
-  connectivity: ^3.0.6
-  cupertino_icons: ^0.1.2
+  connectivity: ^3.0.6  
   firebase_auth: ^3.1.1
   firebase_core: ^1.6.0
-  firebase_crashlytics: ^0.1.0+2
+  firebase_crashlytics: ^2.2.1
   firebase_database: ^7.2.2
   firebase_messaging: ^10.0.7
-  firebase_remote_config: ^0.2.0+3
+  firebase_remote_config: ^0.11.0
   firebase_storage: ^10.0.3
   flutter_webview_plugin: ^0.3.11
   font_awesome_flutter: ^8.10.0

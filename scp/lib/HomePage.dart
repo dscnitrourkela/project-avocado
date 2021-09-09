@@ -382,11 +382,15 @@ class _HomePageState extends State<HomePage> {
     prefs.getKeys();
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     buildNumber = int.parse(packageInfo.buildNumber);
-    remoteConfig = await RemoteConfig.instance;
-    remoteConfig.setConfigSettings(RemoteConfigSettings(debugMode: true));
+    remoteConfig = RemoteConfig.instance;
+    remoteConfig.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(seconds: 10),
+      minimumFetchInterval: Duration.zero,
+    ));
     try {
-      await remoteConfig.fetch(expiration: const Duration(seconds: 0));
-      await remoteConfig.activateFetched();
+      await remoteConfig.fetch();
+      await remoteConfig.fetchAndActivate();
+
       isChat = remoteConfig.getBool('is_chat_active');
 
       chatUrl = remoteConfig.getString('chatLink');
@@ -397,7 +401,7 @@ class _HomePageState extends State<HomePage> {
       await prefs.setBool('is_chat_active', isChat);
       await prefs.setString('chatLink', chatUrl);
       await prefs.setBool('is_autumn', isAutumn);
-    } on FetchThrottledException catch (exception) {
+    } on PlatformException catch (exception) {
       isChat = prefs.getBool('is_chat_active');
       chatUrl = prefs.getString('chatLink');
       isAutumn = prefs.getBool('is_autumn');
