@@ -3,17 +3,17 @@ import 'package:stacked/stacked.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NotificationsViewModel extends BaseViewModel {
-  final databaseReference = Firestore.instance;
+  final databaseReference = FirebaseFirestore.instance;
   List<DocumentSnapshot> notificationList;
 
   void init() async {
     setBusy(true);
-    notificationList = (await getData()).documents;
+    notificationList = (await getData()).docs;
     setBusy(false);
   }
 
   Future<QuerySnapshot> getData() async {
-    return await databaseReference.collection("nots").getDocuments();
+    return await databaseReference.collection("nots").get();
   }
 
   launchURL(String url) async {

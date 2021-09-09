@@ -11,7 +11,7 @@ class ImpDocs extends StatefulWidget {
 List<Widget> doc = [];
 
 class _ImpDocsState extends State<ImpDocs> {
-  final fireDocs = Firestore.instance;
+  final fireDocs = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -55,54 +55,57 @@ class _ImpDocsState extends State<ImpDocs> {
   Future fetchData() async {
     QuerySnapshot snapshot = await fireDocs
         .collection("impdocs")
-        .getDocuments()
+        .get()
         .then((QuerySnapshot snapshot) {
-      snapshot.documents.forEach((f) => doc.add(new Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: InkWell(
-              onTap: () {
-                if (f.data['link'] != null) _launchURL(f.data['link']);
-              },
-              child: Card(
-                elevation: 5.0,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Center(
-                        child: Text(
-                          f.data['title'],
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: textScaleFactor * 20,
-                              fontFamily: 'PfDin',
-                              fontWeight: FontWeight.w800),
-                        ),
-                      ),
-                      Center(
-                        child: Text(
-                          f.data['link'] == null ? "" : f.data['link'],
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: textScaleFactor * 15,
+      snapshot.docs.forEach((f) {
+        Map<String, dynamic> d = f.data();
+        doc.add(new Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: InkWell(
+            onTap: () {
+              if (d['link'] != null) _launchURL(d['link']);
+            },
+            child: Card(
+              elevation: 5.0,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Center(
+                      child: Text(
+                        d['title'],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: textScaleFactor * 20,
                             fontFamily: 'PfDin',
-                            fontWeight: FontWeight.w500,
-                            color: Colors.blue,
-                          ),
+                            fontWeight: FontWeight.w800),
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        d['link'] == null ? "" : d['link'],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: textScaleFactor * 15,
+                          fontFamily: 'PfDin',
+                          fontWeight: FontWeight.w500,
+                          color: Colors.blue,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          )));
+          ),
+        ));
+      });
       return snapshot;
     });
-    snapshot.documents.forEach((f) => print(snapshot.documents.length));
+    snapshot.docs.forEach((f) => print(snapshot.docs.length));
     return snapshot;
   }
 

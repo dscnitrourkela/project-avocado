@@ -80,7 +80,7 @@ class MenteeDetails extends StatelessWidget {
     var queryWidth = MediaQuery.of(context).size.width;
     return Query(
         options: QueryOptions(
-            documentNode: gql(readMentees),
+            document: gql(readMentees),
             variables: <String, dynamic>{"roll": rollNo}),
         builder: (QueryResult result,
             {VoidCallback refetch, FetchMore fetchMore}) {
@@ -89,7 +89,7 @@ class MenteeDetails extends StatelessWidget {
               child: Text("Please check your internet connection"),
             );
           }
-          if (result.loading) {
+          if (result.isLoading) {
             return Center(
               child: CircularProgressIndicator(),
             );

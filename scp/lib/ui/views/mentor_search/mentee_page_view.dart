@@ -81,7 +81,7 @@ class MenteeDetails extends StatelessWidget {
               child: Text("Please check your internet connection"),
             );
           }
-          if (result.loading) {
+          if (result.isLoading) {
             return Center(
               child: CircularProgressIndicator(),
             );

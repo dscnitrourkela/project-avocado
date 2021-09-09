@@ -73,22 +73,24 @@ class HomeViewModel extends BaseViewModel {
   //   }
   // }
 
-  FirebaseMessaging _fcm = new FirebaseMessaging();
-
   void initState(BuildContext context) {
     DateConfig().init();
-    _fcm.subscribeToTopic('academic');
-    _fcm.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        Navigator.pushNamed(context, Routes.rNots);
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        Navigator.pushNamed(context, Routes.rNots);
-      },
-      onResume: (Map<String, dynamic> message) async {
-        Navigator.pushNamed(context, Routes.rNots);
-      },
-    );
+    FirebaseMessaging.instance.subscribeToTopic('academic');
+
+    //replacement for onLaunch
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((value) => Navigator.pushNamed(context, Routes.rNots));
+
+    //replacement for onMessage
+    FirebaseMessaging.onMessage.listen((event) {
+      Navigator.pushNamed(context, Routes.rNots);
+    });
+
+    //replacement for onResume
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      Navigator.pushNamed(context, Routes.rNots);
+    });
     rateApp(context);
     notifyListeners();
   }

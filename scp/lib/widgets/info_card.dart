@@ -5,14 +5,14 @@ import 'package:scp/drawer_screens/notifications/notifications_viewmodel.dart';
 import 'package:scp/utils/sizeConfig.dart';
 
 class InfoCard extends StatelessWidget {
-  DocumentSnapshot f;
-  NotificationsViewModel model;
+  final DocumentSnapshot f;
+  final NotificationsViewModel model;
   InfoCard(this.f, this.model);
-  var textScaleFactor = SizeConfig.drawerItemTextSize * 0.05;
+  final double textScaleFactor = SizeConfig.drawerItemTextSize * 0.05;
 
   @override
   Widget build(BuildContext context) {
-
+    Map<String, dynamic> d = f.data();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
@@ -27,7 +27,7 @@ class InfoCard extends StatelessWidget {
               children: <Widget>[
                 Center(
                   child: Text(
-                    f.data['title'],
+                    d['title'],
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: textScaleFactor * 20,
@@ -37,7 +37,7 @@ class InfoCard extends StatelessWidget {
                 ),
                 Center(
                     child: Text(
-                  f.data['description'],
+                  d['description'],
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: textScaleFactor * 15,
@@ -47,11 +47,10 @@ class InfoCard extends StatelessWidget {
                 Center(
                   child: InkWell(
                       onTap: () {
-                        if (f.data['link'] != null)
-                          model.launchURL((f.data['link']));
+                        if (d['link'] != null) model.launchURL((d['link']));
                       },
                       child: Text(
-                        f.data['link'] == null ? "" : f.data['link'],
+                        d['link'] == null ? "" : d['link'],
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: textScaleFactor * 15,

@@ -142,19 +142,19 @@ class UserdataState extends State<Userdata> {
                                       (rollNo.length == 9) &&
                                       (pattern.hasMatch(rollNo))) {
                                     {
-                                      FirebaseAuth.instance
+                                      /* FirebaseAuth.instance
                                           .currentUser()
                                           .then((val) {
                                         UserUpdateInfo updateUser =
                                             UserUpdateInfo();
-                                        updateUser.displayName = rollNo;
-                                        val.updateProfile(updateUser);
-                                        _storeUserData(context);
-                                        final token = _fcm.getToken().then(
-                                            (token) async =>
-                                                await saveTokenToFirestore(
-                                                    token.toString()));
-                                      });
+                                        updateUser.displayName = rollNo; */
+                                      // val.updateProfile(updateUser);
+                                      _storeUserData(context);
+                                      FirebaseMessaging.instance
+                                          .getToken()
+                                          .then((token) async =>
+                                              await saveTokenToFirestore(
+                                                  token.toString()));
                                     }
                                   } else {
                                     ScaffoldMessenger.of(context)
@@ -222,24 +222,18 @@ class UserdataState extends State<Userdata> {
   }
 
   Future<String> inputData() async {
-    final FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    phoneNo = user.phoneNumber;
-    return "return";
+    phoneNo = FirebaseAuth.instance.currentUser.phoneNumber;
+    return phoneNo;
   }
 
-  FirebaseMessaging _fcm = new FirebaseMessaging();
-
   Future<void> saveTokenToFirestore(String token) async {
-    Firestore.instance
+    FirebaseFirestore.instance
         .collection('tokens')
         .where('mobile', isEqualTo: phoneNo)
-        .getDocuments()
+        .get()
         .then((QuerySnapshot deviceToken) async {
-      if (deviceToken.documents.isEmpty) {
-        await Firestore.instance
-            .collection('tokens')
-            .document(phoneNo)
-            .setData({
+      if (deviceToken.docs.isEmpty) {
+        await FirebaseFirestore.instance.collection('tokens').doc(phoneNo).set({
           'devToken': token,
           'displayName': username,
           'roll': rollNo,
@@ -248,10 +242,10 @@ class UserdataState extends State<Userdata> {
           'createdAt': FieldValue.serverTimestamp(),
         });
       } else {
-        await Firestore.instance
+        await FirebaseFirestore.instance
             .collection('tokens')
-            .document(phoneNo)
-            .updateData({
+            .doc(phoneNo)
+            .update({
           'devToken': token,
           'displayName': username,
         });
