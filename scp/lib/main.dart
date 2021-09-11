@@ -29,7 +29,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  FlutterError.onError = Crashlytics.instance.recordFlutterError;
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   runZoned<Future<void>>(
     () async {
       setupLocator();
@@ -45,6 +45,6 @@ void main() {
     },
   );
   FlutterError.onError = (FlutterErrorDetails details) {
-    Crashlytics.instance.recordFlutterError(details);
+    FirebaseCrashlytics.instance.recordFlutterError(details);
   };
 }

@@ -10,7 +10,7 @@ class Nots extends StatefulWidget {
 }
 
 class _Nots extends State<Nots> {
-  final databaseReference = Firestore.instance;
+  final databaseReference = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

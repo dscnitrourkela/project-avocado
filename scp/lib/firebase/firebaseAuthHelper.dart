@@ -73,14 +73,11 @@ class ScpAuth {
                           fontFamily: 'PfDin'),
                     ),
                     onPressed: () {
-                      firebaseInstance.currentUser().then((user) {
-                        if (user == null) {
-                          signIn(context);
-                        } else {
-                          print("Navigatr push");
-                          Navigator.of(context).pushNamed(Routes.rUserData);
-                        }
-                      });
+                      if (firebaseInstance.currentUser == null) {
+                        signIn(context);
+                      } else {
+                        Navigator.of(context).pushNamed(Routes.rUserData);
+                      }
                     },
                   ),
                 ],
@@ -103,7 +100,8 @@ class ScpAuth {
       signInSpecial(context, credential);
     };
 
-    final PhoneVerificationFailed verificationFailed = (AuthException error) {
+    final PhoneVerificationFailed verificationFailed =
+        (FirebaseAuthException error) {
       print('${error.message}');
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Booooo!')));
@@ -123,11 +121,11 @@ class ScpAuth {
   static signIn(BuildContext context) async {
     print(verificationId);
     print(smsCode);
-    final AuthCredential credential = PhoneAuthProvider.getCredential(
+    final AuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verificationId, smsCode: smsCode);
-    final FirebaseUser user =
-        await firebaseInstance.signInWithCredential(credential).then((user) {
-      print(user.displayName);
+
+    await firebaseInstance.signInWithCredential(credential).then((user) {
+      print(user.user.displayName);
       _storeUserData(context, user);
     }).catchError((error) {
       print(error);
@@ -137,17 +135,17 @@ class ScpAuth {
   static signInSpecial(BuildContext context, AuthCredential credential) async {
     print(verificationId);
     print(smsCode);
-    final FirebaseUser user =
-        await firebaseInstance.signInWithCredential(credential).then((user) {
+    await firebaseInstance.signInWithCredential(credential).then((user) {
       _storeUserData(context, user);
     }).catchError((error) {
       print(error);
     });
   }
 
-  static _storeUserData(BuildContext context, FirebaseUser firebaseUser) async {
+  static _storeUserData(
+      BuildContext context, UserCredential firebaseUser) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('roll_no', firebaseUser.displayName);
+    await prefs.setString('roll_no', firebaseUser.user.displayName);
     Navigator.of(context).pushNamed(Routes.rUserData);
   }
 }

@@ -127,7 +127,7 @@ class AboutSCP extends StatelessWidget {
             GraphQLProvider(
               client: valueclient,
               child: Query(
-                options: QueryOptions(documentNode: gql(readCordinators)),
+                options: QueryOptions(document: gql(readCordinators)),
                 builder: (QueryResult result,
                     {VoidCallback refetch, FetchMore fetchMore}) {
                   if (result.data == null) {
@@ -163,7 +163,7 @@ class AboutSCP extends StatelessWidget {
             GraphQLProvider(
               client: valueclient,
               child: Query(
-                options: QueryOptions(documentNode: gql(readPrefect)),
+                options: QueryOptions(document: gql(readPrefect)),
                 builder: (QueryResult result,
                     {VoidCallback refetch, FetchMore fetchMore}) {
                   if (result.data == null) {

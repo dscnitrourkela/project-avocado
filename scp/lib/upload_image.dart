@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -70,10 +71,11 @@ class UploadImageState extends State<UploadImageScreen> {
       uploading = true;
     });
 
-    StorageReference ref =
+    Reference ref =
         FirebaseStorage.instance.ref().child(widget.type + "$key.jpg");
-    StorageUploadTask uploadTask = ref.putFile(File(imagePath));
-    var futureUrl = (await uploadTask.onComplete).ref.getDownloadURL();
+    UploadTask uploadTask = ref.putFile(File(imagePath));
+
+    var futureUrl = uploadTask.snapshot.ref.getDownloadURL();
 
     String imageUrl;
 

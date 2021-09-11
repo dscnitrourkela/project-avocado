@@ -73,26 +73,26 @@ class _SettingsState extends State<Settings> {
     phoneNo = prefs.getString('phone_no');
     username = prefs.getString('username');
     rollNo = prefs.getString('roll_no');
-    DocumentSnapshot qn =
-        await Firestore.instance.collection('tokens').document(phoneNo).get();
-    state = await qn.data['optionalSub'];
+    DocumentSnapshot qn = await FirebaseFirestore.instance
+        .collection('tokens')
+        .doc(phoneNo)
+        .get();
+    Map<String, dynamic> mp = qn.data();
+    state = await mp['optionalSub'];
 
     return qn;
   }
 
-  FirebaseMessaging _fcm = FirebaseMessaging();
+  //FirebaseMessaging _fcm = FirebaseMessaging();
 
   saveTokenToFirestore(String token) async {
-    Firestore.instance
+    FirebaseFirestore.instance
         .collection('tokens')
         .where('mobile', isEqualTo: phoneNo)
-        .getDocuments()
+        .get()
         .then((QuerySnapshot deviceToken) async {
-      if (deviceToken.documents.isEmpty) {
-        await Firestore.instance
-            .collection('tokens')
-            .document(phoneNo)
-            .setData({
+      if (deviceToken.docs.isEmpty) {
+        await FirebaseFirestore.instance.collection('tokens').doc(phoneNo).set({
           'devToken': token,
           'displayName': username,
           'roll': rollNo,
@@ -101,10 +101,10 @@ class _SettingsState extends State<Settings> {
           'createdAt': FieldValue.serverTimestamp(),
         });
       } else {
-        await Firestore.instance
+        await FirebaseFirestore.instance
             .collection('tokens')
-            .document(phoneNo)
-            .updateData({
+            .doc(phoneNo)
+            .update({
           'devToken': token,
           'displayName': username,
         });
@@ -114,17 +114,17 @@ class _SettingsState extends State<Settings> {
 
   unSubOther(state) {
     if (state == false) {
-      Firestore.instance
+      FirebaseFirestore.instance
           .collection('tokens')
-          .document(phoneNo)
-          .updateData({'optionalSub': false});
-      _fcm.unsubscribeFromTopic('other');
+          .doc(phoneNo)
+          .update({'optionalSub': false});
+      FirebaseMessaging.instance.unsubscribeFromTopic('other');
     } else {
-      Firestore.instance
+      FirebaseFirestore.instance
           .collection('tokens')
-          .document(phoneNo)
-          .updateData({'optionalSub': true});
-      _fcm.subscribeToTopic('other');
+          .doc(phoneNo)
+          .update({'optionalSub': true});
+      FirebaseMessaging.instance.subscribeToTopic('other');
     }
   }
 
@@ -133,7 +133,7 @@ class _SettingsState extends State<Settings> {
     super.initState();
     if (state == null) {
       state = true;
-      final token = _fcm
+      final token = FirebaseMessaging.instance
           .getToken()
           .then((token) async => await saveTokenToFirestore(token.toString()));
     }

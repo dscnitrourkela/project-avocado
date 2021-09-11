@@ -23,7 +23,7 @@ class MenteePageViewModel extends BaseViewModel {
   QueryOptions queryOptions;
   void init() {
     queryOptions = QueryOptions(
-        documentNode: gql(readMentees),
+        document: gql(readMentees),
         variables: <String, dynamic>{"roll": rollNo});
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -73,22 +74,24 @@ class HomeViewModel extends BaseViewModel {
   //   }
   // }
 
-  FirebaseMessaging _fcm = new FirebaseMessaging();
-
   void initState(BuildContext context) {
     DateConfig().init();
-    _fcm.subscribeToTopic('academic');
-    _fcm.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        Navigator.pushNamed(context, Routes.rNots);
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        Navigator.pushNamed(context, Routes.rNots);
-      },
-      onResume: (Map<String, dynamic> message) async {
-        Navigator.pushNamed(context, Routes.rNots);
-      },
-    );
+    FirebaseMessaging.instance.subscribeToTopic('academic');
+
+    //replacement for onLaunch
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((value) => Navigator.pushNamed(context, Routes.rNots));
+
+    //replacement for onMessage
+    FirebaseMessaging.onMessage.listen((event) {
+      Navigator.pushNamed(context, Routes.rNots);
+    });
+
+    //replacement for onResume
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      Navigator.pushNamed(context, Routes.rNots);
+    });
     rateApp(context);
     notifyListeners();
   }
@@ -116,17 +119,20 @@ class HomeViewModel extends BaseViewModel {
     prefs.getKeys();
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     buildNumber = int.parse(packageInfo.buildNumber);
-    remoteConfig = await RemoteConfig.instance;
-    remoteConfig.setConfigSettings(RemoteConfigSettings(debugMode: true));
+    remoteConfig = RemoteConfig.instance;
+    remoteConfig.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(seconds: 10),
+      minimumFetchInterval: Duration.zero,
+    ));
     try {
-      await remoteConfig.fetch(expiration: const Duration(seconds: 0));
-      await remoteConfig.activateFetched();
+      await remoteConfig.fetch();
+      await remoteConfig.fetchAndActivate();
       isChat = remoteConfig.getBool('is_chat_active');
       chatUrl = remoteConfig.getString('chatLink');
       publishVersion = int.parse(remoteConfig.getString("version"));
       await prefs.setBool('is_chat_active', isChat);
       await prefs.setString('chatLink', chatUrl);
-    } on FetchThrottledException catch (exception) {
+    } on PlatformException catch (exception) {
       isChat = prefs.getBool('is_chat_active');
       chatUrl = prefs.getString('chatLink');
       // Fetch throttled.

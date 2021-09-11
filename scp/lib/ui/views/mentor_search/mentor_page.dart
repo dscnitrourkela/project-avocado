@@ -89,7 +89,7 @@ class MentorDetails extends StatelessWidget {
     var queryWidth = MediaQuery.of(context).size.width;
     return Query(
         options: QueryOptions(
-            documentNode: gql(readMentorDetails),
+            document: gql(readMentorDetails),
             variables: <String, dynamic>{"roll": roll}),
         builder: (QueryResult result,
             {VoidCallback refetch, FetchMore fetchMore}) {
@@ -98,7 +98,7 @@ class MentorDetails extends StatelessWidget {
               child: Text("Please check your internet connection"),
             );
           }
-          if (result.loading) {
+          if (result.isLoading) {
             return Center(
               child: CircularProgressIndicator(),
             );
