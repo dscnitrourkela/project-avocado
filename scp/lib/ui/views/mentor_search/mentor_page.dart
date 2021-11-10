@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'package:url_launcher/url_launcher.dart';
-import 'package:native_contact_dialog/native_contact_dialog.dart';
 import 'package:scp/utils/grapgQLconfig.dart';
 
 final Color primaryColor = Color.fromARGB(255, 49, 68, 76);
@@ -301,9 +301,10 @@ class MentorDetails extends StatelessWidget {
                           ),
                           onPressed: () {
                             saveContact(Contact(
-                                givenName: mentorName,
-                                phones: [Item(value: mentorContact)],
-                                emails: [Item(value: mentorEmail)]));
+                              displayName: mentorName,
+                              phones: [Phone(mentorContact)],
+                              emails: [Email(mentorEmail)],
+                            ));
                           },
                           child: Text(
                             message,
@@ -343,17 +344,12 @@ class MentorDetails extends StatelessWidget {
         });
   }
 
-  void saveContact(Contact newContact) async {
-    NativeContactDialog.addContact(newContact).then((result) {
-      // NOTE: The user could cancel the dialog, but not add
-      // them to their addressbook. Whether or not the user decides
-      // to add [contactToAdd] to their addressbook, you will end up
-      // here.
-
-      print('add contact dialog closed.');
+  void saveContact(Contact contact) async {
+    // save contact
+    final result = FlutterContacts.insertContact(contact).then((value) {
+      print('add contact dialog closed');
     }).catchError((error) {
-      // FlutterError, most likely unsupported operating system.
-      print('Error adding contact!');
+      print('pata nai bhai kya error hai');
     });
   }
 }

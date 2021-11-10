@@ -24,8 +24,8 @@ dependencies:
   firebase_database: ^7.2.2
   firebase_messaging: ^10.0.7
   firebase_remote_config: ^0.11.0
-  firebase_storage: ^10.0.3
-  flutter_webview_plugin: ^0.4.0
+  firebase_storage: ^10.0.3  
+  flutter_contacts: ^1.1.1+2
   font_awesome_flutter: ^9.1.0
   get_it: ^5.0.3
   graphql_flutter: ^5.0.0
@@ -33,8 +33,7 @@ dependencies:
   in_app_review: ^2.0.3
   intl: ^0.17.0
   lite_rolling_switch: ^0.1.1
-  lottie: ^1.1.0
-  native_contact_dialog: ^0.2.2
+  lottie: ^1.1.0  
   ndialog: ^4.1.0
   package_info: ^2.0.2
   path_provider: ^2.0.3
@@ -44,6 +43,7 @@ dependencies:
   stacked: ^1.7.6
   table_calendar: ^2.2.3
   url_launcher: ^6.0.10
+  webview_flutter: ^2.3.0
   firebase_analytics: ^8.3.2
 
 dev_dependencies:
