@@ -10,6 +10,7 @@
 .history
 .svn/
 android/app/google-services.json
+android/android.zip
 android/google-services.json
 android/app/key.jks
 android/key.properties
