@@ -67,38 +67,39 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 DrawerHeader(
+                    margin: EdgeInsets.all(0),
                     child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      username,
-                      style: TextStyle(
-                          fontSize: SizeConfig.screenWidth * 0.058,
-                          fontFamily: 'PfDin'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4.0),
-                      child: Text(
-                        phoneNo,
-                        style: TextStyle(
-                            fontSize: SizeConfig.screenWidth * 0.035,
-                            fontFamily: 'PfDin'),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4.0),
-                      child: Text(
-                        rollNo,
-                        style: TextStyle(
-                            fontSize: SizeConfig.screenWidth * 0.035,
-                            fontFamily: 'PfDin'),
-                      ),
-                    )
-                  ],
-                )),
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          username,
+                          style: TextStyle(
+                              fontSize: SizeConfig.screenWidth * 0.058,
+                              fontFamily: 'PfDin'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4.0),
+                          child: Text(
+                            phoneNo,
+                            style: TextStyle(
+                                fontSize: SizeConfig.screenWidth * 0.035,
+                                fontFamily: 'PfDin'),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4.0),
+                          child: Text(
+                            rollNo,
+                            style: TextStyle(
+                                fontSize: SizeConfig.screenWidth * 0.035,
+                                fontFamily: 'PfDin'),
+                          ),
+                        )
+                      ],
+                    )),
                 Expanded(
-                  flex: 4,
+                  flex: 7,
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -164,6 +165,28 @@ class _HomePageState extends State<HomePage> {
                         },
                         title: Text(
                           "Developer Info",
+                          style: TextStyle(
+                              fontSize: SizeConfig.drawerItemTextSize,
+                              fontFamily: 'PfDin'),
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
+                          _launchLink('https://ics.nitrkl.ac.in/');
+                        },
+                        title: Text(
+                          "ICS Website",
+                          style: TextStyle(
+                              fontSize: SizeConfig.drawerItemTextSize,
+                              fontFamily: 'PfDin'),
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
+                          _launchLink('https://www.youtube.com/c/ICSNITR');
+                        },
+                        title: Text(
+                          "ICS YouTube",
                           style: TextStyle(
                               fontSize: SizeConfig.drawerItemTextSize,
                               fontFamily: 'PfDin'),
@@ -467,6 +490,14 @@ class _HomePageState extends State<HomePage> {
       await launch(privacyPolicy);
     } else {
       throw 'Could not launch $privacyPolicy';
+    }
+  }
+
+  _launchLink(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 }
