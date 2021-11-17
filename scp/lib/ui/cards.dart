@@ -9,8 +9,17 @@ import 'package:scp/firebase/firebaseDBHandler.dart';
 import 'package:scp/utils/routes.dart';
 import 'package:scp/utils/sizeConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../utils/models.dart';
 import 'package:scp/upload_image.dart';
+
+_launchLink(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 
 const platform = const MethodChannel("FAQ_ACTIVITY");
 Widget appointmentCard(BuildContext context) {
@@ -23,13 +32,14 @@ Widget appointmentCard(BuildContext context) {
       padding: const EdgeInsets.only(top: 12.0),
       child: InkWell(
         onTap: () async {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          if (prefs.getBool('hasBooked') == true) {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    Booking(counselDay: gCounselDay, time: gTime)));
-          } else
-            Navigator.of(context).pushNamed(Routes.rAppointments);
+          // SharedPreferences prefs = await SharedPreferences.getInstance();
+          // if (prefs.getBool('hasBooked') == true) {
+          //   Navigator.of(context).push(MaterialPageRoute(
+          //       builder: (BuildContext context) =>
+          //           Booking(counselDay: gCounselDay, time: gTime)));
+          // } else
+          //   Navigator.of(context).pushNamed(Routes.rAppointments);
+          _launchLink('https://yourdost.com/');
         },
         // onTap: () async {
         //   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -42,7 +52,7 @@ Widget appointmentCard(BuildContext context) {
         // },
         child: Card(
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
           elevation: 8.0,
           margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
           child: Stack(
@@ -62,7 +72,7 @@ Widget appointmentCard(BuildContext context) {
                           children: <Widget>[
                             Padding(
                               padding:
-                                  const EdgeInsets.only(top: 20.0, left: 14.0),
+                              const EdgeInsets.only(top: 20.0, left: 14.0),
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Container(
@@ -75,7 +85,7 @@ Widget appointmentCard(BuildContext context) {
                                     ),
                                   ),*/
                                   child: Text(
-                                    'BOOK',
+                                    'Book an',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 18.0,
@@ -87,22 +97,22 @@ Widget appointmentCard(BuildContext context) {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20.0, left: 0.0),
-                              child: Container(
-                                alignment: Alignment.bottomLeft,
-                                child: Text(
-                                  'YOUR',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18.0,
-                                    fontFamily: 'PfDin',
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding:
+                            //       const EdgeInsets.only(top: 20.0, left: 0.0),
+                            //   child: Container(
+                            //     alignment: Alignment.bottomLeft,
+                            //     child: Text(
+                            //       'an',
+                            //       style: TextStyle(
+                            //         color: Colors.white,
+                            //         fontSize: 18.0,
+                            //         fontFamily: 'PfDin',
+                            //         fontWeight: FontWeight.w500,
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                         ListTile(
@@ -143,7 +153,7 @@ Widget appointmentCard(BuildContext context) {
                           child: SizedBox(
                             width: heightFactor * 0.47,
                             child: Text(
-                              'Feel like talking to someone? Meet a counsellor today!',
+                              'Our Counselling Partner YOURDOST is here to help.',
                               style: TextStyle(
                                   fontSize: heightFactor * 0.037,
                                   color: Colors.white,
@@ -203,7 +213,7 @@ Widget mentorsCard(BuildContext context, String roll) {
       },
       child: Card(
         shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
         elevation: 8.0,
         margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
         child: Stack(
@@ -299,6 +309,7 @@ Widget mentorsCard(BuildContext context, String roll) {
   );
 }
 
+
 _startFAQActivity() async {
   try {
     await platform.invokeMethod('startFaqActivity');
@@ -319,7 +330,7 @@ Widget faqCard(BuildContext context) {
       },
       child: Card(
         shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
         elevation: 8.0,
         margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
         child: Stack(
@@ -410,7 +421,7 @@ Widget timetableCard(BuildContext context) {
       },
       child: Card(
         shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
         elevation: 8.0,
         margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
         child: Stack(
@@ -531,13 +542,13 @@ Widget slotCard(BuildContext context, String titleText, String type,
                     context,
                     MaterialPageRoute(
                         builder: (context) => UploadImageScreen(
-                              bookingKey: key,
-                              time: time,
-                              counselDay: day,
-                              date: date,
-                              type: type,
-                              index: index,
-                            )));
+                          bookingKey: key,
+                          time: time,
+                          counselDay: day,
+                          date: date,
+                          type: type,
+                          index: index,
+                        )));
                 break;
               case "1":
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -668,7 +679,7 @@ Widget slotCard(BuildContext context, String titleText, String type,
                       itemCount: count, //ScpDatabase.slotsList.length,
                       itemBuilder: (BuildContext context, int index) {
                         var slot =
-                            Slot.map(_slotsSnapshot.value['slot${index + 1}']);
+                        Slot.map(_slotsSnapshot.value['slot${index + 1}']);
                         return slotWidget(slot.status, slot.key, slot.time,
                             (index + 1).toString(), slot.date, slot.day);
                       });
@@ -678,4 +689,5 @@ Widget slotCard(BuildContext context, String titleText, String type,
       ),
     ),
   );
+
 }
