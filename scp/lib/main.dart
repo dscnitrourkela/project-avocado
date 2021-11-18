@@ -13,19 +13,6 @@ final privacyPolicy = "https://project-avocado-8b3e1.firebaseapp.com";
 final playstoreURL =
     "https://play.google.com/store/apps/details?id=in.ac.nitrkl.scp.scp";
 
-/* Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
-  if (message.containsKey('data')) {
-    // Handle data message
-    final dynamic data = message['data'];
-  }
-
-  if (message.containsKey('notification')) {
-    // Handle notification message
-    final dynamic notification = message['notification'];
-  }
-  // Or do other work.
-} */
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
