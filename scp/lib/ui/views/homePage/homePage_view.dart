@@ -11,8 +11,8 @@ import 'homePage_view_model.dart';
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print(DateTime.now().weekday);
-    print(DateTime.now().hour);
+    debugPrint(DateTime.now().weekday.toString());
+    debugPrint(DateTime.now().hour.toString());
     SizeConfig().init(context);
     FirebaseDatabase.instance.setPersistenceEnabled(true);
 

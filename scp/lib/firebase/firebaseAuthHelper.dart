@@ -19,11 +19,11 @@ class ScpAuth {
   }
 
   Future<bool> smsCodeDialog(BuildContext context) {
-    print('enter smsdialog');
+    debugPrint('enter smsdialog');
     var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final otpController = TextEditingController();
-    print(queryWidth);
+    debugPrint(queryWidth.toString());
     return showDialog(
         context: context,
         barrierDismissible: false,
@@ -96,13 +96,13 @@ class ScpAuth {
     };
     final PhoneVerificationCompleted verificationCompleted =
         (AuthCredential credential) {
-      print('verified');
+      debugPrint('verified');
       signInSpecial(context, credential);
     };
 
     final PhoneVerificationFailed verificationFailed =
         (FirebaseAuthException error) {
-      print('${error.message}');
+      debugPrint('${error.message}');
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Booooo!')));
     };
@@ -119,26 +119,26 @@ class ScpAuth {
   }
 
   static signIn(BuildContext context) async {
-    print(verificationId);
-    print(smsCode);
+    debugPrint(verificationId.toString());
+    debugPrint(smsCode.toString());
     final AuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verificationId, smsCode: smsCode);
 
     await firebaseInstance.signInWithCredential(credential).then((user) {
-      print(user.user.displayName);
+      debugPrint(user.user.displayName.toString());
       _storeUserData(context, user);
     }).catchError((error) {
-      print(error);
+      debugPrint(error.toString());
     });
   }
 
   static signInSpecial(BuildContext context, AuthCredential credential) async {
-    print(verificationId);
-    print(smsCode);
+    debugPrint(verificationId.toString());
+    debugPrint(smsCode.toString());
     await firebaseInstance.signInWithCredential(credential).then((user) {
       _storeUserData(context, user);
     }).catchError((error) {
-      print(error);
+      debugPrint(error.toString());
     });
   }
 

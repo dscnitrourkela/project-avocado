@@ -40,7 +40,7 @@ class HomeViewModel extends BaseViewModel {
     var now = DateTime.now();
     //var bookedDate = DateTime.parse(formattedString)
     // int dayFromEpoch = (DateTime.now().millisecondsSinceEpoch/(fac)).floor();
-    // print("Smarak ${((dayFromEpoch - 1)/7).floor()}");
+    // debugPrint("Smarak ${((dayFromEpoch - 1)/7).floor()}");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (!prefs.getBool('hasBooked')) {
       prefs.setString('bookDate', DateTime.now().toString());
@@ -52,10 +52,10 @@ class HomeViewModel extends BaseViewModel {
     /*if(DateTime.now().weekday > 3)*/
     while (now.weekday != wednesday) {
       now = now.add(new Duration(days: 1));
-      //print(now);
+      //debugPrint(now.toString());
     }
 
-    print(DateFormat.d().format(now) + " " + DateFormat.MMM().format(now));
+    debugPrint(DateFormat.d().format(now) + " " + DateFormat.MMM().format(now));
     prefs.setString('psychDate',
         DateFormat.d().format(now) + " " + DateFormat.MMM().format(now));
     prefs.setString(
@@ -70,7 +70,7 @@ class HomeViewModel extends BaseViewModel {
   //   try {
   //     await platform.invokeMethod('startFaqActivity');
   //   } on PlatformException catch (e) {
-  //     print(e.message);
+  //     debugPrint(e.message.toString());
   //   }
   // }
 
@@ -136,7 +136,7 @@ class HomeViewModel extends BaseViewModel {
       isChat = prefs.getBool('is_chat_active');
       chatUrl = prefs.getString('chatLink');
       // Fetch throttled.
-      print(exception);
+      debugPrint(exception.toString());
     } catch (exception) {
       isChat = prefs.getBool('is_chat_active');
       chatUrl = prefs.getString('chatLink');
@@ -148,9 +148,9 @@ class HomeViewModel extends BaseViewModel {
     rollNo = prefs.getString('roll_no');
     phoneNo = prefs.getString('phone_no');
     await prefs.setBool('hasBooked', prefs.getBool('hasBooked') ?? false);
-    print(username + rollNo + phoneNo);
+    debugPrint(username + rollNo + phoneNo);
     reset();
-    print(
+    debugPrint(
         "Version number is $buildNumber and version on remote config is $publishVersion");
     if (buildNumber < publishVersion) {}
     notifyListeners();
@@ -184,7 +184,7 @@ class HomeViewModel extends BaseViewModel {
   void checkUpdate(BuildContext context) async {
     if (buildNumber < publishVersion) {
       Future.delayed(const Duration(milliseconds: 2000), () async {
-        print("It should update");
+        debugPrint("It should update");
         await DialogBackground(
           dismissable: true,
           blur: 2.0,
@@ -204,6 +204,6 @@ class HomeViewModel extends BaseViewModel {
         ).show(context);
       });
     } else
-      print("Not updating");
+      debugPrint("Not updating");
   }
 }

@@ -46,7 +46,7 @@ class UploadImageState extends State<UploadImageScreen> {
   }
 
   void bookAppointment(BuildContext context, String key) async {
-    print(widget.counselDay);
+    debugPrint(widget.counselDay);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var rollNo = prefs.getString('roll_no');
     var phoneNo = prefs.getString('phone_no');
@@ -59,7 +59,7 @@ class UploadImageState extends State<UploadImageScreen> {
         ((widget.type == "psych")
             ? DateConfig.psychDate.toString()
             : DateConfig.counselDate.toString()));
-    print(DateConfig.bookedDate.toString());
+    debugPrint(DateConfig.bookedDate.toString());
     prefs.setString('bookedTime', widget.time);
     prefs.setString('bookedSlot', "slot${widget.index}");
 
@@ -89,7 +89,7 @@ class UploadImageState extends State<UploadImageScreen> {
       "status": "1",
       "idImage": imageUrl,
     }).then((_) {
-      print("Value updated");
+      debugPrint("Value updated");
       Navigator.of(context).pop();
       Navigator.push(
         context,

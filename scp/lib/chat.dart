@@ -13,11 +13,11 @@ class ChatView extends StatelessWidget {
           javascriptMode: JavascriptMode.unrestricted,
           zoomEnabled: true,
           onWebResourceError: (error) {
-            print(error.errorCode);
+            debugPrint(error.errorCode.toString());
             return CircularProgressIndicator();
           },
           onProgress: (int progress) {
-            print("WebView is loading (progress : $progress%)");
+            debugPrint("WebView is loading (progress : $progress%)");
           }),
     ));
   }

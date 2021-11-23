@@ -54,7 +54,7 @@ class _BookingState extends State<Booking> {
   //       "status": "0",
   //       "timestamp": DateTime.now().toString(),
   //     }).then((_) {
-  //       print("Booking canceled");
+  //       debugPrint("Booking canceled");
   //       prefs.setBool('hasBooked', false);
   //       Navigator.of(context).pop();
   //       Navigator.of(context).pushNamed('/appointments');
@@ -66,7 +66,7 @@ class _BookingState extends State<Booking> {
   //       "status": "0",
   //       "timestamp": DateTime.now().toString(),
   //     }).then((_) {
-  //       print("Booking canceled");
+  //       debugPrint("Booking canceled");
   //       prefs.setBool('hasBooked', false);
   //       Navigator.of(context).pop();
   //       Navigator.of(context).pushNamed('/appointments');
@@ -88,7 +88,7 @@ class _BookingState extends State<Booking> {
     counselorName = remoteConfig.getString('counselor_name');
     psychName = remoteConfig.getString('psych_name');
     psychDay = remoteConfig.getString('psych_day');
-    print(counselDay + 'hola');
+    debugPrint(counselDay + 'hola');
     if (hasBooked) {}
     return remoteConfig;
   }
@@ -97,7 +97,7 @@ class _BookingState extends State<Booking> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     screenWidth = SizeConfig.screenWidth;
-    //print(type + "Smarak");
+    //debugPrint(type + "Smarak");
 
     return Scaffold(
       appBar: PreferredSize(
@@ -172,7 +172,7 @@ class _BookingState extends State<Booking> {
                                     "status": "0",
                                     "timestamp": DateTime.now().toString(),
                                   }).then((_) {
-                                    print("Booking canceled");
+                                    debugPrint("Booking canceled");
                                     prefs.setBool('hasBooked', false);
                                     prefs.setString('bookedSlot', "");
                                     Navigator.of(context).pop();
@@ -188,7 +188,7 @@ class _BookingState extends State<Booking> {
                                     "status": "0",
                                     //"timestamp": DateTime.now().toString(),
                                   }).then((_) {
-                                    print("Booking canceled");
+                                    debugPrint("Booking canceled");
                                     prefs.setBool('hasBooked', false);
                                     Navigator.of(context).pop();
                                     Navigator.of(context)
