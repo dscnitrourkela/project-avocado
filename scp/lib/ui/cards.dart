@@ -189,7 +189,7 @@ Widget mentorsCard(BuildContext context, String roll) {
     height: heightFactor * 0.58,
     child: InkWell(
       onTap: () {
-        if (roll.toString()[2] == '0') {
+        if (roll.toString()[2] == '1') {
           Navigator.push(
               context,
               MaterialPageRoute(
