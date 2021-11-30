@@ -172,7 +172,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ListTile(
                         onTap: () {
-                          _launchLink('https://ics.nitrkl.ac.in/');
+                          launchLink('https://ics.nitrkl.ac.in/');
                         },
                         title: Text(
                           "ICS Website",
@@ -183,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ListTile(
                         onTap: () {
-                          _launchLink('https://www.youtube.com/c/ICSNITR');
+                          launchLink('https://www.youtube.com/c/ICSNITR');
                         },
                         title: Text(
                           "ICS YouTube",
@@ -279,7 +279,7 @@ class _HomePageState extends State<HomePage> {
                   ? ListView(
                       scrollDirection: Axis.vertical,
                       children: <Widget>[
-                        appointmentCard(context),
+                        yourDostCard(context),
                         TimetableCardSplit(
                             context,
                             MediaQuery.of(context).size.width,
@@ -493,11 +493,12 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  _launchLink(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
+
+}
+launchLink(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }
