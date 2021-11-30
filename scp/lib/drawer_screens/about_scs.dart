@@ -90,23 +90,24 @@ class AboutSCP extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                contactCard(context, "Prof. Animesh Biswas", "Director", ""),
                 contactCard(
-                    context, "Prof. K.C. Pati", "Professor-In-Charge", ""),
+                    context, "Prof. Simanchala Panigrahi", "Director", ""),
                 contactCard(
-                    context, "Prof. Alok Satpathy", "Faculty Coordinator", ""),
+                    context, "Prof. Pawan Kumar", "Professor-In-Charge", ""),
                 contactCard(
-                    context, "Prof. A.K Rath", "Faculty Coordinator", ""),
-                contactCard(context, "Prof. Suvendu Ranjan Pattnaik",
+                    context, "Prof. Manish Okade", "Faculty Coordinator", ""),
+                contactCard(context, "Prof. K. Ratna Subhashini",
+                    "Faculty Coordinator", ""),
+                contactCard(context, "Prof.(Ms.) Usharani Subuddhi",
                     "Faculty Coordinator", ""),
                 contactCard(
-                    context, "Prof. Dipti Patra", "Faculty Coordinator", ""),
+                    context, "Prof. Bhishma Tyagi", "Faculty Coordinator", ""),
                 contactCard(context, "Prof. Usha Rani Subudhi",
                     "Faculty Coordinator", ""),
-                contactCard(context, "Prof. K.R. Subhashini",
-                    "Faculty Coordinator", ""),
                 contactCard(
-                    context, "Prof. Snehanshu Pal", "Faculty Coordinator", ""),
+                    context, "Prof. Binita Tiwari", "Faculty Coordinator", ""),
+                contactCard(context, "Prof. Abhay Pratap Yadav",
+                    "Faculty Coordinator", ""),
               ],
             ),
             Padding(
