@@ -28,25 +28,27 @@ class _ImpDocsState extends State<ImpDocs> {
         ),
       ),
       body: SingleChildScrollView(
-          child: FutureBuilder(
-              future: fetchData(),
-              builder: (context, snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.done:
-                    return SingleChildScrollView(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: doc,
-                    ));
-                  default:
-                    return Container(
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                }
-              })),
+        child: FutureBuilder(
+          future: fetchData(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.done:
+                return SingleChildScrollView(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: doc,
+                ));
+              default:
+                return Container(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+            }
+          },
+        ),
+      ),
     );
   }
 
