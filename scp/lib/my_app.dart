@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'HomePage.dart';
+import 'home_page.dart';
 import 'package:scp/connectivity/connectivity_handler_widget.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
 import 'login.dart';

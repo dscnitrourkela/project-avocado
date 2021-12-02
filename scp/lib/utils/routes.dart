@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scp/HomePage.dart';
+import 'package:scp/home_page.dart';
 import 'package:scp/booking.dart';
 import 'package:scp/chat.dart';
 import 'package:scp/drawer_screens/about_scs.dart';
@@ -10,6 +10,7 @@ import 'package:scp/drawer_screens/settings.dart';
 import 'package:scp/login.dart';
 import 'package:scp/timetable/theorySection.dart';
 import 'package:scp/appointments.dart';
+import 'package:scp/ui/views/ics_events/events_view.dart';
 import 'package:scp/userdata.dart';
 
 class Routes {
@@ -26,6 +27,7 @@ class Routes {
   static const String rAttendance = '/attendance';
   static const String rSettings = '/settings';
   static const String rChat = '/chat';
+  static const String rEvents = '/events';
 
   static Map<String, WidgetBuilder> getRoutes() {
     return {
@@ -42,6 +44,7 @@ class Routes {
       Routes.rSettings: (context) => Settings(),
       Routes.rAttendance: (context) => TheorySection(1), //1 for right card
       Routes.rChat: (context) => ChatView(),
+      Routes.rEvents: (context) => EventsPage(),
     };
   }
 }

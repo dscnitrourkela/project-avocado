@@ -299,6 +299,111 @@ Widget mentorsCard(BuildContext context, String roll) {
   );
 }
 
+Widget eventsCard(BuildContext context) {
+  Gradients().init(context);
+  SizeConfig().init(context);
+  double heightFactor = SizeConfig.screenWidth;
+
+  return SizedBox(
+    height: heightFactor * 0.58,
+    child: InkWell(
+      onTap: () => Navigator.pushNamed(context, Routes.rEvents),
+      child: Card(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+        elevation: 8.0,
+        margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
+        child: Stack(
+          fit: StackFit.loose,
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(24.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: Gradients.eventsCardGradient,
+                ),
+                child: Container(
+                  height: heightFactor * 0.58,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 32.0),
+                        child: ListTile(
+                          contentPadding: EdgeInsets.symmetric(vertical: 10.0),
+                          title: ShaderMask(
+                            shaderCallback: (rect) {
+                              return LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [Colors.black, Colors.transparent],
+                              ).createShader(
+                                  Rect.fromLTRB(0, 0, rect.width, rect.height));
+                            },
+                            blendMode: BlendMode.dstIn,
+                            child: Container(
+                              height: heightFactor * 0.15,
+                              color: Colors.white,
+                              padding: EdgeInsets.only(left: 18.0),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'ICS Events',
+                                  style: TextStyle(
+                                      fontFamily: 'PfDin',
+                                      fontSize: heightFactor * 0.07,
+                                      color: Color.fromRGBO(142, 40, 142, 1.0),
+                                      fontWeight: FontWeight.w500),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 14.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: SizedBox(
+                            width: 200.0,
+                            child: Text(
+                              'Catch up with our upcoming events',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontSize: heightFactor * 0.038,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'PfDin',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 16.0,
+              bottom: -10.0,
+              right: 0.0,
+              child: Image.asset(
+                'assets/scp_events.png',
+                width: heightFactor * 0.45,
+                height: heightFactor * 0.45,
+                fit: BoxFit.cover,
+                alignment: Alignment.bottomRight,
+                colorBlendMode: BlendMode.color,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
 _startFAQActivity() async {
   try {
     await platform.invokeMethod('startFaqActivity');

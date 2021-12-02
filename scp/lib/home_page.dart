@@ -67,39 +67,40 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 DrawerHeader(
-                    margin: EdgeInsets.all(0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          username,
+                  margin: EdgeInsets.all(0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        username,
+                        style: TextStyle(
+                            fontSize: SizeConfig.screenWidth * 0.058,
+                            fontFamily: 'PfDin'),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4.0),
+                        child: Text(
+                          phoneNo,
                           style: TextStyle(
-                              fontSize: SizeConfig.screenWidth * 0.058,
+                              fontSize: SizeConfig.screenWidth * 0.035,
                               fontFamily: 'PfDin'),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 4.0),
-                          child: Text(
-                            phoneNo,
-                            style: TextStyle(
-                                fontSize: SizeConfig.screenWidth * 0.035,
-                                fontFamily: 'PfDin'),
-                          ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4.0),
+                        child: Text(
+                          rollNo,
+                          style: TextStyle(
+                              fontSize: SizeConfig.screenWidth * 0.035,
+                              fontFamily: 'PfDin'),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 4.0),
-                          child: Text(
-                            rollNo,
-                            style: TextStyle(
-                                fontSize: SizeConfig.screenWidth * 0.035,
-                                fontFamily: 'PfDin'),
-                          ),
-                        )
-                      ],
-                    )),
+                      )
+                    ],
+                  ),
+                ),
                 Expanded(
-                  flex: 7,
+                  flex: 8,
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -196,31 +197,33 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Expanded(
-                    flex: 2,
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: ButtonTheme(
-                          minWidth: SizeConfig.screenWidth * 0.463,
-                          height: SizeConfig.screenWidth * 0.093,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              _removeUserData(context);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0)),
-                              primary: Color.fromRGBO(25, 39, 45, 1),
-                            ),
-                            child: Text(
-                              "Log Out",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'PfDin',
-                                  color: Colors.white,
-                                  fontSize: SizeConfig.screenWidth * 0.046),
-                            ),
-                          )),
-                    ))
+                  flex: 2,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: ButtonTheme(
+                      minWidth: SizeConfig.screenWidth * 0.463,
+                      height: SizeConfig.screenWidth * 0.093,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _removeUserData(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0)),
+                          primary: Color.fromRGBO(25, 39, 45, 1),
+                        ),
+                        child: Text(
+                          "Log Out",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'PfDin',
+                              color: Colors.white,
+                              fontSize: SizeConfig.screenWidth * 0.046),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
               ],
             )),
             appBar: AppBar(
@@ -285,7 +288,8 @@ class _HomePageState extends State<HomePage> {
                             MediaQuery.of(context).size.width,
                             MediaQuery.of(context).textScaleFactor),
                         faqCard(context),
-                        mentorsCard(context, rollNo)
+                        eventsCard(context),
+                        mentorsCard(context, rollNo),
                       ],
                     )
                   : Center(
@@ -344,36 +348,38 @@ class _HomePageState extends State<HomePage> {
   //     print(e.message);
   //   }
   // }
+  Future<void> setupInteractedMessage() async {
+    // Get any messages which caused the application to open from
+    // a terminated state.
+    RemoteMessage initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+
+    // If the message also contains a data property with a "type" of "chat",
+    // navigate to a chat screen
+    if (initialMessage != null) {
+      _handleMessage();
+    }
+
+    FirebaseMessaging.onMessage.listen((event) {
+      Navigator.pushNamed(context, Routes.rNots);
+    });
+    // Also handle any interaction when the app is in the background via a
+    // Stream listener
+    FirebaseMessaging.onMessageOpenedApp.listen(
+      (event) => _handleMessage(),
+    );
+  }
+
+  void _handleMessage() {
+    Navigator.pushNamed(context, Routes.rNots);
+  }
 
   @override
   void initState() {
     super.initState();
     DateConfig().init();
     FirebaseMessaging.instance.subscribeToTopic('academic');
-
-    //replacement for onLaunch
-    FirebaseMessaging.instance
-        .getInitialMessage()
-        .then((value) => Navigator.pushNamed(context, Routes.rNots));
-
-    //replacement for onMessage
-    FirebaseMessaging.onMessage.listen((event) {
-      Navigator.pushNamed(context, Routes.rNots);
-    });
-
-    //replacement for onResume
-    FirebaseMessaging.onMessageOpenedApp.listen((event) {
-      Navigator.pushNamed(context, Routes.rNots);
-    });
-    /*  FirebaseMessaging.instance.configure(
-      onMessage: (Map<String, dynamic> message) async {},
-      onLaunch: (Map<String, dynamic> message) async {
-        Navigator.pushNamed(context, Routes.rNots);
-      },
-      onResume: (Map<String, dynamic> message) async {
-        Navigator.pushNamed(context, Routes.rNots);
-      },
-    ); */
+    setupInteractedMessage();
     rateApp(context);
   }
 
@@ -415,7 +421,7 @@ class _HomePageState extends State<HomePage> {
       await remoteConfig.fetchAndActivate();
 
       isChat = remoteConfig.getBool('is_chat_active');
-
+      publishVersion = remoteConfig.getInt('publishVersion');
       chatUrl = remoteConfig.getString('chatLink');
       isAutumn = remoteConfig.getBool('is_autumn');
 
