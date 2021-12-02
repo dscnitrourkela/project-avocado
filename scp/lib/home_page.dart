@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:ndialog/ndialog.dart';
+import 'package:scp/slotbookingcardsplit.dart';
 import 'package:scp/utils/chatArgs.dart';
 import 'package:scp/utils/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -282,7 +283,11 @@ class _HomePageState extends State<HomePage> {
                   ? ListView(
                       scrollDirection: Axis.vertical,
                       children: <Widget>[
-                        appointmentCard(context),
+                        SlotCardSplit(
+                          context,
+                          MediaQuery.of(context).size.width,
+                          MediaQuery.of(context).textScaleFactor,
+                        ),
                         TimetableCardSplit(
                             context,
                             MediaQuery.of(context).size.width,
@@ -458,29 +463,31 @@ class _HomePageState extends State<HomePage> {
   }
 
   void checkUpdate() async {
-    if (buildNumber < publishVersion) {
-      Future.delayed(const Duration(milliseconds: 2000), () async {
-        print("It should update");
-        await DialogBackground(
-          dismissable: true,
-          blur: 2.0,
-          dialog: AlertDialog(
-            title: Text("Update Available"),
-            content: Text(
-                "The current version of the ICS app is outdated. Kindly update the app to get new features/bug fixes."),
-            actions: <Widget>[
-              TextButton(
-                  child: Text("Update"), onPressed: () => _launchUpdate()),
-              TextButton(
-                child: Text("Later"),
-                onPressed: () => Navigator.pop(context),
-              ),
-            ],
-          ),
-        ).show(context);
-      });
-    } else
-      print("Not updating");
+    if (buildNumber != null && publishVersion != null) {
+      if (buildNumber < publishVersion) {
+        Future.delayed(const Duration(milliseconds: 2000), () async {
+          print("It should update");
+          await DialogBackground(
+            dismissable: true,
+            blur: 2.0,
+            dialog: AlertDialog(
+              title: Text("Update Available"),
+              content: Text(
+                  "The current version of the ICS app is outdated. Kindly update the app to get new features/bug fixes."),
+              actions: <Widget>[
+                TextButton(
+                    child: Text("Update"), onPressed: () => _launchUpdate()),
+                TextButton(
+                  child: Text("Later"),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            ),
+          ).show(context);
+        });
+      } else
+        print("Not updating");
+    }
   }
 
   _launchUpdate() async {
