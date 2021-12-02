@@ -1,14 +1,13 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:scp/booking.dart';
+import 'package:scp/ui/dsc_social.dart';
 import 'package:scp/ui/views/mentor_search/mentee_page.dart';
 import 'package:scp/ui/views/mentor_search/mentor_page.dart';
 import 'package:scp/ui/gradients.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
 import 'package:scp/utils/routes.dart';
 import 'package:scp/utils/sizeConfig.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/models.dart';
 import 'package:scp/upload_image.dart';
 
@@ -22,24 +21,7 @@ Widget appointmentCard(BuildContext context) {
     child: Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: InkWell(
-        onTap: () async {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          if (prefs.getBool('hasBooked') == true) {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    Booking(counselDay: gCounselDay, time: gTime)));
-          } else
-            Navigator.of(context).pushNamed(Routes.rAppointments);
-        },
-        // onTap: () async {
-        //   SharedPreferences prefs = await SharedPreferences.getInstance();
-        //   if (prefs.getBool('hasBooked') == true) {
-        //     Navigator.of(context).push(MaterialPageRoute(
-        //         builder: (BuildContext context) => Booking(
-        //             /*keyCode: gKey,*/ counselDay: gCounselDay, time: gTime)));
-        //   } else
-        //     Navigator.of(context).pushNamed('/appointments');
-        // },
+        onTap: () => launchURL('https://yourdost.com'),
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
@@ -143,12 +125,13 @@ Widget appointmentCard(BuildContext context) {
                           child: SizedBox(
                             width: heightFactor * 0.47,
                             child: Text(
-                              'Feel like talking to someone? Meet a counsellor today!',
+                              'Utilise our Online Counselling Services provided by YourDOST',
                               style: TextStyle(
-                                  fontSize: heightFactor * 0.037,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'PfDin'),
+                                fontSize: heightFactor * 0.037,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'PfDin',
+                              ),
                             ),
                           ),
                         )
