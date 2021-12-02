@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:scp/ui/dsc_social.dart';
+import 'package:scp/utils/urlLauncher.dart';
 
 class EventsListView extends StatelessWidget {
   const EventsListView({
