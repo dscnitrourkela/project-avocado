@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:scp/ui/dsc_social.dart';
+import 'package:scp/ui/views/ics_events/events_list_view.dart';
 
 class EventsPage extends StatelessWidget {
   const EventsPage({Key key}) : super(key: key);
@@ -21,143 +20,71 @@ class EventsPage extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.only(top: 15.0),
-          child: FutureBuilder(
-            future: events.orderBy('dateTime').get(),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                List data = snapshot.data.docs as List;
-                return ListView.builder(
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    final String title = data[index]['name'];
-                    final DateTime date = data[index]['dateTime'].toDate();
-                    final String venue = data[index]['venue'];
-                    String link = '#';
-                    link ?? data[index]['link'];
-                    return GestureDetector(
-                      onTap: () => launchURL(link),
-                      child: Container(
-                        child: Card(
-                          elevation: 7,
-                          shadowColor: Colors.blue,
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Container(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Row(
-                              children: [
-                                FaIcon(
-                                  FontAwesomeIcons.calendar,
-                                  size: 50,
-                                ),
-                                SizedBox(width: 20),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      title,
-                                      style: TextStyle(
-                                        fontFamily: 'PfDin',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                    SizedBox(height: 20),
-                                    Row(
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Date',
-                                              style: TextStyle(
-                                                fontFamily: 'PfDin',
-                                                fontWeight: FontWeight.w200,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                            Text(
-                                              '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}',
-                                              style: TextStyle(
-                                                fontFamily: 'PfDin',
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(width: 40),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Time',
-                                              style: TextStyle(
-                                                fontFamily: 'PfDin',
-                                                fontWeight: FontWeight.w200,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                            Text(
-                                              '${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}',
-                                              style: TextStyle(
-                                                fontFamily: 'PfDin',
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(width: 40),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Venue',
-                                              style: TextStyle(
-                                                fontFamily: 'PfDin',
-                                                fontWeight: FontWeight.w200,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                            Text(
-                                              venue,
-                                              style: TextStyle(
-                                                fontFamily: 'PfDin',
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 10),
+                Text(
+                  'Upcoming Events',
+                  style: TextStyle(
+                    fontFamily: 'PfDin',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 25,
+                  ),
+                ),
+                SizedBox(height: 10),
+                FutureBuilder(
+                  future: events
+                      .orderBy('dateTime', descending: true)
+                      .where('dateTime',
+                          isGreaterThanOrEqualTo: new DateTime.now())
+                      .get(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      List data = snapshot.data.docs as List;
+                      return EventsListView(data: data);
+                    }
+
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: Text('No Upcoming Events'),
+                      );
+                    }
+
+                    return CircularProgressIndicator();
+                  },
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Past Events',
+                  style: TextStyle(
+                    fontFamily: 'PfDin',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 25,
+                  ),
+                ),
+                SizedBox(height: 10),
+                FutureBuilder(
+                  future: events
+                      .orderBy('dateTime', descending: true)
+                      .where('dateTime', isLessThan: new DateTime.now())
+                      .get(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      List data = snapshot.data.docs as List;
+                      return EventsListView(data: data);
+                    }
+
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    }
+                    return Center(
+                      child: Text('No Past Events'),
                     );
                   },
-                );
-              }
-
-              if (!snapshot.hasData) {
-                return Center(
-                  child: Text('No upcoming Events'),
-                );
-              }
-
-              return CircularProgressIndicator();
-            },
+                ),
+              ],
+            ),
           ),
         ),
       ),
