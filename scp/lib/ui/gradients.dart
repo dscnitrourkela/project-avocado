@@ -7,6 +7,7 @@ class Gradients {
   static LinearGradient faqCardGradient;
   static LinearGradient mentorsCardGradient;
   static LinearGradient timetableCardGradient;
+  static LinearGradient eventsCardGradient;
 
   void init(BuildContext context) {
     appointmentCardGradient = LinearGradient(colors: [
@@ -19,14 +20,29 @@ class Gradients {
       Color.fromRGBO(0, 173, 239, 1.0),
     ], begin: Alignment.centerLeft, end: Alignment.centerRight);
 
-    mentorsCardGradient = LinearGradient(colors: [
-      Color.fromRGBO(142, 40, 142, 1.0),
-      Color.fromRGBO(36, 34, 97, 1.0),
-    ], begin: Alignment.bottomLeft, end: Alignment.topRight,);
+    mentorsCardGradient = LinearGradient(
+      colors: [
+        Color.fromRGBO(142, 40, 142, 1.0),
+        Color.fromRGBO(36, 34, 97, 1.0),
+      ],
+      begin: Alignment.bottomLeft,
+      end: Alignment.topRight,
+    );
 
-    timetableCardGradient=LinearGradient(colors:[
-      Color.fromRGBO(134,2,148,1.0),
-      Color.fromRGBO(77,253,218,1.0)
-    ], begin:Alignment.bottomLeft,end:Alignment.topRight);
+    timetableCardGradient = LinearGradient(
+      colors: [
+        Color.fromRGBO(134, 2, 148, 1.0),
+        Color.fromRGBO(77, 253, 218, 1.0)
+      ],
+      begin: Alignment.bottomLeft,
+      end: Alignment.topRight,
+    );
+
+    eventsCardGradient = LinearGradient(
+      colors: [
+        Color(0xffff9966),
+        Color(0xffff5e62),
+      ],
+    );
   }
 }

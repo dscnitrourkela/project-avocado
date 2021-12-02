@@ -140,17 +140,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ListTile(
                         onTap: () {
-                          Navigator.pushNamed(context, Routes.rEvents);
-                        },
-                        title: Text(
-                          "Events",
-                          style: TextStyle(
-                              fontSize: SizeConfig.drawerItemTextSize,
-                              fontFamily: 'PfDin'),
-                        ),
-                      ),
-                      ListTile(
-                        onTap: () {
                           Navigator.pushNamed(context, Routes.rAboutScp);
                         },
                         title: Text(
@@ -299,7 +288,8 @@ class _HomePageState extends State<HomePage> {
                             MediaQuery.of(context).size.width,
                             MediaQuery.of(context).textScaleFactor),
                         faqCard(context),
-                        mentorsCard(context, rollNo)
+                        eventsCard(context),
+                        mentorsCard(context, rollNo),
                       ],
                     )
                   : Center(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scp/homePage.dart';
+import 'package:scp/home_page.dart';
 import 'package:scp/booking.dart';
 import 'package:scp/chat.dart';
 import 'package:scp/drawer_screens/about_scs.dart';
