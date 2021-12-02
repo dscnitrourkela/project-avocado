@@ -125,12 +125,13 @@ Widget appointmentCard(BuildContext context) {
                           child: SizedBox(
                             width: heightFactor * 0.47,
                             child: Text(
-                              'Utilise our Online Counselling Services provided by YOUR DOST',
+                              'Utilise our Online Counselling Services provided by YourDOST',
                               style: TextStyle(
-                                  fontSize: heightFactor * 0.037,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'PfDin'),
+                                fontSize: heightFactor * 0.037,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'PfDin',
+                              ),
                             ),
                           ),
                         )
