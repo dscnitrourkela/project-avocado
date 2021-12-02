@@ -172,7 +172,7 @@ Widget mentorsCard(BuildContext context, String roll) {
     height: heightFactor * 0.58,
     child: InkWell(
       onTap: () {
-        if (roll.toString()[2] == '1') {
+        if (roll.toString()[2] == '1' && roll.toString()[1] == '2') {
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -223,7 +223,9 @@ Widget mentorsCard(BuildContext context, String roll) {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  (roll[2] == "0") ? 'MENTOR' : "MENTEES",
+                                  (roll[2] == "1" && roll[1] == '2')
+                                      ? 'MENTOR'
+                                      : "MENTEES",
                                   style: TextStyle(
                                       fontFamily: 'PfDin',
                                       fontSize: heightFactor * 0.07,
@@ -243,9 +245,9 @@ Widget mentorsCard(BuildContext context, String roll) {
                           child: SizedBox(
                             width: 200.0,
                             child: Text(
-                              (roll[2] == "0")
-                                  ? 'Find more about your ICS Mentor'
-                                  : 'Find the list of your Mentees',
+                              (roll[2] == "1" && roll[1] == '2')
+                                  ? 'Know more about your ICS Mentor and get in touch with them'
+                                  : 'If you are a Mentor, find here the list of your Mentees',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontSize: heightFactor * 0.038,
@@ -449,7 +451,7 @@ Widget faqCard(BuildContext context) {
                           child: SizedBox(
                             width: 200.0,
                             child: Text(
-                              'Find the answers to our most frequently asked questions',
+                              'Find the answers to some of the most frequently asked questions',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontSize: heightFactor * 0.038,
@@ -472,8 +474,8 @@ Widget faqCard(BuildContext context) {
               right: 0.0,
               child: Image.asset(
                 'assets/scp_faq.png',
-                width: heightFactor * 0.45,
-                height: heightFactor * 0.45,
+                width: heightFactor * 0.4,
+                height: heightFactor * 0.4,
                 fit: BoxFit.cover,
                 alignment: Alignment.bottomRight,
                 colorBlendMode: BlendMode.color,

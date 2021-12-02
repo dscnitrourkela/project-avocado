@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:scp/ui/dsc_social.dart';
 import 'package:scp/ui/gradients.dart';
-import 'package:scp/utils/routes.dart';
 
-class TimetableCardSplit extends StatefulWidget {
+class SlotCardSplit extends StatefulWidget {
   final BuildContext cxt;
   final double heightFactor, textSc;
-
-  TimetableCardSplit(this.cxt, this.heightFactor, this.textSc);
+  const SlotCardSplit(this.cxt, this.heightFactor, this.textSc);
 
   @override
-  _TimetableCardSplitState createState() => _TimetableCardSplitState();
+  _SlotCardSplitState createState() => _SlotCardSplitState();
 }
 
-class _TimetableCardSplitState extends State<TimetableCardSplit> {
+class _SlotCardSplitState extends State<SlotCardSplit> {
   bool isTapped;
   double width1, width2;
 
@@ -32,23 +31,43 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             Flexible(
-                child: timetableCard(widget.cxt, widget.heightFactor,
-                    widget.textSc, width1, "Attendance Tracker", 1)),
+                child: slotCard(
+              widget.cxt,
+              widget.heightFactor,
+              widget.textSc,
+              width1,
+              "OFFLINE Counselling",
+              1,
+              'assets/icon-white.png',
+            )),
           ],
         ),
         Row(
           children: <Widget>[
             Flexible(
-                child: timetableCard(widget.cxt, widget.heightFactor,
-                    widget.textSc, width1, "Regular Classes", 0)),
+                child: slotCard(
+              widget.cxt,
+              widget.heightFactor,
+              widget.textSc,
+              width1,
+              "YourDOST Counselling",
+              0,
+              'assets/ydd.png',
+            )),
           ],
         ),
       ],
     );
   }
 
-  Widget timetableCard(BuildContext context, double heightFactor,
-      double textScaleFactor, double width, String onTapText, int cardType) {
+  Widget slotCard(
+      BuildContext context,
+      double heightFactor,
+      double textScaleFactor,
+      double width,
+      String onTapText,
+      int cardType,
+      String onTapImage) {
     Gradients().init(context);
     return AnimatedContainer(
       duration: Duration(milliseconds: 400),
@@ -69,9 +88,13 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
               /*cardType helps us determine upon which card have we registered the tap
               0 is for left card, 1 is for right card*/
               if (cardType == 0) //Regular
-                Navigator.pushNamed(context, Routes.rTimetable);
+              {
+                launchURL("https://www.yourdost.in/");
+              }
               if (cardType == 1) //Remedial
-                Navigator.pushNamed(context, Routes.rAttendance);
+              {
+                launchURL("https://forms.gle/e8K6ZVvoNZ683ZRp6");
+              }
             }
           });
         },
@@ -87,7 +110,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                 borderRadius: BorderRadius.circular(24.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    gradient: Gradients.timetableCardGradient,
+                    gradient: Gradients.appointmentCardGradient,
                   ),
                   child: Container(
                       height: heightFactor * 0.58,
@@ -123,7 +146,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                                         child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            'MY TIMETABLE',
+                                            'STUDENT COUNSELLING',
                                             style: TextStyle(
                                                 fontFamily: 'PfDin',
                                                 fontSize: heightFactor * 0.07,
@@ -154,7 +177,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                                             CrossAxisAlignment.end,
                                         children: <Widget>[
                                           Text(
-                                            'Set your personal timetable and track your attendance',
+                                            'Feeling low? Do not worry. We got your back!',
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               fontSize: heightFactor * 0.038,
@@ -181,17 +204,33 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                               padding: const EdgeInsets.all(8.0),
                               child: Center(
                                 child: SizedBox(
-                                  height: heightFactor * 0.15,
+                                  height: heightFactor * 0.32,
                                   child: Align(
                                     alignment: Alignment.center,
-                                    child: Text(
-                                      onTapText,
-                                      style: TextStyle(
-                                          fontFamily: 'PfDin',
-                                          fontSize: heightFactor * 0.06,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500),
-                                      textAlign: TextAlign.center,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Container(
+                                          child: Image.asset(
+                                            onTapImage,
+                                            width: heightFactor * 0.15,
+                                            height: heightFactor * 0.15,
+                                            fit: BoxFit.fill,
+                                            alignment: Alignment.topCenter,
+                                            colorBlendMode: BlendMode.color,
+                                          ),
+                                        ),
+                                        Text(
+                                          onTapText,
+                                          style: TextStyle(
+                                              fontFamily: 'PfDin',
+                                              fontSize: heightFactor * 0.06,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w500),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -203,13 +242,13 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                 ),
               ),
               Positioned(
-                top: 10.0,
-                left: MediaQuery.of(context).size.width * 0.575,
+                top: MediaQuery.of(context).size.width * 0.075,
+                left: MediaQuery.of(context).size.width * 0.55,
                 child: AnimatedOpacity(
                   opacity: isTapped ? 0 : 1,
                   duration: Duration(milliseconds: 100),
                   child: Image.asset(
-                    'assets/scp_timetable.png',
+                    'assets/scp_app.png',
                     width: heightFactor * 0.4,
                     height: heightFactor * 0.4,
                     fit: BoxFit.cover,

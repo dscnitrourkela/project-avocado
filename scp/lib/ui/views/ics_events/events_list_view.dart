@@ -98,7 +98,7 @@ class EventsListView extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            SizedBox(width: 40),
+                            SizedBox(width: 30),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -110,12 +110,14 @@ class EventsListView extends StatelessWidget {
                                     fontSize: 15,
                                   ),
                                 ),
-                                Text(
-                                  venue,
-                                  style: TextStyle(
-                                    fontFamily: 'PfDin',
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 15,
+                                Container(
+                                  child: Text(
+                                    venue,
+                                    style: TextStyle(
+                                      fontFamily: 'PfDin',
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15,
+                                    ),
                                   ),
                                 ),
                               ],
