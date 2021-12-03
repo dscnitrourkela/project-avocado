@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:scp/ui/dsc_social.dart';
 import 'package:scp/ui/gradients.dart';
+import 'package:scp/utils/urlLauncher.dart';
 
 class SlotCardSplit extends StatefulWidget {
   final BuildContext cxt;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:scp/utils/grapgQLconfig.dart';
+import 'package:scp/utils/urlLauncher.dart';
 
 final Color primaryColor = Color.fromARGB(255, 49, 68, 76);
 final Color secondaryColor = Color.fromARGB(255, 158, 218, 224);
@@ -8,13 +9,15 @@ final Color lunchColor = Color.fromARGB(255, 238, 71, 89);
 
 final String readMentees = """
 query Mentees(\$roll : String){
-  mentor(rollNumber : \$roll){
+  getMentorByRollnumber(rollNumber : \$roll){
+    id
     name
     rollNumber
     mentees{
+      id
       name
       rollNumber
-      
+      contact
     }
   }
 }
@@ -94,7 +97,7 @@ class MenteeDetails extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          if (result.data["mentor"] == null) {
+          if (result.data["getMentorByRollnumber"] == null) {
             return Center(
               child: Text(
                 "You are not a mentor",
@@ -110,14 +113,14 @@ class MenteeDetails extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  result.data["mentor"]["name"],
+                  result.data["getMentorByRollnumber"]["name"],
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: queryWidth * 0.1,
                       fontWeight: FontWeight.bold),
                 ),
-                Text(result.data["mentor"]["rollNumber"],
+                Text(result.data["getMentorByRollnumber"]["rollNumber"],
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: queryWidth * 0.075,
@@ -150,19 +153,28 @@ class MenteeDetails extends StatelessWidget {
                   child: ListView.builder(
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
-                    itemCount: result.data["mentor"]["mentees"].length,
+                    itemCount:
+                        result.data["getMentorByRollnumber"]["mentees"].length,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
                         dense: true,
+                        onTap: () {
+                          launchURL('tel:' +
+                              result.data["getMentorByRollnumber"]["mentees"]
+                                  [index]["contact"]);
+                        },
+                        leading: Icon(Icons.call),
                         title: Text(
-                          result.data["mentor"]["mentees"][index]["name"],
+                          result.data["getMentorByRollnumber"]["mentees"][index]
+                              ["name"],
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               fontSize: queryWidth * 0.042,
                               fontWeight: FontWeight.bold),
                         ),
                         trailing: Text(
-                          result.data["mentor"]["mentees"][index]["rollNumber"],
+                          result.data["getMentorByRollnumber"]["mentees"][index]
+                              ["rollNumber"],
                           textAlign: TextAlign.right,
                           style: TextStyle(
                               fontSize: queryWidth * 0.038,
@@ -175,7 +187,6 @@ class MenteeDetails extends StatelessWidget {
               ],
             ),
           );
-          //return Center(child: Text(result.data["mentor"]["name"].toString()));
         });
   }
 }

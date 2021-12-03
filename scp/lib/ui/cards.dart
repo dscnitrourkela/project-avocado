@@ -1,13 +1,13 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:scp/ui/dsc_social.dart';
 import 'package:scp/ui/views/mentor_search/mentee_page.dart';
 import 'package:scp/ui/views/mentor_search/mentor_page.dart';
 import 'package:scp/ui/gradients.dart';
 import 'package:scp/firebase/firebaseDBHandler.dart';
 import 'package:scp/utils/routes.dart';
 import 'package:scp/utils/sizeConfig.dart';
+import 'package:scp/utils/urlLauncher.dart';
 import '../utils/models.dart';
 import 'package:scp/upload_image.dart';
 

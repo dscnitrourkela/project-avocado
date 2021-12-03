@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:scp/utils/urlLauncher.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:scp/utils/grapgQLconfig.dart';
@@ -11,17 +12,18 @@ final Color lunchColor = Color.fromARGB(255, 238, 71, 89);
 
 final String readMentorDetails = """
 query MentorDetails(\$roll : String){
-  mentee(rollNumber : \$roll){
+  getMenteeByRollnumber(rollNumber : \$roll){
+    id
+    name
     mentor{
+    id
     name
     rollNumber
     contact
     email
-    prefectDetails{
+    prefect{
+      id
       name
-      coordinatorDetails{
-        name
-      }
     }
   }
   }
@@ -103,17 +105,14 @@ class MentorDetails extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          if (result.data["mentee"] != null) {
+          if (result.data["getMenteeByRollnumber"] != null) {
             var message = 'Save Contact';
-            var dataRef = result.data["mentee"]["mentor"];
+            var dataRef = result.data["getMenteeByRollnumber"]["mentor"];
             var mentorName = dataRef["name"].toString();
             var mentorRoll = dataRef["rollNumber"].toString();
             var mentorContact = dataRef["contact"].toString();
             var mentorEmail = dataRef["email"].toString();
-            var mentorPrefect = dataRef["prefectDetails"]["name"].toString();
-            var mentorCoordinator = dataRef["prefectDetails"]
-                    ["coordinatorDetails"]["name"]
-                .toString();
+            var mentorPrefect = dataRef["prefect"]["name"].toString();
             return Padding(
               padding: EdgeInsets.only(top: queryWidth * 0.3),
               child: Column(
@@ -139,11 +138,6 @@ class MentorDetails extends StatelessWidget {
                       ),
                       Text(
                         "Prefect - " + mentorPrefect,
-                        style: TextStyle(
-                            fontFamily: 'PfDin', fontSize: queryWidth * 0.06),
-                      ),
-                      Text(
-                        "Co-ordinator - " + mentorCoordinator,
                         style: TextStyle(
                             fontFamily: 'PfDin', fontSize: queryWidth * 0.06),
                       ),
@@ -238,13 +232,8 @@ class MentorDetails extends StatelessWidget {
                                     Color.fromRGBO(74, 232, 190, 1),
                                 shape: CircleBorder(),
                                 child: Icon(Icons.call),
-                                onPressed: () async {
-                                  var url = "tel:" + mentorContact;
-                                  if (await canLaunch(url)) {
-                                    await launch(url);
-                                  } else {
-                                    throw 'Could not launch $url';
-                                  }
+                                onPressed: () {
+                                  launchURL("tel:" + mentorContact);
                                 },
                               ),
                             ),

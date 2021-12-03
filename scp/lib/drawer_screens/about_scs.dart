@@ -9,21 +9,34 @@ final String aboutText =
     "The objective of ICS is to prepare the students for a confident approach towards life and to bring about a voluntary change in themselves. The goal of counselling is to help individuals overcome their immediate problems and also to equip them to meet future problems. The goals of counselling are appropriately concerned with fundamental and basic aspects such as self-understanding and self-actualization.\n\n"
     "The service has 8 faculty members, including the Professor in Charge, Prof. K. C. Pati and 12 Student Coordinators. Each coordinator has been assigned a set number of mentors who in turn take care of mentees from the freshman year. Experienced mentors interact with the newbies to bridge the Junior-Senior gap and also personal and professional support. Institute Counselling Services also has at their services a Counsellor and a Psychiatrist, who professionally deal with various student issues. ";
 
+final String readFaculties = """
+query Faculties{
+  getFaculties {
+    id
+    name
+    designation
+  }
+}
+""";
+
 final String readCordinators = """
 query Coordinator{
-  coordinators{
+  getCoordinators{
+    id
     name
     contact
-    designation
+    email
   }
 }
 """;
 
 final String readPrefect = """
 query Prefect{
-  prefects{
+  getPrefects{
+    id
     name
     contact
+    email
   }
 }
 """;
@@ -87,28 +100,26 @@ class AboutSCP extends StatelessWidget {
                 ),
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                contactCard(
-                    context, "Prof. Simanchala Panigrahi", "Director", ""),
-                contactCard(
-                    context, "Prof. Pawan Kumar", "Professor-In-Charge", ""),
-                contactCard(
-                    context, "Prof. Manish Okade", "Faculty Coordinator", ""),
-                contactCard(context, "Prof. K. Ratna Subhashini",
-                    "Faculty Coordinator", ""),
-                contactCard(context, "Prof.(Ms.) Usharani Subuddhi",
-                    "Faculty Coordinator", ""),
-                contactCard(
-                    context, "Prof. Bhishma Tyagi", "Faculty Coordinator", ""),
-                contactCard(context, "Prof. Usha Rani Subudhi",
-                    "Faculty Coordinator", ""),
-                contactCard(
-                    context, "Prof. Binita Tiwari", "Faculty Coordinator", ""),
-                contactCard(context, "Prof. Abhay Pratap Yadav",
-                    "Faculty Coordinator", ""),
-              ],
+            GraphQLProvider(
+              client: valueclient,
+              child: Query(
+                options: QueryOptions(document: gql(readFaculties)),
+                builder: (QueryResult result,
+                    {VoidCallback refetch, FetchMore fetchMore}) {
+                  if (result.data == null) {
+                    return Container();
+                  }
+                  return ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: result.data["getFaculties"].length,
+                      itemBuilder: (BuildContext context, int index) {
+                        var ref = result.data["getFaculties"];
+                        return contactCard(context, ref[index]["name"],
+                            ref[index]["designation"], "");
+                      });
+                },
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 30, bottom: 15),
@@ -137,11 +148,11 @@ class AboutSCP extends StatelessWidget {
                   return ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: result.data["coordinators"].length,
+                      itemCount: result.data["getCoordinators"].length,
                       itemBuilder: (BuildContext context, int index) {
-                        var ref = result.data["coordinators"];
+                        var ref = result.data["getCoordinators"];
                         return contactCard(context, ref[index]["name"],
-                            ref[index]["designation"], ref[index]["contact"]);
+                            ref[index]["email"], ref[index]["contact"]);
                       });
                 },
               ),
@@ -173,11 +184,11 @@ class AboutSCP extends StatelessWidget {
                   return ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: result.data["prefects"].length,
+                      itemCount: result.data["getPrefects"].length,
                       itemBuilder: (BuildContext context, int index) {
-                        var ref = result.data["prefects"];
+                        var ref = result.data["getPrefects"];
                         return contactCard(context, ref[index]["name"],
-                            "Prefect", ref[index]["contact"]);
+                            ref[index]["email"], ref[index]["contact"]);
                       });
                 },
               ),
