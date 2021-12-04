@@ -20,8 +20,7 @@ class EventsListView extends StatelessWidget {
         final String title = data[index]['name'];
         final DateTime date = data[index]['dateTime'].toDate();
         final String venue = data[index]['venue'];
-        String link = '#';
-        link ?? data[index]['link'];
+        final String link = data[index]['link'];
         return GestureDetector(
           onTap: () => launchURL(link),
           child: Container(
