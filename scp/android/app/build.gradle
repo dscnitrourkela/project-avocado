@@ -13,12 +13,12 @@ if (flutterRoot == null) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 //if (flutterVersionCode == null) {
-    flutterVersionCode = '41'
+    flutterVersionCode = '42'
 //}
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 //if (flutterVersionName == null) {
-    flutterVersionName = '4.1'
+    flutterVersionName = '4.2'
 //}
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
