@@ -87,11 +87,11 @@ class _SlotCardSplitState extends State<SlotCardSplit> {
             } else {
               /*cardType helps us determine upon which card have we registered the tap
               0 is for left card, 1 is for right card*/
-              if (cardType == 0) //Regular
+              if (cardType == 0) //Online
               {
-                launchURL("https://www.yourdost.in/");
+                launchURL("https://www.yourdost.com/");
               }
-              if (cardType == 1) //Remedial
+              if (cardType == 1) //Offline
               {
                 launchURL("https://forms.gle/e8K6ZVvoNZ683ZRp6");
               }

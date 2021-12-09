@@ -5,7 +5,7 @@ import 'package:scp/utils/sizeConfig.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final String aboutText =
-    "Institute Counselling Services, NIT Rourkela is a noble initiative by the current Director, Prof. Animesh Biswas. This service deals with various important aspects of a student’s life. It addresses Academic, Financial, Mental and Socio-cultural issues, ensuring a seamless transition from home to hostel life for the freshmen and making life at NITR more enjoyable. \n\n"
+    "Institute Counselling Services, NIT Rourkela is a noble initiative by the former Director, Prof. Animesh Biswas. This service deals with various important aspects of a student’s life. It addresses Academic, Financial, Mental and Socio-cultural issues, ensuring a seamless transition from home to hostel life for the freshmen and making life at NITR more enjoyable. \n\n"
     "The objective of ICS is to prepare the students for a confident approach towards life and to bring about a voluntary change in themselves. The goal of counselling is to help individuals overcome their immediate problems and also to equip them to meet future problems. The goals of counselling are appropriately concerned with fundamental and basic aspects such as self-understanding and self-actualization.\n\n"
     "The service has 7 faculty members, including the Head of Unit, Prof. Pawan Kumar and 12 Student Coordinators and 11 Prefects. The Coordinators monitor the overall functioning, manage the events, programs and initiatives of ICS. Each Prefect has been assigned a set number of mentors who in turn take care of the mentees from the freshman year. Experienced mentors interact with the freshers to bridge the Junior-Senior gap and also provide personal and professional support. Professional support is provided to all the students and faculty of the institute through online counselling platform YourDOST. Institute Counselling Services also has at their premises at campus a Counsellor and a Psychiatrist, who professionally deal with various students and faculty isssues. ";
 
@@ -121,6 +121,23 @@ class AboutSCP extends StatelessWidget {
                 },
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.only(top: 30, bottom: 15),
+              child: Center(
+                child: Text(
+                  "ADVISOR",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'PfDin',
+                    color: Color.fromRGBO(74, 232, 190, 1),
+                  ),
+                ),
+              ),
+            ),
+            contactCard(
+                context, "Amlan Das", "amlandas08@gmail.com", "8637252603"),
             Padding(
               padding: const EdgeInsets.only(top: 30, bottom: 15),
               child: Center(

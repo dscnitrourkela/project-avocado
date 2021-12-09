@@ -43,7 +43,7 @@ dependencies:
   stacked: ^1.7.6
   table_calendar: ^2.2.3
   url_launcher: ^6.0.10
-  webview_flutter: ^2.3.0
+  flutter_inappwebview: ^5.3.2
   firebase_analytics: ^8.3.2
 
 dev_dependencies:
