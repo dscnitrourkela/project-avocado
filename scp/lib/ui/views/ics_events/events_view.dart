@@ -40,15 +40,20 @@ class EventsPage extends StatelessWidget {
                           isGreaterThanOrEqualTo: new DateTime.now())
                       .get(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      List data = snapshot.data.docs as List;
-                      return EventsListView(data: data);
-                    }
-
                     if (!snapshot.hasData) {
                       return Center(
                         child: Text('No Upcoming Events'),
                       );
+                    }
+
+                    if (snapshot.hasData) {
+                      List data = snapshot.data.docs as List;
+                      if (data.length == 0) {
+                        return Center(
+                          child: Text('No Upcoming Events'),
+                        );
+                      }
+                      return EventsListView(data: data);
                     }
 
                     return CircularProgressIndicator();
@@ -72,6 +77,11 @@ class EventsPage extends StatelessWidget {
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData) {
                       List data = snapshot.data.docs as List;
+                      if (data.length == 0) {
+                        return Center(
+                          child: Text('No Upcoming Events'),
+                        );
+                      }
                       return EventsListView(data: data);
                     }
 

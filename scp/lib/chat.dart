@@ -1,6 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:scp/utils/chatArgs.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class ChatView extends StatelessWidget {
   @override
@@ -8,17 +10,9 @@ class ChatView extends StatelessWidget {
     final ChatArguments args = ModalRoute.of(context).settings.arguments;
     return SafeArea(
         child: Scaffold(
-      body: WebView(
-          initialUrl: args.url,
-          javascriptMode: JavascriptMode.unrestricted,
-          zoomEnabled: true,
-          onWebResourceError: (error) {
-            print(error.errorCode);
-            return CircularProgressIndicator();
-          },
-          onProgress: (int progress) {
-            print("WebView is loading (progress : $progress%)");
-          }),
+      body: InAppWebView(
+        initialUrlRequest: URLRequest(url: Uri.parse(args.url)),
+      ),
     ));
   }
 }
