@@ -57,7 +57,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
       width: width,
       child: InkWell(
         onLongPress: () {
-          print(cardType.toString());
+          debugPrint(cardType.toString());
         },
         onTap: () {
           setState(() {
