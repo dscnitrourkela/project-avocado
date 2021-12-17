@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.getKeys();
     _loggedin = (prefs.getBool('loggedin') ?? false);
-    print(_loggedin);
+    debugPrint(_loggedin.toString());
   }
 
   @override

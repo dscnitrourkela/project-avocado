@@ -44,13 +44,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(DateTime.now().weekday);
-    print(DateTime.now().hour);
+    debugPrint(DateTime.now().weekday.toString());
+    debugPrint(DateTime.now().hour.toString());
     SizeConfig().init(context);
     //ScpDatabase.pushNewWeek(slotsRefMain);
 
     //Map jMap = json.decode(jsonT);
-    //print(jMap);
+    //debugPrint(jMap.toString());
 
     FirebaseDatabase.instance.setPersistenceEnabled(true);
     // var queryWidth = MediaQuery.of(context).size.width;
@@ -321,7 +321,7 @@ class _HomePageState extends State<HomePage> {
     var now = DateTime.now();
     //var bookedDate = DateTime.parse(formattedString)
     // int dayFromEpoch = (DateTime.now().millisecondsSinceEpoch/(fac)).floor();
-    // print("Smarak ${((dayFromEpoch - 1)/7).floor()}");
+    // debugPrint("Smarak ${((dayFromEpoch - 1)/7).floor()}");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (!prefs.getBool('hasBooked')) {
       prefs.setString('bookDate', DateTime.now().toString());
@@ -333,10 +333,10 @@ class _HomePageState extends State<HomePage> {
     /*if(DateTime.now().weekday > 3)*/
     while (now.weekday != wednesday) {
       now = now.add(new Duration(days: 1));
-      //print(now);
+      //debugPrint(now.toString());
     }
 
-    print(DateFormat.d().format(now) + " " + DateFormat.MMM().format(now));
+    debugPrint(DateFormat.d().format(now) + " " + DateFormat.MMM().format(now));
     prefs.setString('psychDate',
         DateFormat.d().format(now) + " " + DateFormat.MMM().format(now));
     prefs.setString(
@@ -350,7 +350,7 @@ class _HomePageState extends State<HomePage> {
   //   try {
   //     await platform.invokeMethod('startFaqActivity');
   //   } on PlatformException catch (e) {
-  //     print(e.message);
+  //     debugPrint(e.message.toString());
   //   }
   // }
   Future<void> setupInteractedMessage() async {
@@ -431,7 +431,7 @@ class _HomePageState extends State<HomePage> {
       isAutumn = remoteConfig.getBool('is_autumn');
 
       publishVersion = int.parse(remoteConfig.getString("version"));
-      print(publishVersion);
+      debugPrint(publishVersion.toString());
       await prefs.setBool('is_chat_active', isChat);
       await prefs.setString('chatLink', chatUrl);
       await prefs.setBool('is_autumn', isAutumn);
@@ -440,7 +440,7 @@ class _HomePageState extends State<HomePage> {
       chatUrl = prefs.getString('chatLink');
       isAutumn = prefs.getBool('is_autumn');
       // Fetch throttled.
-      print(exception);
+      debugPrint(exception.toString());
     } catch (exception) {
       isChat = prefs.getBool('is_chat_active');
       chatUrl = prefs.getString('chatLink');
@@ -454,10 +454,10 @@ class _HomePageState extends State<HomePage> {
     rollNo = prefs.getString('roll_no');
     phoneNo = prefs.getString('phone_no');
     await prefs.setBool('hasBooked', prefs.getBool('hasBooked') ?? false);
-    print(username + rollNo + phoneNo + isAutumn.toString());
+    debugPrint(username + rollNo + phoneNo + isAutumn.toString());
     reset();
 
-    print(
+    debugPrint(
         "Version number is $buildNumber and version on remote config is $publishVersion");
     if (buildNumber < publishVersion) {}
   }
@@ -466,7 +466,7 @@ class _HomePageState extends State<HomePage> {
     if (buildNumber != null && publishVersion != null) {
       if (buildNumber < publishVersion) {
         Future.delayed(const Duration(milliseconds: 2000), () async {
-          print("It should update");
+          debugPrint("It should update");
           await DialogBackground(
             dismissable: true,
             blur: 2.0,
@@ -486,7 +486,7 @@ class _HomePageState extends State<HomePage> {
           ).show(context);
         });
       } else
-        print("Not updating");
+        debugPrint("Not updating");
     }
   }
 

@@ -167,7 +167,7 @@ Widget mentorsCard(BuildContext context, String roll) {
     return Center(child: CircularProgressIndicator());
   }
   double heightFactor = SizeConfig.screenWidth;
-  print(roll);
+  debugPrint(roll.toString());
   return SizedBox(
     height: heightFactor * 0.58,
     child: InkWell(
@@ -393,7 +393,7 @@ _startFAQActivity() async {
   try {
     await platform.invokeMethod('startFaqActivity');
   } on PlatformException catch (e) {
-    print(e.message);
+    debugPrint(e.message.toString());
   }
 }
 
@@ -605,7 +605,7 @@ Widget slotCard(BuildContext context, String titleText, String type,
     bool isSelected = false;
     SizeConfig().init(context);
     double heightFactor = SizeConfig.screenWidth;
-    print('$day' + 'smarak');
+    debugPrint('$day' + 'smarak');
 
     return StatefulBuilder(
       builder: (BuildContext context, StateSetter setSlotWidgetState) {

@@ -160,10 +160,10 @@ class TimeTableState extends State<TimeTable> {
 
   void launchMap(String url) async {
     if (await canLaunch(url)) {
-      print("Can launch");
+      debugPrint("Can launch");
       await launch(url);
     } else {
-      print("Could not launch $url");
+      debugPrint("Could not launch $url");
       throw 'Could not launch Maps';
     }
   }
@@ -412,7 +412,7 @@ class TimeTableState extends State<TimeTable> {
     List<PeriodDetails> dayList = new List<PeriodDetails>();
     dayList = getDayList(day, codes);
 
-    print("Length ${dayList.length}");
+    debugPrint("Length ${dayList.length}");
 
     return ListView.builder(
         itemCount: dayList.length,
@@ -473,7 +473,7 @@ class TimeTableState extends State<TimeTable> {
           slotLength: 3,
           type: 'practical',
         );
-        print(
+        debugPrint(
             'location ${TimeTableResources.practicalDetails[TimeTableResources.practical[practicalSection][codes[i]]]['location']}');
         slotFilled[j] = true;
         slotFilled[j + 1] = true;
@@ -534,8 +534,8 @@ class TimeTableState extends State<TimeTable> {
   }
 
   String getSlotTime(int startSlotIndex, int endSlotIndex) {
-    print("startSlotIndex" + startSlotIndex.toString());
-    print("endSlotIndex" + endSlotIndex.toString());
+    debugPrint("startSlotIndex" + startSlotIndex.toString());
+    debugPrint("endSlotIndex" + endSlotIndex.toString());
     return TimeTableResources.slotTime[startSlotIndex]['start'] +
         '-' +
         TimeTableResources.slotTime[endSlotIndex]['end'];

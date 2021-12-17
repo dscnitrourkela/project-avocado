@@ -7,7 +7,7 @@ void uploadImage(BuildContext context, String path, Function setValid) async {
   final cameras = await availableCameras();
   final firstCamera = cameras.first;
 
-  print('Ankesh $path');
+  debugPrint('Ankesh $path');
 
   Navigator.push(
       context,
@@ -18,7 +18,7 @@ void uploadImage(BuildContext context, String path, Function setValid) async {
                 setValidImage: setValid,
               )));
 
-  print('Ankesh $path');
+  debugPrint('Ankesh $path');
 }
 
 // A screen that allows users to take a picture using a given camera.
@@ -154,14 +154,14 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   // Attempt to take a picture and log where it's been saved.
                   await _controller.takePicture(widget.storePath);
 
-                  print(widget.storePath);
+                  debugPrint(widget.storePath.toString());
 
                   // If the image was taken then set validImage and exit camera screen.
                   widget.setValidImage();
                   Navigator.pop(context);
                 } catch (e) {
                   // If an error occurs, log the error to the console.
-                  print(e);
+                  debugPrint(e.toString());
                 }
               },
             ),

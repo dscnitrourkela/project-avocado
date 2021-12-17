@@ -30,7 +30,7 @@ class _ConnectivityHandlerWidgetState extends State<ConnectivityHandlerWidget> {
     subscription =
         connectivityService.connectivityController.stream.listen((event) {
       status = event;
-      print(status);
+      debugPrint(status.toString());
       if (status == ConnectionStatus.offline) {
         if (!toDisplay) {
           setState(() {
