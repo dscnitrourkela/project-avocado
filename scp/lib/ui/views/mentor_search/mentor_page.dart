@@ -319,7 +319,7 @@ class MentorDetails extends StatelessWidget {
           if (result.data["mentee"] == null) {
             return Center(
               child: Text(
-                "Re-Login with the correct Roll Number",
+                "Please wait for your mentor to be alloted. You will be updated soon.",
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 32,

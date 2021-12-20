@@ -20,33 +20,6 @@ abstract class TimeTableResources {
             theory['G']['TL'] = theory['H']['TL'] = 'Mathematics-$courseNumber';
   }
 
-  static final tpSequence = {
-    'Monday': ['TA', 'TB', 'TC', 'TE', 'PA', 'PA', 'PA', 'TF', 'ZA'],
-    'Tuesday': ['TB', 'TC', 'TD', 'TE', 'PB', 'PB', 'PB', 'TF', 'ZB'],
-    'Wednesday': [
-      '',
-      'PX',
-      'PX',
-      'PX',
-      'TG1',
-      'SA',
-      'SB',
-      'SC',
-      'ZA',
-      'SM1',
-      'SJ1',
-      'SK1',
-      'SL1',
-      '',
-      'PY',
-      'PY',
-      'PY',
-      ''
-    ],
-    'Thursday': ['TC', 'TD', 'TA', 'TG2', 'PC', 'PC', 'PC', 'TF', 'ZC'],
-    'Friday': ['TD', 'TA', 'TB', 'TE', 'PD', 'PD', 'PD', 'TG3', 'ZA']
-  };
-
   static final sequence = {
     'tp': {
       'Monday': ['TA', 'TB', 'TC', 'TE', 'PA', 'PA', 'PA', 'TF', 'ZA'],
@@ -101,10 +74,6 @@ abstract class TimeTableResources {
       'Friday': ['PH', 'PH', 'PH', 'TE', 'TM', 'TJ', 'TK', 'TG3', 'ZA']
     }
   };
-
-//  static var theoryTutorialAssociation = {
-//    'TA': 'SA', 'TB': 'SB', 'TC': 'SC', 'TD': 'TG1', 'TE': 'TG2',
-//    'TF': 'TG3', 'TJ': 'SJ', 'TK': 'SK', 'TL': 'SL', 'TM': 'SM'};
 
   static final slotTime = [
     {'start': '8:00', 'end': '8:55'},
@@ -226,11 +195,11 @@ abstract class TimeTableResources {
     'P3': {'PC': 'PL', 'PD': 'BP', 'PA': 'WP'},
     'P4': {'PD': 'PL', 'PX': 'BP', 'PB': 'WP'},
     'P5': {'PX': 'PL', 'PA': 'BP', 'PC': 'WP'},
-    'P6': {'PE': 'CL', 'PG': 'ED'},
-    'P7': {'PF': 'CL', 'PH': 'ED'},
-    'P8': {'PG': 'CL', 'PY': 'ED'},
-    'P9': {'PH': 'CL', 'PE': 'ED'},
-    'P10': {'PY': 'CL', 'PF': 'ED'},
+    'P6': {'PF': 'CL', 'PG': 'ED'},
+    'P7': {'PG': 'CL', 'PH': 'ED'},
+    'P8': {'PH': 'CL', 'PY': 'ED'},
+    'P9': {'PY': 'CL', 'PE': 'ED'},
+    'P10': {'PE': 'CL', 'PF': 'ED'},
   };
 
   static final practicalDetails = {

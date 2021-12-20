@@ -158,12 +158,6 @@ class MenteeDetails extends StatelessWidget {
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
                         dense: true,
-                        onTap: () {
-                          launchURL('tel:' +
-                              result.data["getMentorByRollnumber"]["mentees"]
-                                  [index]["contact"]);
-                        },
-                        leading: Icon(Icons.call),
                         title: Text(
                           result.data["getMentorByRollnumber"]["mentees"][index]
                               ["name"],
