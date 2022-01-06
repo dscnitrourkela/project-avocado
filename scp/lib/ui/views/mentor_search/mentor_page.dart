@@ -334,11 +334,13 @@ class MentorDetails extends StatelessWidget {
   }
 
   void saveContact(Contact contact) async {
-    // save contact
-    final result = FlutterContacts.insertContact(contact).then((value) {
-      print('add contact dialog closed');
-    }).catchError((error) {
-      print('pata nai bhai kya error hai');
-    });
+    if (await FlutterContacts.requestPermission()) {
+      // save contact
+      final result = FlutterContacts.insertContact(contact).then((value) {
+        print('add contact dialog closed');
+      }).catchError((error) {
+        print('pata nai bhai kya error hai');
+      });
+    }
   }
 }
