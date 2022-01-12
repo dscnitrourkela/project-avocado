@@ -74,7 +74,7 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
     pref.getKeys();
     setState(() {
       theory = pref.getString('theory_section');
-      print("Abel" + theory.toString());
+      debugPrint("Abel" + theory.toString());
       _events = Map<DateTime, List<dynamic>>.from(
           decodeMap(json.decode(pref.getString('events') ?? "{}")));
       _absents = Map<String, int>.from(
@@ -116,8 +116,8 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
 
   resetSection(BuildContext context) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    print(pref.getString('theory_section'));
-    print(pref.get('events'));
+    debugPrint(pref.getString('theory_section'));
+    debugPrint(pref.get('events'));
     pref.getKeys();
     pref.remove('theory_section');
     pref.remove('events');
@@ -315,25 +315,25 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                                       }
                                       if (_selectedEvents
                                           .contains(markedValue)) {
-                                        print(markedValue + " 1");
+                                        debugPrint(markedValue + " 1");
                                         return;
                                       } else {
                                         if (_events[_calendarController
                                                 .selectedDay] !=
                                             null) {
-                                          print(markedValue + " b");
+                                          debugPrint(markedValue + " b");
                                           _selectedEvents.add(markedValue);
                                           _events[_calendarController
                                                   .selectedDay]
                                               .add(markedValue);
                                         } else {
-                                          print(markedValue + " a");
+                                          debugPrint(markedValue + " a");
                                           _selectedEvents.add(markedValue);
                                           _events[_calendarController
                                               .selectedDay] = [markedValue];
                                         }
                                       }
-                                      print(_selectedEvents);
+                                      debugPrint(_selectedEvents.toString());
                                       pref.setString('absents',
                                           json.encode(encodeAbs(_absents)));
                                       pref.setString('events',
@@ -359,7 +359,7 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                                       _selectedEvents.clear();
                                       _events[_calendarController.selectedDay]
                                           .clear();
-                                      print(_selectedEvents);
+                                      debugPrint(_selectedEvents.toString());
                                     });
                                   }),
                             )

@@ -20,46 +20,45 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
   final double unitHeight = 80.0;
   double screenWidth, screenHeight;
 
-
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     screenWidth = SizeConfig.screenWidth;
     screenHeight = SizeConfig.screenHeight;
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text(
+          'Your Timetable',
+        ),
+        backgroundColor: primaryColor,
+      ),
+      body: DefaultTabController(
+        length: 2,
+        child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: AppBar(
-            title: Text(
-              'Your Timetable',
-            ),
-            backgroundColor: primaryColor,
-          ),
-          body: DefaultTabController(
-            length: 2,
-            child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(80.0),
+            child: AppBar(
+              brightness: Brightness.light,
+              automaticallyImplyLeading: false,
               backgroundColor: Colors.white,
-              appBar: PreferredSize(
-                preferredSize: Size.fromHeight(80.0),
-                child: AppBar(
-                  brightness: Brightness.light,
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.white,
-                  elevation: 0.0,
-                  toolbarOpacity: 0.0,
-                  flexibleSpace: TabBar(
-                    indicatorPadding: EdgeInsets.zero,
-                    labelStyle: TextStyle(
-                      color: primaryColor,
-                      fontSize: 30,
-                    ),
-                    unselectedLabelStyle: TextStyle(
-                        color: primaryColor.withAlpha(100), fontSize: 20),
-                    labelPadding:
+              elevation: 0.0,
+              toolbarOpacity: 0.0,
+              flexibleSpace: TabBar(
+                indicatorPadding: EdgeInsets.zero,
+                labelStyle: TextStyle(
+                  color: primaryColor,
+                  fontSize: 30,
+                ),
+                unselectedLabelStyle:
+                    TextStyle(color: primaryColor.withAlpha(100), fontSize: 20),
+                labelPadding:
                     EdgeInsets.symmetric(vertical: 16.0, horizontal: 48.0),
-                    indicatorColor: Colors.transparent,
-                    tabs: TimeTableResources.sequence[sectionSequence].keys
-                        .map(
-                          (day) => Tab(
+                indicatorColor: Colors.transparent,
+                tabs: TimeTableResources.sequence[sectionSequence].keys
+                    .map(
+                      (day) => Tab(
                         child: Text(
                           day,
                           style: TextStyle(
@@ -69,19 +68,19 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
                         ),
                       ),
                     )
-                        .toList(),
-                    isScrollable: true,
-                  ),
-                ),
+                    .toList(),
+                isScrollable: true,
               ),
-              body: TabBarView(
-                  children: TimeTableResources.sequence[sectionSequence].entries
-                      .map((entry) => Container(
-                      child: buildList(context, entry.key, entry.value)))
-                      .toList()),
             ),
           ),
-        );
+          body: TabBarView(
+              children: TimeTableResources.sequence[sectionSequence].entries
+                  .map((entry) => Container(
+                      child: buildList(context, entry.key, entry.value)))
+                  .toList()),
+        ),
+      ),
+    );
   }
 
   Widget buildMarker(double length, Color stripColor) {
@@ -101,10 +100,9 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
 
   void launchMap(String url) async {
     if (await canLaunch(url)) {
-      print("Can launch");
       await launch(url);
     } else {
-      print("Could not launch $url");
+      debugPrint("Could not launch $url");
       throw 'Could not launch Maps';
     }
   }
@@ -132,24 +130,24 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
                       alignment: Alignment.topLeft,
                       child: RichText(
                           text: TextSpan(
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: periodDetail.name + '\n',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              TextSpan(
-                                text: periodDetail.slotTime + '\n',
-                                style: TextStyle(
-                                  color: Colors.white.withAlpha(200),
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          )),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: periodDetail.name + '\n',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          TextSpan(
+                            text: periodDetail.slotTime + '\n',
+                            style: TextStyle(
+                              color: Colors.white.withAlpha(200),
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      )),
                     ),
                     Align(
                       alignment: Alignment.centerRight,
@@ -185,21 +183,17 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
     );
   }
 
-
-
   ListView buildList(BuildContext context, String day, List<String> codes) {
     List<PeriodDetails> dayList = new List<PeriodDetails>();
     dayList = getDayList(day, codes);
 
-    print("Length ${dayList.length}");
+    debugPrint("Length ${dayList.length}");
 
     return ListView.builder(
         itemCount: dayList.length,
         itemBuilder: (BuildContext context, int index) {
-
-            return buildTheoryCard(dayList[index]);
-          }
-        );
+          return buildTheoryCard(dayList[index]);
+        });
   }
 
   List<PeriodDetails> getDayList(String day, List<String> codes) {
@@ -209,7 +203,6 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
       false,
       false,
       false,
-
     ];
     List<PeriodDetails> dayList = new List<PeriodDetails>(9);
 
@@ -226,7 +219,7 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
           slotLength: 1,
           type: 'theory',
           location:
-          'https://www.google.com/maps/search/?api=1&query=22.2513332,84.9048918',
+              'https://www.google.com/maps/search/?api=1&query=22.2513332,84.9048918',
           locationName: 'LA1',
         );
         slotFilled[j] = true;

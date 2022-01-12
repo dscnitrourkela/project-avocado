@@ -76,7 +76,7 @@ class _SlotCardSplitState extends State<SlotCardSplit> {
       width: width,
       child: InkWell(
         onLongPress: () {
-          print(cardType);
+          debugPrint(cardType.toString());
         },
         onTap: () {
           setState(() {

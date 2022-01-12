@@ -145,7 +145,7 @@ class _AppointmentsState extends State<Appointments> {
     counselorName = remoteConfig.getString('counselor_name');
     psychName = remoteConfig.getString('psych_name');
     psychDay = remoteConfig.getString('psych_day');
-    print(counselDay + 'hola');
+    debugPrint(counselDay + 'hola');
     await scpDatabase.init();
     _onCounselChangedSubscription =
         ScpDatabase.counselRef.onChildChanged.listen(_onSlotsUpdated);
