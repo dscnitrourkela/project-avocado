@@ -289,11 +289,13 @@ class MentorDetails extends StatelessWidget {
                             shape: StadiumBorder(),
                           ),
                           onPressed: () {
-                            saveContact(Contact(
-                              displayName: mentorName,
-                              phones: [Phone(mentorContact)],
-                              emails: [Email(mentorEmail)],
-                            ));
+                            saveContact(
+                                Contact(
+                                  displayName: mentorName,
+                                  phones: [Phone(mentorContact)],
+                                  emails: [Email(mentorEmail)],
+                                ),
+                                context);
                           },
                           child: Text(
                             message,
@@ -333,12 +335,24 @@ class MentorDetails extends StatelessWidget {
         });
   }
 
-  void saveContact(Contact contact) async {
-    // save contact
-    final result = FlutterContacts.insertContact(contact).then((value) {
-      print('add contact dialog closed');
-    }).catchError((error) {
-      print('pata nai bhai kya error hai');
-    });
+  void saveContact(Contact contact, BuildContext context) async {
+    if (await FlutterContacts.requestPermission()) {
+      // save contact
+      final result = FlutterContacts.insertContact(contact)
+          .then((value) {})
+          .catchError((error) {
+        debugPrint(error);
+      });
+    } else {
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "App need permission to create the contact",
+            style: TextStyle(color: Colors.amber),
+          ),
+        ),
+      );
+    }
   }
 }
