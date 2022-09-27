@@ -19,11 +19,10 @@ class ScpAuth {
   }
 
   Future<bool> smsCodeDialog(BuildContext context) {
-    print('enter smsdialog');
     var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final otpController = TextEditingController();
-    print(queryWidth);
+    debugPrint(queryWidth.toString());
     return showDialog(
         context: context,
         barrierDismissible: false,
@@ -96,13 +95,12 @@ class ScpAuth {
     };
     final PhoneVerificationCompleted verificationCompleted =
         (AuthCredential credential) {
-      print('verified');
       signInSpecial(context, credential);
     };
 
     final PhoneVerificationFailed verificationFailed =
         (FirebaseAuthException error) {
-      print('${error.message}');
+      debugPrint('${error.message}');
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Booooo!')));
     };
@@ -119,26 +117,26 @@ class ScpAuth {
   }
 
   static signIn(BuildContext context) async {
-    print(verificationId);
-    print(smsCode);
+    debugPrint(verificationId);
+    debugPrint(smsCode);
     final AuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verificationId, smsCode: smsCode);
 
     await firebaseInstance.signInWithCredential(credential).then((user) {
-      print(user.user.displayName);
+      debugPrint(user.user.displayName);
       _storeUserData(context, user);
     }).catchError((error) {
-      print(error);
+      debugPrint(error);
     });
   }
 
   static signInSpecial(BuildContext context, AuthCredential credential) async {
-    print(verificationId);
-    print(smsCode);
+    debugPrint(verificationId);
+    debugPrint(smsCode);
     await firebaseInstance.signInWithCredential(credential).then((user) {
       _storeUserData(context, user);
     }).catchError((error) {
-      print(error);
+      debugPrint(error);
     });
   }
 

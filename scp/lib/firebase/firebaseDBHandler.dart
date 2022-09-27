@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:scp/utils/models.dart';
 
 class ScpDatabase {
@@ -18,8 +19,8 @@ class ScpDatabase {
   }
 
   void readWeekSlots() {
-    print(counselSlotsList[0].phoneNo);
-    print(counselSlotsList[5].status);
-    print(counselSlotsList[2].rollNo);
+    debugPrint(counselSlotsList[0].phoneNo.toString());
+    debugPrint(counselSlotsList[5].status.toString());
+    debugPrint(counselSlotsList[2].rollNo.toString());
   }
 }

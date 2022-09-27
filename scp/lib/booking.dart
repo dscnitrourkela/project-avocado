@@ -88,7 +88,7 @@ class _BookingState extends State<Booking> {
     counselorName = remoteConfig.getString('counselor_name');
     psychName = remoteConfig.getString('psych_name');
     psychDay = remoteConfig.getString('psych_day');
-    print(counselDay + 'hola');
+    debugPrint(counselDay + 'hola');
     if (hasBooked) {}
     return remoteConfig;
   }
@@ -172,7 +172,6 @@ class _BookingState extends State<Booking> {
                                     "status": "0",
                                     "timestamp": DateTime.now().toString(),
                                   }).then((_) {
-                                    print("Booking canceled");
                                     prefs.setBool('hasBooked', false);
                                     prefs.setString('bookedSlot', "");
                                     Navigator.of(context).pop();
@@ -188,7 +187,6 @@ class _BookingState extends State<Booking> {
                                     "status": "0",
                                     //"timestamp": DateTime.now().toString(),
                                   }).then((_) {
-                                    print("Booking canceled");
                                     prefs.setBool('hasBooked', false);
                                     Navigator.of(context).pop();
                                     Navigator.of(context)
