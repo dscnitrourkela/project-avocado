@@ -1,6 +1,5 @@
 package in.ac.nitrkl.scp;
 
-import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,12 +16,11 @@ public class MainActivity extends FlutterActivity {
         GeneratedPluginRegistrant.registerWith(flutterEngine);
         new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL)
                 .setMethodCallHandler(
-                    (call, result) -> {
-                        if (call.method.equalsIgnoreCase("startFaqActivity")) {
-                            Toast.makeText(getApplicationContext(), "Working", Toast.LENGTH_SHORT).show();
+                        (call, result) -> {
+                            if (call.method.equalsIgnoreCase("startFaqActivity")) {
+                                Toast.makeText(getApplicationContext(), "Working", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                }
-        );
+                );
     }
 }
-

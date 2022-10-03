@@ -15,7 +15,7 @@
          additional functionality it is fine to subclass or reimplement
          FlutterApplication and put your custom class here. -->
     <application
-        android:name="io.flutter.app.FlutterApplication"
+        android:name="${applicationName}"
         android:label="ICS NIT Rourkela"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round">
@@ -30,6 +30,7 @@
             android:value="2" />
         <activity
             android:name=".MainActivity"
+            android:exported="true"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density"
             android:hardwareAccelerated="true"
             android:launchMode="singleTop"
@@ -39,10 +40,10 @@
                  until Flutter renders its first frame. It can be removed if
                  there is no splash screen (such as the default splash screen
                  defined in @style/LaunchTheme). -->
-<!--            <meta-data-->
-<!--                android:name="io.flutter.embedding.android.NormalTheme"-->
-<!--                android:resource="@style/NormalTheme"-->
-<!--                />-->
+            <!--            <meta-data-->
+            <!--                android:name="io.flutter.embedding.android.NormalTheme"-->
+            <!--                android:resource="@style/NormalTheme"-->
+            <!--                />-->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="in.ac.nitrkl.scp.scp.MainActivity" />
@@ -65,17 +66,17 @@
         </activity>
     </application>
     <queries>
-    <intent>
-        <action android:name="android.intent.action.VIEW" />
-        <data android:scheme="https" />
-    </intent>
-    <intent>
-        <action android:name="android.intent.action.DIAL" />
-        <data android:scheme="tel" />
-    </intent>
-    <intent>
-        <action android:name="android.intent.action.SEND" />
-        <data android:mimeType="*/*" />
-    </intent>
-</queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.DIAL" />
+            <data android:scheme="tel" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:mimeType="*/*" />
+        </intent>
+    </queries>
 </manifest>
