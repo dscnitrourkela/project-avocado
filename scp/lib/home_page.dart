@@ -61,170 +61,171 @@ class _HomePageState extends State<HomePage> {
           return Scaffold(
             key: _scaffoldKey,
             drawer: Drawer(
-                child: Column(
+                child: SafeArea(
+                  child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                DrawerHeader(
-                  margin: EdgeInsets.all(0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        username,
-                        style: TextStyle(
-                            fontSize: SizeConfig.screenWidth * 0.058,
-                            fontFamily: 'PfDin'),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 4.0),
-                        child: Text(
-                          phoneNo,
+                  Padding(
+                    padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.04, top: SizeConfig.screenHeight*0.035),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          username,
                           style: TextStyle(
-                              fontSize: SizeConfig.screenWidth * 0.035,
+                              fontSize: SizeConfig.screenWidth * 0.058,
                               fontFamily: 'PfDin'),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 4.0),
-                        child: Text(
-                          rollNo,
-                          style: TextStyle(
-                              fontSize: SizeConfig.screenWidth * 0.035,
-                              fontFamily: 'PfDin'),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4.0),
+                          child: Text(
+                            phoneNo,
+                            style: TextStyle(
+                                fontSize: SizeConfig.screenWidth * 0.035,
+                                fontFamily: 'PfDin'),
+                          ),
                         ),
-                      )
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4.0),
+                          child: Text(
+                            rollNo,
+                            style: TextStyle(
+                                fontSize: SizeConfig.screenWidth * 0.035,
+                                fontFamily: 'PfDin'),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Expanded(
-                  flex: 8,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      ListTile(
-                        onTap: () {
-                          Navigator.of(context).pushNamed(Routes.rImpDocs);
-                        },
-                        title: Text(
-                          "Important Documents",
-                          style: TextStyle(
-                              fontSize: SizeConfig.drawerItemTextSize,
-                              fontFamily: 'PfDin'),
+                  SizedBox(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        ListTile(
+                          onTap: () {
+                            Navigator.of(context).pushNamed(Routes.rImpDocs);
+                          },
+                          title: Text(
+                            "Important Documents",
+                            style: TextStyle(
+                                fontSize: SizeConfig.drawerItemTextSize,
+                                fontFamily: 'PfDin'),
+                          ),
                         ),
-                      ),
-                      ListTile(
-                        onTap: () {
-                          Navigator.pushNamed(context, Routes.rNots);
-                        },
-                        title: Text(
-                          "Notifications",
-                          style: TextStyle(
-                              fontSize: SizeConfig.drawerItemTextSize,
-                              fontFamily: 'PfDin'),
+                        ListTile(
+                          onTap: () {
+                            Navigator.pushNamed(context, Routes.rNots);
+                          },
+                          title: Text(
+                            "Notifications",
+                            style: TextStyle(
+                                fontSize: SizeConfig.drawerItemTextSize,
+                                fontFamily: 'PfDin'),
+                          ),
                         ),
-                      ),
-                      ListTile(
-                        onTap: () {
-                          Navigator.of(context).pushNamed(Routes.rSettings);
-                        },
-                        title: Text(
-                          "Settings",
-                          style: TextStyle(
-                              fontSize: SizeConfig.drawerItemTextSize,
-                              fontFamily: 'PfDin'),
+                        ListTile(
+                          onTap: () {
+                            Navigator.of(context).pushNamed(Routes.rSettings);
+                          },
+                          title: Text(
+                            "Settings",
+                            style: TextStyle(
+                                fontSize: SizeConfig.drawerItemTextSize,
+                                fontFamily: 'PfDin'),
+                          ),
                         ),
-                      ),
-                      ListTile(
-                        onTap: () {
-                          Navigator.pushNamed(context, Routes.rAboutScp);
-                        },
-                        title: Text(
-                          "About ICS",
-                          style: TextStyle(
-                              fontSize: SizeConfig.drawerItemTextSize,
-                              fontFamily: 'PfDin'),
+                        ListTile(
+                          onTap: () {
+                            Navigator.pushNamed(context, Routes.rAboutScp);
+                          },
+                          title: Text(
+                            "About ICS",
+                            style: TextStyle(
+                                fontSize: SizeConfig.drawerItemTextSize,
+                                fontFamily: 'PfDin'),
+                          ),
                         ),
-                      ),
-                      ListTile(
-                        onTap: () {
-                          _launchURL();
-                        },
-                        title: Text(
-                          "Privacy Policy",
-                          style: TextStyle(
-                              fontSize: SizeConfig.drawerItemTextSize,
-                              fontFamily: 'PfDin'),
+                        ListTile(
+                          onTap: () {
+                            _launchURL();
+                          },
+                          title: Text(
+                            "Privacy Policy",
+                            style: TextStyle(
+                                fontSize: SizeConfig.drawerItemTextSize,
+                                fontFamily: 'PfDin'),
+                          ),
                         ),
-                      ),
-                      ListTile(
-                        onTap: () {
-                          Navigator.of(context).pushNamed(Routes.rDevInfo);
-                        },
-                        title: Text(
-                          "Developer Info",
-                          style: TextStyle(
-                              fontSize: SizeConfig.drawerItemTextSize,
-                              fontFamily: 'PfDin'),
+                        ListTile(
+                          onTap: () {
+                            Navigator.of(context).pushNamed(Routes.rDevInfo);
+                          },
+                          title: Text(
+                            "Developer Info",
+                            style: TextStyle(
+                                fontSize: SizeConfig.drawerItemTextSize,
+                                fontFamily: 'PfDin'),
+                          ),
                         ),
-                      ),
-                      ListTile(
-                        onTap: () {
-                          _launchLink('https://ics.nitrkl.ac.in/');
-                        },
-                        title: Text(
-                          "ICS Website",
-                          style: TextStyle(
-                              fontSize: SizeConfig.drawerItemTextSize,
-                              fontFamily: 'PfDin'),
+                        ListTile(
+                          onTap: () {
+                            _launchLink('https://ics.nitrkl.ac.in/');
+                          },
+                          title: Text(
+                            "ICS Website",
+                            style: TextStyle(
+                                fontSize: SizeConfig.drawerItemTextSize,
+                                fontFamily: 'PfDin'),
+                          ),
                         ),
-                      ),
-                      ListTile(
-                        onTap: () {
-                          _launchLink('https://www.youtube.com/c/ICSNITR');
-                        },
-                        title: Text(
-                          "ICS YouTube",
-                          style: TextStyle(
-                              fontSize: SizeConfig.drawerItemTextSize,
-                              fontFamily: 'PfDin'),
+                        ListTile(
+                          onTap: () {
+                            _launchLink('https://www.youtube.com/c/ICSNITR');
+                          },
+                          title: Text(
+                            "ICS YouTube",
+                            style: TextStyle(
+                                fontSize: SizeConfig.drawerItemTextSize,
+                                fontFamily: 'PfDin'),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: ButtonTheme(
-                      minWidth: SizeConfig.screenWidth * 0.463,
-                      height: SizeConfig.screenWidth * 0.093,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          _removeUserData(context);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0)),
-                          primary: Color.fromRGBO(25, 39, 45, 1),
-                        ),
-                        child: Text(
-                          "Log Out",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'PfDin',
-                              color: Colors.white,
-                              fontSize: SizeConfig.screenWidth * 0.046),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: SizeConfig.screenHeight*0.04),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: ButtonTheme(
+                        minWidth: SizeConfig.screenWidth * 0.463,
+                        height: SizeConfig.screenWidth * 0.093,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            _removeUserData(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0)),
+                            primary: Color.fromRGBO(25, 39, 45, 1),
+                          ),
+                          child: Text(
+                            "Log Out",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'PfDin',
+                                color: Colors.white,
+                                fontSize: SizeConfig.screenWidth * 0.046),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                )
+                  )
               ],
-            )),
+            ),
+                )),
             appBar: AppBar(
               leading: Padding(
                 padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.037),
