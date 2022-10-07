@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:scp/utils/routes.dart';
 import 'package:scp/utils/sizeConfig.dart';
@@ -188,26 +189,41 @@ class TimeTableState extends State<TimeTable> {
                   child: Stack(children: [
                     Align(
                       alignment: Alignment.topLeft,
-                      child: RichText(
-                          text: TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: periodDetail.name + '\n',
-                            style: TextStyle(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 23,
+                            width: screenWidth*0.65,
+                            child: AutoSizeText(
+                              periodDetail.name,
+                              style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20.0,
-                                fontWeight: FontWeight.w700),
+                                fontWeight: FontWeight.w600,
+                              ),
+                              maxLines: 1,
+                            ),
                           ),
-                          TextSpan(
-                            text: periodDetail.slotTime,
-                            style: TextStyle(
-                              color: Colors.white.withAlpha(200),
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w600,
+                          SizedBox(
+                            height: 3,
+                          ),
+                          Container(
+                            height: 19.8,
+                            width: screenWidth*0.65,
+                            child: AutoSizeText(
+                              periodDetail.slotTime,
+                              style: TextStyle(
+                                  color: Colors.white.withAlpha(200),
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w600,
+                              ),
+                              maxLines: 1,
                             ),
                           ),
                         ],
-                      )),
+                      ),
                     ),
                     Align(
                       alignment: Alignment.centerRight,
@@ -339,11 +355,39 @@ class TimeTableState extends State<TimeTable> {
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
-                      child: ElevatedButton(
-                          child: Text('Location'),
-                          onPressed: () {
-                            launchMap(periodDetail.location);
-                          }),
+                      child: SizedBox(
+                        width: screenWidth*0.4,
+                        child: RaisedButton(
+                            color: const Color(0xff1f538d),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 8),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.navigation_outlined, color: Colors.white,),
+                                  SizedBox(
+                                    width: 3,
+                                  ),
+                                  Text(
+                                      'Location',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18.5,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            onPressed: () {
+                              launchMap(periodDetail.location);
+                            }
+                            ),
+                      ),
                     ),
                   ]),
                 ),
