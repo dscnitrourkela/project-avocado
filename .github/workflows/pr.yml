@@ -1,0 +1,48 @@
+
+name: pull-build-test
+
+on:
+  pull_request_target:
+    types: [labeled]
+      
+env:
+  ANDROID_FIREBASE_JSON: ${{secrets.ANDROID_FIREBASE_JSON}}
+
+jobs:
+  flutter-build:
+    name: Run flutter build
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'safe-for-build')
+    defaults:
+      run:
+        working-directory: scp
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+      - name: Decode Google Services JSON
+        run: |
+          touch android/app/google-services.json
+          echo $ANDROID_FIREBASE_JSON >> android/app/google-services.json
+          cat android/app/google-services.json
+      - name: Flutter Build
+        run: flutter clean
+      - run: flutter pub get
+      - run: flutter build apk
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-apk
+          path: scp/build/app/outputs/flutter-apk/app-release.apk
+      - name: Download APK
+        uses: actions/download-artifact@v2
+        with:
+          name: release-apk
+      - name: Display structure of downloaded files
+        run: ls -R
