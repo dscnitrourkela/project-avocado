@@ -63,13 +63,16 @@ android {
 
     buildTypes {
         release {
-            signingConfig signingConfigs.release
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        debug{
-            signingConfig signingConfigs.debug
-            minifyEnabled false
+            if (keystorePropertiesFile.exists()) {
+                signingConfig signingConfigs.release
+                minifyEnabled true
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                println "Signing with key.properties"
+            } else {
+                signingConfig signingConfigs.debug
+                minifyEnabled false
+                println "Signing with debug keys"
+            }
         }
     }
 }
