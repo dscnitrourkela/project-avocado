@@ -71,7 +71,8 @@ android {
                 println "Signing with key.properties"
             } else {
                 signingConfig signingConfigs.debug
-                minifyEnabled false
+                shrinkResources true
+                minifyEnabled true
                 println "Signing with debug keys"
             }
         }
