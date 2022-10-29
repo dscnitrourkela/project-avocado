@@ -81,7 +81,13 @@ class TimeTableState extends State<TimeTable> {
                   return <PopupMenuEntry<String>>[
                     PopupMenuItem<String>(
                       value: "Reset",
-                      child: Text("Reset section"),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Icon(Icons.sync_outlined, color: Color(0xff313131), size: 21,),
+                          Text("Reset section"),
+                        ],
+                      ),
                     )
                   ];
                 },
@@ -340,7 +346,8 @@ class TimeTableState extends State<TimeTable> {
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20.0,
-                                fontWeight: FontWeight.w700),
+                                fontWeight: FontWeight.w700,
+                            ),
                           ),
                           TextSpan(
                             text: periodDetail.slotTime,
@@ -357,13 +364,14 @@ class TimeTableState extends State<TimeTable> {
                       alignment: Alignment.bottomCenter,
                       child: SizedBox(
                         width: screenWidth*0.4,
-                        child: RaisedButton(
-                            color: const Color(0xff1f538d),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(6.0)),
+                              primary: Color(0xff1f538d),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8),
+                              padding: EdgeInsets.symmetric(vertical: 8.5),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,

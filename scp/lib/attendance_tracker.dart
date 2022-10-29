@@ -187,7 +187,13 @@ class _AttendanceTrackerState extends State<AttendanceTracker> {
                 return <PopupMenuEntry<String>>[
                   PopupMenuItem<String>(
                     value: "Reset",
-                    child: Text("Reset section"),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Icon(Icons.sync_outlined, color: Color(0xff313131), size: 21,),
+                        Text("Reset section"),
+                      ],
+                    ),
                   )
                 ];
               },
