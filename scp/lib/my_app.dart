@@ -11,7 +11,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  ScpDatabase scpDatabase;
   bool _loggedin;
   @override
   Widget build(BuildContext context) {

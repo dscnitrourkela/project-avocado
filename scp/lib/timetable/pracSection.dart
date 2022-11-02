@@ -193,8 +193,8 @@ storeSectionData(BuildContext context) async {
       MaterialPageRoute(builder: (context) => TimeTable()),
     );
   } else if (cardNumber == 1) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => AttendanceTracker()));
+    // Navigator.push(
+    //     context, MaterialPageRoute(builder: (context) => AttendanceTracker()));
   }
 }
 

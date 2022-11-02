@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scp/counselling/counsellingPage.dart';
 import 'package:scp/home_page.dart';
 import 'package:scp/booking.dart';
 import 'package:scp/chat.dart';
@@ -17,6 +18,7 @@ class Routes {
   static const String rHomepage = '/homePage';
   static const String rAppointments = '/appointments';
   static const String rTimetable = '/timetable';
+  static const String rCounselling = '/counselling';
   static const String rUserData = '/userdata';
   static const String rLogin = '/login';
   static const String rBooking = '/booking';
@@ -32,11 +34,12 @@ class Routes {
   static Map<String, WidgetBuilder> getRoutes() {
     return {
       Routes.rHomepage: (context) => HomePage(),
-      Routes.rAppointments: (context) => Appointments(),
+      // Routes.rAppointments: (context) => Appointments(),
       Routes.rTimetable: (context) => TheorySection(0), //0 for left card
       Routes.rUserData: (context) => Userdata(),
+      Routes.rCounselling: (context) => CounsellingPage(),
       Routes.rLogin: (context) => Login(),
-      Routes.rBooking: (context) => Booking(),
+      // Routes.rBooking: (context) => Booking(),
       Routes.rAboutScp: (context) => AboutSCP(),
       Routes.rImpDocs: (context) => ImpDocs(),
       Routes.rDevInfo: (context) => DevInfo(),
