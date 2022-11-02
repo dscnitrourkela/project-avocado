@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scp/ui/gradients.dart';
 import 'package:scp/utils/routes.dart';
-import 'package:scp/utils/urlLauncher.dart';
 
 class SlotCardSplit extends StatefulWidget {
   final BuildContext cxt;
@@ -27,39 +26,6 @@ class _SlotCardSplitState extends State<SlotCardSplit> {
   @override
   Widget build(BuildContext context) {
     return slotCard(widget.cxt, widget.heightFactor, widget.textSc, width1, "OFFLINE Counselling", 1, 'assets/icon-white.png',);
-    // return Stack(
-    //   children: <Widget>[
-    //     Row(
-    //       mainAxisAlignment: MainAxisAlignment.end,
-    //       children: <Widget>[
-    //         Flexible(
-    //             child: slotCard(
-    //           widget.cxt,
-    //           widget.heightFactor,
-    //           widget.textSc,
-    //           width1,
-    //           "OFFLINE Counselling",
-    //           1,
-    //           'assets/icon-white.png',
-    //         )),
-    //       ],
-    //     ),
-    //     Row(
-    //       children: <Widget>[
-    //         Flexible(
-    //             child: slotCard(
-    //           widget.cxt,
-    //           widget.heightFactor,
-    //           widget.textSc,
-    //           width1,
-    //           "YourDOST Counselling",
-    //           0,
-    //           'assets/ydd.png',
-    //         )),
-    //       ],
-    //     ),
-    //   ],
-    // );
   }
 
   Widget slotCard(
@@ -81,26 +47,7 @@ class _SlotCardSplitState extends State<SlotCardSplit> {
           debugPrint(cardType.toString());
         },
         onTap: () {
-          // setState(() {
-          //   if (!isTapped) {
-          //     isTapped = !isTapped;
-          //     width1 = widget.heightFactor / 2;
-          //     width2 = width1;
-          //   } else {
-          //     /*cardType helps us determine upon which card have we registered the tap
-          //     0 is for left card, 1 is for right card*/
-          //     if (cardType == 0) //Online
-          //     {
-          //       launchURL("https://www.yourdost.com/");
-          //     }
-          //     if (cardType == 1) //Offline
-          //     {
-          //       launchURL("https://forms.gle/e8K6ZVvoNZ683ZRp6");
-          //     }
-          //   }
-          // });
           Navigator.pushNamed(context, Routes.rCounselling);
-
         },
         child: Card(
           shape:
