@@ -405,7 +405,7 @@ Widget faqCard(BuildContext context) {
     height: heightFactor * 0.58,
     child: InkWell(
       onTap: () {
-        _startFAQActivity();
+        Navigator.of(context).pushNamed(Routes.rFaq);
       },
       child: Card(
         shape:
