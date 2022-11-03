@@ -11,6 +11,7 @@ import 'package:scp/drawer_screens/settings.dart';
 import 'package:scp/login.dart';
 import 'package:scp/timetable/theorySection.dart';
 import 'package:scp/appointments.dart';
+import 'package:scp/drawer_screens/policies.dart';
 import 'package:scp/ui/views/ics_events/events_view.dart';
 import 'package:scp/userdata.dart';
 
@@ -26,6 +27,7 @@ class Routes {
   static const String rImpDocs = '/imp_docs';
   static const String rDevInfo = '/dev_info';
   static const String rNots = '/nots';
+  static const String rPolicies = '/policies';
   static const String rAttendance = '/attendance';
   static const String rSettings = '/settings';
   static const String rChat = '/chat';
@@ -39,6 +41,7 @@ class Routes {
       Routes.rUserData: (context) => Userdata(),
       Routes.rCounselling: (context) => CounsellingPage(),
       Routes.rLogin: (context) => Login(),
+      Routes.rPolicies: (context) => PoliciesPage(),
       // Routes.rBooking: (context) => Booking(),
       Routes.rAboutScp: (context) => AboutSCP(),
       Routes.rImpDocs: (context) => ImpDocs(),
