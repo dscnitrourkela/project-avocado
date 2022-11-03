@@ -20,7 +20,7 @@ class _CounsellingPageState extends State<CounsellingPage> {
       appBar: AppBar(
         title: Text(
           "Student Counselling",
-          style: TextStyle(fontFamily: 'PfDin'),
+          style: TextStyle(fontFamily: 'PfDin', fontSize: 22),
         ),
         backgroundColor: primaryColor,
       ),

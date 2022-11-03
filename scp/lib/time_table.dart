@@ -95,6 +95,11 @@ class TimeTableState extends State<TimeTable> {
             ],
             title: Text(
               'Your Timetable',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'PfDin',
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600),
             ),
             backgroundColor: primaryColor,
           ),
