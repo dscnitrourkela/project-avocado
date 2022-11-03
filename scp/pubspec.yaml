@@ -15,24 +15,24 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  camera: ^0.5.7
-  cloud_firestore: ^2.5.2
+  cloud_firestore: ^4.0.3
   connectivity: ^3.0.6  
-  firebase_auth: ^3.1.1
-  firebase_core: ^1.6.0
-  firebase_crashlytics: ^2.2.1
-  firebase_database: ^7.2.2
-  firebase_messaging: ^10.0.7
-  firebase_remote_config: ^0.11.0
-  firebase_storage: ^10.0.3  
+  firebase_auth: ^4.1.0
+  firebase_core: ^2.1.1
+  firebase_core_platform_interface: ^4.5.1
+  firebase_crashlytics: ^3.0.3
+  firebase_database: ^10.0.3
+  firebase_messaging: ^14.0.3
+  firebase_remote_config: ^3.0.3
+  firebase_storage: ^11.0.3  
   flutter_contacts: ^1.1.1+2
-  font_awesome_flutter: ^9.1.0
-  get_it: ^5.0.3
+  font_awesome_flutter: ^10.2.1
+  get_it: ^7.2.0
   graphql_flutter: ^5.0.0
   http: ^0.13.3
   in_app_review: ^2.0.3
   intl: ^0.17.0
-  lite_rolling_switch: ^0.1.1
+  lite_rolling_switch: ^1.0.0
   lottie: ^1.1.0  
   ndialog: ^4.1.0
   package_info: ^2.0.2
@@ -41,16 +41,16 @@ dependencies:
   rate_my_app: ^1.1.1
   shared_preferences: ^2.0.7
   auto_size_text: ^3.0.0
-  stacked: ^1.7.6
-  table_calendar: ^2.2.3
+  stacked: ^3.0.0
+  table_calendar: ^3.0.8
   url_launcher: ^6.0.10
   flutter_inappwebview: ^5.3.2
-  firebase_analytics: ^8.3.2
+  firebase_analytics: ^10.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: "^0.9.2"
+  flutter_launcher_icons: ^0.10.0
 flutter_icons:
   ios: true
   image_path: "assets/icon/icon.png"

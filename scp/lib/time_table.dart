@@ -85,7 +85,7 @@ class TimeTableState extends State<TimeTable> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Icon(Icons.sync_outlined, color: Color(0xff313131), size: 21,),
-                          Text("Reset section"),
+                          Text("Reset Section", style: TextStyle(color: Color(0xff313131), fontSize: 16.5, fontWeight: FontWeight.w500),),
                         ],
                       ),
                     )
@@ -95,6 +95,11 @@ class TimeTableState extends State<TimeTable> {
             ],
             title: Text(
               'Your Timetable',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'PfDin',
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600),
             ),
             backgroundColor: primaryColor,
           ),

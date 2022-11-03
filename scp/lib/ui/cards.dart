@@ -617,17 +617,17 @@ Widget slotCard(BuildContext context, String titleText, String type,
                   isSelected = !isSelected;
                 });
                 Navigator.of(context).pop();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => UploadImageScreen(
-                              bookingKey: key,
-                              time: time,
-                              counselDay: day,
-                              date: date,
-                              type: type,
-                              index: index,
-                            )));
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => UploadImageScreen(
+                //               bookingKey: key,
+                //               time: time,
+                //               counselDay: day,
+                //               date: date,
+                //               type: type,
+                //               index: index,
+                //             )));
                 break;
               case "1":
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -741,28 +741,28 @@ Widget slotCard(BuildContext context, String titleText, String type,
             SizedBox(
               height: heightFactor * 0.047,
             ),
-            StreamBuilder(
-                stream: (type == "psych")
-                    ? ScpDatabase.psychRef.once().asStream()
-                    : ScpDatabase.counselRef.once().asStream(),
-                builder: (context, snapshot) {
-                  DataSnapshot _slotsSnapshot = snapshot.data;
-                  if (!snapshot.hasData) {
-                    return CircularProgressIndicator();
-                  }
-                  return ListView.builder(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: heightFactor * 0.047),
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: count, //ScpDatabase.slotsList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        var slot =
-                            Slot.map(_slotsSnapshot.value['slot${index + 1}']);
-                        return slotWidget(slot.status, slot.key, slot.time,
-                            (index + 1).toString(), slot.date, slot.day);
-                      });
-                }),
+            // StreamBuilder(
+            //     stream: (type == "psych")
+            //         ? ScpDatabase.psychRef.once().asStream()
+            //         : ScpDatabase.counselRef.once().asStream(),
+            //     builder: (context, snapshot) {
+            //       DataSnapshot _slotsSnapshot = snapshot.data;
+            //       if (!snapshot.hasData) {
+            //         return CircularProgressIndicator();
+            //       }
+            //       return ListView.builder(
+            //           padding: EdgeInsets.symmetric(
+            //               horizontal: heightFactor * 0.047),
+            //           shrinkWrap: true,
+            //           physics: NeverScrollableScrollPhysics(),
+            //           itemCount: count, //ScpDatabase.slotsList.length,
+            //           itemBuilder: (BuildContext context, int index) {
+            //             var slot =
+            //                 Slot.map(_slotsSnapshot.value['slot${index + 1}']);
+            //             return slotWidget(slot.status, slot.key, slot.time,
+            //                 (index + 1).toString(), slot.date, slot.day);
+            //           });
+            //     }),
           ],
         ),
       ),

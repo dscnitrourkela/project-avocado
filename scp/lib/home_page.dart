@@ -150,7 +150,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                         ListTile(
                           onTap: () {
-                            _launchURL();
+                            Navigator.pushNamed(context, Routes.rPolicies,
+                                arguments: ChatArguments(privacyPolicy));
                           },
                           title: Text(
                             "Privacy Policy",

@@ -54,8 +54,8 @@ class _TheorySectionState extends State<TheorySection> {
         );
       } else if (cardNumber == 1) {
         Navigator.of(context).pop();
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => AttendanceTracker()));
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => AttendanceTracker()));
       }
     }
   }

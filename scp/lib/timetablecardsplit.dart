@@ -26,25 +26,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Flexible(
-                child: timetableCard(widget.cxt, widget.heightFactor,
-                    widget.textSc, width1, "Attendance Tracker", 1)),
-          ],
-        ),
-        Row(
-          children: <Widget>[
-            Flexible(
-                child: timetableCard(widget.cxt, widget.heightFactor,
-                    widget.textSc, width1, "Regular Classes", 0)),
-          ],
-        ),
-      ],
-    );
+    return timetableCard(widget.cxt, widget.heightFactor, widget.textSc, width1, "Regular Classes", 0);
   }
 
   Widget timetableCard(BuildContext context, double heightFactor,
@@ -60,20 +42,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
           debugPrint(cardType.toString());
         },
         onTap: () {
-          setState(() {
-            if (!isTapped) {
-              isTapped = !isTapped;
-              width1 = widget.heightFactor / 2;
-              width2 = width1;
-            } else {
-              /*cardType helps us determine upon which card have we registered the tap
-              0 is for left card, 1 is for right card*/
-              if (cardType == 0) //Regular
-                Navigator.pushNamed(context, Routes.rTimetable);
-              if (cardType == 1) //Remedial
-                Navigator.pushNamed(context, Routes.rAttendance);
-            }
-          });
+          Navigator.pushNamed(context, Routes.rTimetable);
         },
         child: Card(
           shape:
