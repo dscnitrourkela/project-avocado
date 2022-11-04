@@ -41,6 +41,7 @@ class _FaqPageState extends State<FaqPage> {
                     "Oops! Something Went Wrong",
                     style: TextStyle(
                       fontSize: 18,
+                      fontFamily: 'PfDin',
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -65,14 +66,16 @@ class _FaqPageState extends State<FaqPage> {
           elevation: 5,
           borderRadius: BorderRadius.circular(11),
           child: Theme(
-            data: Theme.of(context)
-                .copyWith(dividerColor: Colors.transparent),
+            data: ThemeData(
+              primarySwatch: Colors.blueGrey,
+              dividerColor: Colors.transparent,
+            ),
             child: ExpansionTile(
               title: Padding(
                 padding: EdgeInsets.symmetric(vertical: 7),
                 child: Text(
                   singlefaqquestion.question,
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                  style: TextStyle(fontSize: 18.5, fontFamily: 'PfDin', fontWeight: FontWeight.w500),
                 ),
               ),
               children: [
@@ -86,11 +89,11 @@ class _FaqPageState extends State<FaqPage> {
                     ),
                     child: LinkText(
                         singlefaqquestion.answer,
-                        textStyle: TextStyle(fontSize: 15.5, color: Colors.black54),
+                        textStyle: TextStyle(fontSize: 16.6, fontFamily: 'PfDin', color: Colors.black54),
                         linkStyle: TextStyle(
                             color: Colors.blueAccent,
                             decoration: TextDecoration.underline,
-                            fontSize: 15), onLinkTap: ((url) {
+                            fontSize: 15.3), onLinkTap: ((url) {
                       _launchUrl(url);
                     })),
                   ),
