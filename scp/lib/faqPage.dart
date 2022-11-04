@@ -89,7 +89,7 @@ class _FaqPageState extends State<FaqPage> {
                     ),
                     child: LinkText(
                         singlefaqquestion.answer,
-                        textStyle: TextStyle(fontSize: 16.6, fontFamily: 'PfDin', color: Colors.black54),
+                        textStyle: TextStyle(fontSize: 16.6, fontFamily: 'PfDin', color: Colors.black38),
                         linkStyle: TextStyle(
                             color: Colors.blueAccent,
                             decoration: TextDecoration.underline,

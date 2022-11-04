@@ -10,7 +10,7 @@ class FaqQuestion {
   });
 
   static FaqQuestion fromJson(json) => FaqQuestion(
-    question: json['question'],
-    answer: json['answer'],
+    question: json['B'],
+    answer: json['D'],
   );
 }
