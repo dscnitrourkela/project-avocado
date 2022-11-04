@@ -7,6 +7,13 @@
 
 The project repository of the mobile application for the [Institute Counselling Services, NIT Rourkela](https://ics.nitrkl.ac.in/). We are using the [Flutter](https://flutter.dev/) framework for the development of the application. This application has more than 3000 active users and is the most popular application at National Institute of Technology Rourkela. To use the android application, visit [play store](https://play.google.com/store/apps/details?id=in.ac.nitrkl.scp.scp).
 
+
+<p>
+  <a href="https://www.digitalocean.com/">
+    <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/PoweredByDO/DO_Powered_by_Badge_blue.svg" width="201px">
+  </a>
+</p>
+
 ## DSC NIT Rourkela
 
 Project developed and maintained by [DSC NIT Rourkela](https://dscnitrourkela.org/)
