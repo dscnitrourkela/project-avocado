@@ -28,6 +28,7 @@ class _ImpDocsState extends State<ImpDocs> {
         ),
       ),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: FutureBuilder(
           future: fetchData(),
           builder: (context, snapshot) {

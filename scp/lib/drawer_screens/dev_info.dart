@@ -21,6 +21,7 @@ class DevInfo extends StatelessWidget {
                 fontWeight: FontWeight.w600),
           )),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           children: <Widget>[
             Padding(
@@ -84,9 +85,13 @@ class DevInfo extends StatelessWidget {
                 contactCard(
                     context, "Astha Nayak", "https://github.com/nayakastha"),
                 contactCard(
+                    context, "Asutosh Ranjan", "https://github.com/asutoshranjan"),
+                contactCard(
                     context, "Chinmay Kabi", "https://github.com/Chinmay-KB"),
                 contactCard(context, "Manikandan L.",
                     "https://github.com/Manikandan9206"),
+                contactCard(context, "Manjeet Pani",
+                    "https://github.com/HustleAura"),
                 contactCard(context, "Patibanda Sriram ",
                     "https://github.com/SriramPatibanda"),
                 contactCard(
@@ -132,6 +137,7 @@ class DevInfo extends StatelessWidget {
   Widget contactCard(BuildContext context, String name, String contact) {
     //var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    var width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
@@ -149,6 +155,31 @@ class DevInfo extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                if(name != "Reuben Abraham")Stack(
+                  alignment: AlignmentDirectional.center,
+                  children: [
+                    Container(
+                      height: width*0.16,
+                      width: width*0.16,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(width*0.08),
+                        color: Color.fromRGBO(0, 213, 154, 1.0),
+                      ),
+                    ),
+                    Container(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      height: width*0.14,
+                      width: width*0.14,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(width*0.07),
+                      ),
+                      child: Image.network(
+                        contact+".png",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ],
+                ),
                 Center(
                   child: Text(
                     name,
