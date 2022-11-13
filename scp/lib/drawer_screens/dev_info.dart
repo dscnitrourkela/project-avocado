@@ -159,10 +159,10 @@ class DevInfo extends StatelessWidget {
                   alignment: AlignmentDirectional.center,
                   children: [
                     Container(
-                      height: width*0.16,
-                      width: width*0.16,
+                      height: width*0.155,
+                      width: width*0.155,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(width*0.08),
+                        borderRadius: BorderRadius.circular(width*0.0775),
                         color: Color.fromRGBO(0, 213, 154, 1.0),
                       ),
                     ),
@@ -172,6 +172,7 @@ class DevInfo extends StatelessWidget {
                       width: width*0.14,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(width*0.07),
+                        color: Colors.white,
                       ),
                       child: Image.network(
                         contact+".png",

@@ -457,7 +457,7 @@ Widget acadVaultCard(BuildContext context) {
                           child: SizedBox(
                             width: 200.0,
                             child: Text(
-                              'Catch up with our upcoming events',
+                              'Need notes, books and other resources? Dive in!',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontSize: heightFactor * 0.038,
@@ -479,7 +479,7 @@ Widget acadVaultCard(BuildContext context) {
               bottom: -10.0,
               right: 0.0,
               child: Image.asset(
-                'assets/scp_events.png',
+                'assets/acad_vault.png',
                 width: heightFactor * 0.45,
                 height: heightFactor * 0.45,
                 fit: BoxFit.cover,
