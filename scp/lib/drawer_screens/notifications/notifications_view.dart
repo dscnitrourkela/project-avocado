@@ -30,6 +30,7 @@ class _Nots extends State<Nots> {
             return Center(child: CircularProgressIndicator());
           } else
             return ListView.builder(
+              physics: BouncingScrollPhysics(),
               itemCount: model.notificationList.length,
               itemBuilder: (context, index) {
                 return InfoCard(model.notificationList[index], model);

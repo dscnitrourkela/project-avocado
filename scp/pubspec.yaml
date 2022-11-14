@@ -44,6 +44,8 @@ dependencies:
   stacked: ^3.0.0
   table_calendar: ^3.0.8
   url_launcher: ^6.0.10
+  link_text: ^0.2.0
+  expansion_tile_card: ^2.0.0
   flutter_inappwebview: ^5.3.2
   firebase_analytics: ^10.0.3
 
@@ -70,6 +72,7 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
     - assets/
+    - assets/data/faqData.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

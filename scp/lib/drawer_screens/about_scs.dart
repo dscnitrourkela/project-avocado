@@ -49,10 +49,11 @@ class AboutSCP extends StatelessWidget {
         backgroundColor: Color.fromRGBO(25, 39, 45, 1),
         title: Text(
           "About ICS",
-          style: TextStyle(fontFamily: 'PfDin'),
+          style: TextStyle(fontFamily: 'PfDin',),
         ),
       ),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -78,7 +79,7 @@ class AboutSCP extends StatelessWidget {
                 aboutText,
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                  fontSize: 15,
+                  fontSize: 16,
                   fontWeight: FontWeight.w500,
                   fontFamily: 'PfDin',
                   color: Color.fromRGBO(25, 39, 45, 1),

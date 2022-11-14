@@ -123,7 +123,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                                             CrossAxisAlignment.end,
                                         children: <Widget>[
                                           Text(
-                                            'Set your personal timetable and track your attendance',
+                                            'Set your personal timetable and schedule here!',
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               fontSize: heightFactor * 0.038,
