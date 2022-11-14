@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scp/utils/sizeConfig.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:scp/ui/dsc_social.dart';
 
@@ -135,9 +136,7 @@ class DevInfo extends StatelessWidget {
   }
 
   Widget contactCard(BuildContext context, String name, String contact) {
-    //var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    var width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
@@ -159,19 +158,19 @@ class DevInfo extends StatelessWidget {
                   alignment: AlignmentDirectional.center,
                   children: [
                     Container(
-                      height: width*0.155,
-                      width: width*0.155,
+                      height: SizeConfig.screenWidth*0.155,
+                      width: SizeConfig.screenWidth*0.155,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(width*0.0775),
+                        borderRadius: BorderRadius.circular(SizeConfig.screenWidth*0.0775),
                         color: Color.fromRGBO(0, 213, 154, 1.0),
                       ),
                     ),
                     Container(
                       clipBehavior: Clip.antiAliasWithSaveLayer,
-                      height: width*0.14,
-                      width: width*0.14,
+                      height: SizeConfig.screenWidth*0.14,
+                      width: SizeConfig.screenWidth*0.14,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(width*0.07),
+                        borderRadius: BorderRadius.circular(SizeConfig.screenWidth*0.07),
                         color: Colors.white,
                       ),
                       child: Image.network(
