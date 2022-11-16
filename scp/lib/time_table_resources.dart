@@ -12,12 +12,12 @@ abstract class TimeTableResources {
   static void setCourseNumber() async {
     courseNumber = await isAutumnSem() ? 'I' : 'II';
     theory['A']['TA'] = theory['B']['TA'] = theory['C']['TB'] =
-        theory['D']['TB'] = theory['E']['TK'] = theory['F']['TK'] =
-            theory['G']['TM'] = theory['H']['TM'] = 'Physics-$courseNumber';
+    theory['D']['TB'] = theory['E']['TK'] = theory['F']['TK'] =
+    theory['G']['TM'] = theory['H']['TM'] = 'Physics-$courseNumber';
 
     theory['A']['TC'] = theory['B']['TC'] = theory['C']['TD'] =
-        theory['D']['TD'] = theory['E']['TJ'] = theory['F']['TJ'] =
-            theory['G']['TL'] = theory['H']['TL'] = 'Mathematics-$courseNumber';
+    theory['D']['TD'] = theory['E']['TJ'] = theory['F']['TJ'] =
+    theory['G']['TL'] = theory['H']['TL'] = 'Mathematics-$courseNumber';
   }
 
   static final sequence = {
@@ -93,7 +93,7 @@ abstract class TimeTableResources {
       'TB': 'Engineering Mechanics',
       'TC': 'Principles of Architectural Designs',
       'TD': 'Building Materials-I',
-      'SB': 'Engineering Mechanics-Tutorial',
+      // 'SB': 'Engineering Mechanics-Tutorial',
       'TG1': 'Communicative English',
       'TG2': 'Communicative English',
       'TG3': 'Communicative English'
@@ -105,7 +105,7 @@ abstract class TimeTableResources {
       'TD': 'Basic Electrical Engineering',
       'TF': 'Chemistry',
       'SA': 'Physics-Tutorial',
-      'SB': 'Engineering Mechanics-Tutorial',
+      // 'SB': 'Engineering Mechanics-Tutorial',
       'SC': 'Mathematics-Tutorial',
       'TG3': 'Chemistry-Tutorial'
     },
@@ -116,7 +116,7 @@ abstract class TimeTableResources {
       'TD': 'Basic Electrical Engineering',
       'TF': 'Chemistry',
       'SA': 'Physics-Tutorial',
-      'SB': 'Engineering Mechanics-Tutorial',
+      // 'SB': 'Engineering Mechanics-Tutorial',
       'SC': 'Mathematics-Tutorial',
       'TG3': 'Chemistry-Tutorial'
     },
@@ -126,7 +126,7 @@ abstract class TimeTableResources {
       'TC': 'Basic Electrical Engineering',
       'TD': 'Mathematics-I',
       'TF': 'Chemistry',
-      'SA': 'Engineering Mechanics-Tutorial',
+      // 'SA': 'Engineering Mechanics-Tutorial',
       'SB': 'Physics-Tutorial',
       'TG1': 'Mathematics-Tutorial',
       'TG3': 'Chemistry-Tutorial'
@@ -137,7 +137,7 @@ abstract class TimeTableResources {
       'TC': 'Basic Electrical Engineering',
       'TD': 'Mathematics-I',
       'TF': 'Chemistry',
-      'SA': 'Engineering Mechanics-Tutorial',
+      // 'SA': 'Engineering Mechanics-Tutorial',
       'SB': 'Physics-Tutorial',
       'TG1': 'Mathematics-Tutorial',
       'TG3': 'Chemistry-Tutorial'
@@ -195,66 +195,66 @@ abstract class TimeTableResources {
     'P3': {'PC': 'PL', 'PD': 'BP', 'PA': 'WP'},
     'P4': {'PD': 'PL', 'PX': 'BP', 'PB': 'WP'},
     'P5': {'PX': 'PL', 'PA': 'BP', 'PC': 'WP'},
-    'P6': {'PF': 'CL', 'PG': 'ED'},
-    'P7': {'PG': 'CL', 'PH': 'ED'},
-    'P8': {'PH': 'CL', 'PY': 'ED'},
-    'P9': {'PY': 'CL', 'PE': 'ED'},
-    'P10': {'PE': 'CL', 'PF': 'ED'},
+    'P6': {'PE': 'CL', 'PG': 'ED'},
+    'P7': {'PF': 'CL', 'PH': 'ED'},
+    'P8': {'PG': 'CL', 'PY': 'ED'},
+    'P9': {'PH': 'CL', 'PE': 'ED'},
+    'P10': {'PY': 'CL', 'PF': 'ED'},
   };
 
   static final practicalDetails = {
     'AR1': {
       'name': 'Architectural Graphics-I',
       'location':
-          'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
+      'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
       'locationName': 'TIIR'
     },
     'AR2': {
       'name': 'Basic Design',
       'location':
-          'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
+      'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
       'locationName': 'TIIR'
     },
     'AR3': {
       'name': 'Visual Arts-I',
       'location':
-          'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
+      'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
       'locationName': 'TIIR'
     },
     'AR4': {
       'name': 'Non Graphic Computer Application',
       'location':
-          'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
+      'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
       'locationName': 'TIIR'
     },
     'PL': {
       'name': 'Physics Laboratory',
       'location':
-          'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
+      'https://www.google.com/maps/search/?api=1&query=22.2530845,84.9015978',
       'locationName': 'Main Building'
     },
     'BP': {
       'name': 'Basic Programming',
       'location':
-          'https://www.google.com/maps/search/?api=1&query=22.2513332,84.9048918',
+      'https://www.google.com/maps/search/?api=1&query=22.2513332,84.9048918',
       'locationName': 'LA1'
     },
     'WP': {
       'name': 'Workshop Practices',
       'location':
-          'https://www.google.com/maps/search/?api=1&query=22.2526002,84.9029979',
+      'https://www.google.com/maps/search/?api=1&query=22.2526002,84.9029979',
       'locationName': 'Central Workshop'
     },
     'CL': {
       'name': 'Chemistry Laboratory',
       'location':
-          'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
+      'https://www.google.com/maps/search/?api=1&query=22.2530523,84.9012673',
       'locationName': 'Main Building'
     },
     'ED': {
       'name': 'Engineering Drawing',
       'location':
-          'https://www.google.com/maps/search/?api=1&query=22.2513332,84.9048918',
+      'https://www.google.com/maps/search/?api=1&query=22.2513332,84.9048918',
       'locationName': 'LA1'
     },
   };
@@ -294,9 +294,9 @@ class PeriodDetails {
 
   PeriodDetails(
       {this.name,
-      this.slotTime,
-      this.location,
-      this.locationName,
-      this.slotLength,
-      this.type});
+        this.slotTime,
+        this.location,
+        this.locationName,
+        this.slotLength,
+        this.type});
 }
