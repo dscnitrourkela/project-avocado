@@ -8,6 +8,7 @@ class Gradients {
   static LinearGradient mentorsCardGradient;
   static LinearGradient timetableCardGradient;
   static LinearGradient eventsCardGradient;
+  static LinearGradient acadCardGradient;
 
   void init(BuildContext context) {
     appointmentCardGradient = LinearGradient(colors: [
@@ -36,6 +37,13 @@ class Gradients {
       ],
       begin: Alignment.bottomLeft,
       end: Alignment.topRight,
+    );
+
+    acadCardGradient = LinearGradient(
+      colors: [
+        Color(0xffb30099),
+        Color(0xffffafbb),
+      ],
     );
 
     eventsCardGradient = LinearGradient(

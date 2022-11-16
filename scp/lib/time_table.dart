@@ -206,15 +206,20 @@ class TimeTableState extends State<TimeTable> {
                         children: [
                           Container(
                             height: 23,
-                            width: screenWidth*0.65,
-                            child: AutoSizeText(
-                              periodDetail.name,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w600,
+                            width: screenWidth*0.62,
+                            child: SingleChildScrollView(
+                              physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              child: Text(
+                                periodDetail.name,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                maxLines: 1,
                               ),
-                              maxLines: 1,
                             ),
                           ),
                           SizedBox(

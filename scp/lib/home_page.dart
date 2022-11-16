@@ -218,7 +218,8 @@ class _HomePageState extends State<HomePage> {
                                 fontWeight: FontWeight.w400,
                                 fontFamily: 'PfDin',
                                 color: Colors.white,
-                                fontSize: SizeConfig.screenWidth * 0.046),
+                                fontSize: SizeConfig.screenWidth * 0.046,
+                            ),
                           ),
                         ),
                       ),
@@ -282,6 +283,7 @@ class _HomePageState extends State<HomePage> {
               child: (snap.connectionState == ConnectionState.done)
                   ? ListView(
                       scrollDirection: Axis.vertical,
+                      physics: BouncingScrollPhysics(),
                       children: <Widget>[
                         SlotCardSplit(
                           context,
@@ -293,6 +295,7 @@ class _HomePageState extends State<HomePage> {
                             MediaQuery.of(context).size.width,
                             MediaQuery.of(context).textScaleFactor),
                         faqCard(context),
+                        acadVaultCard(context),
                         eventsCard(context),
                         mentorsCard(context, rollNo),
                       ],

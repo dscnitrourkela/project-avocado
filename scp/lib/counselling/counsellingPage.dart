@@ -25,6 +25,7 @@ class _CounsellingPageState extends State<CounsellingPage> {
         backgroundColor: primaryColor,
       ),
       body: ListView(
+        physics: BouncingScrollPhysics(),
         children: [
           Padding(
             padding: EdgeInsets.only(top: width*0.05, right: width*0.05, left: width*0.05,),
@@ -94,7 +95,7 @@ class _CounsellingPageState extends State<CounsellingPage> {
             ],
           ),
           SizedBox(
-            height: 20,
+            height: 50,
           ),
         ],
       ),
