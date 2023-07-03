@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scp/drawer_screens/notifications/notifications_viewmodel.dart';
 import 'package:scp/utils/sizeConfig.dart';
@@ -12,7 +11,7 @@ class InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> d = f.data();
+    Map<String, dynamic> d = f.data() as Map<String, dynamic>;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(

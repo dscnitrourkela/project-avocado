@@ -1,9 +1,21 @@
 abstract class TimeTableResources {
   static final sequence = {
     'tp': {
-      'Saturday': ['TA', 'TB', 'TC', 'TD', 'TE',],
-      'Sunday': ['TF', 'TB', 'TC', 'TD', 'TE',],
-      }
+      'Saturday': [
+        'TA',
+        'TB',
+        'TC',
+        'TD',
+        'TE',
+      ],
+      'Sunday': [
+        'TF',
+        'TB',
+        'TC',
+        'TD',
+        'TE',
+      ],
+    }
   };
 
 //  static var theoryTutorialAssociation = {
@@ -41,18 +53,18 @@ abstract class TimeTableResources {
 }
 
 class PeriodDetails {
-  String name;
-  String slotTime;
-  String location;
-  int slotLength;
-  String type;
-  String locationName;
+  String? name;
+  String? slotTime;
+  String? location;
+  int? slotLength;
+  String? type;
+  String? locationName;
 
   PeriodDetails(
       {this.name,
-        this.slotTime,
-        this.location,
-        this.locationName,
-        this.slotLength,
-        this.type});
+      this.slotTime,
+      this.location,
+      this.locationName,
+      this.slotLength,
+      this.type});
 }

@@ -1,15 +1,11 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scp/ui/views/mentor_search/mentee_page.dart';
 import 'package:scp/ui/views/mentor_search/mentor_page.dart';
 import 'package:scp/ui/gradients.dart';
-import 'package:scp/firebase/firebaseDBHandler.dart';
 import 'package:scp/utils/routes.dart';
 import 'package:scp/utils/sizeConfig.dart';
 import 'package:scp/utils/urlLauncher.dart';
-import '../utils/models.dart';
-import 'package:scp/upload_image.dart';
 
 const platform = const MethodChannel("FAQ_ACTIVITY");
 Widget appointmentCard(BuildContext context) {
@@ -400,7 +396,7 @@ Widget acadVaultCard(BuildContext context) {
       onTap: () => Navigator.pushNamed(context, Routes.rAcadVault),
       child: Card(
         shape:
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
         elevation: 8.0,
         margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
         child: Stack(

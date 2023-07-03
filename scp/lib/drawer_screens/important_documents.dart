@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:scp/utils/sizeConfig.dart';
+import 'package:scp/utils/urlLauncher.dart';
 
 class ImpDocs extends StatefulWidget {
   @override
@@ -61,12 +61,15 @@ class _ImpDocsState extends State<ImpDocs> {
         .get()
         .then((QuerySnapshot snapshot) {
       snapshot.docs.forEach((f) {
-        Map<String, dynamic> d = f.data();
+        Map<String, dynamic> d = f.data() as Map<String, dynamic>;
+        print('Data is: ${d['link']} ${d['title']}');
         doc.add(new Padding(
           padding: const EdgeInsets.all(8.0),
           child: InkWell(
             onTap: () {
-              if (d['link'] != null) _launchURL(d['link']);
+              if (d['link'] != null) {
+                launchURL(d['link']);
+              }
             },
             child: Card(
               elevation: 5.0,
@@ -110,13 +113,5 @@ class _ImpDocsState extends State<ImpDocs> {
     });
     snapshot.docs.forEach((f) => debugPrint(snapshot.docs.length.toString()));
     return snapshot;
-  }
-
-  _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
   }
 }

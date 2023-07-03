@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class Gradients {
-  static LinearGradient appointmentCardGradient;
+  static LinearGradient? appointmentCardGradient;
 
-  static LinearGradient appointmentCardGradient2;
-  static LinearGradient faqCardGradient;
-  static LinearGradient mentorsCardGradient;
-  static LinearGradient timetableCardGradient;
-  static LinearGradient eventsCardGradient;
-  static LinearGradient acadCardGradient;
+  static LinearGradient? appointmentCardGradient2;
+  static LinearGradient? faqCardGradient;
+  static LinearGradient? mentorsCardGradient;
+  static LinearGradient? timetableCardGradient;
+  static LinearGradient? eventsCardGradient;
+  static LinearGradient? acadCardGradient;
 
   void init(BuildContext context) {
     appointmentCardGradient = LinearGradient(colors: [

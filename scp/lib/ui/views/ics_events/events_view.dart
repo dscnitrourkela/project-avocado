@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:scp/ui/views/ics_events/events_list_view.dart';
 
 class EventsPage extends StatelessWidget {
-  const EventsPage({Key key}) : super(key: key);
+  const EventsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

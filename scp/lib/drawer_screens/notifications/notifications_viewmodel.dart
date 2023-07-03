@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class NotificationsViewModel extends BaseViewModel {
   final databaseReference = FirebaseFirestore.instance;
-  List<DocumentSnapshot> notificationList;
+  List<DocumentSnapshot>? notificationList;
 
   void init() async {
     setBusy(true);
@@ -17,8 +17,9 @@ class NotificationsViewModel extends BaseViewModel {
   }
 
   launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+    var uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
       throw 'Could not launch $url';
     }

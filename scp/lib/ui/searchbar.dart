@@ -7,9 +7,9 @@ class SearchWidget extends StatefulWidget {
 
   const SearchWidget({
     key,
-    @required this.text,
-    @required this.onChanged,
-    @required this.hintText,
+    required this.text,
+    required this.onChanged,
+    required this.hintText,
   }) : super(key: key);
 
   @override
@@ -40,13 +40,13 @@ class _SearchWidgetState extends State<SearchWidget> {
           icon: Icon(Icons.search, color: style.color),
           suffixIcon: widget.text.isNotEmpty
               ? GestureDetector(
-            child: Icon(Icons.close, color: style.color),
-            onTap: () {
-              controller.clear();
-              widget.onChanged('');
-              FocusScope.of(context).requestFocus(FocusNode());
-            },
-          )
+                  child: Icon(Icons.close, color: style.color),
+                  onTap: () {
+                    controller.clear();
+                    widget.onChanged('');
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  },
+                )
               : null,
           hintText: widget.hintText,
           hintStyle: style,

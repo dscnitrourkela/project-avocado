@@ -17,7 +17,7 @@ class Userdata extends StatefulWidget {
 class UserdataState extends State<Userdata> {
   final rollController = TextEditingController();
   var usernameController = TextEditingController();
-  String rollNo = "", username = "", phoneNo = "";
+  String? rollNo = "", username = "", phoneNo = "";
   bool isEarlierLoggedIn = false;
   RegExp pattern = new RegExp(
     r'[0-9][0-9][0-9][a-zA-Z][a-zA-Z][0-9][0-9][0-9][0-9]',
@@ -62,7 +62,7 @@ class UserdataState extends State<Userdata> {
                             ),
                           ),
                           Text(
-                            phoneNo,
+                            phoneNo ?? "NA",
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.w500,
@@ -139,8 +139,8 @@ class UserdataState extends State<Userdata> {
                                   if (rollNo != "" &&
                                       rollNo != null &&
                                       rollNo != "null" &&
-                                      (rollNo.length == 9) &&
-                                      (pattern.hasMatch(rollNo))) {
+                                      (rollNo!.length == 9) &&
+                                      (pattern.hasMatch(rollNo!))) {
                                     {
                                       /* FirebaseAuth.instance
                                           .currentUser()
@@ -175,12 +175,13 @@ class UserdataState extends State<Userdata> {
                                       fontSize: 20 * textScaleFactor),
                                 ),
                                 style: ElevatedButton.styleFrom(
-                                    onPrimary: Colors.white,
+                                    foregroundColor: Colors.white,
                                     elevation: 7.0,
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(8.0)),
-                                    primary: Color.fromRGBO(25, 39, 45, 1)),
+                                    backgroundColor:
+                                        Color.fromRGBO(25, 39, 45, 1)),
                               ),
                             ),
                           ),
@@ -203,9 +204,9 @@ class UserdataState extends State<Userdata> {
   _storeUserData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.getKeys();
-    await prefs.setString('username', username);
-    await prefs.setString('roll_no', rollNo.toUpperCase());
-    await prefs.setString('phone_no', phoneNo);
+    await prefs.setString('username', username!);
+    await prefs.setString('roll_no', rollNo!.toUpperCase());
+    await prefs.setString('phone_no', phoneNo!);
     await prefs.setBool('loggedin', true);
     await prefs.setBool('show_timetable', false);
     Navigator.of(context).pushNamedAndRemoveUntil(
@@ -217,13 +218,13 @@ class UserdataState extends State<Userdata> {
     rollNo = prefs.getString('roll_no');
     if (rollNo != "" && rollNo != null && rollNo != "null") {
       isEarlierLoggedIn = true;
-      rollController.text = rollNo;
+      rollController.text = rollNo!;
     }
   }
 
   Future<String> inputData() async {
-    phoneNo = FirebaseAuth.instance.currentUser.phoneNumber;
-    return phoneNo;
+    phoneNo = FirebaseAuth.instance.currentUser!.phoneNumber;
+    return phoneNo ?? "NA";
   }
 
   Future<void> saveTokenToFirestore(String token) async {

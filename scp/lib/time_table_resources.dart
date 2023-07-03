@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class TimeTableResources {
-  static Future<bool> isAutumnSem() async {
+  static Future<bool?> isAutumnSem() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.getKeys();
     return prefs.getBool('is_autumn');
@@ -10,14 +10,15 @@ abstract class TimeTableResources {
   //static bool isAutumnSemester() => true;
   static String courseNumber = 'I';
   static void setCourseNumber() async {
-    courseNumber = await isAutumnSem() ? 'I' : 'II';
-    theory['A']['TA'] = theory['B']['TA'] = theory['C']['TB'] =
-    theory['D']['TB'] = theory['E']['TK'] = theory['F']['TK'] =
-    theory['G']['TM'] = theory['H']['TM'] = 'Physics-$courseNumber';
+    courseNumber = (await isAutumnSem())! ? 'I' : 'II';
+    theory['A']!['TA'] = theory['B']!['TA'] = theory['C']!['TB'] =
+        theory['D']!['TB'] = theory['E']!['TK'] = theory['F']!['TK'] =
+            theory['G']!['TM'] = theory['H']!['TM'] = 'Physics-$courseNumber';
 
-    theory['A']['TC'] = theory['B']['TC'] = theory['C']['TD'] =
-    theory['D']['TD'] = theory['E']['TJ'] = theory['F']['TJ'] =
-    theory['G']['TL'] = theory['H']['TL'] = 'Mathematics-$courseNumber';
+    theory['A']!['TC'] = theory['B']!['TC'] = theory['C']!['TD'] =
+        theory['D']!['TD'] = theory['E']!['TJ'] = theory['F']!['TJ'] =
+            theory['G']!['TL'] =
+                theory['H']!['TL'] = 'Mathematics-$courseNumber';
   }
 
   static final sequence = {
@@ -206,55 +207,55 @@ abstract class TimeTableResources {
     'AR1': {
       'name': 'Architectural Graphics-I',
       'location':
-      'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
+          'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
       'locationName': 'TIIR'
     },
     'AR2': {
       'name': 'Basic Design',
       'location':
-      'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
+          'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
       'locationName': 'TIIR'
     },
     'AR3': {
       'name': 'Visual Arts-I',
       'location':
-      'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
+          'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
       'locationName': 'TIIR'
     },
     'AR4': {
       'name': 'Non Graphic Computer Application',
       'location':
-      'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
+          'https://www.google.com/maps/search/?api=1&query=22.2523901,84.9010777',
       'locationName': 'TIIR'
     },
     'PL': {
       'name': 'Physics Laboratory',
       'location':
-      'https://www.google.com/maps/search/?api=1&query=22.2530845,84.9015978',
+          'https://www.google.com/maps/search/?api=1&query=22.2530845,84.9015978',
       'locationName': 'Main Building'
     },
     'BP': {
       'name': 'Basic Programming',
       'location':
-      'https://www.google.com/maps/search/?api=1&query=22.2513332,84.9048918',
+          'https://www.google.com/maps/search/?api=1&query=22.2513332,84.9048918',
       'locationName': 'LA1'
     },
     'WP': {
       'name': 'Workshop Practices',
       'location':
-      'https://www.google.com/maps/search/?api=1&query=22.2526002,84.9029979',
+          'https://www.google.com/maps/search/?api=1&query=22.2526002,84.9029979',
       'locationName': 'Central Workshop'
     },
     'CL': {
       'name': 'Chemistry Laboratory',
       'location':
-      'https://www.google.com/maps/search/?api=1&query=22.2530523,84.9012673',
+          'https://www.google.com/maps/search/?api=1&query=22.2530523,84.9012673',
       'locationName': 'Main Building'
     },
     'ED': {
       'name': 'Engineering Drawing',
       'location':
-      'https://www.google.com/maps/search/?api=1&query=22.2513332,84.9048918',
+          'https://www.google.com/maps/search/?api=1&query=22.2513332,84.9048918',
       'locationName': 'LA1'
     },
   };
@@ -285,18 +286,18 @@ abstract class TimeTableResources {
 }
 
 class PeriodDetails {
-  String name;
-  String slotTime;
-  String location;
-  int slotLength;
-  String type;
-  String locationName;
+  String? name;
+  String? slotTime;
+  String? location;
+  int? slotLength;
+  String? type;
+  String? locationName;
 
   PeriodDetails(
       {this.name,
-        this.slotTime,
-        this.location,
-        this.locationName,
-        this.slotLength,
-        this.type});
+      this.slotTime,
+      this.location,
+      this.locationName,
+      this.slotLength,
+      this.type});
 }

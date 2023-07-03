@@ -14,8 +14,8 @@ class TimeTable extends StatefulWidget {
 }
 
 class TimeTableState extends State<TimeTable> {
-  String theorySection = 'E';
-  String practicalSection = 'P6';
+  String? theorySection = 'E';
+  String? practicalSection = 'P6';
   String sectionSequence = 'pt';
   bool allowedSection = true;
 
@@ -25,7 +25,7 @@ class TimeTableState extends State<TimeTable> {
   final Color secondaryColor = Color.fromARGB(255, 158, 218, 224);
   final Color lunchColor = Color.fromARGB(255, 238, 71, 89);
   final double unitHeight = 80.0;
-  double screenWidth, screenHeight;
+  double? screenWidth, screenHeight;
 
   Future _fetchSectionData(BuildContext context) async {
     TimeTableResources.setCourseNumber();
@@ -33,20 +33,20 @@ class TimeTableState extends State<TimeTable> {
     prefs.getKeys();
     theorySection = prefs.getString('theory_section');
     practicalSection = prefs.getString('prac_section');
-    bool isAutumnSemester = await TimeTableResources.isAutumnSem();
-    if ((theorySection.compareTo('Ar.') == 0) ||
-        (theorySection.compareTo('A') == 0) ||
-        (theorySection.compareTo('D') == 0) ||
-        (theorySection.compareTo('C') == 0) ||
-        (theorySection.compareTo('B') == 0)) {
-      sectionSequence = isAutumnSemester ? 'tp' : 'pt';
+    bool? isAutumnSemester = await TimeTableResources.isAutumnSem();
+    if ((theorySection!.compareTo('Ar.') == 0) ||
+        (theorySection!.compareTo('A') == 0) ||
+        (theorySection!.compareTo('D') == 0) ||
+        (theorySection!.compareTo('C') == 0) ||
+        (theorySection!.compareTo('B') == 0)) {
+      sectionSequence = isAutumnSemester! ? 'tp' : 'pt';
     } else {
-      sectionSequence = isAutumnSemester ? 'pt' : 'tp';
+      sectionSequence = isAutumnSemester! ? 'pt' : 'tp';
     }
-    if (!isAutumnSemester && theorySection.compareTo('Ar.') != 0) {
+    if (!isAutumnSemester && theorySection!.compareTo('Ar.') != 0) {
       theorySection = TimeTableResources.subsituteTheorySection[theorySection];
       practicalSection =
-      TimeTableResources.substitutePracticalSection[practicalSection];
+          TimeTableResources.substitutePracticalSection[practicalSection];
     }
   }
 
@@ -84,8 +84,18 @@ class TimeTableState extends State<TimeTable> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Icon(Icons.sync_outlined, color: Color(0xff313131), size: 21,),
-                          Text("Reset Section", style: TextStyle(color: Color(0xff313131), fontSize: 16.5, fontWeight: FontWeight.w500),),
+                          Icon(
+                            Icons.sync_outlined,
+                            color: Color(0xff313131),
+                            size: 21,
+                          ),
+                          Text(
+                            "Reset Section",
+                            style: TextStyle(
+                                color: Color(0xff313131),
+                                fontSize: 16.5,
+                                fontWeight: FontWeight.w500),
+                          ),
                         ],
                       ),
                     )
@@ -110,7 +120,7 @@ class TimeTableState extends State<TimeTable> {
               appBar: PreferredSize(
                 preferredSize: Size.fromHeight(80.0),
                 child: AppBar(
-                  brightness: Brightness.light,
+                  // brightness: Brightness.light,
                   automaticallyImplyLeading: false,
                   backgroundColor: Colors.white,
                   elevation: 0.0,
@@ -124,29 +134,30 @@ class TimeTableState extends State<TimeTable> {
                     unselectedLabelStyle: TextStyle(
                         color: primaryColor.withAlpha(100), fontSize: 20),
                     labelPadding:
-                    EdgeInsets.symmetric(vertical: 16.0, horizontal: 48.0),
+                        EdgeInsets.symmetric(vertical: 16.0, horizontal: 48.0),
                     indicatorColor: Colors.transparent,
-                    tabs: TimeTableResources.sequence[sectionSequence].keys
+                    tabs: TimeTableResources.sequence[sectionSequence]!.keys
                         .map(
                           (day) => Tab(
-                        child: Text(
-                          day,
-                          style: TextStyle(
-                            color: primaryColor,
-                            fontWeight: FontWeight.w700,
+                            child: Text(
+                              day,
+                              style: TextStyle(
+                                color: primaryColor,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    )
+                        )
                         .toList(),
                     isScrollable: true,
                   ),
                 ),
               ),
               body: TabBarView(
-                  children: TimeTableResources.sequence[sectionSequence].entries
+                  children: TimeTableResources
+                      .sequence[sectionSequence]!.entries
                       .map((entry) => Container(
-                      child: buildList(context, entry.key, entry.value)))
+                          child: buildList(context, entry.key, entry.value)))
                       .toList()),
             ),
           ),
@@ -155,7 +166,7 @@ class TimeTableState extends State<TimeTable> {
     );
   }
 
-  Widget buildMarker(double length, Color stripColor) {
+  Widget buildMarker(double? length, Color stripColor) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
@@ -171,8 +182,9 @@ class TimeTableState extends State<TimeTable> {
   }
 
   void launchMap(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+    Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
     } else {
       debugPrint("Could not launch $url");
       throw 'Could not launch Maps';
@@ -186,12 +198,12 @@ class TimeTableState extends State<TimeTable> {
       margin: EdgeInsets.all(8.0),
       child: Stack(
         children: <Widget>[
-          buildMarker(unitHeight * periodDetail.slotLength, stripColor),
+          buildMarker(unitHeight * periodDetail.slotLength!, stripColor),
           Align(
             alignment: Alignment.centerRight,
             child: Container(
-              width: screenWidth - 32.0,
-              height: unitHeight * periodDetail.slotLength,
+              width: screenWidth! - 32.0,
+              height: unitHeight * periodDetail.slotLength!,
               child: Card(
                 color: stripColor,
                 margin: EdgeInsets.zero,
@@ -206,12 +218,12 @@ class TimeTableState extends State<TimeTable> {
                         children: [
                           Container(
                             height: 23,
-                            width: screenWidth*0.62,
+                            width: screenWidth! * 0.62,
                             child: SingleChildScrollView(
                               physics: BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
                               child: Text(
-                                periodDetail.name,
+                                periodDetail.name!,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   color: Colors.white,
@@ -227,9 +239,9 @@ class TimeTableState extends State<TimeTable> {
                           ),
                           Container(
                             height: 19.8,
-                            width: screenWidth*0.65,
+                            width: screenWidth! * 0.65,
                             child: AutoSizeText(
-                              periodDetail.slotTime,
+                              periodDetail.slotTime!,
                               style: TextStyle(
                                 color: Colors.white.withAlpha(200),
                                 fontSize: 16.0,
@@ -245,7 +257,7 @@ class TimeTableState extends State<TimeTable> {
                       alignment: Alignment.centerRight,
                       child: InkWell(
                         onTap: () {
-                          launchMap(periodDetail.location);
+                          launchMap(periodDetail.location!);
                         },
                         child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -256,7 +268,7 @@ class TimeTableState extends State<TimeTable> {
                                 size: 24.0,
                               ),
                               Text(
-                                periodDetail.locationName,
+                                periodDetail.locationName!,
                                 style: TextStyle(
                                   color: Colors.white.withAlpha(200),
                                   fontSize: 24.0,
@@ -282,12 +294,12 @@ class TimeTableState extends State<TimeTable> {
       margin: EdgeInsets.all(8.0),
       child: Stack(
         children: <Widget>[
-          buildMarker(unitHeight * periodDetail.slotLength, stripColor),
+          buildMarker(unitHeight * periodDetail.slotLength!, stripColor),
           Align(
             alignment: Alignment.centerRight,
             child: Container(
-              width: screenWidth - 32.0,
-              height: unitHeight * periodDetail.slotLength,
+              width: screenWidth! - 32.0,
+              height: unitHeight * periodDetail.slotLength!,
               child: Card(
                 color: stripColor,
                 margin: EdgeInsets.zero,
@@ -298,24 +310,24 @@ class TimeTableState extends State<TimeTable> {
                       alignment: Alignment.topLeft,
                       child: RichText(
                           text: TextSpan(
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: periodDetail.name + '\n',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              TextSpan(
-                                text: periodDetail.slotTime,
-                                style: TextStyle(
-                                  color: Colors.white.withAlpha(200),
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          )),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: periodDetail.name! + '\n',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          TextSpan(
+                            text: periodDetail.slotTime,
+                            style: TextStyle(
+                              color: Colors.white.withAlpha(200),
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      )),
                     ),
                   ]),
                 ),
@@ -334,12 +346,12 @@ class TimeTableState extends State<TimeTable> {
       margin: EdgeInsets.all(8.0),
       child: Stack(
         children: <Widget>[
-          buildMarker(unitHeight * periodDetail.slotLength, stripColor),
+          buildMarker(unitHeight * periodDetail.slotLength!, stripColor),
           Align(
             alignment: Alignment.centerRight,
             child: Container(
-              width: screenWidth - 32.0,
-              height: unitHeight * periodDetail.slotLength,
+              width: screenWidth! - 32.0,
+              height: unitHeight * periodDetail.slotLength!,
               child: Card(
                 color: stripColor,
                 margin: EdgeInsets.zero,
@@ -350,35 +362,35 @@ class TimeTableState extends State<TimeTable> {
                       alignment: Alignment.topLeft,
                       child: RichText(
                           text: TextSpan(
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: periodDetail.name + '\n',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              TextSpan(
-                                text: periodDetail.slotTime,
-                                style: TextStyle(
-                                  color: Colors.white.withAlpha(200),
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          )),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: periodDetail.name! + '\n',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          TextSpan(
+                            text: periodDetail.slotTime,
+                            style: TextStyle(
+                              color: Colors.white.withAlpha(200),
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      )),
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: SizedBox(
-                        width: screenWidth*0.4,
+                        width: screenWidth! * 0.4,
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(6.0)),
-                              primary: Color(0xff1f538d),
+                              backgroundColor: Color(0xff1f538d),
                             ),
                             child: Padding(
                               padding: EdgeInsets.symmetric(vertical: 8.5),
@@ -386,7 +398,10 @@ class TimeTableState extends State<TimeTable> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.navigation_outlined, color: Colors.white,),
+                                  Icon(
+                                    Icons.navigation_outlined,
+                                    color: Colors.white,
+                                  ),
                                   SizedBox(
                                     width: 3,
                                   ),
@@ -402,9 +417,8 @@ class TimeTableState extends State<TimeTable> {
                               ),
                             ),
                             onPressed: () {
-                              launchMap(periodDetail.location);
-                            }
-                        ),
+                              launchMap(periodDetail.location!);
+                            }),
                       ),
                     ),
                   ]),
@@ -424,12 +438,12 @@ class TimeTableState extends State<TimeTable> {
       margin: EdgeInsets.all(8.0),
       child: Stack(
         children: <Widget>[
-          buildMarker(unitHeight * periodDetail.slotLength, stripColor),
+          buildMarker(unitHeight * periodDetail.slotLength!, stripColor),
           Align(
             alignment: Alignment.centerRight,
             child: Container(
-              width: screenWidth - 32.0,
-              height: unitHeight * periodDetail.slotLength,
+              width: screenWidth! - 32.0,
+              height: unitHeight * periodDetail.slotLength!,
               child: Card(
                 color: stripColor,
                 margin: EdgeInsets.zero,
@@ -440,24 +454,24 @@ class TimeTableState extends State<TimeTable> {
                       alignment: Alignment.topLeft,
                       child: RichText(
                           text: TextSpan(
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: periodDetail.name + '\n',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              TextSpan(
-                                text: periodDetail.slotTime,
-                                style: TextStyle(
-                                  color: Colors.white.withAlpha(200),
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          )),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: periodDetail.name! + '\n',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          TextSpan(
+                            text: periodDetail.slotTime,
+                            style: TextStyle(
+                              color: Colors.white.withAlpha(200),
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      )),
                     ),
                   ]),
                 ),
@@ -470,7 +484,7 @@ class TimeTableState extends State<TimeTable> {
   }
 
   ListView buildList(BuildContext context, String day, List<String> codes) {
-    List<PeriodDetails> dayList = new List<PeriodDetails>();
+    List<PeriodDetails?> dayList = [];
     dayList = getDayList(day, codes);
 
     debugPrint("Length ${dayList.length}");
@@ -478,19 +492,19 @@ class TimeTableState extends State<TimeTable> {
     return ListView.builder(
         itemCount: dayList.length,
         itemBuilder: (BuildContext context, int index) {
-          if (dayList[index].type == 'theory') {
-            return buildTheoryCard(dayList[index]);
-          } else if (dayList[index].type == 'practical') {
-            return buildPracticalCard(dayList[index]);
-          } else if (dayList[index].type == 'lunch') {
-            return buildLunchCard(dayList[index]);
+          if (dayList[index]!.type == 'theory') {
+            return buildTheoryCard(dayList[index]!);
+          } else if (dayList[index]!.type == 'practical') {
+            return buildPracticalCard(dayList[index]!);
+          } else if (dayList[index]!.type == 'lunch') {
+            return buildLunchCard(dayList[index]!);
           } else {
-            return buildFreeCard(dayList[index]);
+            return buildFreeCard(dayList[index]!);
           }
         });
   }
 
-  List<PeriodDetails> getDayList(String day, List<String> codes) {
+  List<PeriodDetails?> getDayList(String day, List<String> codes) {
     List<bool> slotFilled = [
       false,
       false,
@@ -502,40 +516,40 @@ class TimeTableState extends State<TimeTable> {
       false,
       false
     ];
-    List<PeriodDetails> dayList = new List<PeriodDetails>(9);
+    List<PeriodDetails?> dayList = List.generate(9, (index) => null);
 
     int j;
     for (int i = 0; i < codes.length; i++) {
       j = i % 9;
       if (slotFilled[j] == true) {
         continue;
-      } else if (TimeTableResources.theory[theorySection]
+      } else if (TimeTableResources.theory[theorySection]!
           .containsKey(codes[i])) {
         dayList[j] = PeriodDetails(
-          name: TimeTableResources.theory[theorySection][codes[i]],
+          name: TimeTableResources.theory[theorySection]![codes[i]],
           slotTime: getSlotTime(j, j),
           slotLength: 1,
           type: 'theory',
           location:
-          'https://www.google.com/maps/search/?api=1&query=22.25082839,84.90534609',
+              'https://www.google.com/maps/search/?api=1&query=22.25082839,84.90534609',
           locationName: 'LA-II',
         );
         slotFilled[j] = true;
-      } else if (TimeTableResources.practical[practicalSection]
+      } else if (TimeTableResources.practical[practicalSection]!
           .containsKey(codes[i])) {
         dayList[j] = PeriodDetails(
-          name: TimeTableResources.practicalDetails[
-          TimeTableResources.practical[practicalSection][codes[i]]]['name'],
+          name: TimeTableResources.practicalDetails[TimeTableResources
+              .practical[practicalSection]![codes[i]]]!['name'],
           slotTime: getSlotTime(j, j + 2),
           location: TimeTableResources.practicalDetails[TimeTableResources
-              .practical[practicalSection][codes[i]]]['location'],
+              .practical[practicalSection]![codes[i]]]!['location'],
           locationName: TimeTableResources.practicalDetails[TimeTableResources
-              .practical[practicalSection][codes[i]]]['locationName'],
+              .practical[practicalSection]![codes[i]]]!['locationName'],
           slotLength: 3,
           type: 'practical',
         );
         debugPrint(
-            'location ${TimeTableResources.practicalDetails[TimeTableResources.practical[practicalSection][codes[i]]]['location']}');
+            'location ${TimeTableResources.practicalDetails[TimeTableResources.practical[practicalSection]![codes[i]]]!['location']}');
         slotFilled[j] = true;
         slotFilled[j + 1] = true;
         slotFilled[j + 2] = true;
@@ -543,7 +557,7 @@ class TimeTableState extends State<TimeTable> {
       }
     }
 
-    List<PeriodDetails> dayList2 = new List<PeriodDetails>();
+    List<PeriodDetails?> dayList2 = [];
     dayList2.addAll(dayList);
     dayList2.insert(
       4,
@@ -597,8 +611,8 @@ class TimeTableState extends State<TimeTable> {
   String getSlotTime(int startSlotIndex, int endSlotIndex) {
     debugPrint("startSlotIndex" + startSlotIndex.toString());
     debugPrint("endSlotIndex" + endSlotIndex.toString());
-    return TimeTableResources.slotTime[startSlotIndex]['start'] +
+    return TimeTableResources.slotTime[startSlotIndex]['start']! +
         '-' +
-        TimeTableResources.slotTime[endSlotIndex]['end'];
+        TimeTableResources.slotTime[endSlotIndex]['end']!;
   }
 }

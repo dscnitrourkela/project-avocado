@@ -62,13 +62,14 @@ We thank the graduates and senior students for their efforts in making this init
             ),
           ),
           GestureDetector(
-            onTap: (){
+            onTap: () {
               launchURL("https://forms.gle/cjtmYB3xWUEKyBK26");
             },
             child: Container(
               clipBehavior: Clip.antiAliasWithSaveLayer,
               height: width * 0.15,
-              margin: EdgeInsets.symmetric(horizontal: width*0.13, vertical: width*0.12),
+              margin: EdgeInsets.symmetric(
+                  horizontal: width * 0.13, vertical: width * 0.12),
               decoration: BoxDecoration(
                 gradient: Gradients.appointmentCardGradient,
                 borderRadius: BorderRadius.circular(width * 0.075),

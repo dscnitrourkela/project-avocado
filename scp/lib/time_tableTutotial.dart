@@ -18,7 +18,7 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
   final Color secondaryColor = Color.fromARGB(255, 158, 218, 224);
   final Color lunchColor = Color.fromARGB(255, 238, 71, 89);
   final double unitHeight = 80.0;
-  double screenWidth, screenHeight;
+  double? screenWidth, screenHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(80.0),
             child: AppBar(
-              brightness: Brightness.light,
+              // brightness: Brightness.light,
               automaticallyImplyLeading: false,
               backgroundColor: Colors.white,
               elevation: 0.0,
@@ -56,7 +56,7 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
                 labelPadding:
                     EdgeInsets.symmetric(vertical: 16.0, horizontal: 48.0),
                 indicatorColor: Colors.transparent,
-                tabs: TimeTableResources.sequence[sectionSequence].keys
+                tabs: TimeTableResources.sequence[sectionSequence]!.keys
                     .map(
                       (day) => Tab(
                         child: Text(
@@ -74,7 +74,7 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
             ),
           ),
           body: TabBarView(
-              children: TimeTableResources.sequence[sectionSequence].entries
+              children: TimeTableResources.sequence[sectionSequence]!.entries
                   .map((entry) => Container(
                       child: buildList(context, entry.key, entry.value)))
                   .toList()),
@@ -99,8 +99,9 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
   }
 
   void launchMap(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+    Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
     } else {
       debugPrint("Could not launch $url");
       throw 'Could not launch Maps';
@@ -114,12 +115,12 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
       margin: EdgeInsets.all(8.0),
       child: Stack(
         children: <Widget>[
-          buildMarker(unitHeight * periodDetail.slotLength, stripColor),
+          buildMarker(unitHeight * periodDetail.slotLength!, stripColor),
           Align(
             alignment: Alignment.centerRight,
             child: Container(
-              width: screenWidth - 32.0,
-              height: unitHeight * periodDetail.slotLength,
+              width: screenWidth! - 32.0,
+              height: unitHeight * periodDetail.slotLength!,
               child: Card(
                 color: stripColor,
                 margin: EdgeInsets.zero,
@@ -132,14 +133,14 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
                           text: TextSpan(
                         children: <TextSpan>[
                           TextSpan(
-                            text: periodDetail.name + '\n',
+                            text: periodDetail.name! + '\n',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.w700),
                           ),
                           TextSpan(
-                            text: periodDetail.slotTime + '\n',
+                            text: periodDetail.slotTime! + '\n',
                             style: TextStyle(
                               color: Colors.white.withAlpha(200),
                               fontSize: 16.0,
@@ -153,7 +154,7 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
                       alignment: Alignment.centerRight,
                       child: InkWell(
                         onTap: () {
-                          launchMap(periodDetail.location);
+                          launchMap(periodDetail.location!);
                         },
                         child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -164,7 +165,7 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
                                 size: 24.0,
                               ),
                               Text(
-                                periodDetail.locationName,
+                                periodDetail.locationName!,
                                 style: TextStyle(
                                   color: Colors.white.withAlpha(200),
                                   fontSize: 24.0,
@@ -184,7 +185,7 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
   }
 
   ListView buildList(BuildContext context, String day, List<String> codes) {
-    List<PeriodDetails> dayList = new List<PeriodDetails>();
+    List<PeriodDetails?> dayList = [];
     dayList = getDayList(day, codes);
 
     debugPrint("Length ${dayList.length}");
@@ -192,11 +193,11 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
     return ListView.builder(
         itemCount: dayList.length,
         itemBuilder: (BuildContext context, int index) {
-          return buildTheoryCard(dayList[index]);
+          return buildTheoryCard(dayList[index]!);
         });
   }
 
-  List<PeriodDetails> getDayList(String day, List<String> codes) {
+  List<PeriodDetails?> getDayList(String day, List<String> codes) {
     List<bool> slotFilled = [
       false,
       false,
@@ -204,17 +205,17 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
       false,
       false,
     ];
-    List<PeriodDetails> dayList = new List<PeriodDetails>(9);
+    List<PeriodDetails?> dayList = List.generate(9, (index) => null);
 
     int j;
     for (int i = 0; i < codes.length; i++) {
       j = i % 9;
       if (slotFilled[j] == true) {
         continue;
-      } else if (TimeTableResources.theory[theorySection]
+      } else if (TimeTableResources.theory[theorySection]!
           .containsKey(codes[i])) {
         dayList[j] = PeriodDetails(
-          name: TimeTableResources.theory[theorySection][codes[i]],
+          name: TimeTableResources.theory[theorySection]![codes[i]],
           slotTime: getSlotTime(j, j),
           slotLength: 1,
           type: 'theory',
@@ -226,7 +227,7 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
       }
     }
 
-    List<PeriodDetails> dayList2 = new List<PeriodDetails>();
+    List<PeriodDetails?> dayList2 = [];
     dayList2.addAll(dayList);
     for (int i = 0; i < dayList2.length; i++) {
       if (dayList2[i] == null) {
@@ -239,8 +240,8 @@ class TutorialTimeTableState extends State<TutorialTimeTable> {
   }
 
   String getSlotTime(int startSlotIndex, int endSlotIndex) {
-    return TimeTableResources.slotTime[startSlotIndex]['start'] +
+    return TimeTableResources.slotTime[startSlotIndex]['start']! +
         '-' +
-        TimeTableResources.slotTime[endSlotIndex]['end'];
+        TimeTableResources.slotTime[endSlotIndex]['end']!;
   }
 }

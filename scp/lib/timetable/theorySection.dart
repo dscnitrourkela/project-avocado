@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:scp/time_table.dart';
 import 'package:scp/timetable/pracSection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:scp/attendance_tracker.dart';
 
 const List<String> sectionArray = [
   "Ar.",
@@ -21,9 +20,9 @@ const SCALE_FRACTION = 0.7;
 const VIEWPORT_FRACTION = 0.4;
 double page = 0.0;
 int currentPage = 0;
-PageController pageController;
+PageController? pageController;
 double pagerHeight = 140.0;
-int cardNumber;
+int? cardNumber;
 
 class TheorySection extends StatefulWidget {
   TheorySection(int number) {
@@ -43,9 +42,9 @@ class _TheorySectionState extends State<TheorySection> {
 
   Future fetchSection() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool showTimeTable = prefs.getBool('show_timetable');
+    bool showTimeTable = prefs.getBool('show_timetable')!;
     if (showTimeTable) {
-      String theorySection = prefs.getString('theorySection');
+      String theorySection = prefs.getString('theorySection')!;
       if (cardNumber == 0) {
         Navigator.of(context).pop();
         Navigator.push(
@@ -126,8 +125,8 @@ class _TheorySectionState extends State<TheorySection> {
                           new MaterialPageRoute(
                               builder: (ctxt) => PracticalSection(
                                   sectionArray[
-                                      (pageController.page.round().toInt())],
-                                  cardNumber)),
+                                      (pageController!.page!.round().toInt())],
+                                  cardNumber!)),
                         )
                       },
                       child: Icon(Icons.arrow_forward),
@@ -176,7 +175,7 @@ Widget _buildCarousel(_TheorySectionState timetableState, BuildContext context,
           onNotification: (ScrollNotification notification) {
             if (notification is ScrollUpdateNotification) {
               timetableState.setState(() {
-                page = pageController.page;
+                page = pageController!.page!;
               });
             }
             return false;

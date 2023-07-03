@@ -13,8 +13,8 @@ class TimetableCardSplit extends StatefulWidget {
 }
 
 class _TimetableCardSplitState extends State<TimetableCardSplit> {
-  bool isTapped;
-  double width1, width2;
+  bool? isTapped;
+  double? width1, width2;
 
   @override
   void initState() {
@@ -26,7 +26,8 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
 
   @override
   Widget build(BuildContext context) {
-    return timetableCard(widget.cxt, widget.heightFactor, widget.textSc, width1, "Regular Classes", 0);
+    return timetableCard(widget.cxt, widget.heightFactor, widget.textSc,
+        width1!, "Regular Classes", 0);
   }
 
   Widget timetableCard(BuildContext context, double heightFactor,
@@ -65,7 +66,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                           Column(
                             children: <Widget>[
                               AnimatedOpacity(
-                                opacity: isTapped ? 0 : 1,
+                                opacity: isTapped! ? 0 : 1,
                                 duration: Duration(milliseconds: 100),
                                 child: Padding(
                                   padding: const EdgeInsets.only(top: 20.0),
@@ -108,7 +109,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                                 ),
                               ),
                               AnimatedOpacity(
-                                opacity: isTapped ? 0 : 1,
+                                opacity: isTapped! ? 0 : 1,
                                 duration: Duration(milliseconds: 100),
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 14.0),
@@ -144,7 +145,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                             ],
                           ),
                           AnimatedOpacity(
-                            opacity: !isTapped ? 0 : 1,
+                            opacity: !isTapped! ? 0 : 1,
                             duration: Duration(milliseconds: 100),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -175,7 +176,7 @@ class _TimetableCardSplitState extends State<TimetableCardSplit> {
                 top: 10.0,
                 left: MediaQuery.of(context).size.width * 0.575,
                 child: AnimatedOpacity(
-                  opacity: isTapped ? 0 : 1,
+                  opacity: isTapped! ? 0 : 1,
                   duration: Duration(milliseconds: 100),
                   child: Image.asset(
                     'assets/scp_timetable.png',

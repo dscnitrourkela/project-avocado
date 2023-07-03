@@ -85,14 +85,14 @@ class DevInfo extends StatelessWidget {
                     context, "Ankesh Anku", "https://github.com/ankank30"),
                 contactCard(
                     context, "Astha Nayak", "https://github.com/nayakastha"),
-                contactCard(
-                    context, "Asutosh Ranjan", "https://github.com/asutoshranjan"),
+                contactCard(context, "Asutosh Ranjan",
+                    "https://github.com/asutoshranjan"),
                 contactCard(
                     context, "Chinmay Kabi", "https://github.com/Chinmay-KB"),
                 contactCard(context, "Manikandan L.",
                     "https://github.com/Manikandan9206"),
-                contactCard(context, "Manjeet Pani",
-                    "https://github.com/HustleAura"),
+                contactCard(
+                    context, "Manjeet Pani", "https://github.com/HustleAura"),
                 contactCard(context, "Patibanda Sriram ",
                     "https://github.com/SriramPatibanda"),
                 contactCard(
@@ -154,32 +154,35 @@ class DevInfo extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                if(name != "Reuben Abraham")Stack(
-                  alignment: AlignmentDirectional.center,
-                  children: [
-                    Container(
-                      height: SizeConfig.screenWidth*0.155,
-                      width: SizeConfig.screenWidth*0.155,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(SizeConfig.screenWidth*0.0775),
-                        color: Color.fromRGBO(0, 213, 154, 1.0),
+                if (name != "Reuben Abraham")
+                  Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      Container(
+                        height: SizeConfig.screenWidth * 0.155,
+                        width: SizeConfig.screenWidth * 0.155,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                              SizeConfig.screenWidth * 0.0775),
+                          color: Color.fromRGBO(0, 213, 154, 1.0),
+                        ),
                       ),
-                    ),
-                    Container(
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      height: SizeConfig.screenWidth*0.14,
-                      width: SizeConfig.screenWidth*0.14,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(SizeConfig.screenWidth*0.07),
-                        color: Colors.white,
+                      Container(
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        height: SizeConfig.screenWidth * 0.14,
+                        width: SizeConfig.screenWidth * 0.14,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                              SizeConfig.screenWidth * 0.07),
+                          color: Colors.white,
+                        ),
+                        child: Image.network(
+                          contact + ".png",
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      child: Image.network(
-                        contact+".png",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
                 Center(
                   child: Text(
                     name,
@@ -208,8 +211,10 @@ class DevInfo extends StatelessWidget {
   }
 
   _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+    Uri uri = Uri.parse(url);
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
     } else {
       throw 'Could not launch $url';
     }

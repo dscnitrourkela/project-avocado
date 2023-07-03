@@ -9,7 +9,7 @@ const SCALE_FRACTION = 0.7;
 const VIEWPORT_FRACTION = 0.4;
 double page = 0.0;
 int currentPage = 0;
-PageController pageController;
+PageController? pageController;
 double pagerHeight = 140.0;
 
 class TutorialSection extends StatefulWidget {
@@ -132,7 +132,7 @@ Widget _buildCarousel(_TutorialSectionState timetableState,
           onNotification: (ScrollNotification notification) {
             if (notification is ScrollUpdateNotification) {
               timetableState.setState(() {
-                page = pageController.page;
+                page = pageController!.page!;
               });
             }
             return false;

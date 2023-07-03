@@ -29,7 +29,7 @@ class _LoginState extends State<Login> {
   }
 
   String countryCode = "91";
-  String phoneNumber;
+  String? phoneNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -183,11 +183,11 @@ class _LoginState extends State<Login> {
               height: SizeConfig.screenWidth * 0.094,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    onPrimary: Colors.white,
+                    foregroundColor: Colors.white,
                     elevation: 7.0,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0)),
-                    primary: Color.fromRGBO(25, 39, 45, 1)),
+                    backgroundColor: Color.fromRGBO(25, 39, 45, 1)),
                 onPressed: () {
                   String finalPhoneNo = "+" +
                       countryCodeController.text +

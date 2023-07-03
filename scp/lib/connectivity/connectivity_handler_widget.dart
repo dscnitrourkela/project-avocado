@@ -9,16 +9,16 @@ import './connectivity_service.dart';
 class ConnectivityHandlerWidget extends StatefulWidget {
   final child;
 
-  const ConnectivityHandlerWidget({Key key, this.child}) : super(key: key);
+  const ConnectivityHandlerWidget({Key? key, this.child}) : super(key: key);
   @override
   _ConnectivityHandlerWidgetState createState() =>
       _ConnectivityHandlerWidgetState();
 }
 
 class _ConnectivityHandlerWidgetState extends State<ConnectivityHandlerWidget> {
-  ConnectionStatus status;
-  StreamSubscription subscription;
-  BuildContext ctx;
+  ConnectionStatus? status;
+  StreamSubscription? subscription;
+  BuildContext? ctx;
 
   // This variable is just use to handle the case when the user just opens the app and is already having an internet conncetion
   // So this variable is just handling that case
@@ -45,8 +45,8 @@ class _ConnectivityHandlerWidgetState extends State<ConnectivityHandlerWidget> {
   }
 
   _showSnackBar(String data) {
-    ScaffoldMessenger.of(ctx).removeCurrentSnackBar();
-    ScaffoldMessenger.of(ctx).showSnackBar(
+    ScaffoldMessenger.of(ctx!).removeCurrentSnackBar();
+    ScaffoldMessenger.of(ctx!).showSnackBar(
       SnackBar(
         content: Text(
           data,
@@ -71,6 +71,6 @@ class _ConnectivityHandlerWidgetState extends State<ConnectivityHandlerWidget> {
   @override
   void dispose() {
     super.dispose();
-    subscription.cancel();
+    subscription!.cancel();
   }
 }

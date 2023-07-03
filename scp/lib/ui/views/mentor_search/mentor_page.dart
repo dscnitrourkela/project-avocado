@@ -94,7 +94,7 @@ class MentorDetails extends StatelessWidget {
             document: gql(readMentorDetails),
             variables: <String, dynamic>{"roll": roll}),
         builder: (QueryResult result,
-            {VoidCallback refetch, FetchMore fetchMore}) {
+            {VoidCallback? refetch, FetchMore? fetchMore}) {
           if (result.hasException) {
             return Center(
               child: Text("Please check your internet connection"),
@@ -105,9 +105,9 @@ class MentorDetails extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          if (result.data["getMenteeByRollnumber"] != null) {
+          if (result.data!["getMenteeByRollnumber"] != null) {
             var message = 'Save Contact';
-            var dataRef = result.data["getMenteeByRollnumber"]["mentor"];
+            var dataRef = result.data!["getMenteeByRollnumber"]["mentor"];
             var mentorName = dataRef["name"].toString();
             var mentorRoll = dataRef["rollNumber"].toString();
             var mentorContact = dataRef["contact"].toString();
@@ -247,8 +247,9 @@ class MentorDetails extends StatelessWidget {
                                 child: Icon(Icons.mail),
                                 onPressed: () async {
                                   var url = "mailto:" + mentorEmail;
-                                  if (await canLaunch(url)) {
-                                    await launch(url);
+                                  Uri uri = Uri.parse(url);
+                                  if (await canLaunchUrl(uri)) {
+                                    await launchUrl(uri);
                                   } else {
                                     throw 'Could not launch $url';
                                   }
@@ -265,8 +266,9 @@ class MentorDetails extends StatelessWidget {
                                 child: Icon(Icons.message),
                                 onPressed: () async {
                                   var url = "sms:" + mentorContact;
-                                  if (await canLaunch(url)) {
-                                    await launch(url);
+                                  Uri uri = Uri.parse(url);
+                                  if (await canLaunchUrl(uri)) {
+                                    await launchUrl(uri);
                                   } else {
                                     throw 'Could not launch $url';
                                   }
@@ -280,7 +282,7 @@ class MentorDetails extends StatelessWidget {
                         height: queryWidth * 0.1,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Color.fromRGBO(
+                            backgroundColor: Color.fromRGBO(
                               54,
                               66,
                               87,
@@ -318,7 +320,7 @@ class MentorDetails extends StatelessWidget {
             );
           }
 
-          if (result.data["mentee"] == null) {
+          if (result.data!["mentee"] == null) {
             return Center(
               child: Text(
                 "Please wait for your mentor to be alloted. You will be updated soon.",

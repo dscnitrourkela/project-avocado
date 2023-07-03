@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:scp/time_table.dart';
 import 'package:scp/utils/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:scp/attendance_tracker.dart';
 
 const List<String> sectionArray = [
   "Ar.",
@@ -23,11 +22,11 @@ const SCALE_FRACTION = 0.7;
 const VIEWPORT_FRACTION = 0.4;
 double page = 0.0;
 int currentPage = 0;
-PageController pageController;
-double pagerHeight = 140.0;
-String theorySection;
-String practicalSection;
-int cardNumber;
+PageController? pageController;
+double? pagerHeight = 140.0;
+String? theorySection;
+String? practicalSection;
+int? cardNumber;
 
 class PracticalSection extends StatefulWidget {
   PracticalSection(String section, int number) {
@@ -118,31 +117,31 @@ class _PracticalSectionState extends State<PracticalSection> {
                       );
 
                       practicalSection =
-                          sectionArray[(pageController.page.round().toInt())];
+                          sectionArray[(pageController!.page!.round().toInt())];
                       // Find the Scaffold in the widget tree and use
                       // it to show a SnackBar.
-                      if ((theorySection.compareTo('Ar.') == 0) &&
-                          (practicalSection.compareTo('Ar.') == 0))
+                      if ((theorySection!.compareTo('Ar.') == 0) &&
+                          (practicalSection!.compareTo('Ar.') == 0))
                         storeSectionData(context);
-                      else if (((theorySection.compareTo('A') == 0) ||
-                              (theorySection.compareTo('B') == 0) ||
-                              (theorySection.compareTo('C') == 0) ||
-                              (theorySection.compareTo('D') == 0)) &&
-                          ((practicalSection.compareTo('P1') == 0) ||
-                              (practicalSection.compareTo('P2') == 0) ||
-                              (practicalSection.compareTo('P3') == 0) ||
-                              (practicalSection.compareTo('P4') == 0) ||
-                              (practicalSection.compareTo('P5') == 0)))
+                      else if (((theorySection!.compareTo('A') == 0) ||
+                              (theorySection!.compareTo('B') == 0) ||
+                              (theorySection!.compareTo('C') == 0) ||
+                              (theorySection!.compareTo('D') == 0)) &&
+                          ((practicalSection!.compareTo('P1') == 0) ||
+                              (practicalSection!.compareTo('P2') == 0) ||
+                              (practicalSection!.compareTo('P3') == 0) ||
+                              (practicalSection!.compareTo('P4') == 0) ||
+                              (practicalSection!.compareTo('P5') == 0)))
                         storeSectionData(context);
-                      else if (((theorySection.compareTo('E') == 0) ||
-                              (theorySection.compareTo('F') == 0) ||
-                              (theorySection.compareTo('G') == 0) ||
-                              (theorySection.compareTo('H') == 0)) &&
-                          ((practicalSection.compareTo('P6') == 0) ||
-                              (practicalSection.compareTo('P7') == 0) ||
-                              (practicalSection.compareTo('P8') == 0) ||
-                              (practicalSection.compareTo('P9') == 0) ||
-                              (practicalSection.compareTo('P10') == 0)))
+                      else if (((theorySection!.compareTo('E') == 0) ||
+                              (theorySection!.compareTo('F') == 0) ||
+                              (theorySection!.compareTo('G') == 0) ||
+                              (theorySection!.compareTo('H') == 0)) &&
+                          ((practicalSection!.compareTo('P6') == 0) ||
+                              (practicalSection!.compareTo('P7') == 0) ||
+                              (practicalSection!.compareTo('P8') == 0) ||
+                              (practicalSection!.compareTo('P9') == 0) ||
+                              (practicalSection!.compareTo('P10') == 0)))
                         storeSectionData(context);
                       else
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -182,9 +181,9 @@ class _PracticalSectionState extends State<PracticalSection> {
 
 storeSectionData(BuildContext context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.setString('theory_section', theorySection);
+  await prefs.setString('theory_section', theorySection!);
   await prefs.setString(
-      'prac_section', sectionArray[(pageController.page.round().toInt())]);
+      'prac_section', sectionArray[(pageController!.page!.round().toInt())]);
   await prefs.setBool('show_timetable', true);
   Navigator.of(context).pop();
   if (cardNumber == 0) {
@@ -207,7 +206,7 @@ Widget _buildCarousel(_PracticalSectionState timetableState,
           onNotification: (ScrollNotification notification) {
             if (notification is ScrollUpdateNotification) {
               timetableState.setState(() {
-                page = pageController.page;
+                page = pageController!.page!;
               });
             }
             return false;
