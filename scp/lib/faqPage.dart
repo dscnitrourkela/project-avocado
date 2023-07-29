@@ -13,7 +13,6 @@ class FaqPage extends StatefulWidget {
 }
 
 class _FaqPageState extends State<FaqPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,15 +49,14 @@ class _FaqPageState extends State<FaqPage> {
                     ),
                   );
                 } else {
-                  return buildFaqQuestion(faqQuestion);
+                  return buildFaqQuestion(faqQuestion!);
                 }
             }
           }),
     );
   }
 
-  Widget buildFaqQuestion(List<FaqQuestion> faqQuestion) =>
-      ListView.builder(
+  Widget buildFaqQuestion(List<FaqQuestion> faqQuestion) => ListView.builder(
         physics: BouncingScrollPhysics(),
         itemCount: faqQuestion.length,
         itemBuilder: (context, index) {

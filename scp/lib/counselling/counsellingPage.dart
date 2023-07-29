@@ -14,7 +14,7 @@ class _CounsellingPageState extends State<CounsellingPage> {
 
   @override
   Widget build(BuildContext context) {
-    double width =  MediaQuery.of(context).size.width;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -28,8 +28,13 @@ class _CounsellingPageState extends State<CounsellingPage> {
         physics: BouncingScrollPhysics(),
         children: [
           Padding(
-            padding: EdgeInsets.only(top: width*0.05, right: width*0.05, left: width*0.05,),
-            child: Text("Your Dost:",
+            padding: EdgeInsets.only(
+              top: width * 0.05,
+              right: width * 0.05,
+              left: width * 0.05,
+            ),
+            child: Text(
+              "Your Dost:",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w500,
@@ -39,20 +44,29 @@ class _CounsellingPageState extends State<CounsellingPage> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: width*0.024, right: width*0.05, left: width*0.05,),
+            padding: EdgeInsets.only(
+              top: width * 0.024,
+              right: width * 0.05,
+              left: width * 0.05,
+            ),
             child: Text(
               "In collaboration with Your Dost, online counselling services were started in November 2021. Your Dost is a  platform for emotional support and counselling that promotes mental wellness . All the students of our institute can access this service by logging in using their Zimbra email address in the link provided below.",
-            style: TextStyle(
-              fontSize: 16.4,
-              fontWeight: FontWeight.w500,
-              fontFamily: 'PfDin',
-              color: Color.fromRGBO(25, 39, 45, 1),
-            ),
+              style: TextStyle(
+                fontSize: 16.4,
+                fontWeight: FontWeight.w500,
+                fontFamily: 'PfDin',
+                color: Color.fromRGBO(25, 39, 45, 1),
+              ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: width*0.05, right: width*0.05, left: width*0.05,),
-            child: Text("Offline Counselling:",
+            padding: EdgeInsets.only(
+              top: width * 0.05,
+              right: width * 0.05,
+              left: width * 0.05,
+            ),
+            child: Text(
+              "Offline Counselling:",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w500,
@@ -62,8 +76,13 @@ class _CounsellingPageState extends State<CounsellingPage> {
             ),
           ),
           Padding(
-            padding:EdgeInsets.only(top: width*0.024, right: width*0.05, left: width*0.05,),
-            child: Text("Institute recognizes the importance of one's mental health and has appointed a counsellor and a psychiatrist. Dr PK Nanda, is the psychiatrist and Dr Ekta Sanghi, the Counsellor under the Institute Counselling Services. While a Counselor helps people address the cause of their problems, a Psychia-trist prescribes and monitors medications to control symp-toms. Appointments can be made through the ICS app.",
+            padding: EdgeInsets.only(
+              top: width * 0.024,
+              right: width * 0.05,
+              left: width * 0.05,
+            ),
+            child: Text(
+              "Institute recognizes the importance of one's mental health and has appointed a counsellor and a psychiatrist. Dr PK Nanda, is the psychiatrist and Dr Ekta Sanghi, the Counsellor under the Institute Counselling Services. While a Counselor helps people address the cause of their problems, a Psychia-trist prescribes and monitors medications to control symp-toms. Appointments can be made through the ICS app.",
               style: TextStyle(
                 fontSize: 16.4,
                 fontWeight: FontWeight.w500,
@@ -79,17 +98,17 @@ class _CounsellingPageState extends State<CounsellingPage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   launchURL("https://www.yourdost.com/");
                 },
-                child: CounsellingCard("YourDOST Counselling", 'assets/ydd.png',
+                child: counsellingCard("YourDOST Counselling", 'assets/ydd.png',
                     MediaQuery.of(context).size.width),
               ),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   launchURL("https://forms.gle/e8K6ZVvoNZ683ZRp6");
                 },
-                child: CounsellingCard("OFFLINE Counselling",
+                child: counsellingCard("OFFLINE Counselling",
                     'assets/icon-white.png', MediaQuery.of(context).size.width),
               ),
             ],
@@ -103,7 +122,7 @@ class _CounsellingPageState extends State<CounsellingPage> {
   }
 }
 
-Widget CounsellingCard(
+Widget counsellingCard(
   String onTapText,
   String onTapImage,
   double width,

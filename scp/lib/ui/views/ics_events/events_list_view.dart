@@ -4,8 +4,8 @@ import 'package:scp/utils/urlLauncher.dart';
 
 class EventsListView extends StatelessWidget {
   const EventsListView({
-    Key key,
-    @required this.data,
+    Key? key,
+    required this.data,
   }) : super(key: key);
 
   final List data;

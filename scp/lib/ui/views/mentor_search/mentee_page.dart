@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:scp/utils/grapgQLconfig.dart';
-import 'package:scp/utils/urlLauncher.dart';
 
 final Color primaryColor = Color.fromARGB(255, 49, 68, 76);
 final Color secondaryColor = Color.fromARGB(255, 158, 218, 224);
@@ -86,7 +85,7 @@ class MenteeDetails extends StatelessWidget {
             document: gql(readMentees),
             variables: <String, dynamic>{"roll": rollNo}),
         builder: (QueryResult result,
-            {VoidCallback refetch, FetchMore fetchMore}) {
+            {VoidCallback? refetch, FetchMore? fetchMore}) {
           if (result.hasException) {
             return Center(
               child: Text("Please check your internet connection"),
@@ -97,7 +96,7 @@ class MenteeDetails extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          if (result.data["getMentorByRollnumber"] == null) {
+          if (result.data!["getMentorByRollnumber"] == null) {
             return Center(
               child: Text(
                 "You are not a mentor",
@@ -113,14 +112,14 @@ class MenteeDetails extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  result.data["getMentorByRollnumber"]["name"],
+                  result.data!["getMentorByRollnumber"]["name"],
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: queryWidth * 0.1,
                       fontWeight: FontWeight.bold),
                 ),
-                Text(result.data["getMentorByRollnumber"]["rollNumber"],
+                Text(result.data!["getMentorByRollnumber"]["rollNumber"],
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: queryWidth * 0.075,
@@ -154,21 +153,21 @@ class MenteeDetails extends StatelessWidget {
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
                     itemCount:
-                        result.data["getMentorByRollnumber"]["mentees"].length,
+                        result.data!["getMentorByRollnumber"]["mentees"].length,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
                         dense: true,
                         title: Text(
-                          result.data["getMentorByRollnumber"]["mentees"][index]
-                              ["name"],
+                          result.data!["getMentorByRollnumber"]["mentees"]
+                              [index]["name"],
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               fontSize: queryWidth * 0.042,
                               fontWeight: FontWeight.bold),
                         ),
                         trailing: Text(
-                          result.data["getMentorByRollnumber"]["mentees"][index]
-                              ["rollNumber"],
+                          result.data!["getMentorByRollnumber"]["mentees"]
+                              [index]["rollNumber"],
                           textAlign: TextAlign.right,
                           style: TextStyle(
                               fontSize: queryWidth * 0.038,

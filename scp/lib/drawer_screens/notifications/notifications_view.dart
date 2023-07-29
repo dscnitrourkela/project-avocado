@@ -25,20 +25,20 @@ class _Nots extends State<Nots> {
         ),
       ),
       body: ViewModelBuilder.reactive(
-        builder: (context, model, child) {
-          if (model.isBusy) {
+        builder: (context, NotificationsViewModel? model, child) {
+          if (model!.isBusy) {
             return Center(child: CircularProgressIndicator());
           } else
             return ListView.builder(
               physics: BouncingScrollPhysics(),
-              itemCount: model.notificationList.length,
+              itemCount: model.notificationList!.length,
               itemBuilder: (context, index) {
-                return InfoCard(model.notificationList[index], model);
+                return InfoCard(model.notificationList![index], model);
               },
             );
         },
         viewModelBuilder: () => NotificationsViewModel(),
-        onModelReady: (model) => model.init(),
+        onViewModelReady: (NotificationsViewModel model) => model.init(),
       ),
     );
   }

@@ -7,9 +7,9 @@ import 'package:scp/utils/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ScpAuth {
-  static String phoneNumber;
-  static String smsCode;
-  static String verificationId;
+  static String? phoneNumber;
+  static String? smsCode;
+  static String? verificationId;
 
   final BuildContext context;
 
@@ -18,7 +18,7 @@ class ScpAuth {
     phoneNumber = phoneNumber;
   }
 
-  Future<bool> smsCodeDialog(BuildContext context) {
+  Future<dynamic> smsCodeDialog(BuildContext context) {
     var queryWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final otpController = TextEditingController();
@@ -60,7 +60,7 @@ class ScpAuth {
                 actions: <Widget>[
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Color.fromRGBO(25, 39, 45, 1),
+                      backgroundColor: Color.fromRGBO(25, 39, 45, 1),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0)),
                     ),
@@ -89,7 +89,7 @@ class ScpAuth {
       verificationId = verId;
     };
 
-    final PhoneCodeSent codeSent = (String verId, [int forceCodeResend]) {
+    final PhoneCodeSent codeSent = (String verId, [int? forceCodeResend]) {
       verificationId = verId;
       smsCodeDialog(context);
     };
@@ -120,10 +120,10 @@ class ScpAuth {
     debugPrint(verificationId);
     debugPrint(smsCode);
     final AuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verificationId, smsCode: smsCode);
+        verificationId: verificationId!, smsCode: smsCode!);
 
     await firebaseInstance.signInWithCredential(credential).then((user) {
-      debugPrint(user.user.displayName);
+      debugPrint(user.user!.displayName);
       _storeUserData(context, user);
     }).catchError((error) {
       debugPrint(error);
@@ -143,7 +143,7 @@ class ScpAuth {
   static _storeUserData(
       BuildContext context, UserCredential firebaseUser) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('roll_no', firebaseUser.user.displayName);
+    await prefs.setString('roll_no', firebaseUser.user!.displayName!);
     Navigator.of(context).pushNamed(Routes.rUserData);
   }
 }

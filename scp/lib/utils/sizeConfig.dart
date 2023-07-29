@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class SizeConfig{
-  static MediaQueryData _mediaQueryData;
-  static double screenWidth;
-  static double iconSizeSCP;
-  static double drawerItemTextSize;
-  static double screenHeight;
+class SizeConfig {
+  static MediaQueryData _mediaQueryData = MediaQueryData();
+  static double screenWidth = 0.0;
+  static double iconSizeSCP = 0.0;
+  static double drawerItemTextSize = 0.0;
+  static double screenHeight = 0.0;
 
-  void init(BuildContext context){
+  void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
     screenWidth = _mediaQueryData.size.width;
     screenHeight = _mediaQueryData.size.height;

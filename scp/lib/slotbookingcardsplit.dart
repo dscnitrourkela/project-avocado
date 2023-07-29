@@ -12,8 +12,8 @@ class SlotCardSplit extends StatefulWidget {
 }
 
 class _SlotCardSplitState extends State<SlotCardSplit> {
-  bool isTapped;
-  double width1, width2;
+  bool? isTapped;
+  double? width1, width2;
 
   @override
   void initState() {
@@ -25,7 +25,15 @@ class _SlotCardSplitState extends State<SlotCardSplit> {
 
   @override
   Widget build(BuildContext context) {
-    return slotCard(widget.cxt, widget.heightFactor, widget.textSc, width1, "OFFLINE Counselling", 1, 'assets/icon-white.png',);
+    return slotCard(
+      widget.cxt,
+      widget.heightFactor,
+      widget.textSc,
+      width1!,
+      "OFFLINE Counselling",
+      1,
+      'assets/icon-white.png',
+    );
   }
 
   Widget slotCard(
@@ -70,7 +78,7 @@ class _SlotCardSplitState extends State<SlotCardSplit> {
                           Column(
                             children: <Widget>[
                               AnimatedOpacity(
-                                opacity: isTapped ? 0 : 1,
+                                opacity: isTapped! ? 0 : 1,
                                 duration: Duration(milliseconds: 100),
                                 child: Padding(
                                   padding: const EdgeInsets.only(top: 20.0),
@@ -113,7 +121,7 @@ class _SlotCardSplitState extends State<SlotCardSplit> {
                                 ),
                               ),
                               AnimatedOpacity(
-                                opacity: isTapped ? 0 : 1,
+                                opacity: isTapped! ? 0 : 1,
                                 duration: Duration(milliseconds: 100),
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 14.0),
@@ -149,7 +157,7 @@ class _SlotCardSplitState extends State<SlotCardSplit> {
                             ],
                           ),
                           AnimatedOpacity(
-                            opacity: !isTapped ? 0 : 1,
+                            opacity: !isTapped! ? 0 : 1,
                             duration: Duration(milliseconds: 100),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -196,7 +204,7 @@ class _SlotCardSplitState extends State<SlotCardSplit> {
                 top: MediaQuery.of(context).size.width * 0.075,
                 left: MediaQuery.of(context).size.width * 0.55,
                 child: AnimatedOpacity(
-                  opacity: isTapped ? 0 : 1,
+                  opacity: isTapped! ? 0 : 1,
                   duration: Duration(milliseconds: 100),
                   child: Image.asset(
                     'assets/scp_app.png',

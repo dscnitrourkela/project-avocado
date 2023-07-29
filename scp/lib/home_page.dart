@@ -1,5 +1,4 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:ndialog/ndialog.dart';
@@ -21,9 +20,7 @@ import 'package:rate_my_app/rate_my_app.dart';
 import 'package:in_app_review/in_app_review.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -31,14 +28,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String username = " ", rollNo = " ", phoneNo = " ";
-  DatabaseReference slotsRefMain;
+  DatabaseReference? slotsRefMain;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  RemoteConfig remoteConfig;
+  FirebaseRemoteConfig? remoteConfig;
   bool isChat = false;
-  String chatUrl;
-  bool isAutumn;
-  int buildNumber;
-  int publishVersion;
+  String? chatUrl;
+  bool? isAutumn;
+  int? buildNumber;
+  int? publishVersion;
 
   static const platform = const MethodChannel("FAQ_ACTIVITY");
 
@@ -62,12 +59,14 @@ class _HomePageState extends State<HomePage> {
             key: _scaffoldKey,
             drawer: Drawer(
                 child: SafeArea(
-                  child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.04, top: SizeConfig.screenHeight*0.035),
+                    padding: EdgeInsets.only(
+                        left: SizeConfig.screenWidth * 0.04,
+                        top: SizeConfig.screenHeight * 0.035),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,7 +172,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         ListTile(
                           onTap: () {
-                            _launchLink('https://ics.nitrkl.ac.in/');
+                            _launchLink("https://www.ics-nitrkl.in/");
                           },
                           title: Text(
                             "ICS Website",
@@ -197,7 +196,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: SizeConfig.screenHeight*0.04),
+                    padding:
+                        EdgeInsets.only(bottom: SizeConfig.screenHeight * 0.04),
                     child: Align(
                       alignment: Alignment.center,
                       child: ButtonTheme(
@@ -210,24 +210,24 @@ class _HomePageState extends State<HomePage> {
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.0)),
-                            primary: Color.fromRGBO(25, 39, 45, 1),
+                            backgroundColor: Color.fromRGBO(25, 39, 45, 1),
                           ),
                           child: Text(
                             "Log Out",
                             style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'PfDin',
-                                color: Colors.white,
-                                fontSize: SizeConfig.screenWidth * 0.046,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'PfDin',
+                              color: Colors.white,
+                              fontSize: SizeConfig.screenWidth * 0.046,
                             ),
                           ),
                         ),
                       ),
                     ),
                   )
-              ],
-            ),
-                )),
+                ],
+              ),
+            )),
             appBar: AppBar(
               leading: Padding(
                 padding: EdgeInsets.only(top: SizeConfig.screenWidth * 0.037),
@@ -237,7 +237,7 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.black,
                       size: 35.0,
                     ),
-                    onPressed: () => _scaffoldKey.currentState.openDrawer()),
+                    onPressed: () => _scaffoldKey.currentState!.openDrawer()),
               ),
               actions: <Widget>[
                 (snap.connectionState != ConnectionState.waiting ||
@@ -254,7 +254,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             onPressed: () {
                               Navigator.pushNamed(context, Routes.rChat,
-                                  arguments: ChatArguments(chatUrl));
+                                  arguments: ChatArguments(chatUrl!));
                             },
                           )
                         : Container())
@@ -326,11 +326,11 @@ class _HomePageState extends State<HomePage> {
     // int dayFromEpoch = (DateTime.now().millisecondsSinceEpoch/(fac)).floor();
     // print("Smarak ${((dayFromEpoch - 1)/7).floor()}");
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (!prefs.getBool('hasBooked')) {
+    if (!prefs.getBool('hasBooked')!) {
       prefs.setString('bookDate', DateTime.now().toString());
     }
 
-    if (now.day > (DateTime.parse(prefs.getString('bookDate')).day)) {
+    if (now.day > (DateTime.parse(prefs.getString('bookDate')!).day)) {
       prefs.setBool('hasBooked', false);
     }
     /*if(DateTime.now().weekday > 3)*/
@@ -360,7 +360,7 @@ class _HomePageState extends State<HomePage> {
     // Get any messages which caused the application to open from
     // a terminated state.
     RemoteMessage initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
+        (await FirebaseMessaging.instance.getInitialMessage())!;
 
     // If the message also contains a data property with a "type" of "chat",
     // navigate to a chat screen
@@ -419,57 +419,56 @@ class _HomePageState extends State<HomePage> {
     prefs.getKeys();
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     buildNumber = int.parse(packageInfo.buildNumber);
-    remoteConfig = RemoteConfig.instance;
-    remoteConfig.setConfigSettings(RemoteConfigSettings(
+    remoteConfig = FirebaseRemoteConfig.instance;
+    remoteConfig!.setConfigSettings(RemoteConfigSettings(
       fetchTimeout: const Duration(seconds: 10),
       minimumFetchInterval: Duration.zero,
     ));
     try {
-      await remoteConfig.fetch();
-      await remoteConfig.fetchAndActivate();
+      await remoteConfig!.fetch();
+      await remoteConfig!.fetchAndActivate();
 
-      isChat = remoteConfig.getBool('is_chat_active');
-      publishVersion = remoteConfig.getInt('publishVersion');
-      chatUrl = remoteConfig.getString('chatLink');
-      isAutumn = remoteConfig.getBool('is_autumn');
+      isChat = remoteConfig!.getBool('is_chat_active');
+      publishVersion = remoteConfig!.getInt('publishVersion');
+      chatUrl = remoteConfig!.getString('chatLink');
+      isAutumn = remoteConfig!.getBool('is_autumn');
 
-      publishVersion = int.parse(remoteConfig.getString("version"));
+      publishVersion = int.parse(remoteConfig!.getString("version"));
       debugPrint(publishVersion.toString());
       await prefs.setBool('is_chat_active', isChat);
-      await prefs.setString('chatLink', chatUrl);
-      await prefs.setBool('is_autumn', isAutumn);
+      await prefs.setString('chatLink', chatUrl!);
+      await prefs.setBool('is_autumn', isAutumn!);
     } on PlatformException catch (exception) {
-      isChat = prefs.getBool('is_chat_active');
+      isChat = prefs.getBool('is_chat_active')!;
       chatUrl = prefs.getString('chatLink');
       isAutumn = prefs.getBool('is_autumn');
       // Fetch throttled.
       debugPrint(exception.toString());
     } catch (exception) {
-      isChat = prefs.getBool('is_chat_active');
+      isChat = prefs.getBool('is_chat_active')!;
       chatUrl = prefs.getString('chatLink');
       isAutumn = prefs.getBool('is_autumn');
     }
 
-    isChat = remoteConfig.getBool('is_chat_active');
-    chatUrl = remoteConfig.getString('chatLink');
-    username = prefs.getString('username');
+    isChat = remoteConfig!.getBool('is_chat_active');
+    chatUrl = remoteConfig!.getString('chatLink');
+    username = prefs.getString('username')!;
     isAutumn = prefs.getBool('is_autumn');
-    rollNo = prefs.getString('roll_no');
-    phoneNo = prefs.getString('phone_no');
+    rollNo = prefs.getString('roll_no')!;
+    phoneNo = prefs.getString('phone_no')!;
     await prefs.setBool('hasBooked', prefs.getBool('hasBooked') ?? false);
     debugPrint(username + rollNo + phoneNo + isAutumn.toString());
     reset();
 
     debugPrint(
         "Version number is $buildNumber and version on remote config is $publishVersion");
-    if (buildNumber < publishVersion) {}
+    if (buildNumber! < publishVersion!) {}
   }
 
   void checkUpdate() async {
     if (buildNumber != null && publishVersion != null) {
-      if (buildNumber < publishVersion) {
+      if (buildNumber! < publishVersion!) {
         Future.delayed(const Duration(milliseconds: 2000), () async {
-        
           await DialogBackground(
             dismissable: true,
             blur: 2.0,
@@ -494,24 +493,25 @@ class _HomePageState extends State<HomePage> {
   }
 
   _launchUpdate() async {
-    if (await canLaunch(playstoreURL)) {
-      await launch(playstoreURL);
+    if (await canLaunchUrl(playstoreUri)) {
+      await launchUrl(playstoreUri);
     } else {
       throw 'Could not launch $playstoreURL';
     }
   }
 
   _launchURL() async {
-    if (await canLaunch(privacyPolicy)) {
-      await launch(privacyPolicy);
+    if (await canLaunchUrl(playstoreUri)) {
+      await launchUrl(playstoreUri);
     } else {
-      throw 'Could not launch $privacyPolicy';
+      throw 'Could not launch $playstoreURL';
     }
   }
 
   _launchLink(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+    Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
     } else {
       throw 'Could not launch $url';
     }

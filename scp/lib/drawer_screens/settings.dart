@@ -11,7 +11,7 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   String username = " ", rollNo = " ", phoneNo = " ";
-  bool state;
+  bool? state;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +42,7 @@ class _SettingsState extends State<Settings> {
                         height: 10.0,
                       ),
                       LiteRollingSwitch(
-                        value: state,
+                        value: state!,
                         textOff: 'No',
                         textOn: 'Yes',
                         colorOff: Colors.redAccent,
@@ -53,6 +53,9 @@ class _SettingsState extends State<Settings> {
                         onChanged: (state) async {
                           unSubOther(state);
                         },
+                        onTap: () {},
+                        onDoubleTap: () {},
+                        onSwipe: () {},
                       )
                     ],
                   ),
@@ -70,14 +73,14 @@ class _SettingsState extends State<Settings> {
 
   Future fetchUserData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    phoneNo = prefs.getString('phone_no');
-    username = prefs.getString('username');
-    rollNo = prefs.getString('roll_no');
+    phoneNo = prefs.getString('phone_no')!;
+    username = prefs.getString('username')!;
+    rollNo = prefs.getString('roll_no')!;
     DocumentSnapshot qn = await FirebaseFirestore.instance
         .collection('tokens')
         .doc(phoneNo)
         .get();
-    Map<String, dynamic> mp = qn.data();
+    Map<String, dynamic> mp = qn.data() as Map<String, dynamic>;
     state = await mp['optionalSub'];
 
     return qn;

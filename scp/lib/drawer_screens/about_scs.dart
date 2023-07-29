@@ -49,7 +49,9 @@ class AboutSCP extends StatelessWidget {
         backgroundColor: Color.fromRGBO(25, 39, 45, 1),
         title: Text(
           "About ICS",
-          style: TextStyle(fontFamily: 'PfDin',),
+          style: TextStyle(
+            fontFamily: 'PfDin',
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -105,17 +107,17 @@ class AboutSCP extends StatelessWidget {
               client: valueclient,
               child: Query(
                 options: QueryOptions(document: gql(readFaculties)),
-                builder: (QueryResult result,
-                    {VoidCallback refetch, FetchMore fetchMore}) {
-                  if (result.data == null) {
+                builder: (QueryResult? result,
+                    {VoidCallback? refetch, FetchMore? fetchMore}) {
+                  if (result!.data == null) {
                     return Container();
                   }
                   return ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: result.data["getFaculties"].length,
+                      itemCount: result.data!["getFaculties"].length,
                       itemBuilder: (BuildContext context, int index) {
-                        var ref = result.data["getFaculties"];
+                        var ref = result.data!["getFaculties"];
                         return contactCard(context, ref[index]["name"],
                             ref[index]["designation"], "");
                       });
@@ -159,16 +161,16 @@ class AboutSCP extends StatelessWidget {
               child: Query(
                 options: QueryOptions(document: gql(readCordinators)),
                 builder: (QueryResult result,
-                    {VoidCallback refetch, FetchMore fetchMore}) {
+                    {VoidCallback? refetch, FetchMore? fetchMore}) {
                   if (result.data == null) {
                     return Container();
                   }
                   return ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: result.data["getCoordinators"].length,
+                      itemCount: result.data!["getCoordinators"].length,
                       itemBuilder: (BuildContext context, int index) {
-                        var ref = result.data["getCoordinators"];
+                        var ref = result.data!["getCoordinators"];
                         return contactCard(context, ref[index]["name"],
                             ref[index]["email"], ref[index]["contact"]);
                       });
@@ -195,16 +197,16 @@ class AboutSCP extends StatelessWidget {
               child: Query(
                 options: QueryOptions(document: gql(readPrefect)),
                 builder: (QueryResult result,
-                    {VoidCallback refetch, FetchMore fetchMore}) {
+                    {VoidCallback? refetch, FetchMore? fetchMore}) {
                   if (result.data == null) {
                     return Container();
                   }
                   return ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: result.data["getPrefects"].length,
+                      itemCount: result.data!["getPrefects"].length,
                       itemBuilder: (BuildContext context, int index) {
-                        var ref = result.data["getPrefects"];
+                        var ref = result.data!["getPrefects"];
                         return contactCard(context, ref[index]["name"],
                             ref[index]["email"], ref[index]["contact"]);
                       });
@@ -223,7 +225,7 @@ class AboutSCP extends StatelessWidget {
     return InkWell(
       onTap: () {
         if (contact != "") {
-          launch("tel://" + contact);
+          launchUrl(Uri.parse("tel://" + contact));
         } else {}
       },
       child: Padding(

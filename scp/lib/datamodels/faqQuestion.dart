@@ -1,16 +1,14 @@
-import 'package:flutter/material.dart';
-
 class FaqQuestion {
   final String question;
   final String answer;
 
   FaqQuestion({
-    @required this.question,
-    @required this.answer,
+    required this.question,
+    required this.answer,
   });
 
   static FaqQuestion fromJson(json) => FaqQuestion(
-    question: json['B'],
-    answer: json['D'],
-  );
+        question: json['B'],
+        answer: json['D'],
+      );
 }
