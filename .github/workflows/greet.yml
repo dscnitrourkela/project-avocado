@@ -1,8 +1,10 @@
 name: Woofy
 on: pull_request_target
 jobs:
-  build:
+  greet:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:      
       - uses: HarishTeens/hacktoberfest-greet@v1.1.0
         with:
