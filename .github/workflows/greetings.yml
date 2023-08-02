@@ -6,7 +6,7 @@ jobs:
   codemagic_comment:
     runs-on: ubuntu-latest
     name: Codemagic build
-    permisssions:
+    permissions:
       pull-requests: write
     steps:
       - name: Checkout
