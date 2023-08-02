@@ -3,9 +3,11 @@ name: Codemagic status
 on: pull_request
 
 jobs:
-  example_comment_pr:
+  codemagic_comment:
     runs-on: ubuntu-latest
     name: Codemagic build
+    permisssions:
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v1
