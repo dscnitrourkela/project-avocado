@@ -1,6 +1,6 @@
 name: Codemagic status
 
-on: pull_request_target
+on: pull_request
 
 jobs:
   codemagic_comment:
