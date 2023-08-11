@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:scp/utils/grapgQLconfig.dart';
@@ -5,22 +6,6 @@ import 'package:scp/utils/grapgQLconfig.dart';
 final Color primaryColor = Color.fromARGB(255, 49, 68, 76);
 final Color secondaryColor = Color.fromARGB(255, 158, 218, 224);
 final Color lunchColor = Color.fromARGB(255, 238, 71, 89);
-
-final String readMentees = """
-query Mentees(\$roll : String){
-  getMentorByRollnumber(rollNumber : \$roll){
-    id
-    name
-    rollNumber
-    mentees{
-      id
-      name
-      rollNumber
-      contact
-    }
-  }
-}
-""";
 
 class ListDetails extends StatelessWidget {
   final String rollNo;
@@ -69,117 +54,147 @@ class ListDetails extends StatelessWidget {
         ),
         body: GraphQLProvider(
           client: valueclient,
-          child: MenteeDetails(rollNo),
+          child: MenteeDetails(rollNo.toLowerCase()),
         ));
   }
 }
 
-class MenteeDetails extends StatelessWidget {
+class MenteeDetails extends StatefulWidget {
   final String rollNo;
   MenteeDetails(this.rollNo);
   @override
+  State<MenteeDetails> createState() => _MenteeDetailsState();
+}
+
+class _MenteeDetailsState extends State<MenteeDetails> {
+  late Stream<QuerySnapshot> qSnapShot;
+
+  @override
+  void initState() {
+    super.initState();
+    qSnapShot = FirebaseFirestore.instance.collection('mentors').snapshots();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var queryWidth = MediaQuery.of(context).size.width;
-    return Query(
-        options: QueryOptions(
-            document: gql(readMentees),
-            variables: <String, dynamic>{"roll": rollNo}),
-        builder: (QueryResult result,
-            {VoidCallback? refetch, FetchMore? fetchMore}) {
-          if (result.hasException) {
-            return Center(
-              child: Text("Please check your internet connection"),
-            );
-          }
-          if (result.isLoading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (result.data!["getMentorByRollnumber"] == null) {
-            return Center(
-              child: Text(
-                "You are not a mentor",
-                style: TextStyle(
-                    color: primaryColor,
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold),
-              ),
-            );
-          }
+    return StreamBuilder(
+      stream: qSnapShot,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting ||
+            snapshot.connectionState == ConnectionState.none) {
+          return const CircularProgressIndicator();
+        }
+        if (snapshot.hasError) {
           return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  result.data!["getMentorByRollnumber"]["name"],
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontSize: queryWidth * 0.1,
-                      fontWeight: FontWeight.bold),
-                ),
-                Text(result.data!["getMentorByRollnumber"]["rollNumber"],
-                    style: TextStyle(
-                        color: primaryColor,
-                        fontSize: queryWidth * 0.075,
-                        fontWeight: FontWeight.bold)),
-                SizedBox(
-                  height: queryWidth * 0.07,
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: queryWidth * 0.05),
-                  child: ListTile(
-                    dense: true,
-                    title: Text(
-                      "MENTEE NAME",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          fontSize: queryWidth * 0.06,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    trailing: Text(
-                      "ROLL NO",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                          fontSize: queryWidth * 0.055,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: queryWidth * 0.05),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount:
-                        result.data!["getMentorByRollnumber"]["mentees"].length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        dense: true,
-                        title: Text(
-                          result.data!["getMentorByRollnumber"]["mentees"]
-                              [index]["name"],
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontSize: queryWidth * 0.042,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        trailing: Text(
-                          result.data!["getMentorByRollnumber"]["mentees"]
-                              [index]["rollNumber"],
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                              fontSize: queryWidth * 0.038,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
+            child: Text("Please check your internet connection"),
+          );
+        }
+        if (!snapshot.hasData) {
+          return Center(
+            child: Text("No data found"),
+          );
+        }
+        final query = snapshot.data as QuerySnapshot;
+        if (query.docs.length == 0) {
+          return Center(
+            child: Text("No data found"),
+          );
+        }
+        late QueryDocumentSnapshot? data;
+        try {
+          data = query.docs.firstWhere((element) =>
+              element['rollNumber'].toLowerCase() ==
+              widget.rollNo.toLowerCase());
+        } catch (e) {
+          return Center(
+            child: Text(
+              "You are not a mentor",
+              style: TextStyle(
+                  color: primaryColor,
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold),
             ),
           );
-        });
+        }
+        if (!data.exists) {
+          return Center(
+            child: Text("No data found"),
+          );
+        }
+        final List<dynamic> mentees = data['mentee'];
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              data['name'],
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: primaryColor,
+                fontSize: queryWidth * 0.1,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(widget.rollNo.toUpperCase(),
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: queryWidth * 0.075,
+                    fontWeight: FontWeight.bold)),
+            SizedBox(
+              height: queryWidth * 0.07,
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: queryWidth * 0.05),
+              child: ListTile(
+                dense: true,
+                title: Text(
+                  "MENTEE NAME",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      fontSize: queryWidth * 0.06, fontWeight: FontWeight.bold),
+                ),
+                trailing: Text(
+                  "ROLL NO",
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                      fontSize: queryWidth * 0.055,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: queryWidth * 0.05),
+                child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: mentees.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      dense: true,
+                      title: Text(
+                        mentees[index]["name"],
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontSize: queryWidth * 0.042,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      trailing: Text(
+                        mentees[index]["rollNumber"],
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                            fontSize: queryWidth * 0.038,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
