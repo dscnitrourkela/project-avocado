@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:scp/firebase/timetable_data.dart';
 import 'package:scp/ui/views/mentor_search/mentee_page.dart';
 import 'package:scp/ui/views/mentor_search/mentor_page.dart';
 import 'package:scp/ui/gradients.dart';
@@ -168,7 +169,7 @@ Widget mentorsCard(BuildContext context, String roll) {
     height: heightFactor * 0.58,
     child: InkWell(
       onTap: () {
-        if (roll.toString()[2] == '1' && roll.toString()[1] == '2') {
+        if (roll.toString()[2] == '3' && roll.toString()[1] == '2') {
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -219,7 +220,7 @@ Widget mentorsCard(BuildContext context, String roll) {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  (roll[2] == "1" && roll[1] == '2')
+                                  (roll[2] == "3" && roll[1] == '2')
                                       ? 'MENTOR'
                                       : "MENTEES",
                                   style: TextStyle(
@@ -241,7 +242,7 @@ Widget mentorsCard(BuildContext context, String roll) {
                           child: SizedBox(
                             width: 200.0,
                             child: Text(
-                              (roll[2] == "1" && roll[1] == '2')
+                              (roll[2] == "3" && roll[1] == '2')
                                   ? 'Know more about your ICS Mentor and get in touch with them'
                                   : 'If you are a Mentor, find here the list of your Mentees',
                               textAlign: TextAlign.left,

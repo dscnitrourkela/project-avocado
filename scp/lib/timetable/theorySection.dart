@@ -44,7 +44,6 @@ class _TheorySectionState extends State<TheorySection> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool showTimeTable = prefs.getBool('show_timetable')!;
     if (showTimeTable) {
-      String theorySection = prefs.getString('theorySection')!;
       if (cardNumber == 0) {
         Navigator.of(context).pop();
         Navigator.push(

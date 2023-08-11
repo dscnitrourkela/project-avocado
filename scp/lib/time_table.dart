@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:scp/firebase/timetable_data.dart';
 import 'package:scp/utils/routes.dart';
 import 'package:scp/utils/sizeConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,9 +16,8 @@ class TimeTable extends StatefulWidget {
 }
 
 class TimeTableState extends State<TimeTable> {
-  String? theorySection = 'E';
-  String? practicalSection = 'P6';
-  String sectionSequence = 'pt';
+  String section = "";
+  List<String> days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   bool allowedSection = true;
 
   bool showTimeTable = false;
@@ -27,27 +28,158 @@ class TimeTableState extends State<TimeTable> {
   final double unitHeight = 80.0;
   double? screenWidth, screenHeight;
 
-  Future _fetchSectionData(BuildContext context) async {
-    TimeTableResources.setCourseNumber();
+  Future _fetchSection() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.getKeys();
-    theorySection = prefs.getString('theory_section');
-    practicalSection = prefs.getString('prac_section');
-    bool? isAutumnSemester = await TimeTableResources.isAutumnSem();
-    if ((theorySection!.compareTo('Ar.') == 0) ||
-        (theorySection!.compareTo('A') == 0) ||
-        (theorySection!.compareTo('D') == 0) ||
-        (theorySection!.compareTo('C') == 0) ||
-        (theorySection!.compareTo('B') == 0)) {
-      sectionSequence = isAutumnSemester! ? 'tp' : 'pt';
-    } else {
-      sectionSequence = isAutumnSemester! ? 'pt' : 'tp';
+    if (prefs.getString('theory_section') != null &&
+        prefs.getString('prac_section') != null) {
+      section =
+          prefs.getString('theory_section')! + prefs.getString('prac_section')!;
     }
-    if (!isAutumnSemester && theorySection!.compareTo('Ar.') != 0) {
-      theorySection = TimeTableResources.subsituteTheorySection[theorySection];
-      practicalSection =
-          TimeTableResources.substitutePracticalSection[practicalSection];
+  }
+
+  int _getSlotLength(String startTime, String endTime) {
+    List<String> startTimeList = startTime.split(':');
+    List<String> endTimeList = endTime.split(':');
+    double startTimeFloat =
+        int.parse(startTimeList[0]) + int.parse(startTimeList[1]) / 60;
+    double endTimeFloat =
+        int.parse(endTimeList[0]) + int.parse(endTimeList[1]) / 60;
+    return (endTimeFloat - startTimeFloat).round();
+  }
+
+  String _convertTo12(String time) {
+    List<String> timeList = time.split(':');
+    int hour = int.parse(timeList[0]);
+    String ampm = 'AM';
+    if (hour > 12) {
+      hour -= 12;
+      ampm = 'PM';
     }
+    if (hour == 12) ampm = 'PM';
+    return hour.toString() + ':' + timeList[1] + ampm;
+  }
+
+  List<PeriodDetails?> _generateList(List<dynamic> dataArray) {
+    List<PeriodDetails?> dayList = [];
+    String lastEndTime = '8:00';
+    int i = 0;
+    for (; i < dataArray.length; i++) {
+      Map<String, dynamic> data = dataArray[i];
+      if (_getSlotLength(data['startTime'], '12:00') < 1) {
+        int slotLenght = _getSlotLength(lastEndTime, '12:00');
+        if (slotLenght > 0) {
+          dayList.add(
+            PeriodDetails(
+              name: 'Free',
+              location: null,
+              slotTime: _convertTo12(lastEndTime) + '-' + '12:00PM',
+              slotLength: slotLenght,
+              type: 'free',
+            ),
+          );
+        }
+        break;
+      }
+      int slotLenght = _getSlotLength(lastEndTime, data['startTime']);
+      if (slotLenght > 0) {
+        dayList.add(
+          PeriodDetails(
+            name: 'Free',
+            location: null,
+            slotTime: _convertTo12(lastEndTime) +
+                '-' +
+                _convertTo12(data['startTime']),
+            slotLength: slotLenght,
+            type: 'free',
+          ),
+        );
+      }
+      lastEndTime = data['endTime'];
+      dayList.add(
+        PeriodDetails(
+          name: data['subject'],
+          location: data['type'] == 'practical'
+              ? data['location']['geopoint'] as GeoPoint
+              : null,
+          locationName: data['location']['title'],
+          slotTime: _convertTo12(data['startTime']) +
+              '-' +
+              _convertTo12(data['endTime']),
+          slotLength: _getSlotLength(data['startTime'], data['endTime']),
+          type: data['type'],
+        ),
+      );
+    }
+
+    int slotLenght = _getSlotLength(lastEndTime, '12:00');
+    if (slotLenght > 0 && i == dataArray.length) {
+      dayList.add(
+        PeriodDetails(
+          name: 'Free',
+          location: null,
+          slotTime: _convertTo12(lastEndTime) + '-' + '12:00PM',
+          slotLength: slotLenght,
+          type: 'free',
+        ),
+      );
+    }
+
+    dayList.add(
+      PeriodDetails(
+        name: 'Lunch',
+        location: null,
+        slotLength: 1,
+        slotTime: '12:00PM-1:15PM',
+        type: 'lunch',
+      ),
+    );
+    lastEndTime = '13:15';
+    for (; i < dataArray.length; i++) {
+      Map<String, dynamic> data = dataArray[i];
+      int slotLenght = _getSlotLength(lastEndTime, data['startTime']);
+      if (slotLenght > 0) {
+        dayList.add(
+          PeriodDetails(
+            name: 'Free',
+            location: null,
+            slotTime: _convertTo12(lastEndTime) +
+                '-' +
+                _convertTo12(data['startTime']),
+            slotLength: slotLenght,
+            type: 'free',
+          ),
+        );
+      }
+      lastEndTime = data['endTime'];
+      dayList.add(
+        PeriodDetails(
+          name: data['subject'],
+          location:
+              data['type'] == 'practical' ? data['location']['geopoint'] : null,
+          locationName: data['location']['title'],
+          slotTime: _convertTo12(data['startTime']) +
+              '-' +
+              _convertTo12(data['endTime']),
+          slotLength: _getSlotLength(data['startTime'], data['endTime']),
+          type: data['type'],
+        ),
+      );
+    }
+
+    slotLenght = _getSlotLength(lastEndTime, '18:15');
+    if (slotLenght > 0) {
+      dayList.add(
+        PeriodDetails(
+          name: 'Free',
+          location: null,
+          slotTime: _convertTo12(lastEndTime) + '-' + '6:15PM',
+          slotLength: slotLenght,
+          type: 'free',
+        ),
+      );
+    }
+    return dayList;
   }
 
   _resetSections(BuildContext context) async {
@@ -63,11 +195,12 @@ class TimeTableState extends State<TimeTable> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    int dayInd = DateTime.now().weekday - 1;
     screenWidth = SizeConfig.screenWidth;
     screenHeight = SizeConfig.screenHeight;
     if (allowedSection) {}
     return FutureBuilder(
-      future: _fetchSectionData(context),
+      future: _fetchSection(),
       builder: (context, snap) {
         return Scaffold(
           backgroundColor: Colors.white,
@@ -115,6 +248,7 @@ class TimeTableState extends State<TimeTable> {
           ),
           body: DefaultTabController(
             length: 5,
+            initialIndex: dayInd > 4 ? 0 : dayInd,
             child: Scaffold(
               backgroundColor: Colors.white,
               appBar: PreferredSize(
@@ -136,7 +270,7 @@ class TimeTableState extends State<TimeTable> {
                     labelPadding:
                         EdgeInsets.symmetric(vertical: 16.0, horizontal: 48.0),
                     indicatorColor: Colors.transparent,
-                    tabs: TimeTableResources.sequence[sectionSequence]!.keys
+                    tabs: days
                         .map(
                           (day) => Tab(
                             child: Text(
@@ -154,10 +288,15 @@ class TimeTableState extends State<TimeTable> {
                 ),
               ),
               body: TabBarView(
-                  children: TimeTableResources
-                      .sequence[sectionSequence]!.entries
-                      .map((entry) => Container(
-                          child: buildList(context, entry.key, entry.value)))
+                  children: days
+                      .map(
+                        (day) => Container(
+                          child: buildList(
+                            context,
+                            day,
+                          ),
+                        ),
+                      )
                       .toList()),
             ),
           ),
@@ -181,17 +320,18 @@ class TimeTableState extends State<TimeTable> {
     );
   }
 
-  void launchMap(String url) async {
-    Uri uri = Uri.parse(url);
+  void launchMap(GeoPoint geoPoint) async {
+    Uri uri = Uri.parse(
+        'https://www.google.com/maps/search/?api=1&query=${geoPoint.latitude},${geoPoint.longitude}');
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
     } else {
-      debugPrint("Could not launch $url");
+      debugPrint("Could not launch $uri");
       throw 'Could not launch Maps';
     }
   }
 
-  Widget buildTheoryCard(PeriodDetails periodDetail) {
+  Widget buildClassCard(PeriodDetails periodDetail) {
     Color stripColor = primaryColor;
 
     return Container(
@@ -211,9 +351,9 @@ class TimeTableState extends State<TimeTable> {
                   padding: EdgeInsets.all(16.0),
                   child: Stack(children: [
                     Align(
-                      alignment: Alignment.topLeft,
+                      alignment: Alignment.centerLeft,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
@@ -257,7 +397,9 @@ class TimeTableState extends State<TimeTable> {
                       alignment: Alignment.centerRight,
                       child: InkWell(
                         onTap: () {
-                          launchMap(periodDetail.location!);
+                          if (periodDetail.location != null) {
+                            launchMap(periodDetail.location!);
+                          }
                         },
                         child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -265,13 +407,13 @@ class TimeTableState extends State<TimeTable> {
                               Icon(
                                 Icons.location_on,
                                 color: Colors.white.withAlpha(200),
-                                size: 24.0,
+                                size: 20.0,
                               ),
                               Text(
                                 periodDetail.locationName!,
                                 style: TextStyle(
                                   color: Colors.white.withAlpha(200),
-                                  fontSize: 24.0,
+                                  fontSize: 20.0,
                                 ),
                               )
                             ]),
@@ -339,98 +481,6 @@ class TimeTableState extends State<TimeTable> {
     );
   }
 
-  Widget buildPracticalCard(PeriodDetails periodDetail) {
-    Color stripColor = primaryColor;
-
-    return Container(
-      margin: EdgeInsets.all(8.0),
-      child: Stack(
-        children: <Widget>[
-          buildMarker(unitHeight * periodDetail.slotLength!, stripColor),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Container(
-              width: screenWidth! - 32.0,
-              height: unitHeight * periodDetail.slotLength!,
-              child: Card(
-                color: stripColor,
-                margin: EdgeInsets.zero,
-                child: Container(
-                  padding: EdgeInsets.all(16.0),
-                  child: Stack(children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: RichText(
-                          text: TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: periodDetail.name! + '\n',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          TextSpan(
-                            text: periodDetail.slotTime,
-                            style: TextStyle(
-                              color: Colors.white.withAlpha(200),
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      )),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: SizedBox(
-                        width: screenWidth! * 0.4,
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6.0)),
-                              backgroundColor: Color(0xff1f538d),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8.5),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.navigation_outlined,
-                                    color: Colors.white,
-                                  ),
-                                  SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    'Location',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18.5,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            onPressed: () {
-                              launchMap(periodDetail.location!);
-                            }),
-                      ),
-                    ),
-                  ]),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget buildLunchCard(PeriodDetails periodDetail) {
     Color stripColor = lunchColor;
 
@@ -483,136 +533,45 @@ class TimeTableState extends State<TimeTable> {
     );
   }
 
-  ListView buildList(BuildContext context, String day, List<String> codes) {
-    List<PeriodDetails?> dayList = [];
-    dayList = getDayList(day, codes);
+  StreamBuilder buildList(BuildContext context, String day) {
+    day = day.toLowerCase();
+    return StreamBuilder(
+      stream: TimeTableData(section, day).getStream(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting ||
+            snapshot.connectionState == ConnectionState.none) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (snapshot.hasError) {
+          return Center(
+            child: Text(
+              'Error fetching data',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 20.0,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          );
+        }
+        List<PeriodDetails?> dayList = _generateList(snapshot.data);
 
-    debugPrint("Length ${dayList.length}");
-
-    return ListView.builder(
-        itemCount: dayList.length,
-        itemBuilder: (BuildContext context, int index) {
-          if (dayList[index]!.type == 'theory') {
-            return buildTheoryCard(dayList[index]!);
-          } else if (dayList[index]!.type == 'practical') {
-            return buildPracticalCard(dayList[index]!);
-          } else if (dayList[index]!.type == 'lunch') {
-            return buildLunchCard(dayList[index]!);
-          } else {
-            return buildFreeCard(dayList[index]!);
-          }
-        });
-  }
-
-  List<PeriodDetails?> getDayList(String day, List<String> codes) {
-    List<bool> slotFilled = [
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false
-    ];
-    List<PeriodDetails?> dayList = List.generate(9, (index) => null);
-
-    int j;
-    for (int i = 0; i < codes.length; i++) {
-      j = i % 9;
-      if (slotFilled[j] == true) {
-        continue;
-      } else if (TimeTableResources.theory[theorySection]!
-          .containsKey(codes[i])) {
-        dayList[j] = PeriodDetails(
-          name: TimeTableResources.theory[theorySection]![codes[i]],
-          slotTime: getSlotTime(j, j),
-          slotLength: 1,
-          type: 'theory',
-          location:
-              'https://www.google.com/maps/search/?api=1&query=22.25082839,84.90534609',
-          locationName: 'LA-II',
-        );
-        slotFilled[j] = true;
-      } else if (TimeTableResources.practical[practicalSection]!
-          .containsKey(codes[i])) {
-        dayList[j] = PeriodDetails(
-          name: TimeTableResources.practicalDetails[TimeTableResources
-              .practical[practicalSection]![codes[i]]]!['name'],
-          slotTime: getSlotTime(j, j + 2),
-          location: TimeTableResources.practicalDetails[TimeTableResources
-              .practical[practicalSection]![codes[i]]]!['location'],
-          locationName: TimeTableResources.practicalDetails[TimeTableResources
-              .practical[practicalSection]![codes[i]]]!['locationName'],
-          slotLength: 3,
-          type: 'practical',
-        );
-        debugPrint(
-            'location ${TimeTableResources.practicalDetails[TimeTableResources.practical[practicalSection]![codes[i]]]!['location']}');
-        slotFilled[j] = true;
-        slotFilled[j + 1] = true;
-        slotFilled[j + 2] = true;
-        i += 2;
-      }
-    }
-
-    List<PeriodDetails?> dayList2 = [];
-    dayList2.addAll(dayList);
-    dayList2.insert(
-      4,
-      PeriodDetails(
-        name: 'Lunch',
-        location: null,
-        slotLength: 1,
-        slotTime: '12:00-1:15',
-        type: 'lunch',
-      ),
+        return ListView.builder(
+            itemCount: dayList.length,
+            itemBuilder: (BuildContext context, int index) {
+              if (dayList[index]!.type == 'theory') {
+                return buildClassCard(dayList[index]!);
+              } else if (dayList[index]!.type == 'practical') {
+                return buildClassCard(dayList[index]!);
+              } else if (dayList[index]!.type == 'lunch') {
+                return buildLunchCard(dayList[index]!);
+              } else {
+                return buildFreeCard(dayList[index]!);
+              }
+            });
+      },
     );
-    slotFilled.insert(4, true);
-    int numbContinuousFree = 0;
-    for (int i = 0; i < 4; i++) {
-      if (!slotFilled[i]) {
-        dayList2[i - numbContinuousFree] = PeriodDetails(
-          name: 'Free',
-          location: null,
-          slotTime: getSlotTime(i - numbContinuousFree, i),
-          slotLength: ++numbContinuousFree,
-          type: 'free',
-        );
-      } else {
-        numbContinuousFree = 0;
-      }
-    }
-    numbContinuousFree = 0;
-    for (int i = 5; i < 10; i++) {
-      if (!slotFilled[i]) {
-        dayList2[i - numbContinuousFree] = PeriodDetails(
-          name: 'Free',
-          location: null,
-          slotTime: getSlotTime(i - numbContinuousFree - 1, i - 1),
-          slotLength: ++numbContinuousFree,
-          type: 'free',
-        );
-      } else {
-        numbContinuousFree = 0;
-      }
-    }
-    for (int i = 0; i < dayList2.length; i++) {
-      if (dayList2[i] == null) {
-        dayList2.removeAt(i);
-        i--;
-      }
-    }
-
-    return dayList2;
-  }
-
-  String getSlotTime(int startSlotIndex, int endSlotIndex) {
-    debugPrint("startSlotIndex" + startSlotIndex.toString());
-    debugPrint("endSlotIndex" + endSlotIndex.toString());
-    return TimeTableResources.slotTime[startSlotIndex]['start']! +
-        '-' +
-        TimeTableResources.slotTime[endSlotIndex]['end']!;
   }
 }
