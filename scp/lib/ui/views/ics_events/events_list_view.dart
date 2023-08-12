@@ -12,6 +12,7 @@ class EventsListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
@@ -37,18 +38,23 @@ class EventsListView extends StatelessWidget {
                   children: [
                     FaIcon(
                       FontAwesomeIcons.calendar,
-                      size: 50,
+                      size: width * 0.1,
                     ),
                     SizedBox(width: 20),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          title,
-                          style: TextStyle(
-                            fontFamily: 'PfDin',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                        Container(
+                          width: width * 0.6,
+                          child: Text(
+                            title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: 'PfDin',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                         SizedBox(height: 20),
@@ -62,7 +68,7 @@ class EventsListView extends StatelessWidget {
                                   style: TextStyle(
                                     fontFamily: 'PfDin',
                                     fontWeight: FontWeight.w200,
-                                    fontSize: 15,
+                                    fontSize: 13,
                                   ),
                                 ),
                                 Text(
@@ -70,7 +76,7 @@ class EventsListView extends StatelessWidget {
                                   style: TextStyle(
                                     fontFamily: 'PfDin',
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 15,
+                                    fontSize: 13,
                                   ),
                                 ),
                               ],
@@ -84,7 +90,7 @@ class EventsListView extends StatelessWidget {
                                   style: TextStyle(
                                     fontFamily: 'PfDin',
                                     fontWeight: FontWeight.w200,
-                                    fontSize: 15,
+                                    fontSize: 13,
                                   ),
                                 ),
                                 Text(
@@ -92,7 +98,7 @@ class EventsListView extends StatelessWidget {
                                   style: TextStyle(
                                     fontFamily: 'PfDin',
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 15,
+                                    fontSize: 13,
                                   ),
                                 ),
                               ],
@@ -103,15 +109,20 @@ class EventsListView extends StatelessWidget {
                               children: [
                                 Text(
                                   'Venue',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     fontFamily: 'PfDin',
                                     fontWeight: FontWeight.w200,
-                                    fontSize: 15,
+                                    fontSize: 13,
                                   ),
                                 ),
                                 Container(
+                                  width: width * 0.19,
                                   child: Text(
                                     venue,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontFamily: 'PfDin',
                                       fontWeight: FontWeight.w600,

@@ -93,6 +93,8 @@ class DevInfo extends StatelessWidget {
                     "https://github.com/Manikandan9206"),
                 contactCard(
                     context, "Manjeet Pani", "https://github.com/HustleAura"),
+                contactCard(
+                    context, "Nikhil Jaiswal", "https://github.com/Mixel2004"),
                 contactCard(context, "Patibanda Sriram ",
                     "https://github.com/SriramPatibanda"),
                 contactCard(

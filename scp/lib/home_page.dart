@@ -304,6 +304,30 @@ class _HomePageState extends State<HomePage> {
                       child: CircularProgressIndicator(),
                     ),
             ),
+            floatingActionButton:
+                (snap.connectionState != ConnectionState.waiting ||
+                        snap.connectionState != ConnectionState.waiting)
+                    ? FloatingActionButton(
+                        onPressed: () {
+                          if (isChat) {
+                            Navigator.pushNamed(context, Routes.rChat,
+                                arguments: ChatArguments(chatUrl!));
+                          }
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            image: DecorationImage(
+                              image: AssetImage(
+                                "assets/chat.gif",
+                              ),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      )
+                    : null,
           );
         },
       ),
@@ -455,6 +479,7 @@ class _HomePageState extends State<HomePage> {
     username = prefs.getString('username')!;
     isAutumn = prefs.getBool('is_autumn');
     rollNo = prefs.getString('roll_no')!;
+    // rollNo = '123CS1133';
     phoneNo = prefs.getString('phone_no')!;
     await prefs.setBool('hasBooked', prefs.getBool('hasBooked') ?? false);
     debugPrint(username + rollNo + phoneNo + isAutumn.toString());
@@ -494,15 +519,7 @@ class _HomePageState extends State<HomePage> {
 
   _launchUpdate() async {
     if (await canLaunchUrl(playstoreUri)) {
-      await launchUrl(playstoreUri);
-    } else {
-      throw 'Could not launch $playstoreURL';
-    }
-  }
-
-  _launchURL() async {
-    if (await canLaunchUrl(playstoreUri)) {
-      await launchUrl(playstoreUri);
+      await launchUrl(playstoreUri, mode: LaunchMode.externalApplication);
     } else {
       throw 'Could not launch $playstoreURL';
     }

@@ -62,7 +62,6 @@ class _ImpDocsState extends State<ImpDocs> {
         .then((QuerySnapshot snapshot) {
       snapshot.docs.forEach((f) {
         Map<String, dynamic> d = f.data() as Map<String, dynamic>;
-        print('Data is: ${d['link']} ${d['title']}');
         doc.add(new Padding(
           padding: const EdgeInsets.all(8.0),
           child: InkWell(
