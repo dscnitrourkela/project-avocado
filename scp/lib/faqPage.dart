@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:link_text/link_text.dart';
+import 'package:matrix_link_text/link_text.dart';
 import 'package:scp/datamodels/faqQuestion.dart';
 import 'package:scp/utils/urlLauncher.dart';
 
@@ -92,7 +92,8 @@ class _FaqPageState extends State<FaqPage> {
                           right: 16.0,
                           top: 4.0,
                         ),
-                        child: LinkText(singlefaqquestion.answer,
+                        child: LinkText(
+                            text: singlefaqquestion.answer,
                             textStyle: TextStyle(
                                 fontSize: 16.6,
                                 fontFamily: 'PfDin',
@@ -100,9 +101,10 @@ class _FaqPageState extends State<FaqPage> {
                             linkStyle: TextStyle(
                                 color: Colors.blueAccent,
                                 decoration: TextDecoration.underline,
-                                fontSize: 15.3), onLinkTap: ((url) {
-                          launchURL(url);
-                        })),
+                                fontSize: 15.3),
+                            onLinkTap: ((url) {
+                              launchURI(url);
+                            })),
                       ),
                     ),
                     SizedBox(height: 10),
