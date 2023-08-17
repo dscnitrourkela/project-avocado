@@ -15,7 +15,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import 'package:in_app_review/in_app_review.dart';
 
