@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field, unnecessary_null_comparison
+
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -50,6 +52,17 @@ class _HomePageState extends State<HomePage> {
     FirebaseDatabase.instance.setPersistenceEnabled(true);
     // var queryWidth = MediaQuery.of(context).size.width;
     // var textScaleFactor = MediaQuery.of(context).textScaleFactor;
+
+    List<Map<String, String>> _drawerData = [
+      {'title': 'Important Documents', 'route': Routes.rImpDocs},
+      {'title': 'Notification', 'route': Routes.rNots},
+      {'title': 'Settings', 'route': Routes.rSettings},
+      {'title': 'About ICS', 'route': Routes.rAboutScp},
+      // {'title': 'Privacy Policy', 'route': Routes.rPolicies},
+      {'title': 'Developer Info', 'route': Routes.rDevInfo},
+      // {'title': 'ICS Website', 'route': "https://www.ics-nitrkl.in/"},
+      // {'title': 'ICS YouTube', 'route': 'https://www.youtube.com/c/ICSNITR'},
+    ];
     return Scaffold(
       body: FutureBuilder(
         future: fetchUserData(context),
@@ -103,50 +116,18 @@ class _HomePageState extends State<HomePage> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        ListTile(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(Routes.rImpDocs);
-                          },
-                          title: Text(
-                            "Important Documents",
-                            style: TextStyle(
-                                fontSize: SizeConfig.drawerItemTextSize,
-                                fontFamily: 'PfDin'),
-                          ),
-                        ),
-                        ListTile(
-                          onTap: () {
-                            Navigator.pushNamed(context, Routes.rNots);
-                          },
-                          title: Text(
-                            "Notifications",
-                            style: TextStyle(
-                                fontSize: SizeConfig.drawerItemTextSize,
-                                fontFamily: 'PfDin'),
-                          ),
-                        ),
-                        ListTile(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(Routes.rSettings);
-                          },
-                          title: Text(
-                            "Settings",
-                            style: TextStyle(
-                                fontSize: SizeConfig.drawerItemTextSize,
-                                fontFamily: 'PfDin'),
-                          ),
-                        ),
-                        ListTile(
-                          onTap: () {
-                            Navigator.pushNamed(context, Routes.rAboutScp);
-                          },
-                          title: Text(
-                            "About ICS",
-                            style: TextStyle(
-                                fontSize: SizeConfig.drawerItemTextSize,
-                                fontFamily: 'PfDin'),
-                          ),
-                        ),
+                        ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: _drawerData.length,
+                            itemBuilder: (context, index) {
+                              return drawerData(
+                                context,
+                                _drawerData[index]['title'].toString(),
+                                _drawerData[index]['route'].toString(),
+                              );
+                            }),
                         ListTile(
                           onTap: () {
                             Navigator.pushNamed(context, Routes.rPolicies,
@@ -154,17 +135,6 @@ class _HomePageState extends State<HomePage> {
                           },
                           title: Text(
                             "Privacy Policy",
-                            style: TextStyle(
-                                fontSize: SizeConfig.drawerItemTextSize,
-                                fontFamily: 'PfDin'),
-                          ),
-                        ),
-                        ListTile(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(Routes.rDevInfo);
-                          },
-                          title: Text(
-                            "Developer Info",
                             style: TextStyle(
                                 fontSize: SizeConfig.drawerItemTextSize,
                                 fontFamily: 'PfDin'),
@@ -330,6 +300,19 @@ class _HomePageState extends State<HomePage> {
                     : null,
           );
         },
+      ),
+    );
+  }
+
+  ListTile drawerData(BuildContext context, String title, String route) {
+    return ListTile(
+      onTap: () {
+        Navigator.of(context).pushNamed(route);
+      },
+      title: Text(
+        title,
+        style: TextStyle(
+            fontSize: SizeConfig.drawerItemTextSize, fontFamily: 'PfDin'),
       ),
     );
   }
