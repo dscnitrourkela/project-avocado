@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:scp/FAQ/faqPage.dart';
 import 'package:scp/acadVault.dart';
 import 'package:scp/counselling/counsellingPage.dart';
 import 'package:scp/drawer_screens/notifications/notifications_view.dart';
-import 'package:scp/faqPage.dart';
 import 'package:scp/home_page.dart';
 import 'package:scp/chat.dart';
 import 'package:scp/drawer_screens/about_scs.dart';

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import, unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scp/firebase/timetable_data.dart';

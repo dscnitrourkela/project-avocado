@@ -1,9 +1,11 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:link_text/link_text.dart';
-import 'package:scp/datamodels/faqQuestion.dart';
+import 'package:provider/provider.dart';
+import 'package:scp/FAQ/models/faq_model.dart';
+import 'package:scp/firebase/firebaseDBHandler.dart';
 import 'package:scp/utils/urlLauncher.dart';
-
-import 'api/faqQuestions_api.dart';
 
 class FaqPage extends StatefulWidget {
   const FaqPage({key}) : super(key: key);
@@ -13,8 +15,11 @@ class FaqPage extends StatefulWidget {
 }
 
 class _FaqPageState extends State<FaqPage> {
+  final FAQDatabase database = FAQDatabase();
   @override
   Widget build(BuildContext context) {
+    final faq = Provider.of<List<faqModels>?>(context);
+    print('faq: ${faq}');
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 49, 68, 76),
@@ -27,36 +32,26 @@ class _FaqPageState extends State<FaqPage> {
               fontWeight: FontWeight.w600),
         ),
       ),
-      body: FutureBuilder<List<FaqQuestion>>(
-          future: FaqQuestionApi.getFaqQuestionLocally(context),
-          builder: (context, snapshot) {
-            final faqQuestion = snapshot.data;
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              default:
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text(
-                      "Oops! Something Went Wrong",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'PfDin',
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  );
-                } else {
-                  return buildFaqQuestion(faqQuestion!);
-                }
-            }
-          }),
+      body: StreamBuilder<List<faqModels>>(
+        stream: FAQDatabase().faqfun,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text("Error: ${snapshot.error}"));
+          } else if (!snapshot.hasData || snapshot.data == null) {
+            return Center(child: Text("No FAQ data available."));
+          } else {
+            final faq = snapshot.data!;
+            return buildFaqQuestion(context, faq);
+          }
+        },
+      ),
     );
   }
 
-  Widget buildFaqQuestion(List<FaqQuestion> faqQuestion) => ListView.builder(
+  Widget buildFaqQuestion(BuildContext context, List<faqModels> faqQuestion) =>
+      ListView.builder(
         physics: BouncingScrollPhysics(),
         itemCount: faqQuestion.length,
         itemBuilder: (context, index) {

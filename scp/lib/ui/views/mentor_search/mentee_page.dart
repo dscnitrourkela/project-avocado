@@ -83,7 +83,7 @@ class _MenteeDetailsState extends State<MenteeDetails> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting ||
             snapshot.connectionState == ConnectionState.none) {
-          return const CircularProgressIndicator();
+          return Center(child: const CircularProgressIndicator());
         }
         if (snapshot.hasError) {
           return Center(
